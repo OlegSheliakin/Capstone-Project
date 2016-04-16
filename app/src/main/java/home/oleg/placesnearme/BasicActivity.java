@@ -1,5 +1,6 @@
 package home.oleg.placesnearme;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +16,12 @@ public class BasicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basic2);
+        setContentView(R.layout.activity_basic);
 
         String [] titles = getResources().getStringArray(R.array.titles_array);
         ListView listView = (ListView) findViewById(R.id.listView);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titles);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, titles);
 
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

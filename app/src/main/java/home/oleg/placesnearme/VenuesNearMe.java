@@ -1,6 +1,5 @@
 package home.oleg.placesnearme;
 
-import android.location.Location;
 import android.os.AsyncTask;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -20,8 +19,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import home.oleg.placesnearme.models.Item;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by Oleg on 10.04.2016.
@@ -30,30 +33,25 @@ public class VenuesNearMe extends AsyncTask<String, Void, ArrayList<Item>> {
 
     private GoogleMap map;
     private ArrayList<Item> items;
-    private int radius;
-    private Location location;
+    private Parameters parameters;
 
-    public VenuesNearMe(GoogleMap map, int radius, Location location) {
-
+    public VenuesNearMe(GoogleMap map, Parameters parameters) {
         this.map = map;
-        this.radius = radius;
-        this.location = location;
-
+        this.parameters = parameters;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        map.clear();
     }
 
     @Override
     protected ArrayList<Item> doInBackground(String... params) {
         items = new ArrayList<>();
         JSONObject jsonResponse = null;
-        try {
-
-            jsonResponse = executeRequest(getUri());
+/*
+            String uri = new VenuesHttpRequest(parameters).toString();
+            jsonResponse = executeRequest(uri);
 
             int returnCode = Integer.parseInt(jsonResponse.getJSONObject("meta")
                     .getString("code"));
@@ -65,13 +63,20 @@ public class VenuesNearMe extends AsyncTask<String, Void, ArrayList<Item>> {
                         .getJSONObject(0) // recommended group
                         .getJSONArray("items");
                 items = convertJSONtoObject(jsonItemsArray);
+                }*/
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.foursquare.com/v2/")
+                .build();
 
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        IFourSquareAPI restItems = retrofit.create(IFourSquareAPI.class);
+        Map<String, String> map = new HashMap<>();
+        map.put("radius", String.valueOf(1000));
+        map.put("section", parameters.getSection());
+        map.put("client_id", Constants.CLIENT_ID);
+        map.put("client_secret", Constants.CLIENT_SECRET);
+
+        Response response = restItems.getItems();
+
         return items;
     }
 
@@ -84,28 +89,6 @@ public class VenuesNearMe extends AsyncTask<String, Void, ArrayList<Item>> {
                             (new LatLng(v.getVenue().getLocation().getLat(),
                                     v.getVenue().getLocation().getLng())));
         }
-    }
-
-    private String getUri (){
-        String uri = "https://api.foursquare.com/v2/venues/explore"
-                + "?ll="
-                + location.getLatitude()
-                + ","
-                + location.getLongitude()
-                + "&radius="
-                + radius
-                + "&section=topPicks"
-                + "&alt="
-                + location.getAltitude()
-                + "&llAcc="
-                + location.getAccuracy()
-                + "&client_id="
-                + Constants.CLIENT_ID
-                + "&client_secret="
-                + Constants.CLIENT_SECRET
-                + "&v="
-                + Constants.FOURSQAURE_API_VERSION;
-        return uri;
     }
 
     private JSONObject executeRequest(String path) throws IOException, JSONException {

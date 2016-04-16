@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,11 +46,10 @@ public class MapActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basic);
+        setContentView(R.layout.activity_map);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Log.d("TAG", getIntent().getStringExtra(EXTRA_DATA_NAME));
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -61,7 +61,6 @@ public class MapActivity extends AppCompatActivity
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
-
 
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
@@ -123,6 +122,7 @@ public class MapActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startSearchingVenues();
             return true;
         }
 
@@ -137,17 +137,11 @@ public class MapActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            new VenuesNearMe(map, 100, location).execute();
         } else if (id == R.id.nav_gallery) {
-            new VenuesNearMe(map, 250, location).execute();
         } else if (id == R.id.nav_slideshow) {
-            new VenuesNearMe(map, 500, location).execute();
         } else if (id == R.id.nav_manage) {
-            new VenuesNearMe(map, 750, location).execute();
         } else if (id == R.id.nav_share) {
-            new VenuesNearMe(map, 1000, location).execute();
         } else if (id == R.id.nav_send) {
-            new VenuesNearMe(map, 2000, location).execute();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,6 +159,7 @@ public class MapActivity extends AppCompatActivity
         }
         map.setMyLocationEnabled(true);
         map.setOnMarkerClickListener(this);
+
     }
 
     @Override
@@ -172,11 +167,11 @@ public class MapActivity extends AppCompatActivity
         return false;
     }
 
-    private boolean hasConnection() {
+    private boolean hasNoConnection() {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
+        return !(networkInfo != null && networkInfo.isConnected());
 
     }
 
@@ -190,16 +185,39 @@ public class MapActivity extends AppCompatActivity
         if (location != null) {
             showMyLocation();
         }
+
+        startSearchingVenues();
+    }
+
+    private void startSearchingVenues() {
+
+        if (hasNoConnection()){
+            Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String section = getIntent().getStringExtra(EXTRA_DATA_NAME);
+
+        Parameters parameters = new Parameters();
+        parameters.setLocation(location)
+                .setRadius(1000)
+                .setSection(section)
+                .setOpenNow(1)
+                .setVenuesPhoto(1);
+
+        if (parameters.getLocation() != null) {
+            new VenuesNearMe(map, parameters).execute();
+        } else {
+            Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
     public void showMyLocation() {
