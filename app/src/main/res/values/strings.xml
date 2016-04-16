@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Places Near Me</string>
+    <string name="connection_error">Check the network connection</string>
+
+    <string-array name="variants_array">
+        <item>Sushi bars</item>
+        <item>Coffee</item>
+        <item>Top places</item>
+    </string-array>
+    <string name="title_activity_basic">Places Near Me</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
