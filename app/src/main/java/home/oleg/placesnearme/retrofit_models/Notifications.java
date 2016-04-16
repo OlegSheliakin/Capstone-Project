@@ -6,7 +6,7 @@ package home.oleg.placesnearme.retrofit_models;
 public class Notifications {
 
     private String type;
-    private ItemItem item;
+    private NotificationItem item;
 
     public String getType() {
         return type;
@@ -16,11 +16,11 @@ public class Notifications {
         this.type = type;
     }
 
-    public ItemItem getItem() {
+    public NotificationItem getItem() {
         return item;
     }
 
-    public void setItem(ItemItem item) {
+    public void setItem(NotificationItem item) {
         this.item = item;
     }
 

@@ -3,7 +3,7 @@ package home.oleg.placesnearme.retrofit_models;
 /**
  * Created by Oleg on 16.04.2016.
  */
-public class ItemItem {
+public class NotificationItem {
     private int unreadCount;
 
     public int getUnreadCount() {

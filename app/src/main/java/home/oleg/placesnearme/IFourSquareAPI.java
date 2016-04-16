@@ -3,7 +3,7 @@ package home.oleg.placesnearme;
 
 import java.util.Map;
 
-import home.oleg.placesnearme.retrofit_models.Model;
+import home.oleg.placesnearme.retrofit_models.FullResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
@@ -15,5 +15,5 @@ import retrofit2.http.QueryMap;
 public interface IFourSquareAPI {
 
     @GET("v2/venues/explore?")
-    public Call<Model> getItems(@QueryMap Map<String, String> queryMap);
+    public Call<FullResponse> getItems(@QueryMap Map<String, String> queryMap);
 }

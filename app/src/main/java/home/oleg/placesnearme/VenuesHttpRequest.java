@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.retrofit_models.Model;
+import home.oleg.placesnearme.retrofit_models.FullResponse;
 import home.oleg.placesnearme.retrofit_models.Item;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -16,9 +16,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Oleg on 10.04.2016.
+ * Created by Oleg on 16.04.2016.
  */
-public class VenuesHttpRequest extends AsyncTask<String, Void, List<Item>> {
+class VenuesHttpRequest extends AsyncTask<String, Void, List<Item>> {
 
     private Parameters parameters;
     private MapActivity mapActivity;
@@ -37,7 +37,7 @@ public class VenuesHttpRequest extends AsyncTask<String, Void, List<Item>> {
     protected List<Item> doInBackground(String... params) {
 
         List<Item> items = new ArrayList<>();
-        Model model = null;
+        FullResponse fullResponse = null;
 
         Map<String,String> map = new HashMap<>();
         map.put(Constants.LL, parameters.getLocationLL());
@@ -54,16 +54,16 @@ public class VenuesHttpRequest extends AsyncTask<String, Void, List<Item>> {
         IFourSquareAPI restItems = retrofit.create(IFourSquareAPI.class);
 
 
-        Call<Model> call = restItems.getItems(map);
+        Call<FullResponse> call = restItems.getItems(map);
         try {
-            Response<Model> response = call.execute();
-            model = response.body();
+            Response<FullResponse> response = call.execute();
+            fullResponse = response.body();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (model != null){
-        items = model.getResponse().getGroups().get(0).getItems();
+        if (fullResponse != null){
+            items = fullResponse.getResponse().getGroups().get(0).getItems();
         }
 
         return items;
@@ -75,3 +75,4 @@ public class VenuesHttpRequest extends AsyncTask<String, Void, List<Item>> {
         mapActivity.showVenues(items);
     }
 }
+

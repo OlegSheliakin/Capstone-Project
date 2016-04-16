@@ -14,6 +14,4 @@ public class DrawerListAdapter extends SimpleAdapter {
     public DrawerListAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
     }
-
-
 }
