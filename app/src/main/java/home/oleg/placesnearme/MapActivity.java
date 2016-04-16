@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,19 +36,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
-import home.oleg.placesnearme.retrofit_models.FullResponse;
 import home.oleg.placesnearme.retrofit_models.Item;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static home.oleg.placesnearme.BasicActivity.EXTRA_DATA_NAME;
 
@@ -239,8 +229,8 @@ public class MapActivity extends AppCompatActivity
                 .setVenuesPhoto(1);
 
         if (location != null) {
-            VenuesHttpRequest venuesHttpRequest = new VenuesHttpRequest(this, parameters);
-            venuesHttpRequest.execute();
+            AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(this, parameters);
+            asyncHttpRequest.execute();
         } else {
             Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
         }

@@ -18,12 +18,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by Oleg on 16.04.2016.
  */
-class VenuesHttpRequest extends AsyncTask<String, Void, List<Item>> {
+class AsyncHttpRequest extends AsyncTask<String, Void, List<Item>> {
 
     private Parameters parameters;
     private MapActivity mapActivity;
 
-    public VenuesHttpRequest(MapActivity mapActivity, Parameters parameters) {
+    public AsyncHttpRequest(MapActivity mapActivity, Parameters parameters) {
         this.mapActivity = mapActivity;
         this.parameters = parameters;
     }

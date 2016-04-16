@@ -8,9 +8,9 @@ import android.location.Location;
  */
 public class Parameters {
 
-    public final String clientId = "BMDK0DP0YBJCG4BTIIC4SOEA2MMT2U4UZLJSBBZY0X2A23GF";
-    public final String clientSecret = "MMSC3RSUOFRTQO13LCB5RY0P0WOQ14M0X1GCIUT32GM4D3YN";
-    public final String version = "20160416";
+    private final String clientId = "BMDK0DP0YBJCG4BTIIC4SOEA2MMT2U4UZLJSBBZY0X2A23GF";
+    private final String clientSecret = "MMSC3RSUOFRTQO13LCB5RY0P0WOQ14M0X1GCIUT32GM4D3YN";
+    private final String version = "20160416";
     private String locationLL;
     private String radius;
     private String section;
