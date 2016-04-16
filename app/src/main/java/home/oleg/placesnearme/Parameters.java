@@ -2,28 +2,29 @@ package home.oleg.placesnearme;
 
 import android.location.Location;
 
-import java.util.Locale;
-
 
 /**
  * Created by Oleg on 16.04.2016.
  */
 public class Parameters {
 
-    private Location location;
-    private int radius;
+    public final String clientId = "BMDK0DP0YBJCG4BTIIC4SOEA2MMT2U4UZLJSBBZY0X2A23GF";
+    public final String clientSecret = "MMSC3RSUOFRTQO13LCB5RY0P0WOQ14M0X1GCIUT32GM4D3YN";
+    public final String version = "20160416";
+    private String locationLL;
+    private String radius;
     private String section;
-    private int limit;
-    private int venuesPhoto;
-    private int openNow;
+    private String limit;
+    private String venuesPhoto;
+    private String openNow;
 
     public Parameters setLocation(Location location) {
-        this.location = location;
+        locationLL = location.getLatitude() + "," + location.getLongitude();
         return this;
     }
 
-    public Parameters setRadius(int radius) {
-        this.radius = radius;
+    public Parameters setOpenNow(int openNow) {
+        this.openNow = String.valueOf(openNow);
         return this;
     }
 
@@ -32,42 +33,51 @@ public class Parameters {
         return this;
     }
 
+    public Parameters setRadius(int radius) {
+        this.radius = String.valueOf(radius);
+        return this;
+    }
+
     public Parameters setLimit(int limit) {
-        this.limit = limit;
+        this.limit = String.valueOf(limit);
         return this;
     }
 
     public Parameters setVenuesPhoto(int venuesPhoto) {
-        this.venuesPhoto = venuesPhoto;
+        this.venuesPhoto = String.valueOf(venuesPhoto);
         return this;
     }
 
-    public Parameters setOpenNow(int openNow) {
-        this.openNow = openNow;
-        return this;
+
+    public String getLocationLL() {
+        return locationLL;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public int getRadius() {
+    public String getRadius() {
         return radius;
     }
+
+    public String getClientId() { return clientId; }
+
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public String getVersion() { return version; }
 
     public String getSection() {
         return section;
     }
 
-    public int getLimit() {
+    public String getLimit() {
         return limit;
     }
 
-    public int getVenuesPhoto() {
+    public String getVenuesPhoto() {
         return venuesPhoto;
     }
 
-    public int getOpenNow() {
+    public String getOpenNow() {
         return openNow;
     }
 }
