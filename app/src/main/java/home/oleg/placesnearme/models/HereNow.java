@@ -1,0 +1,30 @@
+package home.oleg.placesnearme.models;
+
+/**
+ * Created by Oleg on 12.04.2016.
+ */
+public class HereNow {
+    private static final long serialVersionUID = -2307624173279738888L;
+
+    private int count;
+
+    private String summary;
+
+    private boolean marked;
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public boolean isMarked() {
+        return marked;
+    }
+}
