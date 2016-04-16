@@ -28,12 +28,12 @@
         </meta-data>
 
         <activity
-            android:name=".BasicActivity"
+            android:name=".MapActivity"
             android:label="@string/title_activity_basic"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".BasicAct">
+        <activity android:name=".BasicActivity">
             <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
 
