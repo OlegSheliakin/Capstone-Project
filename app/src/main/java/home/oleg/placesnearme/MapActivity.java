@@ -38,20 +38,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
-
+import home.oleg.placesnearme.mapMVP.IMapPresenter;
+import home.oleg.placesnearme.mapMVP.IMapView;
+import home.oleg.placesnearme.mapMVP.impl.MapPresenterImpl;
 import home.oleg.placesnearme.retrofit_models.Item;
 
 import static home.oleg.placesnearme.BasicActivity.EXTRA_DATA_NAME;
 
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, IMapView {
 
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
     private Location location;
     private LocationRequest locationRequest;
     private boolean requestingLocationUpdates;
+    private IMapPresenter mapPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,9 @@ public class MapActivity extends AppCompatActivity
                     .build();
         }
 
+        mapPresenter = new MapPresenterImpl();
+        mapPresenter.onAttachView(this);
+
     }
 
     @Override
@@ -92,14 +98,14 @@ public class MapActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         if (googleApiClient.isConnected() && !requestingLocationUpdates) {
-            startLocationUpdates();
+              startLocationUpdates();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        stopLocationUpdates();
+          stopLocationUpdates();
     }
 
     protected void stopLocationUpdates() {
@@ -111,6 +117,12 @@ public class MapActivity extends AppCompatActivity
     protected void onStop() {
         googleApiClient.disconnect();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mapPresenter.onDetachView();
+        super.onDestroy();
     }
 
     @Override
@@ -139,7 +151,6 @@ public class MapActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startSearchingVenues();
             return true;
         }
 
@@ -154,6 +165,7 @@ public class MapActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            Toast.makeText(this, "navvvv", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
         } else if (id == R.id.nav_slideshow) {
         } else if (id == R.id.nav_manage) {
@@ -161,36 +173,22 @@ public class MapActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+       // DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+       // drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         map = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         map.setMyLocationEnabled(true);
-        map.setOnMarkerClickListener(this);
-
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
-    }
 
-    private boolean hasNoConnection() {
-
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return !(networkInfo != null && networkInfo.isConnected());
-
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -198,21 +196,13 @@ public class MapActivity extends AppCompatActivity
             return;
         }
         location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
-        if (location != null) {
-            showMyLocation();
-        }
-
+        mapPresenter.onGoogleApiClientConnected(location);//
 
         createLocationRequest();
 
-        if (requestingLocationUpdates) {
+        if (requestingLocationUpdates) { // пока не обрабатывать
             startLocationUpdates();
         }
-        startSearchingVenues();
-    }
-
-    private void startSearchingVenues() {
 
         if (hasNoConnection()) {
             Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
@@ -220,7 +210,6 @@ public class MapActivity extends AppCompatActivity
         }
 
         String section = getIntent().getStringExtra(EXTRA_DATA_NAME);
-
         Parameters parameters = new Parameters();
         parameters.setLocation(location)
                 .setRadius(1000)
@@ -228,12 +217,13 @@ public class MapActivity extends AppCompatActivity
                 .setOpenNow(1)
                 .setVenuesPhoto(1);
 
-        if (location != null) {
-            AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(this, parameters);
-            asyncHttpRequest.execute();
-        } else {
-            Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
-        }
+        mapPresenter.startSearchingVenues(parameters);
+    }
+
+    private boolean hasNoConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return !(networkInfo != null && networkInfo.isConnected());
     }
 
     @Override
@@ -242,18 +232,6 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-    }
-
-    private void showMyLocation() {
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(
-                        location.getLatitude(), location.getLongitude()))
-                .title("My ass is here").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
-                location.getLatitude(), location.getLongitude()), 15f);
-
-        map.animateCamera(cameraUpdate);
     }
 
     protected void createLocationRequest() {
@@ -265,17 +243,37 @@ public class MapActivity extends AppCompatActivity
 
     protected void startLocationUpdates() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient, locationRequest, this);
 
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        this.location = location;
+        showMyLocation(location);
+    }
+
+    @Override
+    public void showMyLocation(Location location) {
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(
+                        location.getLatitude(), location.getLongitude()))
+                .title("My ass is here").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
+                location.getLatitude(), location.getLongitude()), 15f);
+
+        map.animateCamera(cameraUpdate);
+    }
+
+    @Override
     public void showVenues(List<Item> items) {
-        for (home.oleg.placesnearme.retrofit_models.Item v : items) {
+        for (Item v : items) {
             map.addMarker(new MarkerOptions()
                     .title(v.getVenue().getLocation().getAddress() + " " + v.getVenue().getName()).position
                             (new LatLng(v.getVenue().getLocation().getLat(),
@@ -284,9 +282,7 @@ public class MapActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        this.location = location;
-        showMyLocation();
+    public void showError() {
+        Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
     }
-
 }

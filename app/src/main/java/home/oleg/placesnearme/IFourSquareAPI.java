@@ -7,6 +7,7 @@ import home.oleg.placesnearme.retrofit_models.FullResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
+import rx.Observable;
 
 
 /**
@@ -15,5 +16,8 @@ import retrofit2.http.QueryMap;
 public interface IFourSquareAPI {
 
     @GET("v2/venues/explore?")
-    public Call<FullResponse> getItems(@QueryMap Map<String, String> queryMap);
+    Call<FullResponse> getItems(@QueryMap Map<String, String> queryMap);
+
+    @GET("v2/venues/explore?")
+    Observable<FullResponse> getItemsObservable(@QueryMap Map<String, String> queryMap);
 }
