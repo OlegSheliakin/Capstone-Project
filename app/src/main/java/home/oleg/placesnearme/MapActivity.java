@@ -203,6 +203,8 @@ public class MapActivity extends AppCompatActivity
         VenuesListAdapter venuesListAdapter = new VenuesListAdapter(this, list, R.layout.venue_list_item, from, to);
 
         ListView listView = (ListView) findViewById(R.id.navidationListView);
-        listView.setAdapter(venuesListAdapter);
+        if (listView != null) {
+            listView.setAdapter(venuesListAdapter);
+        }
     }
 }

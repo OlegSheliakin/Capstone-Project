@@ -47,6 +47,7 @@ public class MapPresenterImpl implements IMapPresenter {
 
     @Override
     public void onStart() {
+        mapView.showProgress();
         locationInteractor.connect();
     }
 
@@ -87,6 +88,7 @@ public class MapPresenterImpl implements IMapPresenter {
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
+            this.location = location;
             mapView.showMyLocation(location);
         }
     }
@@ -102,7 +104,6 @@ public class MapPresenterImpl implements IMapPresenter {
         if (location == null) {
             return;
         }
-        mapView.showProgress();
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(Constants.LL, parameters.getLocationLL());
         queryMap.put(Constants.SECTION, parameters.getSection());
