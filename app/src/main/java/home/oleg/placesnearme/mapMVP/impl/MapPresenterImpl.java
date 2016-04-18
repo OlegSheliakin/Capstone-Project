@@ -28,7 +28,7 @@ public class MapPresenterImpl implements IMapPresenter {
     private Location location;
     private ILocationInteractor locationInteractor;
 
-    public MapPresenterImpl(Context context){
+    public MapPresenterImpl(Context context) {
         mapInteractor = new MapInteractorImpl(this);
         locationInteractor = new LocationInteractorImpl(context, this);
     }
@@ -81,8 +81,8 @@ public class MapPresenterImpl implements IMapPresenter {
         if (location == null) {
             return;
         }
-            this.location = location;
-            mapView.showMyLocation(location);
+        this.location = location;
+        mapView.showMyLocation(this.location);
     }
 
     @Override
@@ -99,6 +99,7 @@ public class MapPresenterImpl implements IMapPresenter {
         mapView.showVenues(items);
         mapView.setListAdapter(items);
     }
+
     @Override
     public void startSearchingVenues(Parameters parameters) {
         if (location == null) {
@@ -116,7 +117,7 @@ public class MapPresenterImpl implements IMapPresenter {
 
     @Override
     public void onFailed() {
-        if (mapView != null){
+        if (mapView != null) {
             mapView.hideProgress();
             mapView.showError();
         }

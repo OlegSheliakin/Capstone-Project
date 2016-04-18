@@ -50,7 +50,6 @@ public class MapInteractorImpl implements IMapInteractor {
                         .getItems();
                 if (mapPresenter.isViewAttached()) {
                     mapPresenter.onFinished(items);
-
                 }
             }
 

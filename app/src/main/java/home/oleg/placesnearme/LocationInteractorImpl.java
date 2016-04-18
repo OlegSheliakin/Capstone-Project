@@ -94,13 +94,14 @@ public class LocationInteractorImpl implements ILocationInteractor {
     }
 
     @Override
-    public void setFlagLocationUpdates(boolean flag) {
-        requestingLocationUpdates = flag;
+    public void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+        setFlagLocationUpdates(false);
     }
 
     @Override
-    public void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+    public void setFlagLocationUpdates(boolean flag) {
+        requestingLocationUpdates = flag;
     }
 
     public Location getLocation() {
@@ -117,9 +118,9 @@ public class LocationInteractorImpl implements ILocationInteractor {
 
     private LocationRequest createLocationRequest() {
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(200);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return locationRequest;
     }
 }
