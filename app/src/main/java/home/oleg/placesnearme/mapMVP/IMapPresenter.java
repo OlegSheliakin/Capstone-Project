@@ -1,6 +1,8 @@
 package home.oleg.placesnearme.mapMVP;
 
 import android.location.Location;
+import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -17,13 +19,23 @@ public interface IMapPresenter {
 
     boolean isViewAttached ();
 
-    void onFinished(List<Item> items);
+    void onStart();
 
     void onResume();
 
+    void onPause();
+
+    void onStop();
+
+    void onItemClick(int position, DrawerLayout drawer);
+
     void onGoogleApiClientConnected(Location location);
+
+    void onLocationChanged(Location location);
 
     void startSearchingVenues(Parameters parameters);
 
-    void failed();
+    void onFinished(List<Item> items);
+
+    void onFailed();
 }

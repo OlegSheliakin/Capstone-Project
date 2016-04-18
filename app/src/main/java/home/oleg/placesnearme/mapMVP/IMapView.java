@@ -14,5 +14,11 @@ public interface IMapView {
 
     void showVenues(List<Item> items);
 
+    void showProgress();
+
+    void hideProgress();
+
     void showError();
+
+    void setListAdapter(List<Item> items);
 }

@@ -1,13 +1,10 @@
 package home.oleg.placesnearme.mapMVP.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.Constants;
 import home.oleg.placesnearme.IFourSquareAPI;
-import home.oleg.placesnearme.Parameters;
 import home.oleg.placesnearme.mapMVP.IMapInteractor;
 import home.oleg.placesnearme.mapMVP.IMapPresenter;
 import home.oleg.placesnearme.retrofit_models.FullResponse;
@@ -23,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MapInteractorImpl implements IMapInteractor {
 
+    private final String PATH = "https://api.foursquare.com/";
     private IMapPresenter mapPresenter;
 
     public MapInteractorImpl(IMapPresenter mapPresenter) {
@@ -30,22 +28,14 @@ public class MapInteractorImpl implements IMapInteractor {
     }
 
     @Override
-    public void findItems(final Parameters parameters) {
-
-        Map<String, String> map = new HashMap<>();
-        map.put(Constants.LL, parameters.getLocationLL());
-        map.put(Constants.SECTION, parameters.getSection());
-        map.put(Constants.RADIUS, parameters.getRadius());
-        map.put(Constants.CLIENT_ID, parameters.getClientId());
-        map.put(Constants.CLIENT_SECRET, parameters.getClientSecret());
-        map.put(Constants.VERSION, parameters.getVersion());
+    public void sendRequest(Map<String, String> queryMap) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.foursquare.com/")
+                .baseUrl(PATH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         IFourSquareAPI adapter = retrofit.create(IFourSquareAPI.class);
-        Call<FullResponse> call = adapter.getItems(map);
+        Call<FullResponse> call = adapter.getItems(queryMap);
 
         call.enqueue(new Callback<FullResponse>() {
             List<Item> items = new ArrayList<>();
@@ -53,17 +43,21 @@ public class MapInteractorImpl implements IMapInteractor {
 
             @Override
             public void onResponse(Call<FullResponse> call, Response<FullResponse> response) {
-                    FullResponse fullResponse = response.body();
-                    items = fullResponse.getResponse().getGroups().get(0).getItems();
+                FullResponse fullResponse = response.body();
+                items = fullResponse.getResponse()
+                        .getGroups()
+                        .get(0)
+                        .getItems();
                 if (mapPresenter.isViewAttached()) {
                     mapPresenter.onFinished(items);
+
                 }
             }
 
             @Override
             public void onFailure(Call<FullResponse> call, Throwable t) {
                 if (mapPresenter.isViewAttached()) {
-                    mapPresenter.failed();
+                    mapPresenter.onFailed();
                 }
             }
         });

@@ -1,15 +1,10 @@
 package home.oleg.placesnearme;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,13 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,10 +26,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import home.oleg.placesnearme.mapMVP.IMapPresenter;
 import home.oleg.placesnearme.mapMVP.IMapView;
@@ -46,15 +41,17 @@ import home.oleg.placesnearme.retrofit_models.Item;
 import static home.oleg.placesnearme.BasicActivity.EXTRA_DATA_NAME;
 
 public class MapActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, IMapView {
+        implements OnMapReadyCallback, AdapterView.OnItemClickListener, IMapView {
 
+    private DrawerLayout drawer;
     private GoogleMap map;
-    private GoogleApiClient googleApiClient;
-    private Location location;
-    private LocationRequest locationRequest;
-    private boolean requestingLocationUpdates;
     private IMapPresenter mapPresenter;
+    private ProgressDialog progressDialog;
+
+    private final String ATTRIBUTE_VENUE_NAME = "name";
+    private final String ATTRIBUTE_VENUE_DISTANCE = "distance";
+    private final String ATTRIBUTE_VENUE_ADDRESS = "address";
+    private final String ATTRIBUTE_VENUE_PHONE = "phone";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,59 +60,42 @@ public class MapActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Log.d("TAG", getIntent().getStringExtra(EXTRA_DATA_NAME));
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        progressDialog = new ProgressDialog(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-
-        mapPresenter = new MapPresenterImpl();
-        mapPresenter.onAttachView(this);
-
+        mapPresenter = new MapPresenterImpl(this /*Context*/);
+        mapPresenter.onAttachView(this /* IMapView */);
     }
 
     @Override
     protected void onStart() {
-        googleApiClient.connect();
+        mapPresenter.onStart();
         super.onStart();
     }
 
     @Override
     protected void onResume() {
+        mapPresenter.onResume();
         super.onResume();
-        if (googleApiClient.isConnected() && !requestingLocationUpdates) {
-              startLocationUpdates();
-        }
     }
 
     @Override
     protected void onPause() {
+        mapPresenter.onPause();
         super.onPause();
-          stopLocationUpdates();
-    }
-
-    protected void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(
-                googleApiClient, this);
     }
 
     @Override
     protected void onStop() {
-        googleApiClient.disconnect();
+        mapPresenter.onStop();
         super.onStop();
     }
 
@@ -127,7 +107,6 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -137,45 +116,22 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.basic, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            Toast.makeText(this, "navvvv", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_gallery) {
-        } else if (id == R.id.nav_slideshow) {
-        } else if (id == R.id.nav_manage) {
-        } else if (id == R.id.nav_share) {
-        } else if (id == R.id.nav_send) {
-        }
-
-       // DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-       // drawer.closeDrawer(GravityCompat.START);
-        return true;
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mapPresenter.onItemClick(position, drawer);
     }
 
     @Override
@@ -186,76 +142,6 @@ public class MapActivity extends AppCompatActivity
             return;
         }
         map.setMyLocationEnabled(true);
-    }
-
-
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        mapPresenter.onGoogleApiClientConnected(location);//
-
-        createLocationRequest();
-
-        if (requestingLocationUpdates) { // пока не обрабатывать
-            startLocationUpdates();
-        }
-
-        if (hasNoConnection()) {
-            Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String section = getIntent().getStringExtra(EXTRA_DATA_NAME);
-        Parameters parameters = new Parameters();
-        parameters.setLocation(location)
-                .setRadius(1000)
-                .setSection(section)
-                .setOpenNow(1)
-                .setVenuesPhoto(1);
-
-        mapPresenter.startSearchingVenues(parameters);
-    }
-
-    private boolean hasNoConnection() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return !(networkInfo != null && networkInfo.isConnected());
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-    }
-
-    protected void createLocationRequest() {
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-    }
-
-    protected void startLocationUpdates() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                googleApiClient, locationRequest, this);
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        this.location = location;
-        showMyLocation(location);
     }
 
     @Override
@@ -282,7 +168,41 @@ public class MapActivity extends AppCompatActivity
     }
 
     @Override
+    public void showProgress() {
+        if(progressDialog != null){
+            progressDialog.setTitle(R.string.progress_dialog_searching);
+            progressDialog.show();
+        }
+    }
+
+    @Override
+    public void hideProgress() {
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void showError() {
         Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setListAdapter(List<Item> items) {
+        List<Map<String, String>> list = new ArrayList<>();
+        for (Item item: items) {
+            Map<String, String> map = new HashMap<>();
+            map.put(ATTRIBUTE_VENUE_NAME, item.getVenue().getName());
+            map.put(ATTRIBUTE_VENUE_ADDRESS, item.getVenue().getLocation().getAddress());
+            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance()));
+            map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
+            list.add(map);
+        }
+        int [] to = new int[]{R.id.tvName, R.id.tvDistance, R.id.tvAddress, R.id.tvPhone};
+        String [] from = new String[]{ATTRIBUTE_VENUE_NAME, ATTRIBUTE_VENUE_DISTANCE, ATTRIBUTE_VENUE_ADDRESS, ATTRIBUTE_VENUE_PHONE};
+        VenuesListAdapter venuesListAdapter = new VenuesListAdapter(this, list, R.layout.venue_list_item, from, to);
+
+        ListView listView = (ListView) findViewById(R.id.navidationListView);
+        listView.setAdapter(venuesListAdapter);
     }
 }
