@@ -93,6 +93,7 @@ public class MapPresenterImpl implements IMapPresenter {
 
     @Override
     public void onFinished(List<Item> items) {
+        mapView.hideProgress();
         mapView.showVenues(items);
         mapView.setListAdapter(items);
     }
@@ -101,6 +102,7 @@ public class MapPresenterImpl implements IMapPresenter {
         if (location == null) {
             return;
         }
+        mapView.showProgress();
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(Constants.LL, parameters.getLocationLL());
         queryMap.put(Constants.SECTION, parameters.getSection());
@@ -114,6 +116,7 @@ public class MapPresenterImpl implements IMapPresenter {
     @Override
     public void onFailed() {
         if (mapView != null){
+            mapView.hideProgress();
             mapView.showError();
         }
     }

@@ -20,7 +20,7 @@ import home.oleg.placesnearme.mapMVP.IMapPresenter;
 /**
  * Created by Oleg on 18.04.2016.
  */
-public class LocationInteractorImpl implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, ILocationInteractor {
+public class LocationInteractorImpl implements ILocationInteractor {
 
     private Context context;
     private GoogleApiClient googleApiClient;
