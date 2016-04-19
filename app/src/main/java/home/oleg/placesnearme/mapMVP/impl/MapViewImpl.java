@@ -44,7 +44,7 @@ public class MapViewImpl extends AppCompatActivity
     private GoogleMap map;
     private DrawerLayout drawerLayout;
     private ProgressDialog progressDialog;
-    private List<Item> items;
+    protected List<Item> items;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,14 +66,8 @@ public class MapViewImpl extends AppCompatActivity
 
     @Override
     public void showMyLocation(Location location) {
-        map.clear();
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(
-                        location.getLatitude(), location.getLongitude()))
-                .title(getResources().getString(R.string.you_are_here)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
                 location.getLatitude(), location.getLongitude()), 15f);
-
         map.animateCamera(cameraUpdate);
     }
 
@@ -93,7 +87,7 @@ public class MapViewImpl extends AppCompatActivity
         double lat = items.get(position).getVenue().getLocation().getLat();
         double lng = items.get(position).getVenue().getLocation().getLng();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
-                lat, lng), 16f);
+                lat, lng), 18f);
         map.animateCamera(cameraUpdate);
         drawerLayout.closeDrawer(GravityCompat.START);
     }

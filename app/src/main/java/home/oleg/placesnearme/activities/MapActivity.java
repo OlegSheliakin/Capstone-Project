@@ -44,24 +44,9 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buildGoogleApiClient();
+        updateValuesFromBundle(savedInstanceState);
         mapPresenter = new MapPresenterImpl(this);
         mapPresenter.onAttachView(this);
-    }
-
-    private void buildGoogleApiClient() {
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        createLocationRequest();
-    }
-
-    private void createLocationRequest() {
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     @Override
@@ -81,7 +66,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     protected void onPause() {
         super.onPause();
         Log.d("TAG", "onPaues");
-        if (googleApiClient.isConnected()) {
+        if (googleApiClient.isConnected() && requestingLocationUpdates) {
             stopLocationUpdates();
         }
     }
@@ -154,12 +139,28 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     @Override
     public void onLocationChanged(Location location) {
-        mapPresenter.onGoogleApiClientSetMyLocation(location);
+        mapPresenter.onGoogleApiLocationChanged(location);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mapPresenter.onFailed();
+    }
+
+    private void buildGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        createLocationRequest();
+    }
+
+    private void createLocationRequest() {
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {

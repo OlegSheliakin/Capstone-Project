@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SimpleAdapter;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.mapMVP.IMapPresenter;
 import home.oleg.placesnearme.mapMVP.IMapView;
 
 /**
@@ -20,12 +18,9 @@ import home.oleg.placesnearme.mapMVP.IMapView;
  */
 public class NavigationListAdapter extends SimpleAdapter {
 
-    private final String LATITUDE = "latitude";
-    private final String LONGITUDE = "longitude";
-
-    int position;
     Context context;
     IMapView mapView;
+
     public NavigationListAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to, IMapView mapView) {
         super(context, data, resource, from, to);
         this.context = context;
@@ -41,13 +36,13 @@ public class NavigationListAdapter extends SimpleAdapter {
             view = inflater.inflate(R.layout.venue_list_item, parent, false);
         }
 
-        final Button btnGoTo = (Button) view.findViewById(R.id.btnGoTo);
+        Button btnGoTo = (Button) view.findViewById(R.id.btnGoTo);
         Button btnCall = (Button) view.findViewById(R.id.btnCall);
 
         btnGoTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mapView.showVenueFromList(position);
+                mapView.showVenueFromList(position);
                 Log.d("TAG", "position = " + position);
             }
         });
@@ -55,9 +50,10 @@ public class NavigationListAdapter extends SimpleAdapter {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+
+                Log.d("TAG", "position = " + position);
             }
         });
-        return super.getView(position, convertView, parent);
+        return super.getView(position, view, parent);
     }
 }

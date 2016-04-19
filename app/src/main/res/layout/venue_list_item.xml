@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:padding="12dp"
               android:orientation="vertical">
 
     <FrameLayout
@@ -15,16 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="text"
-            android:textSize="24sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="text"
-            android:textSize="24sp"/>
+            android:textSize="16sp"/>
     </FrameLayout>
 
     <FrameLayout
@@ -37,16 +34,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="text"
-            android:textSize="24sp"/>
+            android:textSize="16sp"/>
     </FrameLayout>
 
     <TextView
         android:id="@+id/tvPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="text"
-        android:textSize="24sp"
+        android:textSize="16sp"
         />
 
     <FrameLayout
@@ -58,7 +53,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GoTo"/>
+            android:text="@string/go_to"/>
 
         <Button
             android:id="@+id/btnCall"
@@ -66,6 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:text="Call"/>
+            android:text="@string/call"/>
     </FrameLayout>
 </LinearLayout>

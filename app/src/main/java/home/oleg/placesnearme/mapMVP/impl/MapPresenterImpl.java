@@ -3,6 +3,7 @@ package home.oleg.placesnearme.mapMVP.impl;
 import android.content.Context;
 import android.location.Location;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +23,11 @@ public class MapPresenterImpl implements IMapPresenter {
     private IMapView mapView;
     private IMapInteractor mapInteractor;
     private Location location;
+    private List<Item> items;
 
     public MapPresenterImpl(Context context) {
         mapInteractor = new MapInteractorImpl(this);
+        items = new ArrayList<>();
     }
 
     @Override
@@ -54,7 +57,16 @@ public class MapPresenterImpl implements IMapPresenter {
     }
 
     @Override
+    public void onGoogleApiLocationChanged(Location location) {
+        if (location == null) {
+            return;
+        }
+        this.location = location;
+    }
+
+    @Override
     public void onFinished(List<Item> items) {
+        this.items = items;
         mapView.hideProgress();
         mapView.showVenues(items);
         mapView.setListAdapter(items);

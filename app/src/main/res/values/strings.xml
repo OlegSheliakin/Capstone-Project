@@ -31,5 +31,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="progress_dialog_searching">Searching</string>
     <string name="you_are_here">You are here</string>
+    <string name="go_to">GoTo</string>
+    <string name="call">Call</string>
 
 </resources>
