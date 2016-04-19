@@ -45,27 +45,12 @@ public class MapPresenterImpl implements IMapPresenter {
     }
 
     @Override
-    public void onItemClick(int position) {
-        mapView.showError();
-    }
-
-    @Override
-    public void onGoogleApiClientConnected(Location location) {
+    public void onGoogleApiClientSetMyLocation(Location location) {
         if (location == null) {
             return;
         }
         this.location = location;
         mapView.showMyLocation(location);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if (location == null) {
-            return;
-        }
-        this.location = location;
-        mapView.showMyLocation(location);
-
     }
 
     @Override

@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -15,6 +18,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import home.oleg.placesnearme.Parameters;
+import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.mapMVP.impl.MapPresenterImpl;
 import home.oleg.placesnearme.mapMVP.impl.MapViewImpl;
 
@@ -23,19 +27,22 @@ import home.oleg.placesnearme.mapMVP.impl.MapViewImpl;
  */
 public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
-    protected final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
-    protected final static String LOCATION_KEY = "location-key";
+    private final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
+    private final static String REQUESTING_SEARCHING_VENUES = "requesting-searching-venues-key";
+    private final static String LOCATION_KEY = "location-key";
 
-    protected GoogleApiClient googleApiClient;
-    protected LocationRequest locationRequest;
-    protected boolean requestingLocationUpdates;
-    protected Location currentLocation;
+    private boolean requestingLocationUpdates = true;
+    private boolean requestingSearchingVenues = true;
+
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private Location currentLocation;
+
     private MapPresenterImpl mapPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         buildGoogleApiClient();
         mapPresenter = new MapPresenterImpl(this);
         mapPresenter.onAttachView(this);
@@ -52,28 +59,28 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     private void createLocationRequest() {
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(1000);
-        locationRequest.setFastestInterval(500);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
+        Log.d("TAG", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (googleApiClient.isConnected() && requestingLocationUpdates) {
-            startLocationUpdates();
-        }
+        Log.d("TAG", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("TAG", "onPaues");
         if (googleApiClient.isConnected()) {
             stopLocationUpdates();
         }
@@ -81,19 +88,39 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     @Override
     protected void onStop() {
+        Log.d("TAG", "onStop");
         googleApiClient.disconnect();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
+        Log.d("TAG", "onDestroy");
         mapPresenter.onDetachView();
         super.onDestroy();
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.basic, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            requestingSearchingVenues = false;
+            startSearchingVenues();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean(REQUESTING_LOCATION_UPDATES_KEY, requestingLocationUpdates);
+        savedInstanceState.putBoolean(REQUESTING_SEARCHING_VENUES, requestingSearchingVenues);
         savedInstanceState.putParcelable(LOCATION_KEY, currentLocation);
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -106,13 +133,18 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
                 return;
             }
             currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            mapPresenter.onGoogleApiClientConnected(currentLocation);
+            mapPresenter.onGoogleApiClientSetMyLocation(currentLocation);
         }
 
+        Log.d("TAG", "onConnected");
         if (requestingLocationUpdates) {
             startLocationUpdates();
         }
-        startSearchingVenues();
+
+        if (requestingSearchingVenues) {
+            requestingSearchingVenues = false;
+            startSearchingVenues();
+        }
     }
 
     @Override
@@ -122,7 +154,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     @Override
     public void onLocationChanged(Location location) {
-        mapPresenter.onLocationChanged(location);
+        mapPresenter.onGoogleApiClientSetMyLocation(location);
     }
 
     @Override
@@ -132,22 +164,19 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            // Update the value of mRequestingLocationUpdates from the Bundle, and make sure that
-            // the Start Updates and Stop Updates buttons are correctly enabled or disabled.
+
             if (savedInstanceState.keySet().contains(REQUESTING_LOCATION_UPDATES_KEY)) {
                 requestingLocationUpdates = savedInstanceState.getBoolean(
                         REQUESTING_LOCATION_UPDATES_KEY);
-                //    setButtonsEnabledState();
             }
-
-            // Update the value of mCurrentLocation from the Bundle and update the UI to show the
-            // correct latitude and longitude.
+            if (savedInstanceState.keySet().contains(REQUESTING_SEARCHING_VENUES)) {
+                requestingSearchingVenues = savedInstanceState.getBoolean(
+                        REQUESTING_SEARCHING_VENUES);
+            }
             if (savedInstanceState.keySet().contains(LOCATION_KEY)) {
-                // Since LOCATION_KEY was found in the Bundle, we can be sure that mCurrentLocation
-                // is not null.
                 currentLocation = savedInstanceState.getParcelable(LOCATION_KEY);
+                mapPresenter.onGoogleApiClientSetMyLocation(currentLocation);
             }
-            mapPresenter.onGoogleApiClientConnected(currentLocation);
         }
     }
 
@@ -155,15 +184,17 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        requestingLocationUpdates = true;
+        Log.d("TAG", "StartLocationUpdates");
+        requestingLocationUpdates = false;
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient, locationRequest, this);
     }
 
     private void stopLocationUpdates() {
-        requestingLocationUpdates = false;
+        requestingLocationUpdates = true;
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 googleApiClient, this);
+        Log.d("TAG", "StopLocationUpdates");
     }
 
     private void startSearchingVenues() {

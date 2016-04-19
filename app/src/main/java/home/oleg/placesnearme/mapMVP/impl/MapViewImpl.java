@@ -33,18 +33,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import home.oleg.placesnearme.NavigationListAdapter;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.mapMVP.IMapView;
 import home.oleg.placesnearme.retrofit_models.Item;
 
-public abstract class MapViewImpl extends AppCompatActivity
-        implements OnMapReadyCallback, AdapterView.OnItemClickListener, IMapView {
+public class MapViewImpl extends AppCompatActivity
+        implements IMapView {
 
     private GoogleMap map;
     private DrawerLayout drawerLayout;
     private ProgressDialog progressDialog;
     private List<Item> items;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,31 +65,8 @@ public abstract class MapViewImpl extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.basic, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-        double lat = items.get(position).getVenue().getLocation().getLat();
-        double lng = items.get(position).getVenue().getLocation().getLng();
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
-               lat, lng), 15f);
-        map.animateCamera(cameraUpdate);
-    }
-
-    @Override
     public void showMyLocation(Location location) {
+        map.clear();
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(
                         location.getLatitude(), location.getLongitude()))
@@ -109,6 +86,16 @@ public abstract class MapViewImpl extends AppCompatActivity
                             (new LatLng(v.getVenue().getLocation().getLat(),
                                     v.getVenue().getLocation().getLng())));
         }
+    }
+
+    @Override
+    public void showVenueFromList(int position) {
+        double lat = items.get(position).getVenue().getLocation().getLat();
+        double lng = items.get(position).getVenue().getLocation().getLng();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
+                lat, lng), 16f);
+        map.animateCamera(cameraUpdate);
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     @Override
@@ -151,7 +138,7 @@ public abstract class MapViewImpl extends AppCompatActivity
         }
         int[] to = new int[]{R.id.tvName, R.id.tvDistance, R.id.tvAddress, R.id.tvPhone};
         String[] from = new String[]{ATTRIBUTE_VENUE_NAME, ATTRIBUTE_VENUE_DISTANCE, ATTRIBUTE_VENUE_ADDRESS, ATTRIBUTE_VENUE_PHONE};
-        SimpleAdapter venuesListAdapter = new SimpleAdapter(this, list, R.layout.venue_list_item, from, to);
+        NavigationListAdapter venuesListAdapter = new NavigationListAdapter(this, list, R.layout.venue_list_item, from, to, this);
 
         if (listView != null) {
             listView.setAdapter(venuesListAdapter);

@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="24dp"
-              android:orientation="vertical"
-    >
+              android:padding="12dp"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -52,20 +51,21 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnGoTo"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="New Button"/>
+            android:text="GoTo"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnCall"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"/>
+            android:layout_gravity="right|center_vertical"
+            android:text="Call"/>
     </FrameLayout>
 </LinearLayout>
