@@ -29,14 +29,14 @@
         </meta-data>
 
         <activity
-            android:name=".MapActivity"
+            android:name=".activities.MapActivity"
             android:label="@string/title_activity_basic"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".BasicActivity"
+            android:name=".activities.BasicActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

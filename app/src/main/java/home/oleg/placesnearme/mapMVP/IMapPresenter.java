@@ -19,15 +19,7 @@ public interface IMapPresenter {
 
     boolean isViewAttached ();
 
-    void onStart();
-
-    void onResume();
-
-    void onPause();
-
-    void onStop();
-
-    void onItemClick(int position, DrawerLayout drawer);
+    void onItemClick(int position);
 
     void onGoogleApiClientConnected(Location location);
 
