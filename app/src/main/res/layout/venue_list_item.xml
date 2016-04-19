@@ -7,26 +7,29 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginRight="@dimen/margins"
         >
-
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_size"/>
 
         <TextView
             android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_size"/>
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginRight="@dimen/margins"
         >
 
         <TextView
@@ -34,19 +37,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_size"/>
     </FrameLayout>
 
     <TextView
         android:id="@+id/tvPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginRight="@dimen/margins"
         />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginRight="@dimen/margins"
+        >
 
         <Button
             android:id="@+id/btnGoTo"
@@ -63,4 +71,5 @@
             android:layout_gravity="right|center_vertical"
             android:text="@string/call"/>
     </FrameLayout>
+
 </LinearLayout>

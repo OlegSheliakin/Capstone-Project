@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,10 +59,10 @@ public class MapViewImpl extends AppCompatActivity
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
-
+        showProgress();
+        Log.d("TAG", "onCreate");
     }
 
     @Override
@@ -96,6 +97,7 @@ public class MapViewImpl extends AppCompatActivity
     public void showProgress() {
         if (progressDialog != null) {
             progressDialog.setTitle(R.string.progress_dialog_searching);
+            progressDialog.setCancelable(false);
             progressDialog.show();
         }
     }
@@ -126,7 +128,7 @@ public class MapViewImpl extends AppCompatActivity
             Map<String, String> map = new HashMap<>();
             map.put(ATTRIBUTE_VENUE_NAME, item.getVenue().getName());
             map.put(ATTRIBUTE_VENUE_ADDRESS, item.getVenue().getLocation().getAddress());
-            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance()));
+            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance())+"m.");
             map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
             list.add(map);
         }
@@ -157,5 +159,4 @@ public class MapViewImpl extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 }
