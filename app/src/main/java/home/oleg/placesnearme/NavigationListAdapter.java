@@ -23,11 +23,13 @@ public class NavigationListAdapter extends SimpleAdapter {
 
     Context context;
     IMapView mapView;
+    List<Map<String, String>> data;
 
-    public NavigationListAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to, IMapView mapView) {
+    public NavigationListAdapter(Context context, List<Map<String, String>> data, int resource, String[] from, int[] to, IMapView mapView) {
         super(context, data, resource, from, to);
         this.context = context;
         this.mapView = mapView;
+        this.data = data;
     }
 
     @Override
@@ -42,21 +44,26 @@ public class NavigationListAdapter extends SimpleAdapter {
         Button btnGoTo = (Button) view.findViewById(R.id.btnGoTo);
         Button btnCall = (Button) view.findViewById(R.id.btnCall);
 
+        String phone = data.get(position).get("phone");
+        if (phone == null) {
+            btnCall.setEnabled(false);
+        } else {
+            btnCall.setEnabled(true);
+        }
+
         btnGoTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mapView.showVenueFromList(position);
-                Log.d("TAG", "position = " + position);
             }
         });
 
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.d("TAG", "position = " + position);
+                mapView.callIntent(position);
             }
         });
         return super.getView(position, view, parent);
     }
-}
+ }

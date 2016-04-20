@@ -2,8 +2,10 @@ package home.oleg.placesnearme.mapMVP.impl;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -75,11 +77,26 @@ public class MapViewImpl extends AppCompatActivity
     @Override
     public void showVenues(List<Item> items) {
         this.items = items;
+        map.clear();//delete all marks if they exist
+
+        if (items.isEmpty()){
+            Toast.makeText(this, R.string.nothing_arround_you, Toast.LENGTH_SHORT).show();
+        }
+
+        StringBuilder title = new StringBuilder();
         for (Item v : items) {
+            if ( v.getVenue().getName() != null){
+                title.append(v.getVenue().getName());//appends name if it exist
+            }
+            if (v.getVenue().getLocation().getAddress() != null){
+                title.append(", " + v.getVenue().getLocation().getAddress());//appends address if it exist
+            }
+
             map.addMarker(new MarkerOptions()
-                    .title(v.getVenue().getLocation().getAddress() + " " + v.getVenue().getName()).position
+                    .title(title.toString()).position
                             (new LatLng(v.getVenue().getLocation().getLat(),
                                     v.getVenue().getLocation().getLng())));
+            title.delete(0, title.length());//clear stringbuilder
         }
     }
 
@@ -139,6 +156,14 @@ public class MapViewImpl extends AppCompatActivity
         if (listView != null) {
             listView.setAdapter(venuesListAdapter);
         }
+    }
+
+    @Override
+    public void callIntent(int position) {
+        String phoneNumber = items.get(position).getVenue().getContact().getFormattedPhone();
+        Uri uri = Uri.parse("tel:" + phoneNumber);
+        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+        startActivity(intent);
     }
 
     @Override

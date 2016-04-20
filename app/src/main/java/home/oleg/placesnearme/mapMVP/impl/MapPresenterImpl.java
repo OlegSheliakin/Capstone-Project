@@ -23,11 +23,10 @@ public class MapPresenterImpl implements IMapPresenter {
     private IMapView mapView;
     private IMapInteractor mapInteractor;
     private Location location;
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
 
     public MapPresenterImpl(Context context) {
         mapInteractor = new MapInteractorImpl(this);
-        items = new ArrayList<>();
     }
 
     @Override
@@ -36,7 +35,6 @@ public class MapPresenterImpl implements IMapPresenter {
             this.mapView = mapView;
         }
     }
-
     @Override
     public boolean isViewAttached() {
         return mapView != null;

@@ -39,14 +39,13 @@ public class MapInteractorImpl implements IMapInteractor {
 
         call.enqueue(new Callback<FullResponse>() {
             List<Item> items = new ArrayList<>();
-            FullResponse fullResponse = null;
 
             @Override
             public void onResponse(Call<FullResponse> call, Response<FullResponse> response) {
                 FullResponse fullResponse = response.body();
                 items = fullResponse.getResponse()
                         .getGroups()
-                        .get(0)
+                        .get(0)// recommended group
                         .getItems();
                 if (mapPresenter.isViewAttached()) {
                     mapPresenter.onFinished(items);

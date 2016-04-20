@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Places Near Me</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_basic">Places Near Me</string>
 
     <string-array name="titles_array">
-        <item>Top picks</item>
+        <item>Топ мест</item>
         <item>Food</item>
         <item>Drinks</item>
         <item>Coffee</item>
@@ -25,13 +24,27 @@
         <item>sights</item>
     </string-array>
 
+    <integer-array name="distances_array">
+        <item>100</item>
+        <item>250</item>
+        <item>500</item>
+        <item>750</item>
+        <item>1000</item>
+    </integer-array>
+
 
     <string name="connection_error">Check the network connection</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="progress_dialog_searching">Searching</string>
-    <string name="you_are_here">You are here</string>
     <string name="go_to">GoTo</string>
-    <string name="call">Call</string>
+    <string name="dial">Dial</string>
+    <string name="meters">m.</string>
+    <string name="distance_100">100</string>
+    <string name="distance_250">250</string>
+    <string name="distance_500">500</string>
+    <string name="distance_750">750</string>
+    <string name="distance_1000">1000</string>
+    <string name="nothing_arround_you">There are nothing around you. Try to increase radius</string>
 
 </resources>

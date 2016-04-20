@@ -94,10 +94,23 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            requestingSearchingVenues = false;
-            startSearchingVenues();
-            return true;
+        showProgress();
+        switch (item.getItemId()){
+            case R.id.distance100:
+                startSearchingVenues(100);
+                break;
+            case R.id.distance250:
+                startSearchingVenues(250);
+                break;
+            case R.id.distance500:
+                startSearchingVenues(500);
+                break;
+            case R.id.distance750:
+                startSearchingVenues(750);
+                break;
+            case R.id.distance1000:
+                startSearchingVenues(1000);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -121,14 +134,13 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
             mapPresenter.onGoogleApiClientSetMyLocation(currentLocation);
         }
 
-        Log.d("TAG", "onConnected");
         if (requestingLocationUpdates) {
             startLocationUpdates();
         }
 
         if (requestingSearchingVenues) {
             requestingSearchingVenues = false;
-            startSearchingVenues();
+            startSearchingVenues(100);// searches venues around location in the radius = 100 meters;
         }
     }
 
@@ -185,7 +197,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Log.d("TAG", "StartLocationUpdates");
         requestingLocationUpdates = false;
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient, locationRequest, this);
@@ -195,16 +206,15 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         requestingLocationUpdates = true;
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 googleApiClient, this);
-        Log.d("TAG", "StopLocationUpdates");
     }
 
-    private void startSearchingVenues() {
+    private void startSearchingVenues(int radius) {
         String section = getIntent().getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
         Parameters parameters = new Parameters();
-        parameters.setLocation(currentLocation)
-                .setRadius(1000)
-                .setSection(section)
-                .setOpenNow(1);
+        parameters.setLocation(currentLocation)//sets the current location
+                .setRadius(radius)//sets the radius of searching
+                .setSection(section)//sets the section(type) of venues
+                .setOpenNow(1);//sets only open venues
         mapPresenter.startSearchingVenues(parameters);
     }
 }

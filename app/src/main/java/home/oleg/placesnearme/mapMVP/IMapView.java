@@ -26,4 +26,6 @@ public interface IMapView extends OnMapReadyCallback {
     void showError();
 
     void setListAdapter(List<Item> items);
+
+    void callIntent(int position);
 }
