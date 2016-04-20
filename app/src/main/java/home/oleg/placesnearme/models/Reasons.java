@@ -1,19 +1,19 @@
 
-package home.oleg.placesnearme.retrofit_models;
+package home.oleg.placesnearme.models;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Photos {
+public class Reasons {
 
     @SerializedName("count")
     @Expose
     private Integer count;
-    @SerializedName("groups")
+    @SerializedName("items")
     @Expose
-    private List<Object> groups = new ArrayList<Object>();
+    private List<ReasonItem> items = new ArrayList<ReasonItem>();
 
     /**
      * 
@@ -36,19 +36,19 @@ public class Photos {
     /**
      * 
      * @return
-     *     The groups
+     *     The items
      */
-    public List<Object> getGroups() {
-        return groups;
+    public List<ReasonItem> getItems() {
+        return items;
     }
 
     /**
      * 
-     * @param groups
-     *     The groups
+     * @param items
+     *     The items
      */
-    public void setGroups(List<Object> groups) {
-        this.groups = groups;
+    public void setItems(List<ReasonItem> items) {
+        this.items = items;
     }
 
 }

@@ -1,5 +1,5 @@
 
-package home.oleg.placesnearme.retrofit_models;
+package home.oleg.placesnearme.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

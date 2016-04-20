@@ -1,13 +1,11 @@
 package home.oleg.placesnearme.mapMVP;
 
 import android.location.Location;
-import android.support.v4.widget.DrawerLayout;
-import android.view.MenuItem;
 
 import java.util.List;
 
 import home.oleg.placesnearme.Parameters;
-import home.oleg.placesnearme.retrofit_models.Item;
+import home.oleg.placesnearme.models.Item;
 
 /**
  * Created by Oleg on 18.04.2016.

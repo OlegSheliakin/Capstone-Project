@@ -13,21 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -39,7 +31,7 @@ import java.util.Map;
 import home.oleg.placesnearme.NavigationListAdapter;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.mapMVP.IMapView;
-import home.oleg.placesnearme.retrofit_models.Item;
+import home.oleg.placesnearme.models.Item;
 
 public class MapViewImpl extends AppCompatActivity
         implements IMapView {
@@ -61,8 +53,10 @@ public class MapViewImpl extends AppCompatActivity
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
+
         showProgress();
     }
 
@@ -88,7 +82,7 @@ public class MapViewImpl extends AppCompatActivity
                 title.append(v.getVenue().getName());//appends name if it exist
             }
             if (v.getVenue().getLocation().getAddress() != null){
-                title.append(", " + v.getVenue().getLocation().getAddress());//appends address if it exist
+                title.append(", ").append(v.getVenue().getLocation().getAddress());//appends address if it exist
             }
 
             map.addMarker(new MarkerOptions()
@@ -113,7 +107,7 @@ public class MapViewImpl extends AppCompatActivity
     public void showProgress() {
         if (progressDialog != null) {
             progressDialog.setTitle(R.string.progress_dialog_searching);
-            progressDialog.setMessage("wait while it is searching venues");
+            progressDialog.setMessage(getString(R.string.progress_bar_message));
             progressDialog.setCancelable(false);
             progressDialog.show();
         }

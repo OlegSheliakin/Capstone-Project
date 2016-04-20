@@ -13,7 +13,7 @@ import home.oleg.placesnearme.Parameters;
 import home.oleg.placesnearme.mapMVP.IMapInteractor;
 import home.oleg.placesnearme.mapMVP.IMapPresenter;
 import home.oleg.placesnearme.mapMVP.IMapView;
-import home.oleg.placesnearme.retrofit_models.Item;
+import home.oleg.placesnearme.models.Item;
 
 /**
  * Created by Oleg on 18.04.2016.

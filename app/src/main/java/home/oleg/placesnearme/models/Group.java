@@ -1,5 +1,5 @@
 
-package home.oleg.placesnearme.retrofit_models;
+package home.oleg.placesnearme.models;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -46,5 +46,6 @@
     <string name="distance_750">750</string>
     <string name="distance_1000">1000</string>
     <string name="nothing_arround_you">There are nothing around you. Try to increase radius</string>
+    <string name="progress_bar_message">Please wait, while it is searching venues</string>
 
 </resources>

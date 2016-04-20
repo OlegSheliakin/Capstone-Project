@@ -1,15 +1,11 @@
 package home.oleg.placesnearme;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +16,8 @@ import home.oleg.placesnearme.mapMVP.IMapView;
  * Created by Oleg on 19.04.2016.
  */
 public class NavigationListAdapter extends SimpleAdapter {
+
+    private final String KEY_PHONE = "phone";
 
     Context context;
     IMapView mapView;
@@ -44,7 +42,7 @@ public class NavigationListAdapter extends SimpleAdapter {
         Button btnGoTo = (Button) view.findViewById(R.id.btnGoTo);
         Button btnCall = (Button) view.findViewById(R.id.btnCall);
 
-        String phone = data.get(position).get("phone");
+        String phone = data.get(position).get(KEY_PHONE);
         if (phone == null) {
             btnCall.setEnabled(false);
         } else {
@@ -66,4 +64,4 @@ public class NavigationListAdapter extends SimpleAdapter {
         });
         return super.getView(position, view, parent);
     }
- }
+}

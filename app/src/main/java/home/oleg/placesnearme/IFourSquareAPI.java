@@ -3,7 +3,7 @@ package home.oleg.placesnearme;
 
 import java.util.Map;
 
-import home.oleg.placesnearme.retrofit_models.FullResponse;
+import home.oleg.placesnearme.models.FullResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;

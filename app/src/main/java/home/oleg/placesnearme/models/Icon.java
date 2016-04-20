@@ -1,10 +1,10 @@
 
-package home.oleg.placesnearme.retrofit_models;
+package home.oleg.placesnearme.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Photo {
+public class Icon {
 
     @SerializedName("prefix")
     @Expose
@@ -12,9 +12,6 @@ public class Photo {
     @SerializedName("suffix")
     @Expose
     private String suffix;
-    @SerializedName("default")
-    @Expose
-    private Boolean _default;
 
     /**
      * 
@@ -50,24 +47,6 @@ public class Photo {
      */
     public void setSuffix(String suffix) {
         this.suffix = suffix;
-    }
-
-    /**
-     * 
-     * @return
-     *     The _default
-     */
-    public Boolean getDefault() {
-        return _default;
-    }
-
-    /**
-     * 
-     * @param _default
-     *     The default
-     */
-    public void setDefault(Boolean _default) {
-        this._default = _default;
     }
 
 }

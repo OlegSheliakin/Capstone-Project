@@ -25,6 +25,9 @@ import home.oleg.placesnearme.mapMVP.impl.MapViewImpl;
 /**
  * Created by Oleg on 19.04.2016.
  */
+
+//This activity extends MapViewImpl, which extends AppCompatActivity.
+// It is made specially to hide MapView implementation from GoogleAPIClient implementation.
 public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
     private final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
@@ -53,19 +56,16 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
-        Log.d("TAG", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("TAG", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("TAG", "onPaues");
         if (googleApiClient.isConnected() && requestingLocationUpdates) {
             stopLocationUpdates();
         }
@@ -73,14 +73,12 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     @Override
     protected void onStop() {
-        Log.d("TAG", "onStop");
         googleApiClient.disconnect();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("TAG", "onDestroy");
         mapPresenter.onDetachView();
         super.onDestroy();
     }

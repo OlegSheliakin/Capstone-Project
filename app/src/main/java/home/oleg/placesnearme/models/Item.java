@@ -1,8 +1,5 @@
 
-package home.oleg.placesnearme.retrofit_models;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package home.oleg.placesnearme.models;
 
 import java.util.ArrayList;
 import java.util.List;

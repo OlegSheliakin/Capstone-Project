@@ -6,7 +6,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.List;
 
-import home.oleg.placesnearme.retrofit_models.Item;
+import home.oleg.placesnearme.models.Item;
 
 /**
  * Created by Oleg on 18.04.2016.

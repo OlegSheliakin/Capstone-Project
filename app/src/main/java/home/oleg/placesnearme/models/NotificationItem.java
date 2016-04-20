@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.retrofit_models;
+package home.oleg.placesnearme.models;
 
 /**
  * Created by Oleg on 16.04.2016.
