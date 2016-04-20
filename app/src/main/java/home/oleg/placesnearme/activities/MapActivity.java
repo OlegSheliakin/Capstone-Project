@@ -98,7 +98,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         item.setChecked(true);
-        showProgress();
         switch (id){
             case R.id.distance100:
                 startSearchingVenues(100);
@@ -214,6 +213,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     }
 
     private void startSearchingVenues(int radius) {
+        showProgress();
         String section = getIntent().getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
         Parameters parameters = new Parameters();
         parameters.setLocation(currentLocation)//sets the current location

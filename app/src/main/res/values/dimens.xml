@@ -9,4 +9,7 @@
     <dimen name="margins">16dp</dimen>
     <dimen name="text_size">16sp</dimen>
     <dimen name="padding">8dp</dimen>
+    <dimen name="button_height">28dp</dimen>
+    <dimen name="button_margin_right">3dp</dimen>
+    <dimen name="button_margin_left">3dp</dimen>
 </resources>

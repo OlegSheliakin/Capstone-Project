@@ -22,7 +22,7 @@ public class BasicActivity extends AppCompatActivity {
         String [] titles = getResources().getStringArray(R.array.titles_array);
         ListView listView = (ListView) findViewById(R.id.listView);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, titles);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.basic_list_item, titles);
 
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
