@@ -2,5 +2,13 @@
 <resources>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorDivider">#009688</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorButtonDefault">#FF4081</color>
+    <color name="colorButtonPressed">#F8BBD0</color>
+    <color name="colorButtonFocused">#F8BBD0</color>
+    <color name="colorButtonUnable">#BDBDBD</color>
+    <color name="colorButtonText">#ffffff</color>
+    <color name="colorText">#78909C</color>
+    <color name="colorListVenueBackground">#ffffff</color>
 </resources>

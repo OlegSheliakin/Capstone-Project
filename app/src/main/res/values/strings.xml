@@ -3,7 +3,7 @@
     <string name="title_activity_basic">Places Near Me</string>
 
     <string-array name="titles_array">
-        <item>Топ мест</item>
+        <item>Top picks</item>
         <item>Food</item>
         <item>Drinks</item>
         <item>Coffee</item>
@@ -39,7 +39,7 @@
     <string name="progress_dialog_searching">Searching</string>
     <string name="go_to">GoTo</string>
     <string name="dial">Dial</string>
-    <string name="meters">m.</string>
+    <string name="meters">м</string>
     <string name="distance_100">100</string>
     <string name="distance_250">250</string>
     <string name="distance_500">500</string>

@@ -92,27 +92,34 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        item.setChecked(true);
         showProgress();
-        switch (item.getItemId()){
+        switch (id){
             case R.id.distance100:
                 startSearchingVenues(100);
-                break;
+                return true;
             case R.id.distance250:
                 startSearchingVenues(250);
-                break;
+                return true;
             case R.id.distance500:
                 startSearchingVenues(500);
-                break;
+                return true;
             case R.id.distance750:
                 startSearchingVenues(750);
-                break;
+                return true;
             case R.id.distance1000:
                 startSearchingVenues(1000);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

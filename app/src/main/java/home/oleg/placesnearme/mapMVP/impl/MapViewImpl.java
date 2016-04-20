@@ -64,7 +64,6 @@ public class MapViewImpl extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
         showProgress();
-        Log.d("TAG", "onCreate");
     }
 
     @Override
@@ -114,6 +113,7 @@ public class MapViewImpl extends AppCompatActivity
     public void showProgress() {
         if (progressDialog != null) {
             progressDialog.setTitle(R.string.progress_dialog_searching);
+            progressDialog.setMessage("wait while it is searching venues");
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
@@ -145,7 +145,7 @@ public class MapViewImpl extends AppCompatActivity
             Map<String, String> map = new HashMap<>();
             map.put(ATTRIBUTE_VENUE_NAME, item.getVenue().getName());
             map.put(ATTRIBUTE_VENUE_ADDRESS, item.getVenue().getLocation().getAddress());
-            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance())+"m.");
+            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance())+"м");
             map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
             list.add(map);
         }
