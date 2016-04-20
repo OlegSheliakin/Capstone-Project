@@ -10,7 +10,7 @@ import android.widget.SimpleAdapter;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.mapMVP.IMapView;
+import home.oleg.placesnearme.map_mvp.IMapView;
 
 /**
  * Created by Oleg on 19.04.2016.

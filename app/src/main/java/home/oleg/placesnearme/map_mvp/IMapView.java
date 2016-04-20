@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.mapMVP;
+package home.oleg.placesnearme.map_mvp;
 
 import android.location.Location;
 

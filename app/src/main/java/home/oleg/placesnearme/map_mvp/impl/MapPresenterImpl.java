@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.mapMVP.impl;
+package home.oleg.placesnearme.map_mvp.impl;
 
 import android.content.Context;
 import android.location.Location;
@@ -10,9 +10,9 @@ import java.util.Map;
 
 import home.oleg.placesnearme.Constants;
 import home.oleg.placesnearme.Parameters;
-import home.oleg.placesnearme.mapMVP.IMapInteractor;
-import home.oleg.placesnearme.mapMVP.IMapPresenter;
-import home.oleg.placesnearme.mapMVP.IMapView;
+import home.oleg.placesnearme.map_mvp.IMapInteractor;
+import home.oleg.placesnearme.map_mvp.IMapPresenter;
+import home.oleg.placesnearme.map_mvp.IMapView;
 import home.oleg.placesnearme.models.Item;
 
 /**

@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.mapMVP.impl;
+package home.oleg.placesnearme.map_mvp.impl;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -30,7 +30,7 @@ import java.util.Map;
 
 import home.oleg.placesnearme.NavigationListAdapter;
 import home.oleg.placesnearme.R;
-import home.oleg.placesnearme.mapMVP.IMapView;
+import home.oleg.placesnearme.map_mvp.IMapView;
 import home.oleg.placesnearme.models.Item;
 
 public class MapViewImpl extends AppCompatActivity

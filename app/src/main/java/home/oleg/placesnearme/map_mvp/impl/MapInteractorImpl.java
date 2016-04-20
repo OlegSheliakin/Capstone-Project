@@ -1,12 +1,12 @@
-package home.oleg.placesnearme.mapMVP.impl;
+package home.oleg.placesnearme.map_mvp.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import home.oleg.placesnearme.IFourSquareAPI;
-import home.oleg.placesnearme.mapMVP.IMapInteractor;
-import home.oleg.placesnearme.mapMVP.IMapPresenter;
+import home.oleg.placesnearme.map_mvp.IMapInteractor;
+import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.models.FullResponse;
 import home.oleg.placesnearme.models.Item;
 import retrofit2.Call;

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,8 +18,8 @@ import com.google.android.gms.location.LocationServices;
 
 import home.oleg.placesnearme.Parameters;
 import home.oleg.placesnearme.R;
-import home.oleg.placesnearme.mapMVP.impl.MapPresenterImpl;
-import home.oleg.placesnearme.mapMVP.impl.MapViewImpl;
+import home.oleg.placesnearme.map_mvp.impl.MapPresenterImpl;
+import home.oleg.placesnearme.map_mvp.impl.MapViewImpl;
 
 /**
  * Created by Oleg on 19.04.2016.
