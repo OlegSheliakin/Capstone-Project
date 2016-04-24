@@ -42,13 +42,19 @@ public class MapInteractorImpl implements IMapInteractor {
 
             @Override
             public void onResponse(Call<FullResponse> call, Response<FullResponse> response) {
-                FullResponse fullResponse = response.body();
-                items = fullResponse.getResponse()
-                        .getGroups()
-                        .get(0)// recommended group
-                        .getItems();
-                if (mapPresenter.isViewAttached()) {
-                    mapPresenter.onFinished(items);
+                if (response.isSuccessful()) {
+                    FullResponse fullResponse = response.body();
+                    items = fullResponse.getResponse()
+                            .getGroups()
+                            .get(0)// recommended group
+                            .getItems();
+                    if (mapPresenter.isViewAttached()) {//checks the view is still attached
+                        mapPresenter.onFinished(items);
+                    }
+                }else {
+                    if (mapPresenter.isViewAttached()) {
+                        mapPresenter.onFailed();
+                    }
                 }
             }
 

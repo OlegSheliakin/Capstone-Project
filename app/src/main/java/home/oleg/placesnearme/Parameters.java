@@ -18,9 +18,6 @@ public class Parameters {
     private String venuesPhoto;
     private String openNow;
 
-    private Parameters(){
-
-    }
 
     public Parameters setLocation(Location location) {
         locationLL = location.getLatitude() + "," + location.getLongitude();
