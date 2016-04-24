@@ -72,19 +72,16 @@ public class MapPresenterImpl implements IMapPresenter {
 
     @Override
     public void startSearchingVenues(Parameters parameters) {
-        if (location == null) {
-            return;
-        }
         mapView.showProgress();
 
         Map<String, String> queryMap = new HashMap<>();
-        queryMap.put(Constants.LL, parameters.getLocationLL());
-        queryMap.put(Constants.SECTION, parameters.getSection());
-        queryMap.put(Constants.RADIUS, parameters.getRadius());
-        queryMap.put(Constants.CLIENT_ID, parameters.getClientId());
-        queryMap.put(Constants.CLIENT_SECRET, parameters.getClientSecret());
-        queryMap.put(Constants.VERSION, parameters.getVersion());
-        queryMap.put(Constants.OPEN_NOW, parameters.getOpenNow());
+        queryMap.put(Constants.LL_KEY, parameters.getLocationLL());
+        queryMap.put(Constants.SECTION_KEY, parameters.getSection());
+        queryMap.put(Constants.RADIUS_KEY, parameters.getRadius());
+        queryMap.put(Constants.OPEN_NOW_KEY, parameters.getOpenNow());
+        queryMap.put(Constants.CLIENT_ID_KEY, Parameters.CLIENT_ID);
+        queryMap.put(Constants.CLIENT_SECRET_KEY, Parameters.CLIENT_SECRET);
+        queryMap.put(Constants.VERSION_KEY, Parameters.API_VERSION);
         mapInteractor.sendRequest(queryMap);
     }
 

@@ -214,7 +214,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     private void startSearchingVenues(int radius) {
         String section = getIntent().getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
-        Parameters parameters = new Parameters();
+        Parameters parameters = new Parameters();//?????????????????
         parameters.setLocation(currentLocation)//sets the current location
                 .setRadius(radius)//sets the radius of searching
                 .setSection(section)//sets the section(type) of venues

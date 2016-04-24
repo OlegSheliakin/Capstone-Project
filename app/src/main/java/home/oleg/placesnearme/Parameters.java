@@ -8,16 +8,35 @@ import android.location.Location;
  */
 public class Parameters {
 
-    public static final String clientId = "BMDK0DP0YBJCG4BTIIC4SOEA2MMT2U4UZLJSBBZY0X2A23GF";
-    public static final String clientSecret = "MMSC3RSUOFRTQO13LCB5RY0P0WOQ14M0X1GCIUT32GM4D3YN";
-    public static final String version = "20160416";
-    public static String locationLL;
-    public static String radius;
-    public static String section;
-    public static String limit;
-    public static String venuesPhoto;
-    public static String openNow;
+    public static final String CLIENT_ID = "BMDK0DP0YBJCG4BTIIC4SOEA2MMT2U4UZLJSBBZY0X2A23GF";
+    public static final String CLIENT_SECRET = "MMSC3RSUOFRTQO13LCB5RY0P0WOQ14M0X1GCIUT32GM4D3YN";
+    public static final String API_VERSION = "20160416";
+    private String locationLL;
+    private String radius;
+    private String section;
+    private String limit;
+    private String venuesPhoto;
+    private String openNow;
 
+    public String getLocationLL() {
+        return locationLL;
+    }
+
+    public String getRadius() {
+        return radius;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public String getLimit() {
+        return limit;
+    }
+
+    public String getOpenNow() {
+        return openNow;
+    }
 
     public Parameters setLocation(Location location) {
         locationLL = location.getLatitude() + "," + location.getLongitude();
