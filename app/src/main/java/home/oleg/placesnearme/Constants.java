@@ -10,4 +10,7 @@ public class Constants {
     public static final String VERSION = "v";
     public static final String RADIUS = "radius";
     public static final String SECTION = "section";
+    public static final String SORT_BY_DISTANCE = "sortByDistance";
+    public static final String OPEN_NOW = "openNow";
+    public static final String VENUES_PHOTO = "venuesPhoto";
 }

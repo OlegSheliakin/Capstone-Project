@@ -19,9 +19,9 @@ public class NavigationListAdapter extends SimpleAdapter {
 
     private final String KEY_PHONE = "phone";
 
-    Context context;
-    IMapView mapView;
-    List<Map<String, String>> data;
+    private Context context;
+    private IMapView mapView;
+    private List<Map<String, String>> data;
 
     public NavigationListAdapter(Context context, List<Map<String, String>> data, int resource, String[] from, int[] to, IMapView mapView) {
         super(context, data, resource, from, to);

@@ -124,6 +124,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         savedInstanceState.putBoolean(REQUESTING_SEARCHING_VENUES, requestingSearchingVenues);
         savedInstanceState.putParcelable(LOCATION_KEY, currentLocation);
         super.onSaveInstanceState(savedInstanceState);
+
     }
 
     @Override
@@ -212,7 +213,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     }
 
     private void startSearchingVenues(int radius) {
-        showProgress();
         String section = getIntent().getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
         Parameters parameters = new Parameters();
         parameters.setLocation(currentLocation)//sets the current location

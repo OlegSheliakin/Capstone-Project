@@ -75,6 +75,8 @@ public class MapPresenterImpl implements IMapPresenter {
         if (location == null) {
             return;
         }
+        mapView.showProgress();
+
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(Constants.LL, parameters.getLocationLL());
         queryMap.put(Constants.SECTION, parameters.getSection());
@@ -82,6 +84,7 @@ public class MapPresenterImpl implements IMapPresenter {
         queryMap.put(Constants.CLIENT_ID, parameters.getClientId());
         queryMap.put(Constants.CLIENT_SECRET, parameters.getClientSecret());
         queryMap.put(Constants.VERSION, parameters.getVersion());
+        queryMap.put(Constants.OPEN_NOW, parameters.getOpenNow());
         mapInteractor.sendRequest(queryMap);
     }
 
