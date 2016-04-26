@@ -14,7 +14,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
  * Created by Oleg on 18.04.2016.
  */
@@ -35,6 +34,7 @@ public class MapInteractorImpl implements IMapInteractor {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         IFourSquareAPI adapter = retrofit.create(IFourSquareAPI.class);
+
         Call<FullResponse> call = adapter.getItems(queryMap);
 
         call.enqueue(new Callback<FullResponse>() {

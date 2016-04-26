@@ -8,45 +8,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class Reasons {
 
-    @SerializedName("count")
-    @Expose
     private Integer count;
-    @SerializedName("items")
-    @Expose
-    private List<ReasonItem> items = new ArrayList<ReasonItem>();
+    private List<ReasonItem> items = new ArrayList<>();
 
-    /**
-     * 
-     * @return
-     *     The count
-     */
     public Integer getCount() {
         return count;
     }
 
-    /**
-     * 
-     * @param count
-     *     The count
-     */
     public void setCount(Integer count) {
         this.count = count;
     }
 
-    /**
-     * 
-     * @return
-     *     The items
-     */
     public List<ReasonItem> getItems() {
         return items;
     }
 
-    /**
-     * 
-     * @param items
-     *     The items
-     */
     public void setItems(List<ReasonItem> items) {
         this.items = items;
     }

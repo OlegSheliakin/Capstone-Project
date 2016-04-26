@@ -82,6 +82,7 @@ public class MapPresenterImpl implements IMapPresenter {
         queryMap.put(Constants.CLIENT_ID_KEY, Parameters.CLIENT_ID);
         queryMap.put(Constants.CLIENT_SECRET_KEY, Parameters.CLIENT_SECRET);
         queryMap.put(Constants.VERSION_KEY, Parameters.API_VERSION);
+
         mapInteractor.sendRequest(queryMap);
     }
 

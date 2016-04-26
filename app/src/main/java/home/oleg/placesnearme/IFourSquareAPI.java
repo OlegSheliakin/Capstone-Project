@@ -8,7 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
-
 /**
  * Created by Oleg on 16.04.2016.
  */
