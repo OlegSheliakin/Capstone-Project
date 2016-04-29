@@ -17,6 +17,7 @@ public class Parameters {
     private String limit;
     private String venuesPhoto;
     private String openNow;
+    private String locale;
 
     public String getLocationLL() {
         return locationLL;

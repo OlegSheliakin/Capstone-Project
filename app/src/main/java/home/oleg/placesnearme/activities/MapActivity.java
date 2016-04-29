@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationServices;
 
 import home.oleg.placesnearme.Parameters;
 import home.oleg.placesnearme.R;
+import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.map_mvp.impl.MapPresenterImpl;
 import home.oleg.placesnearme.map_mvp.impl.MapViewImpl;
 
@@ -32,15 +33,22 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
     private final static String REQUESTING_SEARCHING_VENUES = "requesting-searching-venues-key";
     private final static String LOCATION_KEY = "location-key";
+    private final static LocationRequest LOCATION_REQUEST;
+    private final static int DEFAULT_RADIUS_METERS = 100;
 
     private boolean requestingLocationUpdates = true;
     private boolean requestingSearchingVenues = true;
 
     private GoogleApiClient googleApiClient;
-    private LocationRequest locationRequest;
     private Location currentLocation;
+    private IMapPresenter mapPresenter;
 
-    private MapPresenterImpl mapPresenter;
+    static {
+        LOCATION_REQUEST = new LocationRequest();
+        LOCATION_REQUEST.setInterval(10000);
+        LOCATION_REQUEST.setFastestInterval(5000);
+        LOCATION_REQUEST.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,11 +63,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -89,15 +92,10 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         item.setChecked(true);
-        switch (id){
+        switch (id) {
             case R.id.distance100:
                 startSearchingVenues(100);
                 return true;
@@ -124,19 +122,16 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         savedInstanceState.putBoolean(REQUESTING_SEARCHING_VENUES, requestingSearchingVenues);
         savedInstanceState.putParcelable(LOCATION_KEY, currentLocation);
         super.onSaveInstanceState(savedInstanceState);
-
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (currentLocation == null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            mapPresenter.onGoogleApiClientSetMyLocation(currentLocation);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
+        currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        mapPresenter.onGoogleApiClientSetMyLocation(currentLocation);
 
         if (requestingLocationUpdates) {
             startLocationUpdates();
@@ -144,7 +139,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
         if (requestingSearchingVenues) {
             requestingSearchingVenues = false;
-            startSearchingVenues(100);// searches venues around location in the radius = 100 meters;
+            startSearchingVenues(DEFAULT_RADIUS_METERS);
         }
     }
 
@@ -155,6 +150,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     @Override
     public void onLocationChanged(Location location) {
+        currentLocation = location;
         mapPresenter.onGoogleApiLocationChanged(location);
     }
 
@@ -169,14 +165,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        createLocationRequest();
-    }
-
-    private void createLocationRequest() {
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {
@@ -203,7 +191,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         }
         requestingLocationUpdates = false;
         LocationServices.FusedLocationApi.requestLocationUpdates(
-                googleApiClient, locationRequest, this);
+                googleApiClient, LOCATION_REQUEST, this);
     }
 
     private void stopLocationUpdates() {
@@ -214,11 +202,11 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     private void startSearchingVenues(int radius) {
         String section = getIntent().getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
-        Parameters parameters = new Parameters();//?????????????????
-        parameters.setLocation(currentLocation)//sets the current location
-                .setRadius(radius)//sets the radius of searching
-                .setSection(section)//sets the section(type) of venues
-                .setOpenNow(1);//sets only open venues
+        Parameters parameters = new Parameters();
+        parameters.setLocation(currentLocation)
+                .setRadius(radius)
+                .setSection(section)
+                .setOpenNow(1);
         mapPresenter.startSearchingVenues(parameters);
     }
 }

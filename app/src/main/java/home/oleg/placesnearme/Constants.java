@@ -4,7 +4,6 @@ package home.oleg.placesnearme;
  * Created by Oleg on 09.04.2016.
  */
 
-//??????????
 public interface Constants {
     String LL_KEY = "ll";
     String CLIENT_ID_KEY= "client_id";

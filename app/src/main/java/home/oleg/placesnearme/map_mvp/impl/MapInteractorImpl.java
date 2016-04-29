@@ -1,10 +1,9 @@
 package home.oleg.placesnearme.map_mvp.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.IFourSquareAPI;
+import home.oleg.placesnearme.activities.IFourSquareAPI;
 import home.oleg.placesnearme.map_mvp.IMapInteractor;
 import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.models.FullResponse;
@@ -19,32 +18,31 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MapInteractorImpl implements IMapInteractor {
 
-    private final String PATH = "https://api.foursquare.com/";
+    private static final String PATH = "https://api.foursquare.com/";
     private IMapPresenter mapPresenter;
+    private IFourSquareAPI adapter;
 
     public MapInteractorImpl(IMapPresenter mapPresenter) {
         this.mapPresenter = mapPresenter;
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PATH)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        this.adapter = retrofit.create(IFourSquareAPI.class);
     }
 
     @Override
     public void sendRequest(Map<String, String> queryMap) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(PATH)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        IFourSquareAPI adapter = retrofit.create(IFourSquareAPI.class);
-
         Call<FullResponse> call = adapter.getItems(queryMap);
 
         call.enqueue(new Callback<FullResponse>() {
-            List<Item> items = new ArrayList<>();
 
             @Override
             public void onResponse(Call<FullResponse> call, Response<FullResponse> response) {
                 if (response.isSuccessful()) {
                     FullResponse fullResponse = response.body();
-                    items = fullResponse.getResponse()
+                    List<Item> items = fullResponse.getResponse()
                             .getGroups()
                             .get(0)// recommended group
                             .getItems();
