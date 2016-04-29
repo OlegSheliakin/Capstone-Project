@@ -33,8 +33,8 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
     private final static String REQUESTING_SEARCHING_VENUES = "requesting-searching-venues-key";
     private final static String LOCATION_KEY = "location-key";
-    private final static LocationRequest LOCATION_REQUEST;
     private final static int DEFAULT_RADIUS_METERS = 100;
+    private final static LocationRequest LOCATION_REQUEST;
 
     private boolean requestingLocationUpdates = true;
     private boolean requestingSearchingVenues = true;
@@ -55,7 +55,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         super.onCreate(savedInstanceState);
         buildGoogleApiClient();
         updateValuesFromBundle(savedInstanceState);
-        mapPresenter = new MapPresenterImpl(this);
+        mapPresenter = new MapPresenterImpl();
         mapPresenter.onAttachView(this);
     }
 
@@ -151,7 +151,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     @Override
     public void onLocationChanged(Location location) {
         currentLocation = location;
-        mapPresenter.onGoogleApiLocationChanged(location);
     }
 
     @Override

@@ -20,8 +20,6 @@ public interface IMapPresenter {
 
     void onGoogleApiClientSetMyLocation(Location location);
 
-    void onGoogleApiLocationChanged(Location location);
-
     void startSearchingVenues(Parameters parameters);
 
     void onFinished(List<Item> items);

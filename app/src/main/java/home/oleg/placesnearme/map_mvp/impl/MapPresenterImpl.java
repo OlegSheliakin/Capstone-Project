@@ -22,10 +22,8 @@ public class MapPresenterImpl implements IMapPresenter {
 
     private IMapView mapView;
     private IMapInteractor mapInteractor;
-    private Location location;
-    private List<Item> items = new ArrayList<>();
 
-    public MapPresenterImpl(Context context) {
+    public MapPresenterImpl() {
         mapInteractor = new MapInteractorImpl(this);
     }
 
@@ -50,21 +48,11 @@ public class MapPresenterImpl implements IMapPresenter {
         if (location == null) {
             return;
         }
-        this.location = location;
         mapView.showMyLocation(location);
     }
 
     @Override
-    public void onGoogleApiLocationChanged(Location location) {
-        if (location == null) {
-            return;
-        }
-        this.location = location;
-    }
-
-    @Override
     public void onFinished(List<Item> items) {
-        this.items = items;
         mapView.hideProgress();
         mapView.showVenues(items);
         mapView.setListAdapter(items);

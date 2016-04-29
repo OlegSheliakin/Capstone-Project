@@ -17,8 +17,6 @@ public class Parameters {
     private String locationLL;
     private String radius;
     private String section;
-    private String limit;
-    private String venuesPhoto;
     private String openNow;
 
     public String getLocationLL() {
@@ -33,9 +31,6 @@ public class Parameters {
         return section;
     }
 
-    public String getLimit() {
-        return limit;
-    }
 
     public String getOpenNow() {
         return openNow;
@@ -56,20 +51,6 @@ public class Parameters {
         return this;
     }
 
-    public Parameters setLimit(int limit) {
-        this.limit = String.valueOf(limit);
-        return this;
-    }
-
-    public String getVenuesPhoto() {
-        return venuesPhoto;
-    }
-
-    public Parameters setVenuesPhoto(int venuesPhoto) {
-        this.venuesPhoto = String.valueOf(venuesPhoto);
-        return this;
-    }
-
     public Parameters setOpenNow(int openNow) {
         this.openNow = String.valueOf(openNow);
         return this;
@@ -81,6 +62,7 @@ public class Parameters {
         queryMap.put(Constants.SECTION_KEY, getSection());
         queryMap.put(Constants.RADIUS_KEY, getRadius());
         queryMap.put(Constants.OPEN_NOW_KEY, getOpenNow());
+        queryMap.put("locale", "en");
         queryMap.put(Constants.CLIENT_ID_KEY, CLIENT_ID);
         queryMap.put(Constants.CLIENT_SECRET_KEY, CLIENT_SECRET);
         queryMap.put(Constants.VERSION_KEY, Parameters.API_VERSION);
