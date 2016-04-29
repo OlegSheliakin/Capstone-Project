@@ -2,6 +2,9 @@ package home.oleg.placesnearme;
 
 import android.location.Location;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Created by Oleg on 16.04.2016.
@@ -17,7 +20,6 @@ public class Parameters {
     private String limit;
     private String venuesPhoto;
     private String openNow;
-    private String locale;
 
     public String getLocationLL() {
         return locationLL;
@@ -71,5 +73,17 @@ public class Parameters {
     public Parameters setOpenNow(int openNow) {
         this.openNow = String.valueOf(openNow);
         return this;
+    }
+
+    public Map<String,String> toQueryMap (){
+        Map<String,String> queryMap = new HashMap<>();
+        queryMap.put(Constants.LL_KEY, getLocationLL());
+        queryMap.put(Constants.SECTION_KEY, getSection());
+        queryMap.put(Constants.RADIUS_KEY, getRadius());
+        queryMap.put(Constants.OPEN_NOW_KEY, getOpenNow());
+        queryMap.put(Constants.CLIENT_ID_KEY, CLIENT_ID);
+        queryMap.put(Constants.CLIENT_SECRET_KEY, CLIENT_SECRET);
+        queryMap.put(Constants.VERSION_KEY, Parameters.API_VERSION);
+        return queryMap;
     }
 }
