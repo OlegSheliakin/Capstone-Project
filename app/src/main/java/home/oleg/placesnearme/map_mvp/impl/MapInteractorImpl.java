@@ -3,7 +3,7 @@ package home.oleg.placesnearme.map_mvp.impl;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.activities.IFourSquareAPI;
+import home.oleg.placesnearme.IFourSquareAPI;
 import home.oleg.placesnearme.map_mvp.IMapInteractor;
 import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.models.FullResponse;

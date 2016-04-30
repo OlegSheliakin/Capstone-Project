@@ -38,5 +38,6 @@
     <string name="distance_1000">1000</string>
     <string name="nothing_arround_you">There are nothing around you. Try to increase radius</string>
     <string name="progress_bar_message">Please wait, searching is in ptogress</string>
+    <string name="distance">m.</string>
 
 </resources>

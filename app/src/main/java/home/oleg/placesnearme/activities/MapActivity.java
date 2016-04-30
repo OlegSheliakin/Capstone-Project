@@ -36,19 +36,18 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private final static int DEFAULT_RADIUS_METERS = 100;
     private final static LocationRequest LOCATION_REQUEST;
 
-    private boolean requestingLocationUpdates = true;
-    private boolean requestingSearchingVenues = true;
-
-    private GoogleApiClient googleApiClient;
-    private Location currentLocation;
-    private IMapPresenter mapPresenter;
-
     static {
         LOCATION_REQUEST = new LocationRequest();
         LOCATION_REQUEST.setInterval(10000);
         LOCATION_REQUEST.setFastestInterval(5000);
         LOCATION_REQUEST.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
+
+    private boolean requestingLocationUpdates = true;
+    private boolean requestingSearchingVenues = true;
+    private GoogleApiClient googleApiClient;
+    private Location currentLocation;
+    private IMapPresenter mapPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +119,9 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean(REQUESTING_LOCATION_UPDATES_KEY, requestingLocationUpdates);
         savedInstanceState.putBoolean(REQUESTING_SEARCHING_VENUES, requestingSearchingVenues);
-        savedInstanceState.putParcelable(LOCATION_KEY, currentLocation);
+        if (currentLocation != null) {
+            savedInstanceState.putParcelable(LOCATION_KEY, currentLocation);
+        }
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -185,7 +186,8 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     }
 
     private void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         requestingLocationUpdates = false;

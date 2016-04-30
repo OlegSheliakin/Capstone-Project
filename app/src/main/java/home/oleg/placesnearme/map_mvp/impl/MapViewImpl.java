@@ -139,7 +139,7 @@ public class MapViewImpl extends AppCompatActivity
             Map<String, String> map = new HashMap<>();
             map.put(ATTRIBUTE_VENUE_NAME, item.getVenue().getName());
             map.put(ATTRIBUTE_VENUE_ADDRESS, item.getVenue().getLocation().getAddress());
-            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance())+"м");
+            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance())+getString(R.string.distance));
             map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
             list.add(map);
         }

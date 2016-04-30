@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Oleg on 16.04.2016.
  */
-public class Parameters {
+public final class Parameters {
 
     public static final String CLIENT_ID = "BMDK0DP0YBJCG4BTIIC4SOEA2MMT2U4UZLJSBBZY0X2A23GF";
     public static final String CLIENT_SECRET = "MMSC3RSUOFRTQO13LCB5RY0P0WOQ14M0X1GCIUT32GM4D3YN";
@@ -62,10 +62,9 @@ public class Parameters {
         queryMap.put(Constants.SECTION_KEY, getSection());
         queryMap.put(Constants.RADIUS_KEY, getRadius());
         queryMap.put(Constants.OPEN_NOW_KEY, getOpenNow());
-        queryMap.put("locale", "en");
         queryMap.put(Constants.CLIENT_ID_KEY, CLIENT_ID);
         queryMap.put(Constants.CLIENT_SECRET_KEY, CLIENT_SECRET);
-        queryMap.put(Constants.VERSION_KEY, Parameters.API_VERSION);
+        queryMap.put(Constants.VERSION_KEY, API_VERSION);
         return queryMap;
     }
 }
