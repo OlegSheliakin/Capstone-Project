@@ -36,10 +36,16 @@ import home.oleg.placesnearme.models.Item;
 public class MapViewImpl extends AppCompatActivity
         implements IMapView {
 
+
+    private final static String ATTRIBUTE_VENUE_NAME = "name";
+    private final static String ATTRIBUTE_VENUE_DISTANCE = "distance";
+    private final static String ATTRIBUTE_VENUE_ADDRESS = "address";
+    private final static String ATTRIBUTE_VENUE_PHONE = "phone";
+
     private GoogleMap map;
     private DrawerLayout drawerLayout;
     private ProgressDialog progressDialog;
-    protected List<Item> items;
+    private List<Item> items;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,11 +133,6 @@ public class MapViewImpl extends AppCompatActivity
 
     @Override
     public void setListAdapter(List<Item> items) {
-
-        final String ATTRIBUTE_VENUE_NAME = "name";
-        final String ATTRIBUTE_VENUE_DISTANCE = "distance";
-        final String ATTRIBUTE_VENUE_ADDRESS = "address";
-        final String ATTRIBUTE_VENUE_PHONE = "phone";
 
         ListView listView = (ListView) findViewById(R.id.navidationListView);
         List<Map<String, String>> list = new ArrayList<>();
