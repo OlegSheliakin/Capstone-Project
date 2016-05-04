@@ -33,9 +33,7 @@ import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.map_mvp.IMapView;
 import home.oleg.placesnearme.models.Item;
 
-public class MapViewImpl extends AppCompatActivity
-        implements IMapView {
-
+public class MapViewImpl extends AppCompatActivity implements IMapView {
 
     private final static String ATTRIBUTE_VENUE_NAME = "name";
     private final static String ATTRIBUTE_VENUE_DISTANCE = "distance";

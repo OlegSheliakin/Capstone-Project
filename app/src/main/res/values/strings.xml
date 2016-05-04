@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Places Near Me</string>
     <string name="title_activity_basic">Places Near Me</string>
+    <string name="google_api_key">AIzaSyDUdjptgskX-E3Mdkm0DOZL4uwgpzY5tAE</string>
 
     <string-array name="titles_array">
         <item>Top picks</item>
