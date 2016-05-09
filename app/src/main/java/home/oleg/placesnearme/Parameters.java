@@ -17,24 +17,7 @@ public final class Parameters {
     private String locationLL;
     private String radius;
     private String section;
-    private String openNow;
-
-    public String getLocationLL() {
-        return locationLL;
-    }
-
-    public String getRadius() {
-        return radius;
-    }
-
-    public String getSection() {
-        return section;
-    }
-
-
-    public String getOpenNow() {
-        return openNow;
-    }
+    private String openNow; //any places by default
 
     public Parameters setLocation(Location location) {
         locationLL = location.getLatitude() + "," + location.getLongitude();
@@ -54,6 +37,31 @@ public final class Parameters {
     public Parameters setOpenNow(int openNow) {
         this.openNow = String.valueOf(openNow);
         return this;
+    }
+
+    public String getLocationLL() {
+        return locationLL;
+    }
+
+    public String getRadius() {
+        if (radius == null){
+            radius = "100";
+        }
+        return radius;
+    }
+
+    public String getSection() {
+        if (section == null){
+            section = "topPicks";// by default
+        }
+        return section;
+    }
+
+    public String getOpenNow() {
+        if (openNow == null){
+            openNow = "0";
+        }
+        return openNow;
     }
 
     public Map<String,String> toQueryMap(){
