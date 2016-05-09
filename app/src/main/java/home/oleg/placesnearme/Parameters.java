@@ -56,7 +56,7 @@ public final class Parameters {
         return this;
     }
 
-    public Map<String,String> toQueryMap (){
+    public Map<String,String> toQueryMap(){
         Map<String,String> queryMap = new HashMap<>();
         queryMap.put(Constants.LL_KEY, getLocationLL());
         queryMap.put(Constants.SECTION_KEY, getSection());

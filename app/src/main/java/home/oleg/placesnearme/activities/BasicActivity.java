@@ -19,22 +19,24 @@ public class BasicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic);
 
-        String [] titles = getResources().getStringArray(R.array.titles_array);
+        String[] titles = getResources().getStringArray(R.array.titles_array);
         ListView listView = (ListView) findViewById(R.id.listView);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.basic_list_item, titles);
 
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (listView != null) {
+            listView.setAdapter(arrayAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(BasicActivity.this, MapActivity.class);
-                String [] sections = getResources().getStringArray(R.array.sections_array);
+                    Intent intent = new Intent(BasicActivity.this, MapActivity.class);
+                    String[] sections = getResources().getStringArray(R.array.sections_array);
 
-                intent.putExtra(EXTRA_DATA_SECTION, sections[position]);
-                startActivity(intent);
-            }
-        });
+                    intent.putExtra(EXTRA_DATA_SECTION, sections[position]);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }
