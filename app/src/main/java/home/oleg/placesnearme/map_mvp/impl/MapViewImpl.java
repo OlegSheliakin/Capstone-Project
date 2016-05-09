@@ -161,11 +161,11 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        map = googleMap;
         map.setMyLocationEnabled(true);
     }
 
