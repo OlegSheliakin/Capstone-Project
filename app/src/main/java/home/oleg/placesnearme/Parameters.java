@@ -19,12 +19,6 @@ public final class Parameters {
     private String section;
     private String openNow;
 
-    {
-        // initialization by default
-        section = "topPicks";
-        openNow = "0";
-    }
-
     public Parameters setLocation(Location location) {
         locationLL = location.getLatitude() + "," + location.getLongitude();
         return this;
