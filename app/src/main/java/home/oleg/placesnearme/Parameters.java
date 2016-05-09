@@ -21,7 +21,6 @@ public final class Parameters {
 
     {
         // initialization by default
-        radius = "100";
         section = "topPicks";
         openNow = "0";
     }
