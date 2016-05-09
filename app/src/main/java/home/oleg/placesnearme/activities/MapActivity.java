@@ -49,6 +49,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private Location currentLocation;
     private IMapPresenter mapPresenter;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

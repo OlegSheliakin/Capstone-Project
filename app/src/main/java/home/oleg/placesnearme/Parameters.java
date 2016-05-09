@@ -17,7 +17,14 @@ public final class Parameters {
     private String locationLL;
     private String radius;
     private String section;
-    private String openNow; //any places by default
+    private String openNow;
+
+    {
+        // initialization by default
+        radius = "100";
+        section = "topPicks";
+        openNow = "0";
+    }
 
     public Parameters setLocation(Location location) {
         locationLL = location.getLatitude() + "," + location.getLongitude();
@@ -44,23 +51,14 @@ public final class Parameters {
     }
 
     public String getRadius() {
-        if (radius == null){
-            radius = "100";
-        }
         return radius;
     }
 
     public String getSection() {
-        if (section == null){
-            section = "topPicks";// by default
-        }
         return section;
     }
 
     public String getOpenNow() {
-        if (openNow == null){
-            openNow = "0";
-        }
         return openNow;
     }
 
