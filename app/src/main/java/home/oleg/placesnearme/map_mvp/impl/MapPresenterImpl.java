@@ -55,7 +55,6 @@ public class MapPresenterImpl implements IMapPresenter {
         }
             Map<String, String> queryMap = parameters.toQueryMap();
             mapInteractor.sendRequest(queryMap);
-
     }
 
     @Override

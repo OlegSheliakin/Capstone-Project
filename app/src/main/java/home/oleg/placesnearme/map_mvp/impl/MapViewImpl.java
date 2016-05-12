@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -79,7 +78,7 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
         map.clear();//delete all marks if they exist
 
         if (items.isEmpty()){
-            Toast.makeText(this, R.string.nothing_arround_you, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.nothing_around_you, Toast.LENGTH_SHORT).show();
         }
 
         StringBuilder title = new StringBuilder();
