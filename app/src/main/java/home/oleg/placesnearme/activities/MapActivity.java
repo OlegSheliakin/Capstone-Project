@@ -35,7 +35,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
     private final static String REQUESTING_SEARCHING_VENUES = "requesting-searching-venues-key";
     private final static String LOCATION_KEY = "location-key";
-    private static final String SECTION_BY_DEFAULT = "topPicks";
     private final static int DEFAULT_RADIUS_METERS = 100;
     private final static LocationRequest LOCATION_REQUEST;
 
@@ -65,8 +64,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         Intent intent = getIntent();
         if (intent != null){
             section = intent.getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
-        } else{
-            section = SECTION_BY_DEFAULT;
         }
     }
 
@@ -236,7 +233,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
                 .setRadius(radius)
                 .setSection(section)
                 .setOpenNow(0);
-
         mapPresenter.startSearchingVenues(parameters);
     }
 

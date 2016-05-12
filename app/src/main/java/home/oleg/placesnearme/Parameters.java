@@ -1,6 +1,7 @@
 package home.oleg.placesnearme;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +16,9 @@ public final class Parameters {
     public static final String CLIENT_SECRET = "MMSC3RSUOFRTQO13LCB5RY0P0WOQ14M0X1GCIUT32GM4D3YN";
     public static final String API_VERSION = "20160416";
     private String locationLL;
-    private String radius;
-    private String section;
-    private String openNow;
+    private int radius;
+    private String section = "topPicks"; // by default
+    private int openNow;
 
     public Parameters setLocation(Location location) {
         locationLL = location.getLatitude() + "," + location.getLongitude();
@@ -25,17 +26,23 @@ public final class Parameters {
     }
 
     public Parameters setRadius(int radius) {
-        this.radius = String.valueOf(radius);
+        this.radius = radius;
         return this;
     }
 
     public Parameters setSection(String section) {
-        this.section = section;
+        if (section != null) {
+            this.section = section;
+        }
         return this;
     }
 
     public Parameters setOpenNow(int openNow) {
-        this.openNow = String.valueOf(openNow);
+        if (openNow == 1) {
+            this.openNow = openNow;
+        } else {
+            this.openNow = 0;
+        }
         return this;
     }
 
@@ -44,7 +51,7 @@ public final class Parameters {
     }
 
     public String getRadius() {
-        return radius;
+        return String.valueOf(radius);
     }
 
     public String getSection() {
@@ -52,7 +59,7 @@ public final class Parameters {
     }
 
     public String getOpenNow() {
-        return openNow;
+        return String.valueOf(openNow);
     }
 
     public Map<String,String> toQueryMap(){
