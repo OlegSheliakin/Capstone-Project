@@ -61,14 +61,15 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
-        showProgress();
     }
 
     @Override
     public void showMyLocation(Location location) {
+        if (location != null){
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
                 location.getLatitude(), location.getLongitude()), 15f);
         map.animateCamera(cameraUpdate);
+        }
     }
 
     @Override
@@ -93,7 +94,7 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
                     .title(title.toString()).position
                             (new LatLng(v.getVenue().getLocation().getLat(),
                                     v.getVenue().getLocation().getLng())));
-            title.delete(0, title.length());//clear stringbuilder
+            title.delete(0, title.length());//clear string builder
         }
     }
 

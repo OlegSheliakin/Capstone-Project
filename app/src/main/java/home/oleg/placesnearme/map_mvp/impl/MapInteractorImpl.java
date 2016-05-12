@@ -1,9 +1,12 @@
 package home.oleg.placesnearme.map_mvp.impl;
 
+import android.content.Context;
+
 import java.util.List;
 import java.util.Map;
 
 import home.oleg.placesnearme.IFourSquareAPI;
+import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.map_mvp.IMapInteractor;
 import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.models.FullResponse;
@@ -13,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * Created by Oleg on 18.04.2016.
  */
@@ -46,21 +50,15 @@ public class MapInteractorImpl implements IMapInteractor {
                             .getGroups()
                             .get(0)// recommended group
                             .getItems();
-                    if (mapPresenter.isViewAttached()) {//checks the view is still attached
-                        mapPresenter.onFinished(items);
-                    }
-                }else {
-                    if (mapPresenter.isViewAttached()) {
-                        mapPresenter.onFailed();
-                    }
+                    mapPresenter.onFinished(items);
+                } else {
+                    mapPresenter.onFailed();
                 }
             }
 
             @Override
             public void onFailure(Call<FullResponse> call, Throwable t) {
-                if (mapPresenter.isViewAttached()) {
-                    mapPresenter.onFailed();
-                }
+                mapPresenter.onFailed();
             }
         });
     }

@@ -40,5 +40,7 @@
     <string name="nothing_arround_you">There are nothing around you. Try to increase radius</string>
     <string name="progress_bar_message">Please wait, searching is in progress</string>
     <string name="distance">m.</string>
+    <string name="error_no_location">Sorry, cannot get your Location. Try to use Network and Wi-Fi for determining location</string>
+    <string name="error_response">Sorry, there are some problems with the server. Try later.</string>
 
 </resources>

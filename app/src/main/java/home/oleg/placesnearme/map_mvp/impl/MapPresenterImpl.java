@@ -1,15 +1,10 @@
 package home.oleg.placesnearme.map_mvp.impl;
 
-import android.content.Context;
-import android.location.Location;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.Constants;
 import home.oleg.placesnearme.Parameters;
+import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.map_mvp.IMapInteractor;
 import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.map_mvp.IMapView;
@@ -33,6 +28,7 @@ public class MapPresenterImpl implements IMapPresenter {
             this.mapView = mapView;
         }
     }
+
     @Override
     public boolean isViewAttached() {
         return mapView != null;
@@ -43,26 +39,31 @@ public class MapPresenterImpl implements IMapPresenter {
         mapView = null;
     }
 
-    @Override
+    /*@Override
     public void onGoogleApiClientSetMyLocation(Location location) {
         if (location == null) {
             return;
         }
         mapView.showMyLocation(location);
     }
-
+*/
     @Override
     public void onFinished(List<Item> items) {
-        mapView.hideProgress();
-        mapView.showVenues(items);
-        mapView.setListAdapter(items);
+        if (mapView != null) {
+            mapView.hideProgress();
+            mapView.showVenues(items);
+            mapView.setListAdapter(items);
+        }
     }
 
     @Override
     public void startSearchingVenues(Parameters parameters) {
-        mapView.showProgress();
-        Map<String, String> queryMap = parameters.toQueryMap();
-        mapInteractor.sendRequest(queryMap);
+        if (mapView != null) {
+            mapView.showProgress();
+        }
+            Map<String, String> queryMap = parameters.toQueryMap();
+            mapInteractor.sendRequest(queryMap);
+
     }
 
     @Override

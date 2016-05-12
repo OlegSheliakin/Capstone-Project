@@ -3,12 +3,14 @@ package home.oleg.placesnearme.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -94,26 +96,37 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        int radius;
+
         item.setChecked(true);
+
         switch (id) {
             case R.id.distance100:
-                startSearchingVenues(100);
-                return true;
+                radius = 100;
+                break;
             case R.id.distance250:
-                startSearchingVenues(250);
-                return true;
+                radius = 250;
+                break;
             case R.id.distance500:
-                startSearchingVenues(500);
-                return true;
+                radius = 500;
+                break;
             case R.id.distance750:
-                startSearchingVenues(750);
-                return true;
+                radius = 750;
+                break;
             case R.id.distance1000:
-                startSearchingVenues(1000);
-                return true;
+                radius = 1000;
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        if (currentLocation != null) {
+            startSearchingVenues(radius);
+        } else {
+            showLocationError();
+        }
+
+        return true;
     }
 
     @Override
@@ -133,16 +146,25 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
             return;
         }
         currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        mapPresenter.onGoogleApiClientSetMyLocation(currentLocation);
 
-        if (requestingLocationUpdates) {
-            startLocationUpdates();
-        }
+        if (currentLocation != null) {
+            showMyLocation(currentLocation);
 
-        if (requestingSearchingVenues) {
-            requestingSearchingVenues = false;
-            startSearchingVenues(DEFAULT_RADIUS_METERS);
+            if (requestingLocationUpdates) {
+                startLocationUpdates();
+            }
+
+            if (requestingSearchingVenues) {
+                requestingSearchingVenues = false;
+                startSearchingVenues(DEFAULT_RADIUS_METERS);
+            }
+        } else {
+            showLocationError();
         }
+    }
+
+    private void showLocationError() {
+        Toast.makeText(this, getString(R.string.error_no_location), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -157,7 +179,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        mapPresenter.onFailed();
+        showLocationError();
     }
 
     private void buildGoogleApiClient() {
@@ -181,7 +203,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
             }
             if (savedInstanceState.keySet().contains(LOCATION_KEY)) {
                 currentLocation = savedInstanceState.getParcelable(LOCATION_KEY);
-                mapPresenter.onGoogleApiClientSetMyLocation(currentLocation);
+                showMyLocation(currentLocation);
             }
         }
     }

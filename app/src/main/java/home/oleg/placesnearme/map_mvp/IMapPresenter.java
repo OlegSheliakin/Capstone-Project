@@ -18,8 +18,6 @@ public interface IMapPresenter {
 
     boolean isViewAttached ();
 
-    void onGoogleApiClientSetMyLocation(Location location);
-
     void startSearchingVenues(Parameters parameters);
 
     void onFinished(List<Item> items);
