@@ -39,14 +39,6 @@ public class MapPresenterImpl implements IMapPresenter {
         mapView = null;
     }
 
-    /*@Override
-    public void onGoogleApiClientSetMyLocation(Location location) {
-        if (location == null) {
-            return;
-        }
-        mapView.showMyLocation(location);
-    }
-*/
     @Override
     public void onFinished(List<Item> items) {
         if (mapView != null) {
