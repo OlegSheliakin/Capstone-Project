@@ -65,11 +65,9 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
 
     @Override
     public void showMyLocation(Location location) {
-        if (location != null){
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
                 location.getLatitude(), location.getLongitude()), 15f);
         map.animateCamera(cameraUpdate);
-        }
     }
 
     @Override
