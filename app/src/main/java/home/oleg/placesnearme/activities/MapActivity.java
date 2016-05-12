@@ -164,10 +164,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         }
     }
 
-    private void showLocationError() {
-        Toast.makeText(this, getString(R.string.error_no_location), Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void onConnectionSuspended(int i) {
         googleApiClient.connect();
@@ -234,4 +230,9 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
                 .setOpenNow(0);
         mapPresenter.startSearchingVenues(parameters);
     }
+
+    private void showLocationError() {
+        Toast.makeText(this, getString(R.string.error_no_location), Toast.LENGTH_LONG).show();
+    }
+
 }
