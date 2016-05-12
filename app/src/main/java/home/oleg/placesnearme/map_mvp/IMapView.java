@@ -1,6 +1,7 @@
 package home.oleg.placesnearme.map_mvp;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 

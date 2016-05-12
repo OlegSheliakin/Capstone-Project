@@ -1,9 +1,9 @@
 package home.oleg.placesnearme.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -145,21 +145,22 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
+        if (requestingLocationUpdates) {
+            startLocationUpdates();
+        }
+
         currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
-        if (currentLocation != null) {
-            showMyLocation(currentLocation);
-
-            if (requestingLocationUpdates) {
-                startLocationUpdates();
-            }
-
-            if (requestingSearchingVenues) {
-                requestingSearchingVenues = false;
-                startSearchingVenues(DEFAULT_RADIUS_METERS);
-            }
-        } else {
+        if (currentLocation == null) {
             showLocationError();
+            return;
+        }
+
+        showMyLocation(currentLocation);
+
+        if (requestingSearchingVenues) {
+            requestingSearchingVenues = false;
+            startSearchingVenues(DEFAULT_RADIUS_METERS);
         }
     }
 

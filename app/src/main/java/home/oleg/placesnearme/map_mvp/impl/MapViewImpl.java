@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -65,9 +66,11 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
 
     @Override
     public void showMyLocation(Location location) {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
-                location.getLatitude(), location.getLongitude()), 15f);
-        map.animateCamera(cameraUpdate);
+        if (location != null) {
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
+                    location.getLatitude(), location.getLongitude()), 15f);
+            map.animateCamera(cameraUpdate);
+        }
     }
 
     @Override
