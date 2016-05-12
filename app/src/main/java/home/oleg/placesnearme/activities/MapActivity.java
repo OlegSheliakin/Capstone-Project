@@ -37,6 +37,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private final static String LOCATION_KEY = "location-key";
     private final static int DEFAULT_RADIUS_METERS = 100;
     private final static LocationRequest LOCATION_REQUEST;
+    private static final String SECTION_BY_DEFAULT = "topPicks";
 
     static {
         LOCATION_REQUEST = new LocationRequest();
@@ -222,12 +223,20 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     }
 
     private void startSearchingVenues(int radius) {
-        String section = getIntent().getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
+        Intent intent = getIntent();
+        String section;
+        if (intent != null){
+            section = intent.getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
+        } else{
+            section = SECTION_BY_DEFAULT;
+        }
+
         Parameters parameters = new Parameters();
         parameters.setLocation(currentLocation)
                 .setRadius(radius)
                 .setSection(section)
                 .setOpenNow(0);
+
         mapPresenter.startSearchingVenues(parameters);
     }
 
