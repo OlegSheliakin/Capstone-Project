@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -232,12 +233,11 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         parameters.setLocation(currentLocation)
                 .setRadius(radius)
                 .setSection(section)
-                .setOpenNow(0);
+                .setOpenNow(false);
         mapPresenter.startSearchingVenues(parameters);
     }
 
     private void showLocationError() {
         Toast.makeText(this, getString(R.string.error_no_location), Toast.LENGTH_LONG).show();
     }
-
 }

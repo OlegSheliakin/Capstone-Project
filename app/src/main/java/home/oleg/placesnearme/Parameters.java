@@ -1,7 +1,6 @@
 package home.oleg.placesnearme;
 
 import android.location.Location;
-import android.support.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,31 +17,10 @@ public final class Parameters {
     private String locationLL;
     private int radius;
     private String section = "topPicks"; // by default
-    private int openNow;
+    private boolean openNow;
 
     public Parameters setLocation(Location location) {
         locationLL = location.getLatitude() + "," + location.getLongitude();
-        return this;
-    }
-
-    public Parameters setRadius(int radius) {
-        this.radius = radius;
-        return this;
-    }
-
-    public Parameters setSection(String section) {
-        if (section != null) {
-            this.section = section;
-        }
-        return this;
-    }
-
-    public Parameters setOpenNow(int openNow) {
-        if (openNow == 1) {
-            this.openNow = openNow;
-        } else {
-            this.openNow = 0;
-        }
         return this;
     }
 
@@ -54,16 +32,33 @@ public final class Parameters {
         return String.valueOf(radius);
     }
 
+    public Parameters setRadius(int radius) {
+        this.radius = radius;
+        return this;
+    }
+
     public String getSection() {
         return section;
     }
 
-    public String getOpenNow() {
-        return String.valueOf(openNow);
+    public Parameters setSection(String section) {
+        if (section != null) {
+            this.section = section;
+        }
+        return this;
     }
 
-    public Map<String,String> toQueryMap(){
-        Map<String,String> queryMap = new HashMap<>();
+    public String getOpenNow() {
+        return this.openNow ? "1":"0";// true - 1; false - 0
+    }
+
+    public Parameters setOpenNow(boolean openNow) {
+        this.openNow = openNow;
+        return this;
+    }
+
+    public Map<String, String> toQueryMap() {
+        Map<String, String> queryMap = new HashMap<>();
         queryMap.put(Constants.LL_KEY, getLocationLL());
         queryMap.put(Constants.SECTION_KEY, getSection());
         queryMap.put(Constants.RADIUS_KEY, getRadius());
