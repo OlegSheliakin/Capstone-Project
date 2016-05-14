@@ -102,7 +102,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        int radius;
+        int radius = 0;
 
         item.setChecked(true);
         switch (id) {
@@ -121,8 +121,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
             case R.id.distance1000:
                 radius = 1000;
                 break;
-            default:
-                return super.onOptionsItemSelected(item);
         }
 
         if (currentLocation != null) {
@@ -131,7 +129,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
             showLocationError();
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
