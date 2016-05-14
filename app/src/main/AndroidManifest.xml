@@ -27,7 +27,6 @@
 
         <activity
             android:name=".activities.MapActivity"
-            android:label="@string/title_activity_basic"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

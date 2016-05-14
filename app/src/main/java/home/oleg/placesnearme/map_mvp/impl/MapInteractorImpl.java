@@ -1,12 +1,9 @@
 package home.oleg.placesnearme.map_mvp.impl;
 
-import android.content.Context;
-
 import java.util.List;
 import java.util.Map;
 
 import home.oleg.placesnearme.IFourSquareAPI;
-import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.map_mvp.IMapInteractor;
 import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.models.FullResponse;
@@ -50,15 +47,21 @@ public class MapInteractorImpl implements IMapInteractor {
                             .getGroups()
                             .get(0)// recommended group
                             .getItems();
-                    mapPresenter.onFinished(items);
+                    if (mapPresenter.isViewAttached()) {
+                        mapPresenter.onFinished(items);
+                    }
                 } else {
-                    mapPresenter.onFailed();
+                    if (mapPresenter.isViewAttached()) {
+                        mapPresenter.onFailed();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<FullResponse> call, Throwable t) {
-                mapPresenter.onFailed();
+                if (mapPresenter.isViewAttached()) {
+                    mapPresenter.onFailed();
+                }
             }
         });
     }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import home.oleg.placesnearme.Parameters;
-import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.map_mvp.IMapInteractor;
 import home.oleg.placesnearme.map_mvp.IMapPresenter;
 import home.oleg.placesnearme.map_mvp.IMapView;
@@ -41,27 +40,21 @@ public class MapPresenterImpl implements IMapPresenter {
 
     @Override
     public void onFinished(List<Item> items) {
-        if (mapView != null) {
             mapView.hideProgress();
             mapView.showVenues(items);
             mapView.setListAdapter(items);
-        }
     }
 
     @Override
     public void startSearchingVenues(Parameters parameters) {
-        if (mapView != null) {
             mapView.showProgress();
-        }
             Map<String, String> queryMap = parameters.toQueryMap();
             mapInteractor.sendRequest(queryMap);
     }
 
     @Override
     public void onFailed() {
-        if (mapView != null) {
             mapView.hideProgress();
             mapView.showError();
-        }
     }
 }
