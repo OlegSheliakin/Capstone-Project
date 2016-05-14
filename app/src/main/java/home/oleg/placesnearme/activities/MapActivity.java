@@ -39,6 +39,12 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private final static int DEFAULT_RADIUS_METERS = 100;
     private final static LocationRequest LOCATION_REQUEST;
 
+    private boolean requestingLocationUpdates = true;
+    private boolean requestingSearchingVenues = true;
+    private GoogleApiClient googleApiClient;
+    private Location currentLocation;
+    private IMapPresenter mapPresenter;
+    private String section;
 
     static {
         LOCATION_REQUEST = new LocationRequest();
@@ -46,13 +52,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         LOCATION_REQUEST.setFastestInterval(5000);
         LOCATION_REQUEST.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
-
-    private boolean requestingLocationUpdates = true;
-    private boolean requestingSearchingVenues = true;
-    private GoogleApiClient googleApiClient;
-    private Location currentLocation;
-    private IMapPresenter mapPresenter;
-    private String section;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,7 +105,6 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         int radius;
 
         item.setChecked(true);
-
         switch (id) {
             case R.id.distance100:
                 radius = 100;
