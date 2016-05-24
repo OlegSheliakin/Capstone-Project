@@ -41,7 +41,6 @@ public class NavigationListAdapter extends SimpleAdapter {
 
         Button btnGoTo = (Button) view.findViewById(R.id.btnGoTo);
         Button btnCall = (Button) view.findViewById(R.id.btnCall);
-
         String phone = data.get(position).get(KEY_PHONE);
         if (phone == null) {
             btnCall.setEnabled(false);

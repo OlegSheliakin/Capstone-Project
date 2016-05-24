@@ -1,5 +1,6 @@
 package home.oleg.placesnearme.activities;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

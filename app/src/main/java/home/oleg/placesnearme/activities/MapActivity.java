@@ -229,7 +229,7 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
         parameters.setLocation(currentLocation)
                 .setRadius(radius)
                 .setSection(section)
-                .setOpenNow(false);
+                .setOpenNow(0);
         mapPresenter.startSearchingVenues(parameters);
     }
 

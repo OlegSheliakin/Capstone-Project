@@ -55,7 +55,7 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
         progressDialog = new ProgressDialog(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
@@ -132,7 +132,6 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
 
     @Override
     public void setListAdapter(List<Item> items) {
-
         ListView listView = (ListView) findViewById(R.id.navidationListView);
         List<Map<String, String>> list = new ArrayList<>();
         for (Item item : items) {

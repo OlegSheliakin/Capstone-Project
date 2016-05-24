@@ -16,5 +16,4 @@
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         />
-
 </LinearLayout>
