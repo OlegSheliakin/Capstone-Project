@@ -60,7 +60,6 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
-
     }
 
     @Override
@@ -84,10 +83,10 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
         StringBuilder title = new StringBuilder();
         for (Item v : items) {
             if ( v.getVenue().getName() != null){
-                title.append(v.getVenue().getName());//appends name if it exist
+                title.append(v.getVenue().getName());//appends name if it exists
             }
             if (v.getVenue().getLocation().getAddress() != null){
-                title.append(", ").append(v.getVenue().getLocation().getAddress());//appends address if it exist
+                title.append(", ").append(v.getVenue().getLocation().getAddress());//appends address if it exists
             }
 
             map.addMarker(new MarkerOptions()
