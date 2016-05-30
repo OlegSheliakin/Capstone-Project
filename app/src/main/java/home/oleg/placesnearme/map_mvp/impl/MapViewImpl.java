@@ -143,7 +143,6 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
             map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
             map.put(ATTRIBUTE_VENUE_PHOTO, item.getVenue().getFeaturedPhotos().getItems().get(0).getPhotoURL());
             data.add(map);
-            Log.d("log", item.getVenue().getFeaturedPhotos().getItems().get(0).getPhotoURL());
         }
 
         VenueRecyclerViewAdapter adapter = new VenueRecyclerViewAdapter(getApplicationContext(), this, data);
