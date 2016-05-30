@@ -5,19 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Map;
 
 import home.oleg.placesnearme.map_mvp.IMapView;
 
+import static home.oleg.placesnearme.map_mvp.impl.MapViewImpl.*;
+
+
 /**
  * Created by Oleg on 19.04.2016.
  */
 public class NavigationListAdapter extends SimpleAdapter {
-
-    private final String KEY_PHONE = "phone";
 
     private Context context;
     private IMapView mapView;
@@ -39,9 +43,16 @@ public class NavigationListAdapter extends SimpleAdapter {
             view = inflater.inflate(R.layout.venue_list_item, parent, false);
         }
 
+        ImageView imageViewPhoto = (ImageView) view.findViewById(R.id.imageViewPhoto);
+        String URL;
+        URL = data.get(position).get(ATTRIBUTE_VENUE_PHOTO);
+        if (URL != null) {
+            Picasso.with(context).load(URL).into(imageViewPhoto);
+        }
+
         Button btnGoTo = (Button) view.findViewById(R.id.btnGoTo);
         Button btnCall = (Button) view.findViewById(R.id.btnCall);
-        String phone = data.get(position).get(KEY_PHONE);
+        String phone = data.get(position).get(ATTRIBUTE_VENUE_PHONE);
         if (phone == null) {
             btnCall.setEnabled(false);
         } else {

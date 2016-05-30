@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class VenuesPhoto {
 
     private Integer count;
-    private List<Object> groups = new ArrayList<Object>();
+    private List<Object> groups = new ArrayList<>();
 
     public Integer getCount() {
         return count;

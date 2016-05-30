@@ -17,6 +17,7 @@ public class Venue {
     private Boolean allowMenuUrlEdit;
     private VenuesPhoto photos;
     private HereNow hereNow;
+    private FeaturedPhotos featuredPhotos;
 
     public String getId() {
         return id;
@@ -38,72 +39,39 @@ public class Venue {
         return contact;
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
     public Location getLocation() {
         return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
     public Boolean getVerified() {
         return verified;
-    }
-
-    public void setVerified(Boolean verified) {
-        this.verified = verified;
     }
 
     public Stats getStats() {
         return stats;
     }
 
-    public void setStats(Stats stats) {
-        this.stats = stats;
-    }
-
     public Price getPrice() {
         return price;
-    }
-
-    public void setPrice(Price price) {
-        this.price = price;
     }
 
     public Boolean getAllowMenuUrlEdit() {
         return allowMenuUrlEdit;
     }
 
-    public void setAllowMenuUrlEdit(Boolean allowMenuUrlEdit) {
-        this.allowMenuUrlEdit = allowMenuUrlEdit;
-    }
-
     public VenuesPhoto getPhotos() {
         return photos;
-    }
-
-    public void setPhotos(VenuesPhoto venuesPhoto) {
-        this.photos = venuesPhoto;
     }
 
     public HereNow getHereNow() {
         return hereNow;
     }
 
-    public void setHereNow(HereNow hereNow) {
-        this.hereNow = hereNow;
+    public FeaturedPhotos getFeaturedPhotos() {
+        return featuredPhotos;
     }
-
 }
