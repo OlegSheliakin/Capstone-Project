@@ -12,9 +12,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -29,8 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.NavigationListAdapter;
 import home.oleg.placesnearme.R;
+import home.oleg.placesnearme.VenueRecyclerViewAdapter;
 import home.oleg.placesnearme.map_mvp.IMapView;
 import home.oleg.placesnearme.models.Item;
 
@@ -133,8 +134,7 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
 
     @Override
     public void setListAdapter(List<Item> items) {
-        ListView listView = (ListView) findViewById(R.id.navidationListView);
-        List<Map<String, String>> list = new ArrayList<>();
+        List<Map<String, String>> data = new ArrayList<>();
         for (Item item : items) {
             Map<String, String> map = new HashMap<>();
             map.put(ATTRIBUTE_VENUE_NAME, item.getVenue().getName());
@@ -142,15 +142,16 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
             map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance())+getString(R.string.distance));
             map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
             map.put(ATTRIBUTE_VENUE_PHOTO, item.getVenue().getFeaturedPhotos().getItems().get(0).getPhotoURL());
-            list.add(map);
+            data.add(map);
             Log.d("log", item.getVenue().getFeaturedPhotos().getItems().get(0).getPhotoURL());
         }
-        int[] to = new int[]{R.id.tvName, R.id.tvDistance, R.id.tvAddress, R.id.tvPhone};
-        String[] from = new String[]{ATTRIBUTE_VENUE_NAME, ATTRIBUTE_VENUE_DISTANCE, ATTRIBUTE_VENUE_ADDRESS, ATTRIBUTE_VENUE_PHONE};
-        NavigationListAdapter venuesListAdapter = new NavigationListAdapter(this, list, R.layout.venue_list_item, from, to, this);
 
-        if (listView != null) {
-            listView.setAdapter(venuesListAdapter);
+        VenueRecyclerViewAdapter adapter = new VenueRecyclerViewAdapter(getApplicationContext(), this, data);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        if (recyclerView != null) {
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(adapter);
         }
     }
 
