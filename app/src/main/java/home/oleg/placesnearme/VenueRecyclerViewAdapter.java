@@ -46,18 +46,17 @@ public class VenueRecyclerViewAdapter extends RecyclerView.Adapter<VenueRecycler
         String distance = data.get(position).get(ATTRIBUTE_VENUE_DISTANCE);
         String address = data.get(position).get(ATTRIBUTE_VENUE_ADDRESS);
         String phone = data.get(position).get(ATTRIBUTE_VENUE_PHONE);
-        String URL = data.get(position).get(ATTRIBUTE_VENUE_PHOTO);
+        holder.tvName.setText(name);
+        holder.tvDistance.setText(distance);
+        holder.tvAddress.setText(address);
+        holder.tvPhone.setText(phone);
 
+        String URL = data.get(position).get(ATTRIBUTE_VENUE_PHOTO);
         if (URL != null) {
             Picasso.with(context)
                     .load(URL)
                     .into(holder.imageViewVenuePhoto);
         }
-
-        holder.tvName.setText(name);
-        holder.tvDistance.setText(distance);
-        holder.tvAddress.setText(address);
-        holder.tvPhone.setText(phone);
 
         if (phone == null) {
             holder.btnCall.setEnabled(false);
