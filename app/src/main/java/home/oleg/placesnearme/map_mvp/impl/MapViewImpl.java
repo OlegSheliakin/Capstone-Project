@@ -79,16 +79,16 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
         this.items = items;
         map.clear();//delete all marks if they exist
 
-        if (items.isEmpty()){
+        if (items.isEmpty()) {
             Toast.makeText(this, R.string.nothing_around_you, Toast.LENGTH_SHORT).show();
         }
 
         StringBuilder title = new StringBuilder();
         for (Item v : items) {
-            if ( v.getVenue().getName() != null){
+            if (v.getVenue().getName() != null) {
                 title.append(v.getVenue().getName());//appends name if it exists
             }
-            if (v.getVenue().getLocation().getAddress() != null){
+            if (v.getVenue().getLocation().getAddress() != null) {
                 title.append(", ").append(v.getVenue().getLocation().getAddress());//appends address if it exists
             }
 
@@ -139,19 +139,17 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
             Map<String, String> map = new HashMap<>();
             map.put(ATTRIBUTE_VENUE_NAME, item.getVenue().getName());
             map.put(ATTRIBUTE_VENUE_ADDRESS, item.getVenue().getLocation().getAddress());
-            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance())+getString(R.string.distance));
+            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance()) + getString(R.string.distance));
             map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
             map.put(ATTRIBUTE_VENUE_PHOTO, item.getVenue().getFeaturedPhotos().getItems().get(0).getPhotoURL());
             data.add(map);
         }
 
         VenueRecyclerViewAdapter adapter = new VenueRecyclerViewAdapter(getApplicationContext(), this, data);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        if (recyclerView != null) {
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(adapter);
-        }
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

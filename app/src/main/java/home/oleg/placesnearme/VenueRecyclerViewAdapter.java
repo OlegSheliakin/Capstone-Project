@@ -1,6 +1,7 @@
 package home.oleg.placesnearme;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,14 +35,14 @@ public class VenueRecyclerViewAdapter extends RecyclerView.Adapter<VenueRecycler
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = (View) LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.venue_list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         String name = data.get(position).get(ATTRIBUTE_VENUE_NAME);
         String distance = data.get(position).get(ATTRIBUTE_VENUE_DISTANCE);
         String address = data.get(position).get(ATTRIBUTE_VENUE_ADDRESS);
