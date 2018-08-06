@@ -41,5 +41,6 @@
     <string name="progress_bar_message">Please wait, searching is in progress</string>
     <string name="distance">m.</string>
     <string name="error_no_location">Sorry, cannot get your location. Try to use Network and Wi-Fi for determining location</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

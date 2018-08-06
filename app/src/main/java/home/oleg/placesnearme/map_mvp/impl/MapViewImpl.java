@@ -1,7 +1,6 @@
 package home.oleg.placesnearme.map_mvp.impl;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -30,10 +28,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import home.oleg.placenearme.domain.models.Item;
+import home.oleg.placenearme.domain.models.Venue;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.VenueRecyclerViewAdapter;
 import home.oleg.placesnearme.map_mvp.IMapView;
-import home.oleg.placesnearme.models.Item;
 
 public class MapViewImpl extends AppCompatActivity implements IMapView {
 
@@ -44,22 +43,14 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
     public final static String ATTRIBUTE_VENUE_PHOTO = "photo";
 
     private GoogleMap map;
-    private DrawerLayout drawerLayout;
-    private ProgressDialog progressDialog;
-    private List<Item> items;
+    private List<Venue> items;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(R.layout.app_bar_basic);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        progressDialog = new ProgressDialog(this);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
@@ -75,7 +66,7 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
     }
 
     @Override
-    public void showVenues(List<Item> items) {
+    public void showVenues(List<Venue> items) {
         this.items = items;
         map.clear();//delete all marks if they exist
 
@@ -84,47 +75,37 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
         }
 
         StringBuilder title = new StringBuilder();
-        for (Item v : items) {
-            if (v.getVenue().getName() != null) {
-                title.append(v.getVenue().getName());//appends name if it exists
+        for (Venue v : items) {
+            if (v.getName() != null) {
+                title.append(v.getName());//appends name if it exists
             }
-            if (v.getVenue().getLocation().getAddress() != null) {
-                title.append(", ").append(v.getVenue().getLocation().getAddress());//appends address if it exists
+            if (v.getLocation().getAddress() != null) {
+                title.append(", ").append(v.getLocation().getAddress());//appends address if it exists
             }
 
             map.addMarker(new MarkerOptions()
                     .title(title.toString()).position
-                            (new LatLng(v.getVenue().getLocation().getLat(),
-                                    v.getVenue().getLocation().getLng())));
+                            (new LatLng(v.getLocation().getLat(),
+                                    v.getLocation().getLng())));
             title.delete(0, title.length());//clear string builder
         }
     }
 
     @Override
     public void showVenueFromList(int position) {
-        double lat = items.get(position).getVenue().getLocation().getLat();
-        double lng = items.get(position).getVenue().getLocation().getLng();
+        double lat = items.get(position).getLocation().getLat();
+        double lng = items.get(position).getLocation().getLng();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
                 lat, lng), 18f);
         map.animateCamera(cameraUpdate);
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     @Override
     public void showProgress() {
-        if (progressDialog != null) {
-            progressDialog.setTitle(R.string.progress_dialog_searching);
-            progressDialog.setMessage(getString(R.string.progress_bar_message));
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
     }
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
     }
 
     @Override
@@ -133,15 +114,15 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
     }
 
     @Override
-    public void setListAdapter(List<Item> items) {
+    public void setListAdapter(List<Venue> items) {
         List<Map<String, String>> data = new ArrayList<>();
-        for (Item item : items) {
+        for (Venue item : items) {
             Map<String, String> map = new HashMap<>();
-            map.put(ATTRIBUTE_VENUE_NAME, item.getVenue().getName());
-            map.put(ATTRIBUTE_VENUE_ADDRESS, item.getVenue().getLocation().getAddress());
-            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getVenue().getLocation().getDistance()) + getString(R.string.distance));
-            map.put(ATTRIBUTE_VENUE_PHONE, item.getVenue().getContact().getFormattedPhone());
-            map.put(ATTRIBUTE_VENUE_PHOTO, item.getVenue().getFeaturedPhotos().getItems().get(0).getPhotoURL());
+            map.put(ATTRIBUTE_VENUE_NAME, item.getName());
+            map.put(ATTRIBUTE_VENUE_ADDRESS, item.getLocation().getAddress());
+            map.put(ATTRIBUTE_VENUE_DISTANCE, String.valueOf(item.getLocation().getDistance()) + getString(R.string.distance));
+            map.put(ATTRIBUTE_VENUE_PHONE, item.getContact().getFormattedPhone());
+            map.put(ATTRIBUTE_VENUE_PHOTO, item.getFeaturedPhotos().getItems().get(0).getPhotoURL());
             data.add(map);
         }
 
@@ -154,7 +135,7 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
 
     @Override
     public void callIntent(int position) {
-        String phoneNumber = items.get(position).getVenue().getContact().getFormattedPhone();
+        String phoneNumber = items.get(position).getContact().getFormattedPhone();
         Uri uri = Uri.parse("tel:" + phoneNumber);
         Intent intent = new Intent(Intent.ACTION_DIAL, uri);
         startActivity(intent);
@@ -170,12 +151,4 @@ public class MapViewImpl extends AppCompatActivity implements IMapView {
         map.setMyLocationEnabled(true);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 }

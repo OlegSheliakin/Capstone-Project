@@ -1,13 +1,13 @@
 package home.oleg.placesnearme.map_mvp;
 
 import android.location.Location;
-import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.List;
 
-import home.oleg.placesnearme.models.Item;
+import home.oleg.placenearme.domain.models.Item;
+import home.oleg.placenearme.domain.models.Venue;
 
 /**
  * Created by Oleg on 18.04.2016.
@@ -16,7 +16,7 @@ public interface IMapView extends OnMapReadyCallback {
 
     void showMyLocation(Location location);
 
-    void showVenues(List<Item> items);
+    void showVenues(List<Venue> items);
 
     void showVenueFromList(int position);
 
@@ -26,7 +26,7 @@ public interface IMapView extends OnMapReadyCallback {
 
     void showError();
 
-    void setListAdapter(List<Item> items);
+    void setListAdapter(List<Venue> items);
 
     void callIntent(int position);
 }

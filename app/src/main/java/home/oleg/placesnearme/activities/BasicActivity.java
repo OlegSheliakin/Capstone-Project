@@ -21,7 +21,7 @@ public class BasicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basic);
 
         String[] titles = getResources().getStringArray(R.array.titles_array);
-        ListView listView = (ListView) findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.basic_list_item, titles);
 

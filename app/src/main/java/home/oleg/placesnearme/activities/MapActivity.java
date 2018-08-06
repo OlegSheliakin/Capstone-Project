@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,18 +18,14 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import home.oleg.placesnearme.Parameters;
+import javax.inject.Inject;
+
+import home.oleg.placenearme.domain.interactors.MapInteractor;
 import home.oleg.placesnearme.R;
-import home.oleg.placesnearme.map_mvp.IMapPresenter;
-import home.oleg.placesnearme.map_mvp.impl.MapPresenterImpl;
+import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
+import home.oleg.placesnearme.map_mvp.impl.MapPresenter;
 import home.oleg.placesnearme.map_mvp.impl.MapViewImpl;
 
-/**
- * Created by Oleg on 19.04.2016.
- */
-
-//This activity extends MapViewImpl, which extends AppCompatActivity.
-// It is made specially to hide MapView implementation from GoogleAPIClient implementation.
 public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
     private final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
@@ -43,7 +38,10 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     private boolean requestingSearchingVenues = true;
     private GoogleApiClient googleApiClient;
     private Location currentLocation;
-    private IMapPresenter mapPresenter;
+
+    @Inject
+    MapPresenter mapPresenter;
+
     private String section;
 
     static {
@@ -56,13 +54,14 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DaggerApplicationComponent.create().inject(this);
+
         buildGoogleApiClient();
         updateValuesFromBundle(savedInstanceState);
-        mapPresenter = new MapPresenterImpl();
         mapPresenter.onAttachView(this);
 
         Intent intent = getIntent();
-        if (intent != null){
+        if (intent != null) {
             section = intent.getStringExtra(BasicActivity.EXTRA_DATA_SECTION);
         }
     }
@@ -225,8 +224,9 @@ public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnec
     }
 
     private void startSearchingVenues(int radius) {
-        Parameters parameters = new Parameters();
-        parameters.setLocation(currentLocation)
+        MapInteractor.Parameters parameters = new MapInteractor.Parameters();
+        parameters.setLatitude(currentLocation.getLatitude())
+                .setLongitude(currentLocation.getLongitude())
                 .setRadius(radius)
                 .setSection(section);
         mapPresenter.startSearchingVenues(parameters);
