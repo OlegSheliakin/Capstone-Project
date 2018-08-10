@@ -1,8 +1,6 @@
 package home.oleg.placenearme.domain.interactors;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import home.oleg.placenearme.domain.models.Venue;
 import home.oleg.placenearme.domain.repositories.VenueRepository;

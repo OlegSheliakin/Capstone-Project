@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.map_mvp;
+package home.oleg.placesnearme.presentation.feature.map.view;
 
 import android.location.Location;
 
@@ -6,7 +6,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.List;
 
-import home.oleg.placenearme.domain.models.Item;
 import home.oleg.placenearme.domain.models.Venue;
 
 /**

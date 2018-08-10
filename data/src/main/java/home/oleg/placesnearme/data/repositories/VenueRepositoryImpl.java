@@ -29,16 +29,13 @@ public class VenueRepositoryImpl implements VenueRepository {
 
     @Override
     public Observable<List<Venue>> getPlaces(MapInteractor.Parameters parameters) {
-        return api.getItems(toQueryParam(parameters)).map(new Function<FullResponse, List<Venue>>() {
-            @Override
-            public List<Venue> apply(FullResponse fullResponse) throws Exception {
-                List<Item> items = fullResponse.getResponse().getGroups().get(0).getItems();
-                List<Venue> venues = new ArrayList<>();
-                for (Item item : items) {
-                    venues.add(item.getVenue());
-                }
-                return venues;
+        return api.getItems(toQueryParam(parameters)).map(fullResponse -> {
+            List<Item> items = fullResponse.getResponse().getGroups().get(0).getItems();
+            List<Venue> venues = new ArrayList<>();
+            for (Item item : items) {
+                venues.add(item.getVenue());
             }
+            return venues;
         });
     }
 

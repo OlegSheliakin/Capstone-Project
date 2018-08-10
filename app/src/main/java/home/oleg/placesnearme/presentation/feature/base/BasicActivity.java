@@ -1,6 +1,5 @@
-package home.oleg.placesnearme.activities;
+package home.oleg.placesnearme.presentation.feature.base;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import home.oleg.placesnearme.R;
+import home.oleg.placesnearme.presentation.feature.map.view.MapActivity;
 
 public class BasicActivity extends AppCompatActivity {
 
-    public static final String EXTRA_DATA_SECTION = "home.oleg.placesnearme.activities.BasicActivity";
+    public static final String EXTRA_DATA_SECTION = "home.oleg.placesnearme.presentation.feature.base.BasicActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

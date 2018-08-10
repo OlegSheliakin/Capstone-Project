@@ -15,9 +15,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placesnearme.map_mvp.IMapView;
+import home.oleg.placesnearme.presentation.feature.map.view.IMapView;
 
-import static home.oleg.placesnearme.map_mvp.impl.MapViewImpl.*;
+import static home.oleg.placesnearme.presentation.feature.map.view.BaseMapActivity.*;
 
 /**
  * Created by Oleg on 30.05.2016.
@@ -65,19 +65,9 @@ public class VenueRecyclerViewAdapter extends RecyclerView.Adapter<VenueRecycler
             holder.btnCall.setEnabled(true);
         }
 
-        holder.btnGoTo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapView.showVenueFromList(position);
-            }
-        });
+        holder.btnGoTo.setOnClickListener(v -> mapView.showVenueFromList(position));
 
-        holder.btnCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapView.callIntent(position);
-            }
-        });
+        holder.btnCall.setOnClickListener(v -> mapView.callIntent(position));
     }
 
     @Override
@@ -96,13 +86,13 @@ public class VenueRecyclerViewAdapter extends RecyclerView.Adapter<VenueRecycler
 
         public ViewHolder(View view) {
             super(view);
-            imageViewVenuePhoto = (ImageView) view.findViewById(R.id.imageViewVenuePhoto);
-            tvName = (TextView) view.findViewById(R.id.tvName);
-            tvAddress = (TextView) view.findViewById(R.id.tvAddress);
-            tvPhone = (TextView) view.findViewById(R.id.tvPhone);
-            tvDistance = (TextView) view.findViewById(R.id.tvDistance);
-            btnGoTo = (Button) view.findViewById(R.id.btnGoTo);
-            btnCall = (Button) view.findViewById(R.id.btnCall);
+            imageViewVenuePhoto = view.findViewById(R.id.imageViewVenuePhoto);
+            tvName = view.findViewById(R.id.tvName);
+            tvAddress = view.findViewById(R.id.tvAddress);
+            tvPhone = view.findViewById(R.id.tvPhone);
+            tvDistance = view.findViewById(R.id.tvDistance);
+            btnGoTo = view.findViewById(R.id.btnGoTo);
+            btnCall = view.findViewById(R.id.btnCall);
         }
     }
 }

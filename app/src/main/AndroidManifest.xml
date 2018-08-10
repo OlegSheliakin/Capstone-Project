@@ -25,11 +25,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".activities.MapActivity"
+            android:name=".presentation.feature.map.view.MapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.BasicActivity"
+            android:name=".presentation.feature.base.BasicActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

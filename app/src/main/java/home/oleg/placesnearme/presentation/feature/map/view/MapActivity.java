@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.activities;
+package home.oleg.placesnearme.presentation.feature.map.view;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,10 +23,10 @@ import javax.inject.Inject;
 import home.oleg.placenearme.domain.interactors.MapInteractor;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
-import home.oleg.placesnearme.map_mvp.impl.MapPresenter;
-import home.oleg.placesnearme.map_mvp.impl.MapViewImpl;
+import home.oleg.placesnearme.presentation.feature.base.BasicActivity;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapPresenter;
 
-public class MapActivity extends MapViewImpl implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
+public class MapActivity extends BaseMapActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
     private final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
     private final static String REQUESTING_SEARCHING_VENUES = "requesting-searching-venues-key";

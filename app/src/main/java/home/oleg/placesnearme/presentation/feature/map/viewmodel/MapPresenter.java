@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.map_mvp.impl;
+package home.oleg.placesnearme.presentation.feature.map.viewmodel;
 
 import java.util.List;
 import java.util.Objects;
@@ -6,11 +6,9 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import home.oleg.placenearme.domain.interactors.MapInteractor;
-import home.oleg.placenearme.domain.models.Item;
 import home.oleg.placenearme.domain.models.Venue;
 import home.oleg.placenearme.domain.repositories.VenueRepository;
-import home.oleg.placesnearme.map_mvp.IMapView;
-import io.reactivex.Scheduler;
+import home.oleg.placesnearme.presentation.feature.map.view.IMapView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;

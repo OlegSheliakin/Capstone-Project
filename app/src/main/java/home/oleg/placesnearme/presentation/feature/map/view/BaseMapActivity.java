@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.map_mvp.impl;
+package home.oleg.placesnearme.presentation.feature.map.view;
 
 import android.Manifest;
 import android.content.Intent;
@@ -7,9 +7,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,13 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placenearme.domain.models.Item;
 import home.oleg.placenearme.domain.models.Venue;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.VenueRecyclerViewAdapter;
-import home.oleg.placesnearme.map_mvp.IMapView;
 
-public class MapViewImpl extends AppCompatActivity implements IMapView {
+public class BaseMapActivity extends AppCompatActivity implements IMapView {
 
     public final static String ATTRIBUTE_VENUE_NAME = "name";
     public final static String ATTRIBUTE_VENUE_DISTANCE = "distance";
