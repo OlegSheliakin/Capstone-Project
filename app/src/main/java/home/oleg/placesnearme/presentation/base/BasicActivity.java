@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.presentation.feature.base;
+package home.oleg.placesnearme.presentation.base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import home.oleg.placesnearme.presentation.feature.map.view.MapActivity;
 
 public class BasicActivity extends AppCompatActivity {
 
-    public static final String EXTRA_DATA_SECTION = "home.oleg.placesnearme.presentation.feature.base.BasicActivity";
+    public static final String EXTRA_DATA_SECTION = "home.oleg.placesnearme.presentation.base.BasicActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

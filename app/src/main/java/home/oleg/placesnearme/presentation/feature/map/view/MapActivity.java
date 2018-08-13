@@ -23,8 +23,8 @@ import javax.inject.Inject;
 import home.oleg.placenearme.domain.interactors.MapInteractor;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
-import home.oleg.placesnearme.presentation.feature.base.BasicActivity;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapPresenter;
+import home.oleg.placesnearme.presentation.base.BasicActivity;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
 
 public class MapActivity extends BaseMapActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
@@ -40,7 +40,7 @@ public class MapActivity extends BaseMapActivity implements GoogleApiClient.OnCo
     private Location currentLocation;
 
     @Inject
-    MapPresenter mapPresenter;
+    MapViewModel mapPresenter;
 
     private String section;
 
@@ -54,11 +54,9 @@ public class MapActivity extends BaseMapActivity implements GoogleApiClient.OnCo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DaggerApplicationComponent.create().inject(this);
 
         buildGoogleApiClient();
         updateValuesFromBundle(savedInstanceState);
-        mapPresenter.onAttachView(this);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -88,7 +86,6 @@ public class MapActivity extends BaseMapActivity implements GoogleApiClient.OnCo
 
     @Override
     protected void onDestroy() {
-        mapPresenter.onDetachView();
         super.onDestroy();
     }
 
@@ -212,15 +209,15 @@ public class MapActivity extends BaseMapActivity implements GoogleApiClient.OnCo
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        requestingLocationUpdates = false;
+        /*requestingLocationUpdates = false;
         LocationServices.FusedLocationApi.requestLocationUpdates(
-                googleApiClient, LOCATION_REQUEST, this);
+                googleApiClient, LOCATION_REQUEST, this);*/
     }
 
     private void stopLocationUpdates() {
-        requestingLocationUpdates = true;
+        /*requestingLocationUpdates = true;
         LocationServices.FusedLocationApi.removeLocationUpdates(
-                googleApiClient, this);
+                googleApiClient, this);*/
     }
 
     private void startSearchingVenues(int radius) {
@@ -229,7 +226,7 @@ public class MapActivity extends BaseMapActivity implements GoogleApiClient.OnCo
                 .setLongitude(currentLocation.getLongitude())
                 .setRadius(radius)
                 .setSection(section);
-        mapPresenter.startSearchingVenues(parameters);
+        mapPresenter.search(parameters);
     }
 
     private void showLocationError() {

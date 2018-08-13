@@ -18,7 +18,7 @@ public class MapInteractor {
     }
 
     public Observable<List<Venue>> getPlaces(Parameters params) {
-        return placesRepository.getPlaces(params);
+        return placesRepository.explore(params);
     }
 
     public static final class Parameters {

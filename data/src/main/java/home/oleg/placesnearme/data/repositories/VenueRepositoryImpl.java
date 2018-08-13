@@ -28,7 +28,7 @@ public class VenueRepositoryImpl implements VenueRepository {
     }
 
     @Override
-    public Observable<List<Venue>> getPlaces(MapInteractor.Parameters parameters) {
+    public Observable<List<Venue>> explore(MapInteractor.Parameters parameters) {
         return api.getItems(toQueryParam(parameters)).map(fullResponse -> {
             List<Item> items = fullResponse.getResponse().getGroups().get(0).getItems();
             List<Venue> venues = new ArrayList<>();
@@ -37,6 +37,11 @@ public class VenueRepositoryImpl implements VenueRepository {
             }
             return venues;
         });
+    }
+
+    @Override
+    public Observable<List<Venue>> search(String query) {
+        return Observable.empty();
     }
 
     private Map<String, String> toQueryParam(MapInteractor.Parameters parameters) {

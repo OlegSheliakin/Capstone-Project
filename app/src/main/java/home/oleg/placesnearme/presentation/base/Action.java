@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.presentation.feature.base;
+package home.oleg.placesnearme.presentation.base;
 
 import io.reactivex.annotations.NonNull;
 

@@ -1,13 +1,10 @@
 package home.oleg.placesnearme.data.service;
 
-import java.io.IOException;
-
 import home.oleg.placesnearme.data.BuildConfig;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -42,18 +39,15 @@ public class FourSquareAPIFactory {
     }
 
     private static Interceptor createSecretInterceptor() {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                HttpUrl url = chain.request().url().newBuilder()
-                        .addQueryParameter(CLIENT_ID_KEY, BuildConfig.CLIENT_ID)
-                        .addQueryParameter(CLIENT_SECRET_KEY, BuildConfig.CLIENT_SECRET)
-                        .addQueryParameter(VERSION_KEY, BuildConfig.API_VERSION)
-                        .build();
-                Request req = chain.request().newBuilder().url(url).build();
+        return chain -> {
+            HttpUrl url = chain.request().url().newBuilder()
+                    .addQueryParameter(CLIENT_ID_KEY, BuildConfig.CLIENT_ID)
+                    .addQueryParameter(CLIENT_SECRET_KEY, BuildConfig.CLIENT_SECRET)
+                    .addQueryParameter(VERSION_KEY, BuildConfig.API_VERSION)
+                    .build();
+            Request req = chain.request().newBuilder().url(url).build();
 
-                return chain.proceed(req);
-            }
+            return chain.proceed(req);
         };
     }
 

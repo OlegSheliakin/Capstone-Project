@@ -42,5 +42,6 @@
     <string name="distance">m.</string>
     <string name="error_no_location">Sorry, cannot get your location. Try to use Network and Wi-Fi for determining location</string>
     <string name="title_activity_maps">Map</string>
+    <string name="map">Map</string>
 
 </resources>

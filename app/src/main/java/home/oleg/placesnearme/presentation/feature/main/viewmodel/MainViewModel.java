@@ -2,7 +2,7 @@ package home.oleg.placesnearme.presentation.feature.main.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 
-import home.oleg.placesnearme.presentation.feature.base.Action;
+import home.oleg.placesnearme.presentation.base.Action;
 
 public class MainViewModel extends ViewModel {
 

@@ -7,5 +7,9 @@ import home.oleg.placenearme.domain.models.Venue;
 import io.reactivex.Observable;
 
 public interface VenueRepository {
-    Observable<List<Venue>> getPlaces(MapInteractor.Parameters parameters);
+
+    Observable<List<Venue>> explore(MapInteractor.Parameters parameters);
+
+    Observable<List<Venue>> search(String query);
+
 }

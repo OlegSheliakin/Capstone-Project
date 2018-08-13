@@ -1,4 +1,4 @@
-package home.oleg.placesnearme;
+package home.oleg.placesnearme.presentation;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Map;
 
+import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.presentation.feature.map.view.IMapView;
 
 import static home.oleg.placesnearme.presentation.feature.map.view.BaseMapActivity.*;
@@ -34,9 +35,10 @@ public class VenueRecyclerViewAdapter extends RecyclerView.Adapter<VenueRecycler
         this.data = data;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = (View) LayoutInflater.from(parent.getContext()).
+        View view = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.venue_list_item, parent, false);
         return new ViewHolder(view);
     }

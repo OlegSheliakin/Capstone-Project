@@ -27,7 +27,7 @@ import java.util.Map;
 
 import home.oleg.placenearme.domain.models.Venue;
 import home.oleg.placesnearme.R;
-import home.oleg.placesnearme.VenueRecyclerViewAdapter;
+import home.oleg.placesnearme.presentation.VenueRecyclerViewAdapter;
 
 public class BaseMapActivity extends AppCompatActivity implements IMapView {
 
@@ -43,10 +43,6 @@ public class BaseMapActivity extends AppCompatActivity implements IMapView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_basic);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
     }
@@ -120,12 +116,6 @@ public class BaseMapActivity extends AppCompatActivity implements IMapView {
             map.put(ATTRIBUTE_VENUE_PHOTO, item.getFeaturedPhotos().getItems().get(0).getPhotoURL());
             data.add(map);
         }
-
-        VenueRecyclerViewAdapter adapter = new VenueRecyclerViewAdapter(getApplicationContext(), this, data);
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
