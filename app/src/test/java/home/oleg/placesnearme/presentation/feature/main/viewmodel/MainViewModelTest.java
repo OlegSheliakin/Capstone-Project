@@ -6,16 +6,10 @@ import home.oleg.placesnearme.presentation.base.Action;
 
 public class MainViewModelTest {
 
-    private final MainViewModel mainViewModel = new MainViewModel(new Action<String>() {
-        @Override
-        public void perform(String s) {
-
-        }
-    });
+    private final MainViewModel mainViewModel = new MainViewModel();
 
     @Test
     public void act() {
-        mainViewModel.act("Hello");
     }
 
 }

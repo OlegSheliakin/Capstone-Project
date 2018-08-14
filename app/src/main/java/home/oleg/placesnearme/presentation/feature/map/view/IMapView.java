@@ -6,7 +6,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.List;
 
-import home.oleg.placenearme.domain.models.Venue;
+import home.oleg.placenearme.models.Venue;
 
 /**
  * Created by Oleg on 18.04.2016.

@@ -2,9 +2,9 @@ package home.oleg.placesnearme.di.modules;
 
 import dagger.Module;
 import dagger.Provides;
-import home.oleg.placenearme.domain.repositories.VenueRepository;
-import home.oleg.placesnearme.data.repositories.VenueRepositoryImpl;
-import home.oleg.placesnearme.data.service.IFourSquareAPI;
+import home.oleg.placenearme.repositories.VenueRepository;
+import home.oleg.placesnearme.repositories.VenueRepositoryImpl;
+import home.oleg.placesnearme.service.IFourSquareAPI;
 
 @Module
 public class RepositoryModule {

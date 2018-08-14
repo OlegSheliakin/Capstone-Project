@@ -25,9 +25,11 @@ public final class MainActivity extends AppCompatActivity implements MainView {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(mapDelegate);
+
+        mapDelegate.onCreate();
     }
 
-    protected void injectDependencies() {
+    void injectDependencies() {
         DaggerApplicationComponent.create().mainActivityComponent().inject(this);
     }
 

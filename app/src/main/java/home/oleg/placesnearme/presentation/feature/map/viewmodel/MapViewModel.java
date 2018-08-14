@@ -6,29 +6,58 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import home.oleg.placenearme.domain.interactors.MapInteractor;
-import home.oleg.placenearme.domain.models.Venue;
-import home.oleg.placenearme.domain.repositories.VenueRepository;
+import home.oleg.placenearme.repositories.Category;
+import home.oleg.placenearme.repositories.VenueRepository;
+import home.oleg.placesnearme.presentation.viewobjects.VenueViewObject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.AsyncSubject;
 
 /**
- * Created by Oleg on 18.04.2016.
+ * Created by Oleg on 10.08.2018.
  */
 public class MapViewModel extends ViewModel {
 
-    private VenueRepository venueRepository;
+    private final VenueRepository venueRepository;
+    private AsyncSubject<List<VenueViewObject>> searchSubject = AsyncSubject.create();
+    private Disposable disposable;
 
     @Inject
     public MapViewModel(VenueRepository venueRepository) {
         this.venueRepository = venueRepository;
     }
 
-    public Observable<List<Venue>> search(MapInteractor.Parameters parameters) {
-        return venueRepository.explore(parameters)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+    public Observable<List<VenueViewObject>> observeResults() {
+        return searchSubject;
     }
 
+    public void search(String query) {
+        disposable = venueRepository.search(query)
+                .map(VenueViewObject::mapFrom)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        searchSubject::onNext,
+                        searchSubject::onError);
+    }
+
+    public void getRecommended(String type) {
+        disposable = venueRepository.getRecommendedByCategory(Category.COFFEE)
+                .map(VenueViewObject::mapFrom)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        searchSubject::onNext,
+                        searchSubject::onError);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if(disposable != null) {
+            disposable.dispose();
+        }
+    }
 }
