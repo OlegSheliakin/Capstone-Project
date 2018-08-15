@@ -10,6 +10,7 @@ import home.oleg.placesnearme.models.responses.TipsResponse;
 import home.oleg.placesnearme.models.responses.VenueDetailResponse;
 import home.oleg.placesnearme.models.responses.VenuesResponse;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -21,23 +22,23 @@ import retrofit2.http.QueryMap;
 public interface IFourSquareAPI {
 
     @GET("v2/venues/explore")
-    Observable<Response<ExploreResponse>> explore(@QueryMap Map<String, String> queryMap);
+    Single<Response<ExploreResponse>> explore(@QueryMap Map<String, String> queryMap);
 
     @GET("v2/venues/search")
-    Observable<Response<VenuesResponse>> search(@QueryMap Map<String, String> queryMap);
+    Single<Response<VenuesResponse>> search(@QueryMap Map<String, String> queryMap);
 
     @GET("v2/venues/{id}/tips")
-    Observable<Response<TipsResponse>> getTips(
+    Single<Response<TipsResponse>> getTips(
             @Path("id") String id,
             @Query("offset") int offset,
             @Query("limit") int limit,
             @Query("sort") String sort);
 
     @GET("v2/venues/{id}")
-    Observable<Response<VenueDetailResponse>> getDetail(@Path("id") String id);
+    Single<Response<VenueDetailResponse>> getDetail(@Path("id") String id);
 
     @GET("v2/venues/{id}/photos")
-    Observable<Response<PhotosResponse>> getPhotos(
+    Single<Response<PhotosResponse>> getPhotos(
             @Path("id") String id,
             @Query("offset") int offset,
             @Query("limit") int limit);

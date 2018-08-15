@@ -11,6 +11,6 @@ public class RepositoryModule {
 
     @Provides
     public VenueRepository provideVenueRepo(IFourSquareAPI api) {
-        return new VenueRepositoryImpl(api);
+        return new VenueRepositoryImpl(api, queryParamCreator);
     }
 }

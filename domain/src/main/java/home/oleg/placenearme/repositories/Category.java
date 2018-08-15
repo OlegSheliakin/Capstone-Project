@@ -12,5 +12,13 @@ public enum Category {
     TRENDING("trending"),
     NEXTVENUES("nextVenues");
 
-    Category(String food) { }
+    private String value;
+
+    Category(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }
