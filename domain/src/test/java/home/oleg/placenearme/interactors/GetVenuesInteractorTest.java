@@ -1,6 +1,5 @@
 package home.oleg.placenearme.interactors;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 import home.oleg.placenearme.models.DetailedVenue;
-import home.oleg.placenearme.models.User;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.repositories.Category;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
@@ -57,6 +55,7 @@ public class GetVenuesInteractorTest {
         List<DetailedVenue> list = subject.getRecommendedVenue(Category.ARTS).blockingGet();
 
         verify(venueRepository, times(1)).getRecommendedByCategory(Category.ARTS, filter);
+        verifyNoMoreInteractions(detailedVenueRepository);
 
         assertTrue(list.isEmpty());
     }
