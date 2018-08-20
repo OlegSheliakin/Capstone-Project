@@ -16,17 +16,17 @@ public final class MainActivity extends AppCompatActivity implements MainView {
     @Inject
     MapViewDelegate mapDelegate;
 
+    @Inject
+    SupportMapFragment mapFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        getLifecycle().addObserver(mapDelegate);
         mapFragment.getMapAsync(mapDelegate);
-
-        mapDelegate.onCreate();
     }
 
     void injectDependencies() {

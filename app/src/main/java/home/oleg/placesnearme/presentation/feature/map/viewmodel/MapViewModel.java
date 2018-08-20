@@ -1,14 +1,20 @@
 package home.oleg.placesnearme.presentation.feature.map.viewmodel;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.Lazy;
+import home.oleg.placenearme.interactors.GetVenuesInteractor;
 import home.oleg.placenearme.repositories.Category;
 import home.oleg.placenearme.repositories.VenueRepository;
+import home.oleg.placenearme.utils.Supplier;
 import home.oleg.placesnearme.presentation.viewobjects.VenueViewObject;
+import home.oleg.placesnearme.utils.LazyDelegate;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -21,42 +27,37 @@ import io.reactivex.subjects.AsyncSubject;
  */
 public class MapViewModel extends ViewModel {
 
-    private final VenueRepository venueRepository;
-    private AsyncSubject<List<VenueViewObject>> searchSubject = AsyncSubject.create();
+    private final GetVenuesInteractor interactor;
+
+    private Lazy<MutableLiveData<List<VenueViewObject>>> results = LazyDelegate.delegate(MutableLiveData::new);
+    private Lazy<MutableLiveData<Throwable>> errors = LazyDelegate.delegate(MutableLiveData::new);
     private Disposable disposable;
 
     @Inject
-    public MapViewModel(VenueRepository venueRepository) {
-        this.venueRepository = venueRepository;
+    public MapViewModel(GetVenuesInteractor interactor) {
+        this.interactor = interactor;
     }
 
-    public Observable<List<VenueViewObject>> observeResults() {
-        return searchSubject;
+    public MutableLiveData<List<VenueViewObject>> observeResults() {
+        return results.get();
     }
 
-    public void search(String query) {
-        disposable = venueRepository.search(query)
-                .map(VenueViewObject::mapFrom)
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        searchSubject::onNext,
-                        searchSubject::onError);
+    public MutableLiveData<Throwable> observeErrors() {
+        return errors.get();
     }
 
-    public void getRecommended(String type) {
-        disposable = venueRepository.getRecommendedByCategory(Category.COFFEE)
+    public void getRecommendedVenues() {
+        disposable = interactor.getRecommendedVenues()
                 .map(VenueViewObject::mapFrom)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        searchSubject::onNext,
-                        searchSubject::onError);
+                .subscribe(results.get()::setValue, errors.get()::setValue);
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        if(disposable != null) {
+        if (disposable != null) {
             disposable.dispose();
         }
     }

@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import home.oleg.placenearme.models.Venue;
+import home.oleg.placenearme.models.DetailedVenue;
+import home.oleg.placenearme.models.Photo;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
@@ -14,10 +15,10 @@ import home.oleg.placenearme.models.Venue;
 public class VenueViewObject {
 
     private String title;
-    private String addres;
-    private String thumbUrl;
+    private String address;
     private double lat;
     private double lng;
+    private List<String> photoUrls;
 
     public String getTitle() {
         return title;
@@ -27,20 +28,12 @@ public class VenueViewObject {
         this.title = title;
     }
 
-    public String getAddres() {
-        return addres;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddres(String addres) {
-        this.addres = addres;
-    }
-
-    public String getThumbUrl() {
-        return thumbUrl;
-    }
-
-    public void setThumbUrl(String thumbUrl) {
-        this.thumbUrl = thumbUrl;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public double getLat() {
@@ -59,32 +52,40 @@ public class VenueViewObject {
         this.lng = lng;
     }
 
-    public static List<VenueViewObject> mapFrom(Collection<Venue> venues) {
+    public List<String> getPhotoUrls() {
+        return photoUrls;
+    }
+
+    public void setPhotoUrls(List<String> photoUrls) {
+        this.photoUrls = photoUrls;
+    }
+
+    public static List<VenueViewObject> mapFrom(Collection<DetailedVenue> venues) {
         if (venues.isEmpty()) {
             return Collections.emptyList();
         }
 
         List<VenueViewObject> list = new ArrayList<>();
-        for (Venue venue : venues) {
+        for (DetailedVenue venue : venues) {
             list.add(VenueViewObject.mapFrom(venue));
         }
         return list;
     }
 
-    public static VenueViewObject mapFrom(Venue venue) {
+    public static VenueViewObject mapFrom(DetailedVenue venue) {
         VenueViewObject venueViewObject = new VenueViewObject();
         venueViewObject.setTitle(venue.getName());
-        venueViewObject.setAddres(venue.getLocation().getAddress());
+        venueViewObject.setAddress(venue.getLocation().getAddress());
         venueViewObject.setLat(venue.getLocation().getLat());
         venueViewObject.setLng(venue.getLocation().getLng());
 
-        /*List<FeaturedPhotos.ItemsPhoto> itemsPhotos = venue.getFeaturedPhotos().getItems();
-        if (itemsPhotos != null && !itemsPhotos.isEmpty()) {
-            FeaturedPhotos.ItemsPhoto itemsPhoto = itemsPhotos.get(0);
-            if (itemsPhoto != null) {
-                venueViewObject.setThumbUrl(itemsPhoto.getPhotoURL());
-            }
-        }*/
+        List<Photo> photos = venue.getPhotos();
+
+        List<String> photoUrls = new ArrayList<>();
+        for (Photo photo : photos) {
+            photoUrls.add(photo.getImageUrl());
+        }
+        venueViewObject.setPhotoUrls(photoUrls);
 
         return venueViewObject;
     }

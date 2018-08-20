@@ -20,14 +20,14 @@ public class VenueRepositoryImpl implements VenueRepository {
     }
 
     @Override
-    public Single<List<Venue>> getRecommendedByCategory(Category category, Filter filter) {
+    public Single<List<Venue>> getRecommendedByCategory(Category category, RequestParams filter) {
         Map<String, String> queryMap = queryParamCreator.create(category, filter);
 
         return api.explore(queryMap).map(fullResponse -> fullResponse.getResponse().getVenues());
     }
 
     @Override
-    public Single<List<Venue>> search(String query, Filter filter) {
+    public Single<List<Venue>> search(String query, RequestParams filter) {
         Map<String, String> queryMap = queryParamCreator.create(query, filter);
 
         return api.search(queryMap).map(fullResponse -> fullResponse.getResponse().getVenues());

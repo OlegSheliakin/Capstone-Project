@@ -6,6 +6,7 @@ import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
 import home.oleg.placenearme.repositories.Category;
+import home.oleg.placenearme.repositories.CategoryRepository;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
@@ -19,13 +20,21 @@ public class GetVenuesInteractor {
     private final VenueRepository venueRepository;
     private final DetailedVenueRepository detailedVenueRepository;
     private final UserLocationRepository locationRepository;
+    private final CategoryRepository categoryRepository;
 
     public GetVenuesInteractor(VenueRepository venueRepository,
                                DetailedVenueRepository detailedVenueRepository,
-                               UserLocationRepository locationRepository) {
+                               UserLocationRepository locationRepository, CategoryRepository categoryRepository) {
         this.venueRepository = venueRepository;
         this.detailedVenueRepository = detailedVenueRepository;
         this.locationRepository = locationRepository;
+        this.categoryRepository = categoryRepository;
+    }
+
+    public Single<List<DetailedVenue>> getRecommendedVenues() {
+        return getVenues(userLocation ->
+                venueRepository.getRecommendedByCategory(
+                        categoryRepository.getMostFrequent(), createFilter(userLocation)));
     }
 
     public Single<List<DetailedVenue>> getRecommendedVenue(Category category) {
@@ -47,8 +56,9 @@ public class GetVenuesInteractor {
                 .toList();
     }
 
-    private VenueRepository.Filter createFilter(UserLocation userLocation) {
-        VenueRepository.Filter filter = new VenueRepository.Filter();
+    private VenueRepository.RequestParams createFilter(UserLocation userLocation) {
+        VenueRepository.RequestParams filter = new VenueRepository.RequestParams();
+
         filter.setLat(userLocation.getLat());
         filter.setLng(userLocation.getLng());
         return filter;

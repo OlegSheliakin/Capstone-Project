@@ -13,7 +13,7 @@ public class QueryParamCreator {
     private static final String SECTION_KEY = "section";
     private static final String QUERY = "query";
 
-    public Map<String, String> create(Category category, VenueRepository.Filter filter) {
+    public Map<String, String> create(Category category, VenueRepository.RequestParams filter) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(LL_KEY, filter.getLat() + "," + filter.getLng());
         queryMap.put(SECTION_KEY, category.getValue());
@@ -22,7 +22,7 @@ public class QueryParamCreator {
         return queryMap;
     }
 
-    public Map<String, String> create(String query, VenueRepository.Filter filter) {
+    public Map<String, String> create(String query, VenueRepository.RequestParams filter) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(LL_KEY, filter.getLat() + "," + filter.getLng());
         queryMap.put(QUERY, query);
