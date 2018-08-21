@@ -5,6 +5,7 @@ import java.util.Map;
 
 import home.oleg.placenearme.repositories.Category;
 import home.oleg.placenearme.repositories.VenueRepository;
+import home.oleg.placenearme.repositories.VenueRequestParams;
 
 public class QueryParamCreator {
 
@@ -13,7 +14,7 @@ public class QueryParamCreator {
     private static final String SECTION_KEY = "section";
     private static final String QUERY = "query";
 
-    public Map<String, String> create(Category category, VenueRepository.RequestParams filter) {
+    public Map<String, String> create(Category category,VenueRequestParams filter) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(LL_KEY, filter.getLat() + "," + filter.getLng());
         queryMap.put(SECTION_KEY, category.getValue());
@@ -22,7 +23,7 @@ public class QueryParamCreator {
         return queryMap;
     }
 
-    public Map<String, String> create(String query, VenueRepository.RequestParams filter) {
+    public Map<String, String> create(String query, VenueRequestParams filter) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(LL_KEY, filter.getLat() + "," + filter.getLng());
         queryMap.put(QUERY, query);

@@ -13,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 @Module
-public class CoreModule {
+public final class CoreModule {
 
     @Provides
     @NonNull

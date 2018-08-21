@@ -24,7 +24,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-
 }
 
 dependencies {
@@ -65,12 +64,10 @@ dependencies {
 
     //lifecycle
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.2'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.2'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+    implementation "android.arch.lifecycle:common-java8:1.1.1"
+    annotationProcessor  "android.arch.lifecycle:compiler:1.1.1"
 
-
-    //auto value
-    annotationProcessor "com.google.auto.value:auto-value:1.6.2"
+    //logging
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

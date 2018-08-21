@@ -1,5 +1,5 @@
 package home.oleg.placesnearme.presentation.base;
 
-public interface WithError {
+public interface ErrorView {
     void showError(String message);
 }

@@ -10,6 +10,7 @@ import home.oleg.placenearme.repositories.CategoryRepository;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
+import home.oleg.placenearme.repositories.VenueRequestParams;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
@@ -24,7 +25,8 @@ public class GetVenuesInteractor {
 
     public GetVenuesInteractor(VenueRepository venueRepository,
                                DetailedVenueRepository detailedVenueRepository,
-                               UserLocationRepository locationRepository, CategoryRepository categoryRepository) {
+                               UserLocationRepository locationRepository,
+                               CategoryRepository categoryRepository) {
         this.venueRepository = venueRepository;
         this.detailedVenueRepository = detailedVenueRepository;
         this.locationRepository = locationRepository;
@@ -47,7 +49,8 @@ public class GetVenuesInteractor {
                 venueRepository.search(query, createFilter(userLocation)));
     }
 
-    private Single<List<DetailedVenue>> getVenues(Function<UserLocation, SingleSource<List<Venue>>> mapper) {
+    private Single<List<DetailedVenue>> getVenues(
+            Function<UserLocation, SingleSource<List<Venue>>> mapper) {
         return locationRepository.getLocation()
                 .flatMap(mapper)
                 .flatMapObservable(Observable::fromIterable)
@@ -56,12 +59,10 @@ public class GetVenuesInteractor {
                 .toList();
     }
 
-    private VenueRepository.RequestParams createFilter(UserLocation userLocation) {
-        VenueRepository.RequestParams filter = new VenueRepository.RequestParams();
-
-        filter.setLat(userLocation.getLat());
-        filter.setLng(userLocation.getLng());
-        return filter;
+    private VenueRequestParams createFilter(UserLocation userLocation) {
+        return VenueRequestParams.withLocation(
+                userLocation.getLat(),
+                userLocation.getLng());
     }
 
 }
