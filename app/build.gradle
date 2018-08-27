@@ -41,15 +41,17 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
+
     //dependency injection
-    implementation 'com.google.dagger:dagger:2.16'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
-    implementation 'com.google.dagger:dagger-android:2.16'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.16'
+    implementation 'com.google.dagger:dagger:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    implementation 'com.google.dagger:dagger-android:2.17'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
 
     //reactive programming
     implementation "io.reactivex.rxjava2:rxjava:2.2.0"
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
     //data persistence
     implementation "android.arch.persistence.room:runtime:1.1.1"
@@ -65,7 +67,6 @@ dependencies {
     //lifecycle
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:runtime:1.1.1"
-    implementation "android.arch.lifecycle:common-java8:1.1.1"
     annotationProcessor  "android.arch.lifecycle:compiler:1.1.1"
 
     //logging

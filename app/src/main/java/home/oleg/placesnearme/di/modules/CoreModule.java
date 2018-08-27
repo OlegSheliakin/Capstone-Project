@@ -1,7 +1,10 @@
 package home.oleg.placesnearme.di.modules;
 
+import android.content.Context;
+
 import dagger.Module;
 import dagger.Provides;
+import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.presentation.errorhandler.ErrorHandler;
 import home.oleg.placesnearme.repositories.QueryParamCreator;
 import io.reactivex.annotations.NonNull;
@@ -14,6 +17,12 @@ import io.reactivex.disposables.CompositeDisposable;
 
 @Module
 public final class CoreModule {
+
+    @Provides
+    @NonNull
+    static Context provideContext(PlacesNearMeApp app) {
+        return app;
+    }
 
     @Provides
     @NonNull

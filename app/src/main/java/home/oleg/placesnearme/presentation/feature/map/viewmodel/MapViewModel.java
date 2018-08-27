@@ -4,14 +4,13 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import home.oleg.placenearme.interactors.GetVenuesInteractor;
-import home.oleg.placesnearme.presentation.base.HideLoadingAction;
-import home.oleg.placesnearme.presentation.base.ShowErrorAction;
-import home.oleg.placesnearme.presentation.base.ShowLoadingAction;
+import home.oleg.placesnearme.presentation.base.ShowVenueDataAction;
 import home.oleg.placesnearme.presentation.base.ViewAction;
+import home.oleg.placesnearme.presentation.base.ViewActions;
 import home.oleg.placesnearme.presentation.feature.map.view.MapView;
-import home.oleg.placesnearme.presentation.feature.map.view.ShowDataAction;
-import home.oleg.placesnearme.presentation.viewobjects.VenueViewObject;
+import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -25,28 +24,13 @@ public class MapViewModel extends ViewModel {
     private MutableLiveData<ViewAction<MapView>> observer = new MutableLiveData<>();
     private Disposable disposable;
 
-    public MapViewModel(GetVenuesInteractor interactor) {
+    public MapViewModel(@NonNull GetVenuesInteractor interactor) {
         this.interactor = interactor;
         init();
     }
 
-    public MutableLiveData<ViewAction<MapView>> observeState() {
+    public MutableLiveData<ViewAction<MapView>> observe() {
         return observer;
-    }
-
-    public void getRecommendedVenues() {
-        disposable = interactor.getRecommendedVenues()
-                .map(VenueViewObject::mapFrom)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(d -> observer.setValue(new ShowLoadingAction<>()))
-                //.doFinally(() -> observer.setValue(new HideLoadingAction<>()))
-                .subscribe(venueViewObjects -> {
-                            observer.setValue(new ShowDataAction(venueViewObjects));
-                        },
-                        throwable -> {
-                            observer.setValue(new ShowErrorAction<>(throwable));
-                        });
     }
 
     @Override
@@ -59,6 +43,22 @@ public class MapViewModel extends ViewModel {
 
     private void init() {
         getRecommendedVenues();
+    }
+
+    private void getRecommendedVenues() {
+        disposable = interactor.getRecommendedVenues()
+                .map(VenueViewData::mapFrom)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(d -> observer.setValue(ViewActions.showLoading()))
+                .subscribe(venues -> {
+                            observer.setValue(ViewActions.hideLoading());
+                            observer.setValue(ShowVenueDataAction.create(venues));
+                        },
+                        throwable -> {
+                            observer.setValue(ViewActions.hideLoading());
+                            observer.setValue(ViewActions.error(throwable));
+                        });
     }
 
 }

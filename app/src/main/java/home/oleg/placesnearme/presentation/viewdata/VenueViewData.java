@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.presentation.viewobjects;
+package home.oleg.placesnearme.presentation.viewdata;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,18 +7,20 @@ import java.util.List;
 
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Photo;
+import home.oleg.placenearme.repositories.Category;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewObject {
+public class VenueViewData {
 
     private String title;
     private String address;
     private double lat;
     private double lng;
     private List<String> photoUrls;
+    private Category category;
 
     public String getTitle() {
         return title;
@@ -60,20 +62,20 @@ public class VenueViewObject {
         this.photoUrls = photoUrls;
     }
 
-    public static List<VenueViewObject> mapFrom(Collection<DetailedVenue> venues) {
+    public static List<VenueViewData> mapFrom(Collection<DetailedVenue> venues) {
         if (venues.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<VenueViewObject> list = new ArrayList<>();
+        List<VenueViewData> list = new ArrayList<>();
         for (DetailedVenue venue : venues) {
-            list.add(VenueViewObject.mapFrom(venue));
+            list.add(VenueViewData.mapFrom(venue));
         }
         return list;
     }
 
-    public static VenueViewObject mapFrom(DetailedVenue venue) {
-        VenueViewObject venueViewObject = new VenueViewObject();
+    public static VenueViewData mapFrom(DetailedVenue venue) {
+        VenueViewData venueViewObject = new VenueViewData();
         venueViewObject.setTitle(venue.getName());
         venueViewObject.setAddress(venue.getLocation().getAddress());
         venueViewObject.setLat(venue.getLocation().getLat());
@@ -88,5 +90,9 @@ public class VenueViewObject {
         venueViewObject.setPhotoUrls(photoUrls);
 
         return venueViewObject;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 }

@@ -18,7 +18,7 @@ public class ShowErrorAction<T extends ErrorView> implements ViewAction<T> {
     @Override
     public void accept(ErrorView errorView) {
         Timber.e(error);
-        errorView.showError(error.getLocalizedMessage());
+        errorView.showError();
     }
 
 }

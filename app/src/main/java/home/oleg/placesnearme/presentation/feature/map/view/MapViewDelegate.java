@@ -11,9 +11,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import home.oleg.placesnearme.presentation.base.ViewActionObserver;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
-import home.oleg.placesnearme.presentation.mapper.MarkerMapper;
-import home.oleg.placesnearme.presentation.viewobjects.VenueViewObject;
+import home.oleg.placesnearme.presentation.feature.map.MarkerMapper;
+import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 import io.reactivex.annotations.NonNull;
 
 public class MapViewDelegate implements OnMapReadyCallback, LifecycleObserver, MapView {
@@ -21,10 +22,13 @@ public class MapViewDelegate implements OnMapReadyCallback, LifecycleObserver, M
     private GoogleMap map;
     private LifecycleOwner lifecycleOwner;
     private final MapViewModel viewModel;
+    private final MarkerMapper markerMapper;
 
     @Inject
-    public MapViewDelegate(@NonNull MapViewModel viewModel) {
+    public MapViewDelegate(@NonNull MapViewModel viewModel,
+                           @NonNull MarkerMapper markerMapper) {
         this.viewModel = viewModel;
+        this.markerMapper = markerMapper;
     }
 
     public void attachLifecycleOwner(LifecycleOwner lifecycleOwner) {
@@ -37,29 +41,25 @@ public class MapViewDelegate implements OnMapReadyCallback, LifecycleObserver, M
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
-        viewModel.observeState().observe(lifecycleOwner, viewAction -> {
-            if (viewAction != null) {
-                viewAction.accept(this);
-            }
-        });
+        viewModel.observe().observe(lifecycleOwner, ViewActionObserver.create(this));
     }
 
     @Override
-    public void showVenues(List<VenueViewObject> items) {
+    public void showVenues(List<VenueViewData> items) {
         if (map == null) {
             return;
         }
 
         map.clear();
 
-        List<MarkerOptions> markers = MarkerMapper.mapFrom(items);
+        List<MarkerOptions> markers = markerMapper.mapFrom(items);
         for (MarkerOptions marker : markers) {
             map.addMarker(marker);
         }
     }
 
     @Override
-    public void showError(String message) {
+    public void showError() {
 
     }
 

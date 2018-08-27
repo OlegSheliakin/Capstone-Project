@@ -1,6 +1,8 @@
 package home.oleg.placesnearme.di.components;
 
+import dagger.BindsInstance;
 import dagger.Component;
+import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.di.modules.CoreModule;
 import home.oleg.placesnearme.di.modules.InteractorModule;
 import home.oleg.placesnearme.di.modules.NetworkModule;
@@ -16,5 +18,13 @@ import home.oleg.placesnearme.presentation.feature.main.di.MainActivityComponent
 public interface ApplicationComponent {
 
     MainActivityComponent.Builder mainActivityComponentBuilder();
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        Builder bind(PlacesNearMeApp app);
+
+        ApplicationComponent build();
+    }
 
 }
