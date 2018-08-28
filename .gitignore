@@ -5,4 +5,4 @@
 .DS_Store
 /build
 /captures
-google_maps_api.xml
+/data/config/config.props
