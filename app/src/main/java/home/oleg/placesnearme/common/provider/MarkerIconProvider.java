@@ -5,6 +5,8 @@ import android.graphics.drawable.GradientDrawable;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -12,6 +14,7 @@ import javax.inject.Inject;
 import home.oleg.placenearme.repositories.Section;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.common.converter.DrawableConverter;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 
 /**
@@ -22,12 +25,15 @@ public class MarkerIconProvider {
 
     private final ResourceProvider resourceProvider;
     private final DrawableConverter drawableConverter;
+    private final Map<Section, Integer> colors;
 
     @Inject
     public MarkerIconProvider(ResourceProvider resourceProvider,
-                              DrawableConverter drawableConverter) {
+                              DrawableConverter drawableConverter,
+                              Map<Section, Integer> colors) {
         this.resourceProvider = resourceProvider;
         this.drawableConverter = drawableConverter;
+        this.colors = new HashMap<>(colors);
     }
 
     public BitmapDescriptor getIconByCategory(@Nullable Section section) {
@@ -44,8 +50,9 @@ public class MarkerIconProvider {
         return drawableConverter.convert(drawable);
     }
 
-    private int getColor(Section section) {
-        return resourceProvider.getColor(R.color.colorAccent);
+    private int getColor(@NonNull Section section) {
+        int colorResId = colors.get(section);
+        return resourceProvider.getColor(colorResId);
     }
 
     private void changeColor(Drawable drawable, int color) {
