@@ -1,10 +1,7 @@
 package home.oleg.placesnearme.presentation.feature.main.view;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
@@ -18,7 +15,6 @@ import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
 import home.oleg.placesnearme.presentation.feature.map.view.MapViewDelegate;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
 
 public final class MainActivity extends AppCompatActivity implements MainView {
 

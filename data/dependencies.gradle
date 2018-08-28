@@ -1,4 +1,0 @@
-
-ext.rxjava2 = [
-        rxjava: "io.reactivex.rxjava2:rxjava:$versions.rxJava2"
-]

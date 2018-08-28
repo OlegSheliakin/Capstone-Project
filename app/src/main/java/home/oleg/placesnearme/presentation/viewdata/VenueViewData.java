@@ -62,6 +62,10 @@ public class VenueViewData {
         this.photoUrls = photoUrls;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public static List<VenueViewData> mapFrom(Collection<DetailedVenue> venues) {
         if (venues.isEmpty()) {
             return Collections.emptyList();
@@ -92,7 +96,4 @@ public class VenueViewData {
         return venueViewObject;
     }
 
-    public Category getCategory() {
-        return category;
-    }
 }
