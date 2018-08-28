@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Photo;
-import home.oleg.placenearme.repositories.Category;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
@@ -21,6 +21,10 @@ public class VenueViewData {
     private double lng;
     private List<String> photoUrls;
     private Category category;
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public String getTitle() {
         return title;
@@ -84,6 +88,13 @@ public class VenueViewData {
         venueViewObject.setAddress(venue.getLocation().getAddress());
         venueViewObject.setLat(venue.getLocation().getLat());
         venueViewObject.setLng(venue.getLocation().getLng());
+
+        for (Category category : venue.getCategories()) {
+            if (category.getPrimary()) {
+                venueViewObject.setCategory(category);
+                break;
+            }
+        }
 
         List<Photo> photos = venue.getPhotos();
 

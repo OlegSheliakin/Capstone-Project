@@ -14,7 +14,7 @@ import java.util.List;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
-import home.oleg.placenearme.repositories.Category;
+import home.oleg.placenearme.repositories.Section;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
@@ -65,9 +65,9 @@ public class GetVenuesInteractorTest {
         when(venueRepository.getRecommendedByCategory(any(), any()))
                 .thenReturn(Single.just(Collections.emptyList()));
 
-        List<DetailedVenue> list = subject.getRecommendedVenue(Category.ARTS).blockingGet();
+        List<DetailedVenue> list = subject.getRecommendedVenue(Section.ARTS).blockingGet();
 
-        verify(venueRepository, times(1)).getRecommendedByCategory(Category.ARTS, filter);
+        verify(venueRepository, times(1)).getRecommendedByCategory(Section.ARTS, filter);
         verifyNoMoreInteractions(detailedVenueRepository);
 
         assertTrue(list.isEmpty());
@@ -78,7 +78,7 @@ public class GetVenuesInteractorTest {
         when(venueRepository.getRecommendedByCategory(any(), any()))
                 .thenReturn(Single.just(fakeVenues));
 
-        List<DetailedVenue> list = subject.getRecommendedVenue(Category.ARTS).blockingGet();
+        List<DetailedVenue> list = subject.getRecommendedVenue(Section.ARTS).blockingGet();
 
         verify(detailedVenueRepository, times(fakeVenues.size())).getDetailedVenueById(any());
 

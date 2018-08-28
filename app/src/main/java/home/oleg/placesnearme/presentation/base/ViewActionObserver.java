@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Objects;
 
-public class ViewActionObserver<VIEW> implements Observer<ViewAction<VIEW>> {
+public final class ViewActionObserver<VIEW> implements Observer<ViewAction<VIEW>> {
 
     private final VIEW view;
 
@@ -19,7 +19,8 @@ public class ViewActionObserver<VIEW> implements Observer<ViewAction<VIEW>> {
 
     @Override
     public void onChanged(@Nullable ViewAction<VIEW> viewAction) {
-        Objects.requireNonNull(viewAction).accept(view);
-
+        if (viewAction != null) {
+            viewAction.accept(view);
+        }
     }
 }

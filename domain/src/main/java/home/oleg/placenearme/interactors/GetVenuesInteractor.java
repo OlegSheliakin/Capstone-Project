@@ -5,7 +5,7 @@ import java.util.List;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
-import home.oleg.placenearme.repositories.Category;
+import home.oleg.placenearme.repositories.Section;
 import home.oleg.placenearme.repositories.CategoryRepository;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
@@ -39,7 +39,7 @@ public class GetVenuesInteractor {
                         categoryRepository.getMostFrequent(), createFilter(userLocation)));
     }
 
-    public Single<List<DetailedVenue>> getRecommendedVenue(Category category) {
+    public Single<List<DetailedVenue>> getRecommendedVenue(Section category) {
         return getVenues(userLocation ->
                 venueRepository.getRecommendedByCategory(category, createFilter(userLocation)));
     }

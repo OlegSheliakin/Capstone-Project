@@ -1,16 +1,25 @@
-package home.oleg.placesnearme.utils;
+package home.oleg.placesnearme.common.converter;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
-public class BitmapUtils {
+import javax.inject.Inject;
 
-    public static BitmapDescriptor convertToBitmapDescriptor(@NonNull Drawable drawable) {
+/**
+ * Created by Oleg Sheliakin on 28.08.2018.
+ * Contact me by email - olegsheliakin@gmail.com
+ */
+public class DrawableConverterImpl implements DrawableConverter {
+
+    @Inject
+    public DrawableConverterImpl() {}
+
+    @Override
+    public BitmapDescriptor convert(Drawable drawable) {
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
                 drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -18,5 +27,4 @@ public class BitmapUtils {
         drawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
-
 }

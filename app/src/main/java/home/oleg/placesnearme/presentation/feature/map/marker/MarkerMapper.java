@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.presentation.feature.map;
+package home.oleg.placesnearme.presentation.feature.map.marker;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -8,9 +8,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import home.oleg.placesnearme.common.provider.MarkerIconProvider;
 import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 import io.reactivex.annotations.NonNull;
 
+/**
+ * Created by Oleg Sheliakin on 14.08.2018.
+ * Contact me by email - olegsheliakin@gmail.com
+ */
 public class MarkerMapper {
 
     private final MarkerIconProvider markerIconProvider;
@@ -24,7 +29,6 @@ public class MarkerMapper {
     public MarkerOptions mapFrom(@NonNull VenueViewData venueViewData) {
         LatLng latLng = new LatLng(venueViewData.getLat(), venueViewData.getLng());
         return new MarkerOptions()
-                .title(venueViewData.getTitle())
                 .icon(markerIconProvider.getIconByCategory(venueViewData.getCategory()))
                 .position(latLng);
     }

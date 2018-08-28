@@ -13,16 +13,17 @@ import javax.inject.Inject;
 
 import home.oleg.placesnearme.presentation.base.ViewActionObserver;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
-import home.oleg.placesnearme.presentation.feature.map.MarkerMapper;
+import home.oleg.placesnearme.presentation.feature.map.marker.MarkerMapper;
 import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 import io.reactivex.annotations.NonNull;
 
 public class MapViewDelegate implements OnMapReadyCallback, LifecycleObserver, MapView {
 
-    private GoogleMap map;
-    private LifecycleOwner lifecycleOwner;
     private final MapViewModel viewModel;
     private final MarkerMapper markerMapper;
+
+    private GoogleMap map;
+    private LifecycleOwner lifecycleOwner;
 
     @Inject
     public MapViewDelegate(@NonNull MapViewModel viewModel,
