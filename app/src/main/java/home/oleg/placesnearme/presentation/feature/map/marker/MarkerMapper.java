@@ -29,7 +29,7 @@ public class MarkerMapper {
     public MarkerOptions mapFrom(@NonNull VenueViewData venueViewData) {
         LatLng latLng = new LatLng(venueViewData.getLat(), venueViewData.getLng());
         return new MarkerOptions()
-                .icon(markerIconProvider.getIconByCategory(venueViewData.getCategory()))
+                .icon(markerIconProvider.getIconByCategory(venueViewData.getSection()))
                 .position(latLng);
     }
 

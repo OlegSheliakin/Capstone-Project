@@ -8,6 +8,7 @@ import java.util.List;
 import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Photo;
+import home.oleg.placenearme.repositories.Section;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
@@ -21,6 +22,7 @@ public class VenueViewData {
     private double lng;
     private List<String> photoUrls;
     private Category category;
+    private Section section;
 
     public void setCategory(Category category) {
         this.category = category;
@@ -107,4 +109,7 @@ public class VenueViewData {
         return venueViewObject;
     }
 
+    public Section getSection() {
+        return section;
+    }
 }

@@ -3,13 +3,12 @@ package home.oleg.placesnearme.di.modules;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placenearme.models.UserLocation;
-import home.oleg.placenearme.repositories.Category;
 import home.oleg.placenearme.repositories.CategoryRepository;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
+import home.oleg.placenearme.repositories.Section;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placesnearme.repositories.DetailedVenueRepositoryImpl;
-import home.oleg.placesnearme.repositories.QueryParamCreator;
 import home.oleg.placesnearme.repositories.VenueRepositoryImpl;
 import home.oleg.placesnearme.service.IFourSquareAPI;
 import io.reactivex.Single;
@@ -36,6 +35,6 @@ public class RepositoryModule {
     //TODO create real repo
     @Provides
     public CategoryRepository provideCategoryRepo() {
-        return () -> Category.TOP;
+        return () -> Section.TOP;
     }
 }
