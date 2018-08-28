@@ -7,7 +7,7 @@ import io.reactivex.Single;
 
 public interface VenueRepository {
 
-    Single<List<Venue>> getRecommendedByCategory(Section category, VenueRequestParams requestParams);
+    Single<List<Venue>> getRecommendedBySection(Section category, VenueRequestParams requestParams);
 
     Single<List<Venue>> search(String query, VenueRequestParams requestParams);
 

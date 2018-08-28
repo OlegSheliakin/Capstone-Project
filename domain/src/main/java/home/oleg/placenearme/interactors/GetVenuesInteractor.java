@@ -6,7 +6,7 @@ import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
 import home.oleg.placenearme.repositories.Section;
-import home.oleg.placenearme.repositories.CategoryRepository;
+import home.oleg.placenearme.repositories.SectionRepository;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
@@ -21,12 +21,12 @@ public class GetVenuesInteractor {
     private final VenueRepository venueRepository;
     private final DetailedVenueRepository detailedVenueRepository;
     private final UserLocationRepository locationRepository;
-    private final CategoryRepository categoryRepository;
+    private final SectionRepository categoryRepository;
 
     public GetVenuesInteractor(VenueRepository venueRepository,
                                DetailedVenueRepository detailedVenueRepository,
                                UserLocationRepository locationRepository,
-                               CategoryRepository categoryRepository) {
+                               SectionRepository categoryRepository) {
         this.venueRepository = venueRepository;
         this.detailedVenueRepository = detailedVenueRepository;
         this.locationRepository = locationRepository;
@@ -35,13 +35,13 @@ public class GetVenuesInteractor {
 
     public Single<List<DetailedVenue>> getRecommendedVenues() {
         return getVenues(userLocation ->
-                venueRepository.getRecommendedByCategory(
+                venueRepository.getRecommendedBySection(
                         categoryRepository.getMostFrequent(), createFilter(userLocation)));
     }
 
-    public Single<List<DetailedVenue>> getRecommendedVenue(Section category) {
+    public Single<List<DetailedVenue>> getRecommendedVenues(Section section) {
         return getVenues(userLocation ->
-                venueRepository.getRecommendedByCategory(category, createFilter(userLocation)));
+                venueRepository.getRecommendedBySection(section, createFilter(userLocation)));
     }
 
     public Single<List<DetailedVenue>> searchVenue(String query) {

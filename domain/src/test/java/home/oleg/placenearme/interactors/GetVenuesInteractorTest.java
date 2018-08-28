@@ -62,12 +62,12 @@ public class GetVenuesInteractorTest {
         filter.setLat(fakeUserLocation.getLat());
         filter.setLng(fakeUserLocation.getLng());
 
-        when(venueRepository.getRecommendedByCategory(any(), any()))
+        when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(Collections.emptyList()));
 
-        List<DetailedVenue> list = subject.getRecommendedVenue(Section.ARTS).blockingGet();
+        List<DetailedVenue> list = subject.getRecommendedVenues(Section.ARTS).blockingGet();
 
-        verify(venueRepository, times(1)).getRecommendedByCategory(Section.ARTS, filter);
+        verify(venueRepository, times(1)).getRecommendedBySection(Section.ARTS, filter);
         verifyNoMoreInteractions(detailedVenueRepository);
 
         assertTrue(list.isEmpty());
@@ -75,10 +75,10 @@ public class GetVenuesInteractorTest {
 
     @Test
     public void shouldReturnListDetailedVenue() {
-        when(venueRepository.getRecommendedByCategory(any(), any()))
+        when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(fakeVenues));
 
-        List<DetailedVenue> list = subject.getRecommendedVenue(Section.ARTS).blockingGet();
+        List<DetailedVenue> list = subject.getRecommendedVenues(Section.ARTS).blockingGet();
 
         verify(detailedVenueRepository, times(fakeVenues.size())).getDetailedVenueById(any());
 

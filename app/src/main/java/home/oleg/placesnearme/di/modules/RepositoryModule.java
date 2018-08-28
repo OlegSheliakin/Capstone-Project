@@ -3,7 +3,7 @@ package home.oleg.placesnearme.di.modules;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placenearme.models.UserLocation;
-import home.oleg.placenearme.repositories.CategoryRepository;
+import home.oleg.placenearme.repositories.SectionRepository;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.Section;
 import home.oleg.placenearme.repositories.UserLocationRepository;
@@ -34,7 +34,7 @@ public class RepositoryModule {
 
     //TODO create real repo
     @Provides
-    public CategoryRepository provideCategoryRepo() {
+    public SectionRepository provideCategoryRepo() {
         return () -> Section.TOP;
     }
 }
