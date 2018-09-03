@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion sdk.compile
 
     defaultConfig {
         applicationId "home.oleg.placesnearme"
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion sdk.min
+        targetSdkVersion sdk.target
         versionCode 1
         versionName "1.0"
     }
@@ -20,8 +19,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
     }
 
 }
@@ -35,6 +34,7 @@ dependencies {
 
     implementation project(':data')
     implementation project(':domain')
+    implementation project(':common')
 
     implementation deps.support.appcompat7
     implementation deps.support.design

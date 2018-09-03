@@ -49,7 +49,8 @@ deps.support = [
         design          : "com.android.support:design:$versions.androidSupport",
         cardview        : "com.android.support:cardview-v7:$versions.androidSupport",
         recyclerview    : "com.android.support:recyclerview-v7:$versions.androidSupport",
-        constraintLayout: "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+        constraintLayout: "com.android.support.constraint:constraint-layout:$versions.constraintLayout",
+        annotations     : "com.android.support:support-annotations:$versions.androidSupport"
 ]
 
 deps.dagger = [

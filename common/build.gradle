@@ -2,11 +2,7 @@ apply plugin: 'java-library'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':common')
-
-    implementation deps.rxjava2.rxjava
-    testImplementation deps.testing.junit
-    testImplementation deps.testing.mockito
+    implementation deps.support.annotations
 }
 
 sourceCompatibility = javaVersion

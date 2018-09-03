@@ -1,5 +1,10 @@
 package home.oleg.placesnearme.presentation.base;
 
+import android.support.annotation.NonNull;
+
+import com.smedialink.common.Optional;
+import com.smedialink.common.function.Action;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +15,7 @@ import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
  * Created by Oleg Sheliakin on 21.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class ShowVenueDataAction implements ViewAction<MapView> {
+public final class ShowVenueDataAction implements Action<MapView> {
 
     private final List<VenueViewData> data;
 
@@ -23,7 +28,7 @@ public class ShowVenueDataAction implements ViewAction<MapView> {
     }
 
     @Override
-    public void accept(MapView mapView) {
-        mapView.showVenues(data);
+    public void perform(@NonNull MapView mapView) {
+        Optional.of(data).ifPresent(mapView::showVenues);
     }
 }
