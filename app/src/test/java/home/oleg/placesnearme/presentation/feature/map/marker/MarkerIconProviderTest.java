@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import home.oleg.placenearme.repositories.Section;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.common.converter.DrawableConverter;
 import home.oleg.placesnearme.common.provider.MarkerIconProvider;

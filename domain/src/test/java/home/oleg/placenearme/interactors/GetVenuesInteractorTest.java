@@ -12,12 +12,13 @@ import java.util.Collections;
 import java.util.List;
 
 import home.oleg.placenearme.models.DetailedVenue;
+import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
-import home.oleg.placenearme.repositories.Section;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
+import home.oleg.placenearme.repositories.VenueRequestParams;
 import io.reactivex.Single;
 
 import static org.junit.Assert.*;
@@ -36,11 +37,11 @@ public class GetVenuesInteractorTest {
     UserLocationRepository userLocationRepository;
 
     @InjectMocks
-    GetVenuesInteractor subject;
+    GetRecomendedVenuesInteractor subject;
 
     private UserLocation fakeUserLocation = new UserLocation(45.0, 45.0);
 
-    private VenueRepository.RequestParams filter = new VenueRepository.RequestParams();
+    private VenueRequestParams filter;
 
     private List<Venue> fakeVenues = Arrays.asList(
             new Venue() {{
@@ -52,53 +53,33 @@ public class GetVenuesInteractorTest {
     public void setUp() {
         when(userLocationRepository.getLocation()).thenReturn(Single.just(fakeUserLocation));
 
-        filter.setLat(fakeUserLocation.getLat());
-        filter.setLng(fakeUserLocation.getLng());
+        filter = new VenueRequestParams(1000, fakeUserLocation.getLat(), fakeUserLocation.getLng());
     }
 
     @Test
     public void shouldReturnEmptyList() {
-        VenueRepository.RequestParams filter = new VenueRepository.RequestParams();
-        filter.setLat(fakeUserLocation.getLat());
-        filter.setLng(fakeUserLocation.getLng());
-
         when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(Collections.emptyList()));
 
-        List<DetailedVenue> list = subject.getRecommendedVenues(Section.ARTS).blockingGet();
+        Section section = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
 
-        verify(venueRepository, times(1)).getRecommendedBySection(Section.ARTS, filter);
+        verify(venueRepository, times(1)).getRecommendedBySection(Section.Type.ARTS, filter);
         verifyNoMoreInteractions(detailedVenueRepository);
 
-        assertTrue(list.isEmpty());
+        assertTrue(section.getVenues().isEmpty());
     }
 
     @Test
     public void shouldReturnListDetailedVenue() {
         when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(fakeVenues));
+        when(detailedVenueRepository.getDetailedVenueById(anyString())).thenReturn(Single.just(new DetailedVenue()));
 
-        List<DetailedVenue> list = subject.getRecommendedVenues(Section.ARTS).blockingGet();
+        Section section = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
 
         verify(detailedVenueRepository, times(fakeVenues.size())).getDetailedVenueById(any());
 
-        assertTrue(list.isEmpty());
+        assertFalse(section.getVenues().isEmpty());
     }
 
-    @Test
-    public void searchVenue() {
-        when(venueRepository.search(any(), any()))
-                .thenReturn(Single.just(fakeVenues));
-        when(detailedVenueRepository.getDetailedVenueById(any())).thenReturn(Single.just(
-                new DetailedVenue()
-        ));
-
-
-        List<DetailedVenue> list = subject.searchVenue("").blockingGet();
-
-        verify(venueRepository, times(1)).search("", filter);
-        verifyNoMoreInteractions(detailedVenueRepository);
-
-        assertTrue(list.isEmpty());
-    }
 }

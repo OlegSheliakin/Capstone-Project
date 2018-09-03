@@ -3,8 +3,8 @@ package home.oleg.placesnearme.repositories;
 import java.util.List;
 import java.util.Map;
 
+import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.Venue;
-import home.oleg.placenearme.repositories.Section;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placenearme.repositories.VenueRequestParams;
 import home.oleg.placesnearme.service.IFourSquareAPI;
@@ -20,8 +20,8 @@ public class VenueRepositoryImpl implements VenueRepository {
     }
 
     @Override
-    public Single<List<Venue>> getRecommendedBySection(Section category, VenueRequestParams filter) {
-        Map<String, String> queryMap = queryParamCreator.create(category, filter);
+    public Single<List<Venue>> getRecommendedBySection(Section.Type section, VenueRequestParams filter) {
+        Map<String, String> queryMap = queryParamCreator.create(section, filter);
 
         return api.explore(queryMap).map(fullResponse -> fullResponse.getResponse().getVenues());
     }

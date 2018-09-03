@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import home.oleg.placenearme.repositories.Section;
+import home.oleg.placenearme.models.Section;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.common.converter.DrawableConverter;
 import io.reactivex.annotations.NonNull;
@@ -25,33 +25,33 @@ public class MarkerIconProvider {
 
     private final ResourceProvider resourceProvider;
     private final DrawableConverter drawableConverter;
-    private final Map<Section, Integer> colors;
+    private final Map<Section.Type, Integer> colors;
 
     @Inject
     public MarkerIconProvider(ResourceProvider resourceProvider,
                               DrawableConverter drawableConverter,
-                              Map<Section, Integer> colors) {
+                              Map<Section.Type, Integer> colors) {
         this.resourceProvider = resourceProvider;
         this.drawableConverter = drawableConverter;
         this.colors = new HashMap<>(colors);
     }
 
-    public BitmapDescriptor getIconByCategory(@Nullable Section section) {
+    public BitmapDescriptor getIconByCategory(@Nullable Section.Type type) {
         Drawable drawable = resourceProvider.getDrawable(R.drawable.ic_place_marker);
         Objects.requireNonNull(drawable);
 
-        if (section == null) {
+        if (type == null) {
             return drawableConverter.convert(drawable);
         }
 
-        int color = getColor(section);
+        int color = getColor(type);
         changeColor(drawable, color);
 
         return drawableConverter.convert(drawable);
     }
 
-    private int getColor(@NonNull Section section) {
-        int colorResId = colors.get(section);
+    private int getColor(@NonNull Section.Type type) {
+        int colorResId = colors.get(type);
         return resourceProvider.getColor(colorResId);
     }
 

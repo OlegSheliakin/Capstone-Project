@@ -2,10 +2,10 @@ package home.oleg.placesnearme.di.modules;
 
 import dagger.Module;
 import dagger.Provides;
+import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.repositories.SectionRepository;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
-import home.oleg.placenearme.repositories.Section;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placesnearme.repositories.DetailedVenueRepositoryImpl;
@@ -35,6 +35,6 @@ public class RepositoryModule {
     //TODO create real repo
     @Provides
     public SectionRepository provideCategoryRepo() {
-        return () -> Section.TOP;
+        return () -> Section.Type.TOP;
     }
 }

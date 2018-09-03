@@ -11,7 +11,7 @@ import javax.inject.Provider;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
-import home.oleg.placenearme.interactors.GetVenuesInteractor;
+import home.oleg.placenearme.interactors.GetRecomendedVenuesInteractor;
 import home.oleg.placesnearme.di.mapkeys.ViewModelKey;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
 
@@ -26,7 +26,7 @@ public final class ViewModelModule {
     @ViewModelKey(MapViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideMapViewModel(GetVenuesInteractor interactor) {
+    public static ViewModel provideMapViewModel(GetRecomendedVenuesInteractor interactor) {
         return new MapViewModel(interactor);
     }
 

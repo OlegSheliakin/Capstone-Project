@@ -24,7 +24,6 @@ public final class ViewActionObserver<VIEW> implements Observer<Action<VIEW>> {
 
     @Override
     public void onChanged(@Nullable Action<VIEW> viewAction) {
-        Optional.of(viewAction)
-                .ifPresent(a -> a.perform(view));
+        Optional.of(viewAction).ifPresent(a -> a.perform(view));
     }
 }

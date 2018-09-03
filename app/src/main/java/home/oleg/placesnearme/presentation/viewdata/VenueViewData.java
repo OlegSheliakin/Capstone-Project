@@ -1,5 +1,8 @@
 package home.oleg.placesnearme.presentation.viewdata;
 
+import android.support.annotation.ColorRes;
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,7 +11,7 @@ import java.util.List;
 import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Photo;
-import home.oleg.placenearme.repositories.Section;
+import home.oleg.placenearme.models.Section;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
@@ -21,8 +24,9 @@ public class VenueViewData {
     private double lat;
     private double lng;
     private List<String> photoUrls;
+    @Nullable
+    private Section.Type sectionType;
     private Category category;
-    private Section section;
 
     public void setCategory(Category category) {
         this.category = category;
@@ -72,6 +76,27 @@ public class VenueViewData {
         return category;
     }
 
+    @Nullable
+    public Section.Type getSectionType() {
+        return sectionType;
+    }
+
+    public void setSectionType(@Nullable Section.Type sectionType) {
+        this.sectionType = sectionType;
+    }
+
+    public static List<VenueViewData> mapFrom(Section section) {
+        if (section.getVenues().isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<VenueViewData> list = new ArrayList<>();
+        for (DetailedVenue venue : section.getVenues()) {
+            list.add(VenueViewData.mapFrom(venue, section.getSectionType()));
+        }
+        return list;
+    }
+
     public static List<VenueViewData> mapFrom(Collection<DetailedVenue> venues) {
         if (venues.isEmpty()) {
             return Collections.emptyList();
@@ -79,17 +104,18 @@ public class VenueViewData {
 
         List<VenueViewData> list = new ArrayList<>();
         for (DetailedVenue venue : venues) {
-            list.add(VenueViewData.mapFrom(venue));
+            list.add(VenueViewData.mapFrom(venue, null));
         }
         return list;
     }
 
-    public static VenueViewData mapFrom(DetailedVenue venue) {
+    public static VenueViewData mapFrom(DetailedVenue venue, Section.Type type) {
         VenueViewData venueViewObject = new VenueViewData();
         venueViewObject.setTitle(venue.getName());
         venueViewObject.setAddress(venue.getLocation().getAddress());
         venueViewObject.setLat(venue.getLocation().getLat());
         venueViewObject.setLng(venue.getLocation().getLng());
+        venueViewObject.setSectionType(type);
 
         for (Category category : venue.getCategories()) {
             if (category.getPrimary()) {
@@ -109,7 +135,4 @@ public class VenueViewData {
         return venueViewObject;
     }
 
-    public Section getSection() {
-        return section;
-    }
 }
