@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/width_bottom_bar"
+    android:layout_height="@dimen/bottom_bar_height"
+    android:layout_gravity="bottom"
+    android:background="@drawable/ic_bottom_background">
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+        android:id="@+id/bottomNavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="@dimen/bottom_bar_padding"
+        android:paddingStart="@dimen/bottom_bar_padding"
+        android:layout_marginEnd="@dimen/bottom_bar_right_margin" />
+
+</FrameLayout>
