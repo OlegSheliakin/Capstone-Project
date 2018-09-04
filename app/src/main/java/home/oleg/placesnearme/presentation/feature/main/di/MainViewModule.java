@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placesnearme.presentation.feature.main.view.MainActivity;
+import home.oleg.placesnearme.presentation.feature.main.viewmodel.MainViewModel;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
 import io.reactivex.annotations.NonNull;
 
@@ -16,5 +17,11 @@ public final class MainViewModule {
     @NonNull
     static MapViewModel provideMapViewModel(MainActivity mainActivity, ViewModelProvider.Factory factory) {
         return ViewModelProviders.of(mainActivity, factory).get(MapViewModel.class);
+    }
+
+    @Provides
+    @NonNull
+    static MainViewModel provideMainViewModel(MainActivity mainActivity, ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(mainActivity, factory).get(MainViewModel.class);
     }
 }
