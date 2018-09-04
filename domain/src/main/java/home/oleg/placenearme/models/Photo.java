@@ -85,4 +85,7 @@ public class Photo {
         this.width = width;
     }
 
+    public String getImageUrl() {
+        return prefix + height + "x" + width + suffix;
+    }
 }

@@ -1,7 +1,10 @@
 
 package home.oleg.placenearme.models;
 
+import java.util.Collections;
 import java.util.List;
+
+import io.reactivex.annotations.NonNull;
 
 public class Group<I> {
 
@@ -19,11 +22,15 @@ public class Group<I> {
         this.count = count;
     }
 
+    @NonNull
     public List<I> getItems() {
+        if (items == null) {
+            return Collections.emptyList();
+        }
         return items;
     }
 
-    public void setItems(List<I> items) {
+    public void setItems(@NonNull List<I> items) {
         this.items = items;
     }
 

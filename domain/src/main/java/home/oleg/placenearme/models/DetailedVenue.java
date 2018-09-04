@@ -1,7 +1,11 @@
 
 package home.oleg.placenearme.models;
 
+import java.util.Collections;
 import java.util.List;
+
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 
 public class DetailedVenue {
 
@@ -163,8 +167,23 @@ public class DetailedVenue {
         this.pageUpdates = pageUpdates;
     }
 
-    public PhotosGroup getPhotos() {
+    public PhotosGroup getPhotoGroup() {
         return photos;
+    }
+
+    @NonNull
+    public List<Photo> getPhotos() {
+        if (photos.getGroups() == null) {
+            return Collections.emptyList();
+        }
+
+        List<Group<Photo>> groups = photos.getGroups();
+
+        if (groups.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return groups.get(0).getItems();
     }
 
     public void setPhotos(PhotosGroup photos) {

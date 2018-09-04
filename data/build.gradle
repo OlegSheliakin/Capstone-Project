@@ -6,13 +6,12 @@ def getProps(path) {
     return props
 }
 
-
 android {
-    compileSdkVersion 27
+    compileSdkVersion sdk.compile
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion sdk.min
+        targetSdkVersion sdk.target
         versionCode 1
         versionName "1.0"
 
@@ -32,19 +31,22 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     implementation project(':domain')
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    implementation deps.support.appcompat7
+
+    testImplementation deps.testing.junit
+    androidTestImplementation deps.testing.testRunner
+
+    implementation deps.network.retrofit
+    implementation deps.network.converterGson
+    implementation deps.network.loggingInterceptor
+    implementation deps.network.rxJavaAdapter
 }

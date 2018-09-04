@@ -1,0 +1,67 @@
+package home.oleg.placesnearme.common.provider;
+
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+
+import com.google.android.gms.maps.model.BitmapDescriptor;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.inject.Inject;
+
+import home.oleg.placenearme.models.Section;
+import home.oleg.placesnearme.R;
+import home.oleg.placesnearme.common.converter.DrawableConverter;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
+
+/**
+ * Created by Oleg Sheliakin on 14.08.2018.
+ * Contact me by email - olegsheliakin@gmail.com
+ */
+public class MarkerIconProvider {
+
+    private final ResourceProvider resourceProvider;
+    private final DrawableConverter drawableConverter;
+    private final Map<Section.Type, Integer> colors;
+
+    @Inject
+    public MarkerIconProvider(ResourceProvider resourceProvider,
+                              DrawableConverter drawableConverter,
+                              Map<Section.Type, Integer> colors) {
+        this.resourceProvider = resourceProvider;
+        this.drawableConverter = drawableConverter;
+        this.colors = new HashMap<>(colors);
+    }
+
+    public BitmapDescriptor getIconByCategory(@Nullable Section.Type type) {
+        Drawable drawable = resourceProvider.getDrawable(R.drawable.ic_place_marker);
+        Objects.requireNonNull(drawable);
+
+        if (type == null) {
+            return drawableConverter.convert(drawable);
+        }
+
+        int color = getColor(type);
+        changeColor(drawable, color);
+
+        return drawableConverter.convert(drawable);
+    }
+
+    private int getColor(@NonNull Section.Type type) {
+        int colorResId = colors.get(type);
+        return resourceProvider.getColor(colorResId);
+    }
+
+    private void changeColor(Drawable drawable, int color) {
+        if (drawable instanceof GradientDrawable) {
+            GradientDrawable gradientDrawable = (GradientDrawable) drawable;
+            gradientDrawable.setColor(color);
+        } else {
+            throw new IllegalStateException("Drawable should be GradientDrawable");
+        }
+    }
+
+}
