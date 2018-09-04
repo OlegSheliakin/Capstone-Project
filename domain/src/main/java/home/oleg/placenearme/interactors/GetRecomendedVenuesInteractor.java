@@ -1,5 +1,10 @@
 package home.oleg.placenearme.interactors;
 
+import com.smedialink.common.Pair;
+
+import java.util.List;
+
+import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
@@ -28,23 +33,23 @@ public class GetRecomendedVenuesInteractor {
         this.categoryRepository = categoryRepository;
     }
 
-    public Single<Section> getRecommendedSection() {
+    public Single<Pair<Section.Type, List<DetailedVenue>>> getRecommendedSection() {
         Section.Type type = categoryRepository.getMostFrequent();
         return getVenues(type);
     }
 
-    public Single<Section> getRecommendedSection(@NonNull Section.Type type) {
+    public Single<Pair<Section.Type, List<DetailedVenue>>> getRecommendedSection(@NonNull Section.Type type) {
         return getVenues(type);
     }
 
-    private Single<Section> getVenues(Section.Type type) {
+    private Single<Pair<Section.Type, List<DetailedVenue>>> getVenues(Section.Type type) {
         return locationRepository.getLocation()
                 .flatMap(userLocation -> venueRepository.getRecommendedBySection(type, createFilter(userLocation)))
                 .flatMapObservable(Observable::fromIterable)
                 .map(Venue::getId)
                 .flatMapSingle(detailedVenueRepository::getDetailedVenueById)
                 .toList()
-                .map(venues -> new Section(type, venues));
+                .map(venues -> new Pair<>(type, venues));
     }
 
     private VenueRequestParams createFilter(UserLocation userLocation) {

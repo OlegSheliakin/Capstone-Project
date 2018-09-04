@@ -1,5 +1,7 @@
 package home.oleg.placenearme.interactors;
 
+import com.smedialink.common.Pair;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,12 +63,12 @@ public class GetVenuesInteractorTest {
         when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(Collections.emptyList()));
 
-        Section section = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
+        Pair<Section.Type, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
 
         verify(venueRepository, times(1)).getRecommendedBySection(Section.Type.ARTS, filter);
         verifyNoMoreInteractions(detailedVenueRepository);
 
-        assertTrue(section.getVenues().isEmpty());
+        assertTrue(pair.getSecond().isEmpty());
     }
 
     @Test
@@ -75,11 +77,11 @@ public class GetVenuesInteractorTest {
                 .thenReturn(Single.just(fakeVenues));
         when(detailedVenueRepository.getDetailedVenueById(anyString())).thenReturn(Single.just(new DetailedVenue()));
 
-        Section section = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
+        Pair<Section.Type, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
 
         verify(detailedVenueRepository, times(fakeVenues.size())).getDetailedVenueById(any());
 
-        assertFalse(section.getVenues().isEmpty());
+        assertFalse(pair.getSecond().isEmpty());
     }
 
 }

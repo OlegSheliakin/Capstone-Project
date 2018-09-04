@@ -4,6 +4,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,7 +36,11 @@ public class MarkerMapper {
     }
 
     @NonNull
-    public List<MarkerOptions> mapFrom(@NonNull Iterable<VenueViewData> venueViewDatas) {
+    public List<MarkerOptions> mapFrom(@NonNull Collection<VenueViewData> venueViewDatas) {
+        if(venueViewDatas.isEmpty()) {
+            return Collections.emptyList();
+        }
+
         List<MarkerOptions> markerOptions = new ArrayList<>();
 
         for (VenueViewData venueViewData : venueViewDatas) {

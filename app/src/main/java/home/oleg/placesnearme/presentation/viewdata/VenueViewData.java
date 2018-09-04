@@ -3,6 +3,8 @@ package home.oleg.placesnearme.presentation.viewdata;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 
+import com.smedialink.common.Pair;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -85,14 +87,14 @@ public class VenueViewData {
         this.sectionType = sectionType;
     }
 
-    public static List<VenueViewData> mapFrom(Section section) {
-        if (section.getVenues().isEmpty()) {
+    public static List<VenueViewData> mapFrom(Pair<Section.Type, List<DetailedVenue>> pair) {
+        if (pair.getSecond().isEmpty()) {
             return Collections.emptyList();
         }
 
         List<VenueViewData> list = new ArrayList<>();
-        for (DetailedVenue venue : section.getVenues()) {
-            list.add(VenueViewData.mapFrom(venue, section.getSectionType()));
+        for (DetailedVenue venue : pair.getSecond()) {
+            list.add(VenueViewData.mapFrom(venue, pair.getFirst()));
         }
         return list;
     }
