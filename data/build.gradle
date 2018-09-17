@@ -38,9 +38,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation project(':domain')
 
-    implementation deps.support.appcompat7
+    implementation deps.googlePlayServices.location
 
     testImplementation deps.testing.junit
     androidTestImplementation deps.testing.testRunner

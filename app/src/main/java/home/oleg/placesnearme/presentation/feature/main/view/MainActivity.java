@@ -14,7 +14,7 @@ import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
 import home.oleg.placesnearme.presentation.feature.favorite_places.FavoritePlacesFragment;
 import home.oleg.placesnearme.presentation.feature.main.viewmodel.MainViewModel;
-import home.oleg.placesnearme.presentation.feature.map.view.PlacesMapFragment;
+import home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragment;
 import home.oleg.placesnearme.presentation.feature.places_history.PlacesHistoryFragment;
 
 public final class MainActivity extends AppCompatActivity implements MainView {
@@ -57,7 +57,7 @@ public final class MainActivity extends AppCompatActivity implements MainView {
                     fragment = new PlacesHistoryFragment();
                     break;
                 case 1:
-                    fragment = new PlacesMapFragment();
+                    fragment = new VenuesMapFragment();
                     break;
                 case 2:
                     fragment = new FavoritePlacesFragment();
@@ -69,7 +69,7 @@ public final class MainActivity extends AppCompatActivity implements MainView {
 
             Fragment curFrag = getSupportFragmentManager().findFragmentById(R.id.container);
             if (curFrag != null) {
-                if(curFrag instanceof PlacesMapFragment) {
+                if(curFrag instanceof VenuesMapFragment) {
                     fragmentTransaction.hide(curFrag);
                 } else {
                     fragmentTransaction.detach(curFrag);
@@ -79,7 +79,7 @@ public final class MainActivity extends AppCompatActivity implements MainView {
             Fragment curFragment = getSupportFragmentManager().findFragmentByTag(tag);
             if (curFragment == null) {
                 fragmentTransaction.add(R.id.container, fragment, tag);
-            } else if (curFragment instanceof PlacesMapFragment){
+            } else if (curFragment instanceof VenuesMapFragment){
                 fragmentTransaction.show(curFragment);
             } else {
                 fragmentTransaction.attach(curFragment);

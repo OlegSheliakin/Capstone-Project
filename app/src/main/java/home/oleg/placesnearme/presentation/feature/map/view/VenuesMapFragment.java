@@ -1,5 +1,7 @@
 package home.oleg.placesnearme.presentation.feature.map.view;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,31 +14,36 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smedialink.common.Optional;
+import com.smedialink.common.function.Action;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
 import home.oleg.placesnearme.presentation.base.ViewActionObserver;
 import home.oleg.placesnearme.presentation.feature.map.marker.MarkerMapper;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenueViewModel;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
-public class PlacesMapFragment extends BaseMapFragment implements MapView {
+@RuntimePermissions
+public class VenuesMapFragment extends BaseMapFragment implements MapView {
+
+    public static final int USER_LOCATION_ZOOM = 16;
 
     @Inject
-    MapViewModel viewModel;
+    VenueViewModel venueViewModel;
 
     @Inject
     MarkerMapper markerMapper;
 
     private GoogleMap googleMap;
-
-    public PlacesMapFragment() {
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -52,7 +59,7 @@ public class PlacesMapFragment extends BaseMapFragment implements MapView {
         FloatingActionButton fabZoomOut = view.findViewById(R.id.fabZoomOut);
 
         fabCurrentLocation.setOnClickListener(v -> {
-            LatLng latLng = viewModel.getCurrentLocation();
+            onShowCurrenLocationClicked();
         });
 
         fabZoomIn.setOnClickListener(v -> {
@@ -69,17 +76,14 @@ public class PlacesMapFragment extends BaseMapFragment implements MapView {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        viewModel.observe().observe(this, ViewActionObserver.create(this));
+        venueViewModel.observer().observe(this, ViewActionObserver.create(this));
+        VenuesMapFragmentPermissionsDispatcher.initLocationSettingsWithPermissionCheck(this, googleMap);
     }
 
-    private void injectDependencies() {
-        DaggerApplicationComponent.builder()
-                .bind((PlacesNearMeApp) getActivity().getApplication())
-                .build()
-                .placeMapFragmentComponentBuilder()
-                .bind(this)
-                .build()
-                .inject(this);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        VenuesMapFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
@@ -91,6 +95,18 @@ public class PlacesMapFragment extends BaseMapFragment implements MapView {
             for (MarkerOptions marker : markers) {
                 map.addMarker(marker);
             }
+        });
+    }
+
+    @Override
+    public void showUserLocation(UserLocation userLocation) {
+        LatLng latLng = new LatLng(userLocation.getLat(), userLocation.getLng());
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng);
+
+        Optional.of(googleMap).ifPresent(googleMap -> {
+            googleMap.addMarker(markerOptions);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM));
         });
     }
 
@@ -108,4 +124,28 @@ public class PlacesMapFragment extends BaseMapFragment implements MapView {
     public void hideLoading() {
 
     }
+
+    @SuppressLint("MissingPermission")
+    @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+    void onShowCurrenLocationClicked() {
+        venueViewModel.getUserLocation();
+    }
+
+    @SuppressLint("MissingPermission")
+    @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+    void initLocationSettings(GoogleMap googleMap) {
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.setMyLocationEnabled(true);
+    }
+
+    private void injectDependencies() {
+        DaggerApplicationComponent.builder()
+                .bind((PlacesNearMeApp) getActivity().getApplication())
+                .build()
+                .placeMapFragmentComponentBuilder()
+                .bind(this)
+                .build()
+                .inject(this);
+    }
+
 }

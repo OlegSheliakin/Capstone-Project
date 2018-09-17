@@ -18,7 +18,7 @@ public class ShowErrorAction<T extends ErrorView> implements Action<T> {
     }
 
     @Override
-    public void perform(@NonNull ErrorView errorView) {
+    public void perform(@android.support.annotation.NonNull @NonNull ErrorView errorView) {
         Timber.e(error);
         errorView.showError();
     }

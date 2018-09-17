@@ -13,6 +13,7 @@ public interface MainActivityComponent {
     interface Builder {
         @BindsInstance
         MainActivityComponent.Builder bind(MainActivity mainActivity);
+
         MainActivityComponent build();
     }
 }

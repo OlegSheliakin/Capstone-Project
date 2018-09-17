@@ -23,13 +23,6 @@ public abstract class BaseMapFragment extends Fragment implements OnMapReadyCall
     private MapView mapView;
 
     public BaseMapFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override

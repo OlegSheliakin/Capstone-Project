@@ -46,7 +46,8 @@ deps.lifecycle = [
 
 deps.support = [
         appcompat7      : "com.android.support:appcompat-v7:$versions.androidSupport",
-        support4        : "com.android.support:support-v4:$versions.androidSupport",
+        supportV4        : "com.android.support:support-v4:$versions.androidSupport",
+        supportV13        : "com.android.support:support-v13:$versions.androidSupport",
         design          : "com.android.support:design:$versions.androidSupport",
         cardview        : "com.android.support:cardview-v7:$versions.androidSupport",
         recyclerview    : "com.android.support:recyclerview-v7:$versions.androidSupport",
@@ -93,7 +94,7 @@ deps.glide = [
 
 deps.permissions = [
         runtime: "com.github.hotchemi:permissionsdispatcher:$versions.permissionDispather",
-        compiler: "com.github.hotchemi:permissionsdispatcher-processor:$versions.permissionDispather}"
+        compiler: "com.github.hotchemi:permissionsdispatcher-processor:$versions.permissionDispather"
 ]
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.leakCanary = "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"

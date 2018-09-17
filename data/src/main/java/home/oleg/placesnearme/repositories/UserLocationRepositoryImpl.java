@@ -2,6 +2,8 @@ package home.oleg.placesnearme.repositories;
 
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.repositories.UserLocationRepository;
+import home.oleg.placesnearme.provider.ReactiveLocationStore;
+import home.oleg.placesnearme.mapper.LocationMapper;
 import io.reactivex.Single;
 
 /**
@@ -10,10 +12,18 @@ import io.reactivex.Single;
  */
 public class UserLocationRepositoryImpl implements UserLocationRepository {
 
+    private final ReactiveLocationStore reactiveLocationStore;
+
+    public UserLocationRepositoryImpl(ReactiveLocationStore reactiveLocationStore) {
+        this.reactiveLocationStore = reactiveLocationStore;
+    }
+
     @Override
     public Single<UserLocation> getLocation() {
-        return Single.just(new UserLocation(34.7576236, 39.5017049));
+        return reactiveLocationStore
+                .getLastLocation()
+                .map(LocationMapper::map);
     }
-    
+
 }
 

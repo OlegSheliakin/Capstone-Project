@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+}
+
 android {
     compileSdkVersion sdk.compile
 
@@ -28,7 +32,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito
     testImplementation deps.testing.room
@@ -39,6 +42,8 @@ dependencies {
 
     implementation deps.support.appcompat7
     implementation deps.support.design
+    implementation deps.support.supportV4
+    implementation deps.support.supportV13
     implementation deps.support.cardview
     implementation deps.support.recyclerview
     implementation deps.support.constraintLayout
@@ -59,7 +64,6 @@ dependencies {
     implementation deps.room.rxjava2
 
     implementation deps.googlePlayServices.maps
-    implementation deps.googlePlayServices.location
 
     implementation deps.glide.runtime
     annotationProcessor deps.glide.compiler

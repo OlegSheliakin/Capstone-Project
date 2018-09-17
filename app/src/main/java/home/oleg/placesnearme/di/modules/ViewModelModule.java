@@ -4,8 +4,6 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import com.smedialink.common.function.Action;
-
 import java.util.Map;
 
 import javax.inject.Provider;
@@ -14,9 +12,10 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import home.oleg.placenearme.interactors.GetRecomendedVenuesInteractor;
+import home.oleg.placenearme.interactors.GetUserLocationInteractor;
 import home.oleg.placesnearme.di.mapkeys.ViewModelKey;
 import home.oleg.placesnearme.presentation.feature.main.viewmodel.MainViewModel;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenueViewModel;
 
 /**
  * Created by Oleg Sheliakin on 21.08.2018.
@@ -26,11 +25,11 @@ import home.oleg.placesnearme.presentation.feature.map.viewmodel.MapViewModel;
 public final class ViewModelModule {
 
     @IntoMap
-    @ViewModelKey(MapViewModel.class)
+    @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideMapViewModel(GetRecomendedVenuesInteractor interactor) {
-        return new MapViewModel(interactor);
+    public static ViewModel provideMapViewModel(GetRecomendedVenuesInteractor interactor, GetUserLocationInteractor getUserLocationInteractor) {
+        return new VenueViewModel(interactor, getUserLocationInteractor);
     }
 
     @IntoMap
