@@ -20,7 +20,7 @@ public class VenueRepositoryImpl implements VenueRepository {
     }
 
     @Override
-    public Single<List<Venue>> getRecommendedBySection(Section.Type section, VenueRequestParams filter) {
+    public Single<List<Venue>> getRecommendedBySection(Section section, VenueRequestParams filter) {
         Map<String, String> queryMap = queryParamCreator.create(section, filter);
 
         return api.explore(queryMap).map(fullResponse -> fullResponse.getResponse().getVenues());

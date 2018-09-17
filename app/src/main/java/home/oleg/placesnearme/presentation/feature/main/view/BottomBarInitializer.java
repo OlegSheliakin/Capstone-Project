@@ -19,17 +19,15 @@ import home.oleg.placesnearme.common.provider.ResourceProvider;
  */
 public class BottomBarInitializer {
 
-    private final ResourceProvider resourceProvider;
-
     @Inject
-    public BottomBarInitializer(ResourceProvider resourceProvider) {
-        this.resourceProvider = resourceProvider;
+    public BottomBarInitializer() {
+
     }
 
     public void initialize(AHBottomNavigation bottomNavigation) {
         bottomNavigation.setAccentColor(Color.WHITE);
         bottomNavigation.setInactiveColor(Color.WHITE);
-        bottomNavigation.setDefaultBackgroundColor(resourceProvider.getColor(android.R.color.transparent));
+        bottomNavigation.setDefaultBackgroundColor(Color.TRANSPARENT);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
 
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(null, R.drawable.ic_place);

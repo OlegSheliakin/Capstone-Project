@@ -33,23 +33,23 @@ public class GetRecomendedVenuesInteractor {
         this.categoryRepository = categoryRepository;
     }
 
-    public Single<Pair<Section.Type, List<DetailedVenue>>> getRecommendedSection() {
-        Section.Type type = categoryRepository.getMostFrequent();
-        return getVenues(type);
+    public Single<Pair<Section, List<DetailedVenue>>> getRecommendedSection() {
+        Section section = categoryRepository.getMostFrequent();
+        return getVenues(section);
     }
 
-    public Single<Pair<Section.Type, List<DetailedVenue>>> getRecommendedSection(@NonNull Section.Type type) {
-        return getVenues(type);
+    public Single<Pair<Section, List<DetailedVenue>>> getRecommendedSection(@NonNull Section section) {
+        return getVenues(section);
     }
 
-    private Single<Pair<Section.Type, List<DetailedVenue>>> getVenues(Section.Type type) {
+    private Single<Pair<Section, List<DetailedVenue>>> getVenues(Section section) {
         return locationRepository.getLocation()
-                .flatMap(userLocation -> venueRepository.getRecommendedBySection(type, createFilter(userLocation)))
+                .flatMap(userLocation -> venueRepository.getRecommendedBySection(section, createFilter(userLocation)))
                 .flatMapObservable(Observable::fromIterable)
                 .map(Venue::getId)
                 .flatMapSingle(detailedVenueRepository::getDetailedVenueById)
                 .toList()
-                .map(venues -> new Pair<>(type, venues));
+                .map(venues -> new Pair<>(section, venues));
     }
 
     private VenueRequestParams createFilter(UserLocation userLocation) {
