@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smedialink.common.Optional;
@@ -58,9 +60,7 @@ public class VenuesMapFragment extends BaseMapFragment implements MapView {
         FloatingActionButton fabZoomIn = view.findViewById(R.id.fabZoomIn);
         FloatingActionButton fabZoomOut = view.findViewById(R.id.fabZoomOut);
 
-        fabCurrentLocation.setOnClickListener(v -> {
-            onShowCurrenLocationClicked();
-        });
+        fabCurrentLocation.setOnClickListener(v -> onShowCurrenLocationClicked());
 
         fabZoomIn.setOnClickListener(v -> {
             Optional.of(googleMap)
@@ -71,12 +71,13 @@ public class VenuesMapFragment extends BaseMapFragment implements MapView {
             Optional.of(googleMap)
                     .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
         });
+
+        venueViewModel.observer().observe(this, ViewActionObserver.create(this));
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        venueViewModel.observer().observe(this, ViewActionObserver.create(this));
         VenuesMapFragmentPermissionsDispatcher.initLocationSettingsWithPermissionCheck(this, googleMap);
     }
 
@@ -101,11 +102,8 @@ public class VenuesMapFragment extends BaseMapFragment implements MapView {
     @Override
     public void showUserLocation(UserLocation userLocation) {
         LatLng latLng = new LatLng(userLocation.getLat(), userLocation.getLng());
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(latLng);
 
         Optional.of(googleMap).ifPresent(googleMap -> {
-            googleMap.addMarker(markerOptions);
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM));
         });
     }
@@ -136,6 +134,9 @@ public class VenuesMapFragment extends BaseMapFragment implements MapView {
     void initLocationSettings(GoogleMap googleMap) {
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         googleMap.setMyLocationEnabled(true);
+
+        venueViewModel.getUserLocation();
+        venueViewModel.getRecommendedVenues();
     }
 
     private void injectDependencies() {

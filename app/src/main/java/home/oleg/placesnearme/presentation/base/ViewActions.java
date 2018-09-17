@@ -2,6 +2,9 @@ package home.oleg.placesnearme.presentation.base;
 
 public final class ViewActions {
 
+    private ViewActions() {
+    }
+
     public static <T extends LoadingView> HideLoadingAction<T> hideLoading() {
         return new HideLoadingAction<T>();
     }
