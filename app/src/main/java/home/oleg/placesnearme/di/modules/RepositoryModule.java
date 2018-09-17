@@ -1,5 +1,6 @@
 package home.oleg.placesnearme.di.modules;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placenearme.models.Section;
@@ -9,6 +10,7 @@ import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placesnearme.repositories.DetailedVenueRepositoryImpl;
+import home.oleg.placesnearme.repositories.UserLocationRepositoryImpl;
 import home.oleg.placesnearme.repositories.VenueRepositoryImpl;
 import home.oleg.placesnearme.service.IFourSquareAPI;
 import io.reactivex.Single;
@@ -16,10 +18,9 @@ import io.reactivex.Single;
 @Module
 public class RepositoryModule {
 
-    //TODO create real repo
     @Provides
     public UserLocationRepository provideUserLocationRepo() {
-        return () -> Single.just(new UserLocation(34.7576236, 39.5017049));
+        return new UserLocationRepositoryImpl();
     }
 
     @Provides
