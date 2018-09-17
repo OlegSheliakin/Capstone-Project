@@ -4,6 +4,6 @@ import home.oleg.placenearme.models.Section;
 
 public interface SectionRepository {
 
-    Section.Type getMostFrequent();
+    Section getMostFrequent();
 
 }

@@ -28,6 +28,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito
     testImplementation deps.testing.room
@@ -40,6 +41,7 @@ dependencies {
     implementation deps.support.design
     implementation deps.support.cardview
     implementation deps.support.recyclerview
+    implementation deps.support.constraintLayout
 
     implementation deps.dagger.runtime
     implementation deps.dagger.android

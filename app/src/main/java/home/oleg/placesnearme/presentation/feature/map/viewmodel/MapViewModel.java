@@ -3,6 +3,7 @@ package home.oleg.placesnearme.presentation.feature.map.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.smedialink.common.Optional;
 import com.smedialink.common.function.Action;
 
@@ -25,6 +26,7 @@ public class MapViewModel extends ViewModel {
     private final MutableLiveData<Action<MapView>> observer = new MutableLiveData<>();
 
     private Disposable disposable;
+    private LatLng currentLocation;
 
     public MapViewModel(@NonNull GetRecomendedVenuesInteractor interactor) {
         this.interactor = interactor;
@@ -61,4 +63,7 @@ public class MapViewModel extends ViewModel {
                         });
     }
 
+    public LatLng getCurrentLocation() {
+        return currentLocation;
+    }
 }

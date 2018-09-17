@@ -27,7 +27,7 @@ public class VenueViewData {
     private double lng;
     private List<String> photoUrls;
     @Nullable
-    private Section.Type sectionType;
+    private Section sectionType;
     private Category category;
 
     public void setCategory(Category category) {
@@ -79,15 +79,15 @@ public class VenueViewData {
     }
 
     @Nullable
-    public Section.Type getSectionType() {
+    public Section getSectionType() {
         return sectionType;
     }
 
-    public void setSectionType(@Nullable Section.Type sectionType) {
+    public void setSectionType(@Nullable Section sectionType) {
         this.sectionType = sectionType;
     }
 
-    public static List<VenueViewData> mapFrom(Pair<Section.Type, List<DetailedVenue>> pair) {
+    public static List<VenueViewData> mapFrom(Pair<Section, List<DetailedVenue>> pair) {
         if (pair.getSecond().isEmpty()) {
             return Collections.emptyList();
         }
@@ -111,13 +111,13 @@ public class VenueViewData {
         return list;
     }
 
-    public static VenueViewData mapFrom(DetailedVenue venue, Section.Type type) {
+    public static VenueViewData mapFrom(DetailedVenue venue, Section section) {
         VenueViewData venueViewObject = new VenueViewData();
         venueViewObject.setTitle(venue.getName());
         venueViewObject.setAddress(venue.getLocation().getAddress());
         venueViewObject.setLat(venue.getLocation().getLat());
         venueViewObject.setLng(venue.getLocation().getLng());
-        venueViewObject.setSectionType(type);
+        venueViewObject.setSectionType(section);
 
         for (Category category : venue.getCategories()) {
             if (category.getPrimary()) {

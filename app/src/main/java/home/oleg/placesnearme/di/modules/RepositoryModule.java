@@ -36,6 +36,6 @@ public class RepositoryModule {
     //TODO create real repo
     @Provides
     public SectionRepository provideCategoryRepo() {
-        return () -> Section.Type.TOP;
+        return () -> Section.TOP;
     }
 }

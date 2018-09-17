@@ -16,6 +16,6 @@ public class DetailedVenueRepositoryImpl implements DetailedVenueRepository{
     @Override
     public Single<DetailedVenue> getDetailedVenueById(String venueId) {
         return api.getDetail(venueId)
-                .map(venueDetailResponseResponse -> venueDetailResponseResponse.getResponse().getVenue());
+                .map(response -> response.getResponse().getVenue());
     }
 }
