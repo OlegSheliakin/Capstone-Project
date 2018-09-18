@@ -1,5 +1,6 @@
 package home.oleg.placesnearme.repositories;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class VenueRepositoryImpl implements VenueRepository {
     }
 
     @Override
-    public Single<List<Venue>> getRecommendedBySection(Section.Type section, VenueRequestParams filter) {
+    public Single<List<Venue>> getRecommendedBySection(Section section, VenueRequestParams filter) {
         Map<String, String> queryMap = queryParamCreator.create(section, filter);
 
         return api.explore(queryMap).map(fullResponse -> fullResponse.getResponse().getVenues());

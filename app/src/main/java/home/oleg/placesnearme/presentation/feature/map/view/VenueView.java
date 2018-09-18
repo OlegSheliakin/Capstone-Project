@@ -6,13 +6,14 @@ import java.util.List;
 
 import home.oleg.placesnearme.presentation.base.ErrorView;
 import home.oleg.placesnearme.presentation.base.LoadingView;
+import home.oleg.placesnearme.presentation.base.View;
 import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 
 /**
- * Created by Oleg on 18.04.2016.
+ * Created by Oleg Sheliakin on 17.09.2018.
+ * Contact me by email - olegsheliakin@gmail.com
  */
-public interface MapView extends LoadingView, ErrorView {
+public interface VenueView extends ErrorView, LoadingView {
 
     void showVenues(@NonNull List<VenueViewData> items);
-
 }

@@ -25,33 +25,33 @@ public class MarkerIconProvider {
 
     private final ResourceProvider resourceProvider;
     private final DrawableConverter drawableConverter;
-    private final Map<Section.Type, Integer> colors;
+    private final Map<Section, Integer> colors;
 
     @Inject
     public MarkerIconProvider(ResourceProvider resourceProvider,
                               DrawableConverter drawableConverter,
-                              Map<Section.Type, Integer> colors) {
+                              Map<Section, Integer> colors) {
         this.resourceProvider = resourceProvider;
         this.drawableConverter = drawableConverter;
         this.colors = new HashMap<>(colors);
     }
 
-    public BitmapDescriptor getIconByCategory(@Nullable Section.Type type) {
+    public BitmapDescriptor getIconByCategory(@Nullable Section section) {
         Drawable drawable = resourceProvider.getDrawable(R.drawable.ic_place_marker);
         Objects.requireNonNull(drawable);
 
-        if (type == null) {
+        if (section == null) {
             return drawableConverter.convert(drawable);
         }
 
-        int color = getColor(type);
+        int color = getColor(section);
         changeColor(drawable, color);
 
         return drawableConverter.convert(drawable);
     }
 
-    private int getColor(@NonNull Section.Type type) {
-        int colorResId = colors.get(type);
+    private int getColor(@NonNull Section section) {
+        int colorResId = colors.get(section);
         return resourceProvider.getColor(colorResId);
     }
 

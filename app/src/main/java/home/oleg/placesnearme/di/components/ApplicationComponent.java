@@ -10,6 +10,7 @@ import home.oleg.placesnearme.di.modules.NetworkModule;
 import home.oleg.placesnearme.di.modules.RepositoryModule;
 import home.oleg.placesnearme.di.modules.ViewModelModule;
 import home.oleg.placesnearme.presentation.feature.main.di.MainActivityComponent;
+import home.oleg.placesnearme.presentation.feature.map.di.PlacesMapFragmentComponent;
 
 @Component(modules = {CoreModule.class,
         NetworkModule.class,
@@ -20,6 +21,7 @@ import home.oleg.placesnearme.presentation.feature.main.di.MainActivityComponent
 public interface ApplicationComponent {
 
     MainActivityComponent.Builder mainActivityComponentBuilder();
+    PlacesMapFragmentComponent.Builder placeMapFragmentComponentBuilder();
 
     @Component.Builder
     interface Builder {

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+}
+
 android {
     compileSdkVersion sdk.compile
 
@@ -38,13 +42,19 @@ dependencies {
 
     implementation deps.support.appcompat7
     implementation deps.support.design
+    implementation deps.support.supportV4
+    implementation deps.support.supportV13
     implementation deps.support.cardview
     implementation deps.support.recyclerview
+    implementation deps.support.constraintLayout
 
-    implementation deps.dagger.dagger
-    implementation deps.dagger.daggerAndroid
-    annotationProcessor deps.dagger.dagerAndroidProcessor
-    annotationProcessor deps.dagger.daggerCompiler
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    annotationProcessor deps.dagger.androidProcessor
+    annotationProcessor deps.dagger.compiler
+
+    implementation deps.permissions.runtime
+    annotationProcessor deps.permissions.compiler
 
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
@@ -54,7 +64,6 @@ dependencies {
     implementation deps.room.rxjava2
 
     implementation deps.googlePlayServices.maps
-    implementation deps.googlePlayServices.location
 
     implementation deps.glide.runtime
     annotationProcessor deps.glide.compiler

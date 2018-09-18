@@ -1,7 +1,8 @@
-package home.oleg.placesnearme.presentation.base;
+package home.oleg.placesnearme.presentation.view_action;
 
 import com.smedialink.common.function.Action;
 
+import home.oleg.placesnearme.presentation.base.ErrorView;
 import io.reactivex.annotations.NonNull;
 import timber.log.Timber;
 
@@ -18,7 +19,7 @@ public class ShowErrorAction<T extends ErrorView> implements Action<T> {
     }
 
     @Override
-    public void perform(@NonNull ErrorView errorView) {
+    public void perform(@android.support.annotation.NonNull @NonNull ErrorView errorView) {
         Timber.e(error);
         errorView.showError();
     }

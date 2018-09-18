@@ -18,17 +18,17 @@ public class ResourceModule {
 
     @Provides
     @NonNull
-    Map<Section.Type, Integer> provideColorMap() {
-        Map<Section.Type, Integer> colors = new HashMap<>();
-        colors.put(Section.Type.TRENDING, R.color.colorCategoryTrending);
-        colors.put(Section.Type.ARTS, R.color.colorCategoryArts);
-        colors.put(Section.Type.COFFEE, R.color.colorCategoryCoffee);
-        colors.put(Section.Type.DRINKS, R.color.colorCategoryDrinks);
-        colors.put(Section.Type.FOOD, R.color.colorCategoryFood);
-        colors.put(Section.Type.OUTDOORS, R.color.colorCategoryOutdoors);
-        colors.put(Section.Type.SIGHTS, R.color.colorCategorySights);
-        colors.put(Section.Type.SHOPS, R.color.colorCategoryShops);
-        colors.put(Section.Type.TOP, R.color.colorCategoryTopPicks);
+    Map<Section, Integer> provideColorMap() {
+        Map<Section, Integer> colors = new HashMap<>();
+        colors.put(Section.TRENDING, R.color.colorCategoryTrending);
+        colors.put(Section.ARTS, R.color.colorCategoryArts);
+        colors.put(Section.COFFEE, R.color.colorCategoryCoffee);
+        colors.put(Section.DRINKS, R.color.colorCategoryDrinks);
+        colors.put(Section.FOOD, R.color.colorCategoryFood);
+        colors.put(Section.OUTDOORS, R.color.colorCategoryOutdoors);
+        colors.put(Section.SIGHTS, R.color.colorCategorySights);
+        colors.put(Section.SHOPS, R.color.colorCategoryShops);
+        colors.put(Section.TOP, R.color.colorCategoryTopPicks);
         return colors;
     }
 }

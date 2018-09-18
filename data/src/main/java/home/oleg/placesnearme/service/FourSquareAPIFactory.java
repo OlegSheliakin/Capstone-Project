@@ -1,6 +1,8 @@
 package home.oleg.placesnearme.service;
 
 import home.oleg.placesnearme.data.BuildConfig;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -10,12 +12,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FourSquareAPIFactory {
+public final class FourSquareAPIFactory {
 
     private static final String BASE_URL = BuildConfig.BASE_URL;
     private static final String CLIENT_ID_KEY = "client_id";
     private static final String CLIENT_SECRET_KEY = "client_secret";
     private static final String VERSION_KEY = "v";
+
+    private FourSquareAPIFactory() {
+    }
 
     public static IFourSquareAPI create() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -32,7 +37,7 @@ public class FourSquareAPIFactory {
 
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .client(httpClient)
                 .baseUrl(BASE_URL)
                 .build().create(IFourSquareAPI.class);

@@ -13,7 +13,7 @@ public class QueryParamCreator {
     private static final String SECTION_KEY = "section";
     private static final String QUERY = "query";
 
-    public Map<String, String> create(Section.Type section, VenueRequestParams filter) {
+    public Map<String, String> create(Section section, VenueRequestParams filter) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(LL_KEY, filter.getLat() + "," + filter.getLng());
         queryMap.put(SECTION_KEY, section.getValue());

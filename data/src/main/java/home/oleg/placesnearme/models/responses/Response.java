@@ -11,7 +11,4 @@ public class Response<T> {
         return response;
     }
 
-    public void setResponse(T response) {
-        this.response = response;
-    }
 }
