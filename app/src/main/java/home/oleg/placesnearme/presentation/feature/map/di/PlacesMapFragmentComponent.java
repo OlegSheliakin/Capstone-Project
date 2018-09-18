@@ -4,7 +4,7 @@ import dagger.BindsInstance;
 import dagger.Subcomponent;
 import home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragment;
 
-@Subcomponent(modules = PlacesMapFragmentModule.class)
+@Subcomponent(modules = VenuesMapFragmentModule.class)
 public interface PlacesMapFragmentComponent {
 
     void inject(VenuesMapFragment target);

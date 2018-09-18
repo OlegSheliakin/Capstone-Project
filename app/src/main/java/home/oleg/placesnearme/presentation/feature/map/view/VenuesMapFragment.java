@@ -11,12 +11,9 @@ import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smedialink.common.Optional;
-import com.smedialink.common.function.Action;
 
 import java.util.List;
 
@@ -26,21 +23,24 @@ import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
-import home.oleg.placesnearme.presentation.base.ViewActionObserver;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.UserLocationViewModel;
+import home.oleg.placesnearme.presentation.view_action.ViewActionObserver;
 import home.oleg.placesnearme.presentation.feature.map.marker.MarkerMapper;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenueViewModel;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class VenuesMapFragment extends BaseMapFragment implements MapView {
+public class VenuesMapFragment extends BaseMapFragment implements VenueView, UserLocationView {
 
-    public static final int USER_LOCATION_ZOOM = 16;
+    private static final int USER_LOCATION_ZOOM = 16;
 
     @Inject
     VenueViewModel venueViewModel;
+
+    @Inject
+    UserLocationViewModel userLocationViewModel;
 
     @Inject
     MarkerMapper markerMapper;
@@ -72,7 +72,8 @@ public class VenuesMapFragment extends BaseMapFragment implements MapView {
                     .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
         });
 
-        venueViewModel.observer().observe(this, ViewActionObserver.create(this));
+        venueViewModel.getObserver().observe(this, ViewActionObserver.create(this));
+        userLocationViewModel.getObserver().observe(this, ViewActionObserver.create(this));
     }
 
     @Override
@@ -126,7 +127,7 @@ public class VenuesMapFragment extends BaseMapFragment implements MapView {
     @SuppressLint("MissingPermission")
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     void onShowCurrenLocationClicked() {
-        venueViewModel.getUserLocation();
+        userLocationViewModel.getUserLocation();
     }
 
     @SuppressLint("MissingPermission")
@@ -135,8 +136,7 @@ public class VenuesMapFragment extends BaseMapFragment implements MapView {
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         googleMap.setMyLocationEnabled(true);
 
-        venueViewModel.getUserLocation();
-        venueViewModel.getRecommendedVenues();
+        userLocationViewModel.getUserLocation();
     }
 
     private void injectDependencies() {

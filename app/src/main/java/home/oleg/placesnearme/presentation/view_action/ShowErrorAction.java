@@ -1,7 +1,8 @@
-package home.oleg.placesnearme.presentation.base;
+package home.oleg.placesnearme.presentation.view_action;
 
 import com.smedialink.common.function.Action;
 
+import home.oleg.placesnearme.presentation.base.ErrorView;
 import io.reactivex.annotations.NonNull;
 import timber.log.Timber;
 

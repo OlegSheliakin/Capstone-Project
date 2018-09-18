@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.presentation.base;
+package home.oleg.placesnearme.presentation.view_action;
 
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
