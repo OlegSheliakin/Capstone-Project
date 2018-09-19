@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_fragment_venue_details"
+    android:paddingBottom="@dimen/margin_normal"
+    android:paddingEnd="@dimen/margin_normal"
+    android:paddingStart="@dimen/margin_normal">
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@drawable/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivVenueIcon"
+        android:layout_width="@dimen/width_all_icon_venue"
+        android:layout_height="@dimen/width_all_icon_venue"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:contentDescription="@string/content_description_venue_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/__leak_canary_toast_background" />
+
+    <TextView
+        android:id="@+id/tvVenueName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivVenueIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivVenueIcon"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvVenueAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueDescription"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvVenueOpeningHours"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueAddress"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvVenueDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueDescription"
+        tools:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_extra_small"
+        android:contentDescription="@string/content_description_icon_routes"
+        app:layout_constraintBottom_toBottomOf="@+id/tvVenueDistance"
+        app:layout_constraintEnd_toStartOf="@+id/tvVenueDistance"
+        app:layout_constraintTop_toTopOf="@+id/tvVenueDistance"
+        app:srcCompat="@drawable/ic_route" />
+
+    <TextView
+        android:id="@+id/tvVenueDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivVenueIcon"
+        tools:text="Родина Южной кухни в самом центре Краasdasdasdasdas " />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintBottom_toBottomOf="@+id/ivVenueIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueName"
+        tools:text="TextView" />
+
+</android.support.constraint.ConstraintLayout>

@@ -12,38 +12,53 @@ import android.view.View;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smedialink.common.Optional;
+import com.smedialink.common.Pair;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import dagger.Lazy;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.R;
+import home.oleg.placesnearme.di.HasComponent;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
+import home.oleg.placesnearme.presentation.feature.map.di.PlacesMapFragmentComponent;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.UserLocationViewModel;
+import home.oleg.placesnearme.presentation.feature.venue.view.VenueViewDelegate;
 import home.oleg.placesnearme.presentation.view_action.ViewActionObserver;
 import home.oleg.placesnearme.presentation.feature.map.marker.MarkerMapper;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenueViewModel;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenuesViewModel;
 import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
+import static home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragmentPermissionsDispatcher.*;
+
 @RuntimePermissions
-public class VenuesMapFragment extends BaseMapFragment implements VenueView, UserLocationView {
+public class VenuesMapFragment extends BaseMapFragment implements VenuesView, UserLocationView, GoogleMap.OnMarkerClickListener, HasComponent<PlacesMapFragmentComponent> {
 
     private static final int USER_LOCATION_ZOOM = 16;
 
     @Inject
-    VenueViewModel venueViewModel;
+    VenuesViewModel venueViewModel;
 
     @Inject
     UserLocationViewModel userLocationViewModel;
 
     @Inject
     MarkerMapper markerMapper;
+
+    @Inject
+    Lazy<VenueViewDelegate.ShowHandler> showHandlerLazy;
+
+    private PlacesMapFragmentComponent component;
 
     private GoogleMap googleMap;
 
@@ -60,7 +75,8 @@ public class VenuesMapFragment extends BaseMapFragment implements VenueView, Use
         FloatingActionButton fabZoomIn = view.findViewById(R.id.fabZoomIn);
         FloatingActionButton fabZoomOut = view.findViewById(R.id.fabZoomOut);
 
-        fabCurrentLocation.setOnClickListener(v -> onShowCurrenLocationClicked());
+        fabCurrentLocation.setOnClickListener(v ->
+                onShowCurrenLocationClickedWithPermissionCheck(this));
 
         fabZoomIn.setOnClickListener(v -> {
             Optional.of(googleMap)
@@ -79,7 +95,7 @@ public class VenuesMapFragment extends BaseMapFragment implements VenueView, Use
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        VenuesMapFragmentPermissionsDispatcher.initLocationSettingsWithPermissionCheck(this, googleMap);
+        initLocationSettingsWithPermissionCheck(this, googleMap);
     }
 
     @Override
@@ -93,10 +109,15 @@ public class VenuesMapFragment extends BaseMapFragment implements VenueView, Use
         Optional.of(googleMap).ifPresent(map -> {
             map.clear();
 
-            List<MarkerOptions> markers = markerMapper.mapFrom(items);
-            for (MarkerOptions marker : markers) {
-                map.addMarker(marker);
+            List<Pair<MarkerOptions, VenueViewData>> pairs = markerMapper.mapFrom(items);
+            Map<String, VenueViewData> markerVenueViewDataMap = new HashMap<>();
+
+            for (Pair<MarkerOptions, VenueViewData> pair : pairs) {
+                String id = map.addMarker(pair.getFirst()).getId();
+                markerVenueViewDataMap.put(id, pair.getSecond());
             }
+
+            venueViewModel.setVenues(markerVenueViewDataMap);
         });
     }
 
@@ -135,18 +156,31 @@ public class VenuesMapFragment extends BaseMapFragment implements VenueView, Use
     void initLocationSettings(GoogleMap googleMap) {
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         googleMap.setMyLocationEnabled(true);
+        googleMap.setOnMarkerClickListener(this);
 
         userLocationViewModel.getUserLocation();
+        venueViewModel.getRecommendedVenues();
     }
 
     private void injectDependencies() {
-        DaggerApplicationComponent.builder()
+        component = DaggerApplicationComponent.builder()
                 .bind((PlacesNearMeApp) getActivity().getApplication())
                 .build()
                 .placeMapFragmentComponentBuilder()
                 .bind(this)
-                .build()
-                .inject(this);
+                .build();
+        component.inject(this);
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        showHandlerLazy.get().show();
+        venueViewModel.selectVenue(marker.getId());
+        return true;
+    }
+
+    @Override
+    public PlacesMapFragmentComponent get() {
+        return component;
+    }
 }

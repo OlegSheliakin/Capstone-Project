@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.feature.map.view.BaseMapFragment">
+    android:layout_height="match_parent">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
@@ -12,38 +11,71 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabCurrentLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="24dp"
-        app:backgroundTint="@android:color/white"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_current_location" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.feature.map.view.BaseMapFragment">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabZoomOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:backgroundTint="@android:color/white"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@id/fabCurrentLocation"
-        app:layout_constraintStart_toStartOf="@id/fabCurrentLocation"
-        app:srcCompat="@drawable/ic_remove_black_24dp" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabCurrentLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_current_location" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabZoomIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:backgroundTint="@android:color/white"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@id/fabZoomOut"
-        app:layout_constraintStart_toStartOf="@id/fabCurrentLocation"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabZoomOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@id/fabCurrentLocation"
+            app:layout_constraintStart_toStartOf="@id/fabCurrentLocation"
+            app:srcCompat="@drawable/ic_remove_black_24dp" />
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabZoomIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@id/fabZoomOut"
+            app:layout_constraintStart_toStartOf="@id/fabCurrentLocation"
+            app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/ivVenuePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/anchor_point"
+        android:src="@color/colorText"
+        app:layout_behavior="@string/BackDropBottomSheetBehavior" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:anchorPoint="@dimen/anchor_point"
+        app:defaultState="stateHidden"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="160dp"
+        app:layout_behavior="@string/BottomSheetBehaviorGoogleMapsLike">
+
+        <fragment
+            android:id="@+id/venueDetailFragment"
+            android:name="home.oleg.placesnearme.presentation.feature.venue.view.VenueDetailsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

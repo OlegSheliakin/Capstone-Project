@@ -1,6 +1,7 @@
 package home.oleg.placesnearme.presentation.feature.map.viewmodel;
 
 import home.oleg.placenearme.interactors.GetUserLocationInteractor;
+import home.oleg.placesnearme.presentation.base.BaseViewModel;
 import home.oleg.placesnearme.presentation.feature.map.view.UserLocationView;
 import home.oleg.placesnearme.presentation.view_action.ShowUserLocationAction;
 import home.oleg.placesnearme.presentation.view_action.ViewActions;

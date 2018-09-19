@@ -1,6 +1,7 @@
 package home.oleg.placesnearme.presentation.viewdata;
 
-import android.support.annotation.ColorRes;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.smedialink.common.Pair;
@@ -19,20 +20,16 @@ import home.oleg.placenearme.models.Section;
  * Created by Oleg Sheliakin on 14.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewData {
+public class VenueViewData implements Parcelable {
 
     private String title;
     private String address;
     private double lat;
     private double lng;
     private List<String> photoUrls;
+    private String description;
     @Nullable
     private Section sectionType;
-    private Category category;
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public String getTitle() {
         return title;
@@ -67,15 +64,23 @@ public class VenueViewData {
     }
 
     public List<String> getPhotoUrls() {
-        return photoUrls;
+        if(photoUrls == null) {
+            return Collections.emptyList();
+        } else {
+            return new ArrayList<>(photoUrls);
+        }
     }
 
     public void setPhotoUrls(List<String> photoUrls) {
-        this.photoUrls = photoUrls;
+        this.photoUrls = new ArrayList<>(photoUrls);
     }
 
-    public Category getCategory() {
-        return category;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Nullable
@@ -118,13 +123,7 @@ public class VenueViewData {
         venueViewObject.setLat(venue.getLocation().getLat());
         venueViewObject.setLng(venue.getLocation().getLng());
         venueViewObject.setSectionType(section);
-
-        for (Category category : venue.getCategories()) {
-            if (category.getPrimary()) {
-                venueViewObject.setCategory(category);
-                break;
-            }
-        }
+        venueViewObject.setDescription(venue.getDescription());
 
         List<Photo> photos = venue.getPhotos();
 
@@ -137,4 +136,45 @@ public class VenueViewData {
         return venueViewObject;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeString(this.address);
+        dest.writeDouble(this.lat);
+        dest.writeDouble(this.lng);
+        dest.writeStringList(this.photoUrls);
+        dest.writeString(this.description);
+        dest.writeInt(this.sectionType == null ? -1 : this.sectionType.ordinal());
+    }
+
+    public VenueViewData() {
+    }
+
+    protected VenueViewData(Parcel in) {
+        this.title = in.readString();
+        this.address = in.readString();
+        this.lat = in.readDouble();
+        this.lng = in.readDouble();
+        this.photoUrls = in.createStringArrayList();
+        this.description = in.readString();
+        int tmpSectionType = in.readInt();
+        this.sectionType = tmpSectionType == -1 ? null : Section.values()[tmpSectionType];
+    }
+
+    public static final Parcelable.Creator<VenueViewData> CREATOR = new Parcelable.Creator<VenueViewData>() {
+        @Override
+        public VenueViewData createFromParcel(Parcel source) {
+            return new VenueViewData(source);
+        }
+
+        @Override
+        public VenueViewData[] newArray(int size) {
+            return new VenueViewData[size];
+        }
+    };
 }

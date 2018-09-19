@@ -9,7 +9,7 @@
     <color name="colorButtonFocused">#F8BBD0</color>
     <color name="colorButtonUnable">#BDBDBD</color>
     <color name="colorButtonText">#ffffff</color>
-    <color name="colorText">#78909C</color>
+    <color name="colorText">#3e3e3e</color>
     <color name="colorListVenueBackground">#ffffff</color>
 
     <color name="colorCategoryTravelling">#5693e4</color>

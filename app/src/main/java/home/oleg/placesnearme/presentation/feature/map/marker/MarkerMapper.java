@@ -2,6 +2,7 @@ package home.oleg.placesnearme.presentation.feature.map.marker;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.smedialink.common.Pair;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,20 +29,20 @@ public class MarkerMapper {
     }
 
     @NonNull
-    public MarkerOptions mapFrom(@NonNull VenueViewData venueViewData) {
+    public Pair<MarkerOptions, VenueViewData> mapFrom(@NonNull VenueViewData venueViewData) {
         LatLng latLng = new LatLng(venueViewData.getLat(), venueViewData.getLng());
-        return new MarkerOptions()
+        return new Pair<>(new MarkerOptions()
                 .icon(markerIconProvider.getIconByCategory(venueViewData.getSectionType()))
-                .position(latLng);
+                .position(latLng), venueViewData);
     }
 
     @NonNull
-    public List<MarkerOptions> mapFrom(@NonNull Collection<VenueViewData> venueViewDatas) {
+    public List<Pair<MarkerOptions, VenueViewData>> mapFrom(@NonNull Collection<VenueViewData> venueViewDatas) {
         if(venueViewDatas.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<MarkerOptions> markerOptions = new ArrayList<>();
+        List<Pair<MarkerOptions, VenueViewData>> markerOptions = new ArrayList<>();
 
         for (VenueViewData venueViewData : venueViewDatas) {
             markerOptions.add(mapFrom(venueViewData));

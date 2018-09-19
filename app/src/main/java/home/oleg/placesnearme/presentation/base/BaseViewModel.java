@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.presentation.feature.map.viewmodel;
+package home.oleg.placesnearme.presentation.base;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
