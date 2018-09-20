@@ -23,11 +23,7 @@ public class HideViewTwoPhaseBottomSheetBehavior<V extends View> extends Coordin
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        if (dependency instanceof NestedScrollView) {
-            CustomBottomSheetBehavior.from(dependency);
-            return true;
-        }
-        return false;
+        return dependency instanceof NestedScrollView;
     }
 
     @Override
@@ -67,7 +63,7 @@ public class HideViewTwoPhaseBottomSheetBehavior<V extends View> extends Coordin
             return;
         }
 
-        view.animate().alpha(alpha).start();
+        view.setAlpha(alpha);
     }
 
     private void getBottomSheetBehavior(@NonNull CoordinatorLayout coordinatorLayout) {

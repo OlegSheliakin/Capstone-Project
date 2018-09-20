@@ -16,25 +16,30 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_image_view_venue_photo"
         android:src="@color/colorText"
-        app:layout_behavior="com.mahc.custombottomsheetbehavior.BackdropBottomSheetBehavior" />
+        app:layout_behavior="com.mahc.custombottomsheetbehavior.BackdropBottomSheetBehavior"
+        android:contentDescription="@string/content_description_venue_s_photo" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:fitsSystemWindows="true"
+        android:fillViewport="true"
         app:anchorPoint="@dimen/anchor_point_bottom_sheet"
         app:behavior_hideable="true"
         app:behavior_peekHeight="160dp"
         app:defaultState="stateHidden"
         app:layout_behavior="com.mahc.custombottomsheetbehavior.CustomBottomSheetBehavior">
 
-        <fragment
-            android:id="@+id/venueDetailFragment"
-            android:name="home.oleg.placesnearme.presentation.feature.venue.view.VenueDetailsFragment"
+        <home.oleg.placesnearme.presentation.feature.venue.view.VenueDetailsView
+            android:id="@+id/venueView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_fragment_venue_details"
+            android:fitsSystemWindows="true"
+            android:paddingBottom="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_normal"
+            android:paddingStart="@dimen/margin_normal"/>
 
     </android.support.v4.widget.NestedScrollView>
 

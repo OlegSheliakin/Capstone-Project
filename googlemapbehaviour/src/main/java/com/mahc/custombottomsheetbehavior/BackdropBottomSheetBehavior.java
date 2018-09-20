@@ -46,6 +46,10 @@ public class BackdropBottomSheetBehavior<V extends View> extends CoordinatorLayo
 
         mCurrentChildY = (dependency.getY() - achorPointY) * collapsedY / (collapsedY - offset - achorPointY);
 
+        if(mCurrentChildY < 0) {
+            mCurrentChildY = 0;
+        }
+
         child.setY(mCurrentChildY);
         return lastCurrentChildY == mCurrentChildY;
     }

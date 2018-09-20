@@ -48,5 +48,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_description_venue_icon">Venue\'s icon</string>
     <string name="content_description_icon_routes">By tapping this icon the routes will be drawn</string>
+    <string name="content_description_venue_s_photo">Venue\'s photo</string>
 
 </resources>

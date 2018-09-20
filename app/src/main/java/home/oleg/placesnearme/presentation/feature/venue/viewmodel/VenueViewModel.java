@@ -12,20 +12,16 @@ import io.reactivex.Observable;
  */
 public class VenueViewModel extends BaseViewModel<VenueView> {
 
-    private VenueViewModel.VenueViewDataSelector some;
+    private VenueViewData venue;
 
-    public interface VenueViewDataSelector {
-        Observable<VenueViewData> listenSelected();
+    public void setVenue(VenueViewData venue) {
+        this.venue = venue;
+
+        setAction(ShowVenueAction.create(venue));
     }
 
-    public void attachSelector(VenueViewModel.VenueViewDataSelector selector) {
-        addToDisposables(
-                selector.listenSelected()
-                        .subscribe(
-                                venueViewData -> setAction(ShowVenueAction.create(venueViewData)),
-                                Throwable::printStackTrace
-                        )
-        );
+    public void geocode(double latitude, double longitude) {
+
     }
 
 }

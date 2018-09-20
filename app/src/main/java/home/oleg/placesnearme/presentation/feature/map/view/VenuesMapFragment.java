@@ -23,44 +23,38 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import dagger.Lazy;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.HasComponent;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
 import home.oleg.placesnearme.presentation.feature.map.di.PlacesMapFragmentComponent;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.UserLocationViewModel;
-import home.oleg.placesnearme.presentation.feature.venue.view.VenueViewDelegate;
-import home.oleg.placesnearme.presentation.view_action.ViewActionObserver;
 import home.oleg.placesnearme.presentation.feature.map.marker.MarkerMapper;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenuesViewModel;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenuesMapViewModelFacade;
+import home.oleg.placesnearme.presentation.feature.venue.view.VenueDetailsView;
 import home.oleg.placesnearme.presentation.viewdata.VenueViewData;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
-import static home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragmentPermissionsDispatcher.*;
+import static home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragmentPermissionsDispatcher.initLocationSettingsWithPermissionCheck;
+import static home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragmentPermissionsDispatcher.onShowCurrenLocationClickedWithPermissionCheck;
 
 @RuntimePermissions
-public class VenuesMapFragment extends BaseMapFragment implements VenuesView, UserLocationView, GoogleMap.OnMarkerClickListener, HasComponent<PlacesMapFragmentComponent>, GoogleMap.OnMapClickListener {
+public class VenuesMapFragment extends BaseMapFragment implements VenuesMapView, GoogleMap.OnMarkerClickListener, HasComponent<PlacesMapFragmentComponent>, GoogleMap.OnMapClickListener {
 
     private static final int USER_LOCATION_ZOOM = 16;
 
     @Inject
-    VenuesViewModel venueViewModel;
-
-    @Inject
-    UserLocationViewModel userLocationViewModel;
+    VenuesMapViewModelFacade venuesMapViewModelFacade;
 
     @Inject
     MarkerMapper markerMapper;
 
-    @Inject
-    Lazy<VenueViewDelegate.ShowHandler> showHandlerLazy;
-
     private PlacesMapFragmentComponent component;
 
     private GoogleMap googleMap;
+
+    private VenueDetailsView venueDetailsView;
 
     @Override
     public void onAttach(Context context) {
@@ -71,6 +65,8 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        venueDetailsView = view.findViewById(R.id.venueView);
+
         FloatingActionButton fabCurrentLocation = view.findViewById(R.id.fabCurrentLocation);
         FloatingActionButton fabZoomIn = view.findViewById(R.id.fabZoomIn);
         FloatingActionButton fabZoomOut = view.findViewById(R.id.fabZoomOut);
@@ -88,8 +84,7 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
                     .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
         });
 
-        venueViewModel.getObserver().observe(this, ViewActionObserver.create(this));
-        userLocationViewModel.getObserver().observe(this, ViewActionObserver.create(this));
+        venuesMapViewModelFacade.attachView(this);
     }
 
     @Override
@@ -117,7 +112,7 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
                 markerVenueViewDataMap.put(id, pair.getSecond());
             }
 
-            venueViewModel.setVenues(markerVenueViewDataMap);
+            venuesMapViewModelFacade.setVenues(markerVenueViewDataMap);
         });
     }
 
@@ -148,7 +143,7 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
     @SuppressLint("MissingPermission")
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     void onShowCurrenLocationClicked() {
-        userLocationViewModel.getUserLocation();
+        venuesMapViewModelFacade.refreshUserLocation();
     }
 
     @SuppressLint("MissingPermission")
@@ -159,8 +154,8 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnMapClickListener(this);
 
-        userLocationViewModel.getUserLocation();
-        venueViewModel.getRecommendedVenues();
+        venuesMapViewModelFacade.refreshUserLocation();
+        venuesMapViewModelFacade.refreshRecomendedVenues();
     }
 
     private void injectDependencies() {
@@ -175,8 +170,7 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        showHandlerLazy.get().show();
-        venueViewModel.selectVenue(marker.getId());
+        venuesMapViewModelFacade.selectVenue(marker.getId());
         return true;
     }
 
@@ -187,6 +181,11 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
 
     @Override
     public void onMapClick(LatLng latLng) {
-        showHandlerLazy.get().show();
+        venuesMapViewModelFacade.geocode(latLng.latitude, latLng.longitude);
+    }
+
+    @Override
+    public void showVenue(VenueViewData venueViewData) {
+        venueDetailsView.showVenue(venueViewData);
     }
 }

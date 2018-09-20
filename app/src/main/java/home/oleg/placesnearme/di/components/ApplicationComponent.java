@@ -11,8 +11,6 @@ import home.oleg.placesnearme.di.modules.RepositoryModule;
 import home.oleg.placesnearme.di.modules.ViewModelModule;
 import home.oleg.placesnearme.presentation.feature.main.di.MainActivityComponent;
 import home.oleg.placesnearme.presentation.feature.map.di.PlacesMapFragmentComponent;
-import home.oleg.placesnearme.presentation.feature.venue.di.VenueDetailsFragmentComponent;
-import home.oleg.placesnearme.presentation.feature.venue.view.VenueDetailsFragment;
 
 @Component(modules = {CoreModule.class,
         NetworkModule.class,
