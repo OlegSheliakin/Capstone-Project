@@ -11,10 +11,39 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-    <android.support.constraint.ConstraintLayout
+    <ImageView
+        android:id="@+id/ivVenuePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_image_view_venue_photo"
+        android:src="@color/colorText"
+        app:layout_behavior="com.mahc.custombottomsheetbehavior.BackdropBottomSheetBehavior" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.feature.map.view.BaseMapFragment">
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        app:anchorPoint="@dimen/anchor_point_bottom_sheet"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="160dp"
+        app:defaultState="stateHidden"
+        app:layout_behavior="com.mahc.custombottomsheetbehavior.CustomBottomSheetBehavior">
+
+        <fragment
+            android:id="@+id/venueDetailFragment"
+            android:name="home.oleg.placesnearme.presentation.feature.venue.view.VenueDetailsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fabs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        app:layout_behavior="com.mahc.custombottomsheetbehavior.HideViewTwoPhaseBottomSheetBehavior">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabCurrentLocation"
@@ -51,31 +80,5 @@
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
     </android.support.constraint.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/ivVenuePhoto"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/anchor_point"
-        android:src="@color/colorText"
-        app:layout_behavior="@string/BackDropBottomSheetBehavior" />
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:anchorPoint="@dimen/anchor_point"
-        app:defaultState="stateHidden"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="160dp"
-        app:layout_behavior="@string/BottomSheetBehaviorGoogleMapsLike">
-
-        <fragment
-            android:id="@+id/venueDetailFragment"
-            android:name="home.oleg.placesnearme.presentation.feature.venue.view.VenueDetailsFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

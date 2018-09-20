@@ -1,7 +1,6 @@
 package com.mahc.custombottomsheetbehavior;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -11,13 +10,14 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
-public class BackdropBottomSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
+public class HideViewTwoPhaseBottomSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
 
+    public static final float RANGE = 50f;
     private WeakReference<CustomBottomSheetBehavior> mBottomSheetBehaviorRef;
 
-    private float mCurrentChildY;
+    float mCurrentChildY;
 
-    public BackdropBottomSheetBehavior(Context context, AttributeSet attrs) {
+    public HideViewTwoPhaseBottomSheetBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -37,24 +37,39 @@ public class BackdropBottomSheetBehavior<V extends View> extends CoordinatorLayo
             getBottomSheetBehavior(parent);
         }
 
-        int collapsedY = dependency.getHeight() - mBottomSheetBehaviorRef.get().getPeekHeight();
+        int peekHeight = mBottomSheetBehaviorRef.get().getPeekHeight();
 
-        int achorPointY = mBottomSheetBehaviorRef.get().getAnchorPoint();
+        float y = dependency.getY();
+
+        int achorPointY = child.getHeight();
 
         float lastCurrentChildY = mCurrentChildY;
-        int offset = child.getHeight() - achorPointY;
+        mCurrentChildY = dependency.getY() - achorPointY;
 
-        mCurrentChildY = (dependency.getY() - achorPointY) * collapsedY / (collapsedY - offset - achorPointY);
+        int tillY = parent.getHeight() - peekHeight;
+        float alpha = 1 - (tillY - dependency.getY()) / RANGE;
 
-        child.setY(mCurrentChildY);
-        return lastCurrentChildY == mCurrentChildY;
+        if (alpha > 1) {
+            alpha = 1;
+        } else if (alpha < 0) {
+            alpha = 0;
+        }
+
+        changeAlphaIfNecessary(child, alpha);
+
+        child.setY(y - achorPointY);
+
+        return lastCurrentChildY != mCurrentChildY;
     }
 
-    /**
-     * Look into the CoordiantorLayout for the {@link BottomSheetBehaviorGoogleMapsLike}
-     *
-     * @param coordinatorLayout with app:layout_behavior= {@link BottomSheetBehaviorGoogleMapsLike}
-     */
+    private void changeAlphaIfNecessary(View view, float alpha) {
+        if (view.getAlpha() == alpha) {
+            return;
+        }
+
+        view.animate().alpha(alpha).start();
+    }
+
     private void getBottomSheetBehavior(@NonNull CoordinatorLayout coordinatorLayout) {
 
         for (int i = 0; i < coordinatorLayout.getChildCount(); i++) {

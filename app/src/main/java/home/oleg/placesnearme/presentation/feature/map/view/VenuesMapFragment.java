@@ -42,7 +42,7 @@ import permissions.dispatcher.RuntimePermissions;
 import static home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragmentPermissionsDispatcher.*;
 
 @RuntimePermissions
-public class VenuesMapFragment extends BaseMapFragment implements VenuesView, UserLocationView, GoogleMap.OnMarkerClickListener, HasComponent<PlacesMapFragmentComponent> {
+public class VenuesMapFragment extends BaseMapFragment implements VenuesView, UserLocationView, GoogleMap.OnMarkerClickListener, HasComponent<PlacesMapFragmentComponent>, GoogleMap.OnMapClickListener {
 
     private static final int USER_LOCATION_ZOOM = 16;
 
@@ -157,6 +157,7 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         googleMap.setMyLocationEnabled(true);
         googleMap.setOnMarkerClickListener(this);
+        googleMap.setOnMapClickListener(this);
 
         userLocationViewModel.getUserLocation();
         venueViewModel.getRecommendedVenues();
@@ -182,5 +183,10 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesView, Us
     @Override
     public PlacesMapFragmentComponent get() {
         return component;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        showHandlerLazy.get().show();
     }
 }

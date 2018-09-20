@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 
 import com.mahc.custombottomsheetbehavior.BottomSheetBehaviorGoogleMapsLike;
+import com.mahc.custombottomsheetbehavior.CustomBottomSheetBehavior;
 import com.smedialink.common.Optional;
 
 import dagger.Module;
@@ -37,30 +38,30 @@ public final class VenuesMapFragmentModule {
         return ViewModelProviders.of(fragment, factory).get(UserLocationViewModel.class);
     }
 
-    @Provides
+  /*  @Provides
     @NonNull
     static VenueDetailsFragment provideVenueDetailFragment(VenuesMapFragment mapFragment) {
         return Optional.of(mapFragment.getChildFragmentManager())
                 .map(fragmentManager ->
                         (VenueDetailsFragment) fragmentManager.findFragmentById(R.id.venueDetailFragment))
                 .getOrElseThrow(new IllegalStateException("cannot find venue detail fragment"));
-    }
+    }*/
 
     @Provides
     @NonNull
     static VenueViewDelegate.ShowHandler provideShowHandler(VenuesMapFragment mapFragment) {
         NestedScrollView nestedScrollView = mapFragment.getView().findViewById(R.id.nestedScrollView);
 
-        BottomSheetBehaviorGoogleMapsLike<NestedScrollView> bottomSheetBehaviorGoogleMapsLike = BottomSheetBehaviorGoogleMapsLike.from(nestedScrollView);
+        CustomBottomSheetBehavior<NestedScrollView> bottomSheetBehaviorGoogleMapsLike = CustomBottomSheetBehavior.from(nestedScrollView);
         bottomSheetBehaviorGoogleMapsLike.setState(BottomSheetBehaviorGoogleMapsLike.STATE_HIDDEN);
 
         return new VenuesMapFragmentModule.MyShowHandler(bottomSheetBehaviorGoogleMapsLike);
     }
 
     private static final class MyShowHandler implements VenueViewDelegate.ShowHandler {
-        private final BottomSheetBehaviorGoogleMapsLike<NestedScrollView> bottomSheetBehaviorGoogleMapsLike;
+        private final CustomBottomSheetBehavior<NestedScrollView> bottomSheetBehaviorGoogleMapsLike;
 
-        private MyShowHandler(BottomSheetBehaviorGoogleMapsLike<NestedScrollView> bottomSheetBehaviorGoogleMapsLike) {
+        private MyShowHandler(CustomBottomSheetBehavior<NestedScrollView> bottomSheetBehaviorGoogleMapsLike) {
             this.bottomSheetBehaviorGoogleMapsLike = bottomSheetBehaviorGoogleMapsLike;
         }
 
@@ -71,7 +72,7 @@ public final class VenuesMapFragmentModule {
 
         @Override
         public void show() {
-            bottomSheetBehaviorGoogleMapsLike.setState(BottomSheetBehaviorGoogleMapsLike.STATE_ANCHOR_POINT);
+            bottomSheetBehaviorGoogleMapsLike.setState(BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED);
         }
     }
 }

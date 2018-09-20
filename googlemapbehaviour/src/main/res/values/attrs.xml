@@ -10,7 +10,4 @@
         </attr>
     </declare-styleable>
 
-    <!--<declare-styleable name="MergedAppBarLayout">-->
-        <!--<attr name="mergedAppBarLayoutStyle" format="reference"/>-->
-    <!--</declare-styleable>-->
 </resources>
