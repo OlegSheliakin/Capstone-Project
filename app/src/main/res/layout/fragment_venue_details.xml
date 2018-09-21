@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- FIXME присутствуют хардкод дименшены -->
+
     <View
         android:id="@+id/line"
         android:layout_width="36dp"

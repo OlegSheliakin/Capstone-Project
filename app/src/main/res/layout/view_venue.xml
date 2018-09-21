@@ -16,6 +16,7 @@
         app:srcCompat="@drawable/__leak_canary_toast_background"
         android:contentDescription="@string/content_description_venue_icon" />
 
+    <!-- TODO У TextView часто повторяются некоторые атриьуты, значит можно сделать переиспользуемый стиль -->
     <TextView
         android:id="@+id/tvVenueName"
         android:layout_width="0dp"

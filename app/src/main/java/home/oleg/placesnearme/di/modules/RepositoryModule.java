@@ -19,6 +19,21 @@ import io.reactivex.annotations.NonNull;
 @Module
 public class RepositoryModule {
 
+    /* TODO В репо impl лучше добавить @Inject в конструктор, а здесь как-то так
+    (чтобы не было return new для имплементаций интерфейсов):
+
+    @Provides
+    public DetailedVenueRepository provideDetailedVenueRepo(DetailedVenueRepositoryImpl repoImpl) {
+        return repoImpl;
+    }
+    ...
+
+    А чтоб не тащить весь даггер в data, можно добавить только аннотацию:
+
+    implementation "javax.inject:javax.inject:1"
+
+    */
+
     @Provides
     public DetailedVenueRepository provideDetailedVenueRepo(IFourSquareAPI api) {
         return new DetailedVenueRepositoryImpl(api);

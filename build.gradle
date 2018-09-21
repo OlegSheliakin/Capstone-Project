@@ -3,8 +3,8 @@ apply from: 'dependencies.gradle'
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
@@ -13,10 +13,13 @@ buildscript {
     }
 }
 
+// TODO В новых версиях студии репо google() должен идти перед jcenter(),
+// иначе не билдится проект (здесь уже поменял)
+// https://stackoverflow.com/questions/50570134/
 allprojects {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 }
 
