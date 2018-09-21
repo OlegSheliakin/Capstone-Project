@@ -19,7 +19,6 @@ import home.oleg.placesnearme.presentation.feature.map.di.PlacesMapFragmentCompo
         ViewModelModule.class,
         ResourceModule.class})
 public interface ApplicationComponent {
-
     MainActivityComponent.Builder mainActivityComponentBuilder();
     PlacesMapFragmentComponent.Builder placeMapFragmentComponentBuilder();
 

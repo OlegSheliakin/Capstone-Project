@@ -16,7 +16,8 @@ import home.oleg.placenearme.interactors.GetUserLocationInteractor;
 import home.oleg.placesnearme.di.mapkeys.ViewModelKey;
 import home.oleg.placesnearme.presentation.feature.main.viewmodel.MainViewModel;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.UserLocationViewModel;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenueViewModel;
+import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenuesViewModel;
+import home.oleg.placesnearme.presentation.feature.venue.viewmodel.VenueViewModel;
 
 /**
  * Created by Oleg Sheliakin on 21.08.2018.
@@ -29,8 +30,16 @@ public final class ViewModelModule {
     @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
+    public static ViewModel provideVenueViewModel() {
+        return new VenueViewModel();
+    }
+
+    @IntoMap
+    @ViewModelKey(VenuesViewModel.class)
+    @Provides
+    @NonNull
     public static ViewModel provideMapViewModel(GetRecomendedVenuesInteractor interactor) {
-        return new VenueViewModel(interactor);
+        return new VenuesViewModel(interactor);
     }
 
     @IntoMap

@@ -1,9 +1,14 @@
-package home.oleg.placesnearme.presentation.feature.map.viewmodel;
+package home.oleg.placesnearme.presentation.base;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import com.smedialink.common.function.Action;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import home.oleg.placesnearme.presentation.base.View;
 import io.reactivex.disposables.CompositeDisposable;
