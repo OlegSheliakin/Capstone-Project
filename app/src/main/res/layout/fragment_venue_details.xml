@@ -5,12 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- FIXME присутствуют хардкод дименшены -->
-
     <View
         android:id="@+id/line"
-        android:layout_width="36dp"
-        android:layout_height="4dp"
+        android:layout_width="@dimen/width_line_venue_detail"
+        android:layout_height="@dimen/height_line_venue_detail"
         android:layout_marginTop="@dimen/margin_small"
         android:background="@drawable/line"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +34,6 @@
         android:maxLines="1"
         android:textColor="@color/colorText"
         android:textStyle="bold"
-        android:text="asdasd"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivVenueIcon"
@@ -52,7 +49,6 @@
         android:layout_marginTop="@dimen/margin_normal"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="asdasd"
         android:textColor="@color/colorText"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -67,7 +63,6 @@
         android:layout_marginTop="@dimen/margin_small"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="asdasd"
         android:textColor="@color/colorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +76,6 @@
         android:layout_marginTop="@dimen/margin_normal"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="asdasd"
         android:textColor="@color/colorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvVenueDescription"
@@ -121,7 +115,6 @@
         android:layout_marginStart="@dimen/margin_small"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="asdasd"
         android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="@+id/ivVenueIcon"
         app:layout_constraintEnd_toEndOf="parent"
