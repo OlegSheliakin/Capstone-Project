@@ -60,7 +60,7 @@ public final class ViewModelModule {
 
     @Provides
     @NonNull
-    public static ViewModelProvider.Factory provideFactory(Map<Class<? extends ViewModel>,
+    public ViewModelProvider.Factory provideFactory(Map<Class<? extends ViewModel>,
             Provider<ViewModel>> map) {
         return new ViewModelProvider.Factory() {
 

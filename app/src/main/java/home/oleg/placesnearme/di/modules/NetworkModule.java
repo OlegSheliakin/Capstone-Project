@@ -3,9 +3,7 @@ package home.oleg.placesnearme.di.modules;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placesnearme.BuildConfig;
-import home.oleg.placesnearme.core_network.config.NetworkConfig;
-import home.oleg.placesnearme.core_network.service.FourSquareAPIFactory;
-import home.oleg.placesnearme.core_network.service.IFourSquareAPI;
+import home.oleg.placesnearme.network.config.NetworkConfig;
 import io.reactivex.annotations.NonNull;
 
 @Module
@@ -15,12 +13,6 @@ public final class NetworkModule {
     @NonNull
     public NetworkConfig provideNetwowkConfig() {
         return new NetworkModule.MyNetworkConfig();
-    }
-
-    @Provides
-    @NonNull
-    public IFourSquareAPI provide(NetworkConfig networkConfig) {
-        return FourSquareAPIFactory.create(networkConfig);
     }
 
     private static class MyNetworkConfig implements NetworkConfig {

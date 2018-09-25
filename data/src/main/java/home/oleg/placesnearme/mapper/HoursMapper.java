@@ -14,9 +14,11 @@ public final class HoursMapper {
     public static Hours map(home.oleg.placesnearme.core_network.models.Hours hours) {
         Hours result = new Hours();
 
-        result.setIsLocalHoliday(hours.getIsLocalHoliday());
-        result.setIsOpen(hours.getIsOpen());
-        result.setStatus(hours.getStatus());
+        if(hours != null) {
+            result.setIsLocalHoliday(hours.getIsLocalHoliday());
+            result.setIsOpen(hours.getIsOpen());
+            result.setStatus(hours.getStatus());
+        }
 
         return result;
     }

@@ -27,7 +27,6 @@ import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.R;
 import home.oleg.placesnearme.di.HasComponent;
-import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
 import home.oleg.placesnearme.presentation.feature.map.di.PlacesMapFragmentComponent;
 import home.oleg.placesnearme.presentation.feature.map.marker.MarkerMapper;
 import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenuesMapViewModelFacade;
@@ -40,7 +39,11 @@ import static home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFrag
 import static home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragmentPermissionsDispatcher.onShowCurrenLocationClickedWithPermissionCheck;
 
 @RuntimePermissions
-public class VenuesMapFragment extends BaseMapFragment implements VenuesMapView, GoogleMap.OnMarkerClickListener, HasComponent<PlacesMapFragmentComponent>, GoogleMap.OnMapClickListener {
+public class VenuesMapFragment extends BaseMapFragment implements
+        VenuesMapView,
+        GoogleMap.OnMarkerClickListener,
+        HasComponent<PlacesMapFragmentComponent>,
+        GoogleMap.OnMapClickListener {
 
     private static final int USER_LOCATION_ZOOM = 16;
 
@@ -159,13 +162,13 @@ public class VenuesMapFragment extends BaseMapFragment implements VenuesMapView,
     }
 
     private void injectDependencies() {
-        component = DaggerApplicationComponent.builder()
+       /* component = DaggerApplicationComponent.builder()
                 .bind((PlacesNearMeApp) getActivity().getApplication())
                 .build()
                 .placeMapFragmentComponentBuilder()
                 .bind(this)
                 .build();
-        component.inject(this);
+        component.inject(this);*/
     }
 
     @Override

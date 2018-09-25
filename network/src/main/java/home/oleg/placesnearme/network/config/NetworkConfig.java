@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.core_network.config;
+package home.oleg.placesnearme.network.config;
 
 /**
  * Created by Oleg Sheliakin on 25.09.2018.

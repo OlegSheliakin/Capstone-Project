@@ -1,1 +1,1 @@
-include ':app', ':domain', ':data', ':common', ':googlemapbehaviour', ':core-network'
+include ':app', ':domain', ':data', ':common', ':googlemapbehaviour', ':network'

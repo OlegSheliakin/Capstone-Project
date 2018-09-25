@@ -25,4 +25,5 @@
     <dimen name="peek_height_fragment_map">160dp</dimen>
     <dimen name="width_line_venue_detail">36dp</dimen>
     <dimen name="height_line_venue_detail">4dp</dimen>
+    <dimen name="radius_item_photo_card">6dp</dimen>
 </resources>

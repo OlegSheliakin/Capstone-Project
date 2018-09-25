@@ -10,6 +10,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -26,18 +27,14 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-    implementation project(':domain')
-    implementation project(':network')
-
-    implementation deps.googlePlayServices.location
-
-    testImplementation deps.testing.junit
-    androidTestImplementation deps.testing.testRunner
-
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.network.retrofit
     implementation deps.network.converterGson
     implementation deps.network.loggingInterceptor
     implementation deps.network.rxJavaAdapter
+    implementation deps.rxjava2.rxjava
+
+    implementation deps.dagger.runtime
+    annotationProcessor deps.dagger.compiler
 }

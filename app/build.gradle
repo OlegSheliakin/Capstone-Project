@@ -43,7 +43,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':googlemapbehaviour')
-    implementation project(':core-network')
+    implementation project(':network')
 
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito

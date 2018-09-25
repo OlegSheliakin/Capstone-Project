@@ -9,9 +9,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 
 import javax.inject.Inject;
 
-import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.R;
-import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
 import home.oleg.placesnearme.presentation.feature.favorite_places.FavoritePlacesFragment;
 import home.oleg.placesnearme.presentation.feature.main.viewmodel.MainViewModel;
 import home.oleg.placesnearme.presentation.feature.map.view.VenuesMapFragment;
@@ -34,13 +32,15 @@ public final class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void injectDependencies() {
-        DaggerApplicationComponent.builder()
+        /*ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
                 .bind((PlacesNearMeApp) getApplication())
-                .build()
-                .mainActivityComponentBuilder()
-                .bind(this)
-                .build()
-                .inject(this);
+                .build();
+
+        NetworkComponent networkComponent = DaggerNetworkComponent.builder()
+                .networkConfig(applicationComponent.getNetworkConfig())
+                .build();*/
+
+
     }
 
     private void initBottomBar() {
@@ -69,7 +69,7 @@ public final class MainActivity extends AppCompatActivity implements MainView {
 
             Fragment curFrag = getSupportFragmentManager().findFragmentById(R.id.container);
             if (curFrag != null) {
-                if(curFrag instanceof VenuesMapFragment) {
+                if (curFrag instanceof VenuesMapFragment) {
                     fragmentTransaction.hide(curFrag);
                 } else {
                     fragmentTransaction.detach(curFrag);
@@ -79,7 +79,7 @@ public final class MainActivity extends AppCompatActivity implements MainView {
             Fragment curFragment = getSupportFragmentManager().findFragmentByTag(tag);
             if (curFragment == null) {
                 fragmentTransaction.add(R.id.container, fragment, tag);
-            } else if (curFragment instanceof VenuesMapFragment){
+            } else if (curFragment instanceof VenuesMapFragment) {
                 fragmentTransaction.show(curFragment);
             } else {
                 fragmentTransaction.attach(curFragment);

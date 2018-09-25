@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.core_network.service;
+package home.oleg.placesnearme.network.service;
 
 
 import home.oleg.placesnearme.core_network.models.reposnses.ExploreResponse;

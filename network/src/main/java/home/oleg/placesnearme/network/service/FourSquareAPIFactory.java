@@ -1,7 +1,6 @@
-package home.oleg.placesnearme.core_network.service;
+package home.oleg.placesnearme.network.service;
 
-import home.oleg.placesnearme.core_network.config.NetworkConfig;
-
+import home.oleg.placesnearme.network.config.NetworkConfig;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;

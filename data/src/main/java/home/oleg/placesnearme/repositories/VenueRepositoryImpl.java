@@ -1,6 +1,5 @@
 package home.oleg.placesnearme.repositories;
 
-import home.oleg.placesnearme.core_network.service.IFourSquareAPI;
 import home.oleg.placesnearme.core_network.models.reposnses.ExploreResponse;
 import home.oleg.placesnearme.core_network.models.reposnses.Response;
 import home.oleg.placesnearme.core_network.models.reposnses.VenuesResponse;
@@ -13,6 +12,7 @@ import home.oleg.placenearme.models.Venue;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placenearme.repositories.VenueRequestParams;
 import home.oleg.placesnearme.mapper.VenueMapper;
+import home.oleg.placesnearme.network.service.IFourSquareAPI;
 import io.reactivex.Single;
 
 public class VenueRepositoryImpl implements VenueRepository {

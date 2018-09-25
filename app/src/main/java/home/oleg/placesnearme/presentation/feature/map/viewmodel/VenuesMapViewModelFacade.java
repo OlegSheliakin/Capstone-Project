@@ -40,6 +40,9 @@ public class VenuesMapViewModelFacade {
         venuesViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(venuesMapView));
         venueViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(venuesMapView));
         userLocationViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(venuesMapView));
+
+        refreshRecomendedVenues();
+        refreshUserLocation();
     }
 
     public void refreshRecomendedVenues() {

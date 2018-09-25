@@ -24,4 +24,5 @@
     <color name="colorCategoryArts">#0FAA72</color>
     <color name="colorCategoryCoffee">#541212</color>
     <color name="colorCategoryTrending">#FD6000</color>
+    <color name="textColorLight">#787878</color>
 </resources>

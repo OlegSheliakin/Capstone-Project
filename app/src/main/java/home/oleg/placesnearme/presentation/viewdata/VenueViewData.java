@@ -25,7 +25,8 @@ public class VenueViewData implements Parcelable {
     private String address;
     private double lat;
     private double lng;
-    private List<String> photoUrls;
+    private IconViewData icon;
+    private List<PhotoViewData> photoUrls;
     private String description;
     @Nullable
     private Section sectionType;
@@ -62,7 +63,7 @@ public class VenueViewData implements Parcelable {
         this.lng = lng;
     }
 
-    public List<String> getPhotoUrls() {
+    public List<PhotoViewData> getPhotoUrls() {
         if(photoUrls == null) {
             return Collections.emptyList();
         } else {
@@ -70,7 +71,7 @@ public class VenueViewData implements Parcelable {
         }
     }
 
-    public void setPhotoUrls(List<String> photoUrls) {
+    public void setPhotoUrls(List<PhotoViewData> photoUrls) {
         this.photoUrls = new ArrayList<>(photoUrls);
     }
 
@@ -126,13 +127,17 @@ public class VenueViewData implements Parcelable {
 
         List<Photo> photos = venue.getPhotos();
 
-        List<String> photoUrls = new ArrayList<>();
+        List<PhotoViewData> photoUrls = new ArrayList<>();
         for (Photo photo : photos) {
-            photoUrls.add(photo.getImageUrl());
+            photoUrls.add(PhotoViewData.map(photo));
         }
         venueViewObject.setPhotoUrls(photoUrls);
 
         return venueViewObject;
+    }
+
+    public String getIconUrlGray() {
+        return icon.getIconUrlGray();
     }
 
     @Override
@@ -146,7 +151,8 @@ public class VenueViewData implements Parcelable {
         dest.writeString(this.address);
         dest.writeDouble(this.lat);
         dest.writeDouble(this.lng);
-        dest.writeStringList(this.photoUrls);
+        dest.writeParcelable(this.icon, flags);
+        dest.writeTypedList(this.photoUrls);
         dest.writeString(this.description);
         dest.writeInt(this.sectionType == null ? -1 : this.sectionType.ordinal());
     }
@@ -159,7 +165,8 @@ public class VenueViewData implements Parcelable {
         this.address = in.readString();
         this.lat = in.readDouble();
         this.lng = in.readDouble();
-        this.photoUrls = in.createStringArrayList();
+        this.icon = in.readParcelable(IconViewData.class.getClassLoader());
+        this.photoUrls = in.createTypedArrayList(PhotoViewData.CREATOR);
         this.description = in.readString();
         int tmpSectionType = in.readInt();
         this.sectionType = tmpSectionType == -1 ? null : Section.values()[tmpSectionType];
