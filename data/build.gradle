@@ -17,8 +17,6 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        // FIXME config.props отсутствует в репо, без него не билдится проект
-        // хорошо бы запушить, либо добавить какой-нибудь со стабами, чтобы у ревьюера сбилдилось
         getProps('./config/config.props').each { p ->
             buildConfigField 'String', p.key, p.value
         }
