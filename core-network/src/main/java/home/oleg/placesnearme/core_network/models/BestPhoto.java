@@ -1,7 +1,7 @@
 
-package home.oleg.placenearme.models;
+package home.oleg.placesnearme.core_network.models;
 
-public class Photo {
+public class BestPhoto {
 
     private Long createdAt;
     private Long height;
@@ -67,7 +67,4 @@ public class Photo {
         this.width = width;
     }
 
-    public String getImageUrl() {
-        return prefix + height + "x" + width + suffix;
-    }
 }

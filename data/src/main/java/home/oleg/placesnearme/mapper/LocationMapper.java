@@ -25,4 +25,17 @@ public final class LocationMapper {
         return location;
     }
 
+    public static home.oleg.placenearme.models.Location map(home.oleg.placesnearme.core_network.models.Location location) {
+        home.oleg.placenearme.models.Location result = new home.oleg.placenearme.models.Location();
+        result.setAddress(location.getAddress());
+        result.setCc(location.getCc());
+        result.setCity(location.getCity());
+        result.setCountry(location.getCountry());
+        result.setCrossStreet(location.getCrossStreet());
+        result.setFormattedAddress(location.getFormattedAddress());
+        result.setLat(location.getLat());
+        result.setLng(location.getLng());
+        return result;
+    }
+
 }

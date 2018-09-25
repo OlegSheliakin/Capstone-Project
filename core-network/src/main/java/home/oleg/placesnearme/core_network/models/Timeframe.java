@@ -1,5 +1,5 @@
 
-package home.oleg.placenearme.models;
+package home.oleg.placesnearme.core_network.models;
 
 import java.util.List;
 

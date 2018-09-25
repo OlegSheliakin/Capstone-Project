@@ -1,5 +1,7 @@
 package home.oleg.placesnearme.di.modules;
 
+import home.oleg.placesnearme.core_network.service.IFourSquareAPI;
+
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placenearme.models.Section;
@@ -8,12 +10,10 @@ import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placesnearme.PlacesNearMeApp;
-import home.oleg.placesnearme.presentation.feature.main.view.MainActivity;
 import home.oleg.placesnearme.provider.ReactiveLocationStore;
 import home.oleg.placesnearme.repositories.DetailedVenueRepositoryImpl;
 import home.oleg.placesnearme.repositories.UserLocationRepositoryImpl;
 import home.oleg.placesnearme.repositories.VenueRepositoryImpl;
-import home.oleg.placesnearme.service.IFourSquareAPI;
 import io.reactivex.annotations.NonNull;
 
 @Module

@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Photo;
 import home.oleg.placenearme.models.Section;

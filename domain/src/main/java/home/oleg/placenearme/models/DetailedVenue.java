@@ -1,66 +1,29 @@
 
 package home.oleg.placenearme.models;
 
-import java.util.Collections;
 import java.util.List;
-
-import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
 
 public class DetailedVenue {
 
-    private BeenHere beenHere;
-    private BestPhoto bestPhoto;
-    private String canonicalUrl;
+    private Photo bestPhoto;
     private List<Category> categories;
     private Contact contact;
     private Long createdAt;
     private String description;
-    private HereNow hereNow;
     private Hours hours;
     private String id;
-    private Inbox inbox;
-    private Likes likes;
     private Location location;
     private String name;
-    private Page page;
-    private PageUpdates pageUpdates;
-    private PhotosGroup photos;
-    private List<Phrase> phrases;
-    private Popular popular;
+    private List<Photo> photos;
     private Double rating;
-    private String ratingColor;
     private Long ratingSignals;
-    private String shortUrl;
-    private Stats stats;
-    private String storeId;
-    private String timeZone;
-    private Tips tips;
-    private String url;
-    private Boolean verified;
 
-    public BeenHere getBeenHere() {
-        return beenHere;
-    }
-
-    public void setBeenHere(BeenHere beenHere) {
-        this.beenHere = beenHere;
-    }
-
-    public BestPhoto getBestPhoto() {
+    public Photo getBestPhoto() {
         return bestPhoto;
     }
 
-    public void setBestPhoto(BestPhoto bestPhoto) {
+    public void setBestPhoto(Photo bestPhoto) {
         this.bestPhoto = bestPhoto;
-    }
-
-    public String getCanonicalUrl() {
-        return canonicalUrl;
-    }
-
-    public void setCanonicalUrl(String canonicalUrl) {
-        this.canonicalUrl = canonicalUrl;
     }
 
     public List<Category> getCategories() {
@@ -95,14 +58,6 @@ public class DetailedVenue {
         this.description = description;
     }
 
-    public HereNow getHereNow() {
-        return hereNow;
-    }
-
-    public void setHereNow(HereNow hereNow) {
-        this.hereNow = hereNow;
-    }
-
     public Hours getHours() {
         return hours;
     }
@@ -117,22 +72,6 @@ public class DetailedVenue {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Inbox getInbox() {
-        return inbox;
-    }
-
-    public void setInbox(Inbox inbox) {
-        this.inbox = inbox;
-    }
-
-    public Likes getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Likes likes) {
-        this.likes = likes;
     }
 
     public Location getLocation() {
@@ -151,59 +90,12 @@ public class DetailedVenue {
         this.name = name;
     }
 
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
-    }
-
-    public PageUpdates getPageUpdates() {
-        return pageUpdates;
-    }
-
-    public void setPageUpdates(PageUpdates pageUpdates) {
-        this.pageUpdates = pageUpdates;
-    }
-
-    public PhotosGroup getPhotoGroup() {
+    public List<Photo> getPhotos() {
         return photos;
     }
 
-    @NonNull
-    public List<Photo> getPhotos() {
-        if (photos.getGroups() == null) {
-            return Collections.emptyList();
-        }
-
-        List<Group<Photo>> groups = photos.getGroups();
-
-        if (groups.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        return groups.get(0).getItems();
-    }
-
-    public void setPhotos(PhotosGroup photos) {
+    public void setPhotos(List<Photo> photos) {
         this.photos = photos;
-    }
-
-    public List<Phrase> getPhrases() {
-        return phrases;
-    }
-
-    public void setPhrases(List<Phrase> phrases) {
-        this.phrases = phrases;
-    }
-
-    public Popular getPopular() {
-        return popular;
-    }
-
-    public void setPopular(Popular popular) {
-        this.popular = popular;
     }
 
     public Double getRating() {
@@ -214,14 +106,6 @@ public class DetailedVenue {
         this.rating = rating;
     }
 
-    public String getRatingColor() {
-        return ratingColor;
-    }
-
-    public void setRatingColor(String ratingColor) {
-        this.ratingColor = ratingColor;
-    }
-
     public Long getRatingSignals() {
         return ratingSignals;
     }
@@ -229,61 +113,4 @@ public class DetailedVenue {
     public void setRatingSignals(Long ratingSignals) {
         this.ratingSignals = ratingSignals;
     }
-
-    public String getShortUrl() {
-        return shortUrl;
-    }
-
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
-    }
-
-    public Stats getStats() {
-        return stats;
-    }
-
-    public void setStats(Stats stats) {
-        this.stats = stats;
-    }
-
-    public String getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
-    }
-
-    public String getTimeZone() {
-        return timeZone;
-    }
-
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
-    }
-
-    public Tips getTips() {
-        return tips;
-    }
-
-    public void setTips(Tips tips) {
-        this.tips = tips;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Boolean getVerified() {
-        return verified;
-    }
-
-    public void setVerified(Boolean verified) {
-        this.verified = verified;
-    }
-
 }
