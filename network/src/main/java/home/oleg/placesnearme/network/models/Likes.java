@@ -1,5 +1,5 @@
 
-package home.oleg.placesnearme.core_network.models;
+package home.oleg.placesnearme.network.models;
 
 public class Likes {
 

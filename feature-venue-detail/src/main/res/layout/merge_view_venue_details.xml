@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@drawable/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivVenueIcon"
+        android:layout_width="@dimen/width_all_icon_venue"
+        android:layout_height="@dimen/width_all_icon_venue"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:contentDescription="@string/content_description_venue_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvVenueName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvHeaderMessage"
+        app:layout_constraintEnd_toStartOf="@+id/ratingBar"
+        app:layout_constraintStart_toEndOf="@+id/ivVenueIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivVenueIcon"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="TextView" />
+
+    <hyogeun.github.com.colorratingbarlib.ColorRatingBar
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:numStars="5"
+        android:rating="4"
+        android:stepSize="0.1"
+        app:empty_color="@color/colorGrayLight"
+        app:layout_constraintBottom_toBottomOf="@id/tvVenueName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvVenueName"
+        app:layout_constraintTop_toTopOf="@id/tvVenueName"
+        app:progress_color="@color/colorGray" />
+
+    <TextView
+        android:id="@+id/tvVenueDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColorLight"
+        app:layout_constraintBottom_toBottomOf="@+id/tvVenueAddress"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
+        app:layout_constraintTop_toTopOf="@+id/tvVenueAddress"
+        tools:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_extra_small"
+        android:contentDescription="@string/content_description_icon_routes"
+        app:layout_constraintBottom_toBottomOf="@+id/tvVenueDistance"
+        app:layout_constraintEnd_toStartOf="@+id/tvVenueDistance"
+        app:layout_constraintTop_toTopOf="@+id/tvVenueDistance"
+        app:srcCompat="@drawable/ic_route" />
+
+    <TextView
+        android:id="@+id/tvHeaderMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintBottom_toBottomOf="@+id/ivVenueIcon"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
+        app:layout_constraintStart_toEndOf="@+id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueName"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvVenueAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/ivVenueIcon"
+        tools:text="Address" />
+
+    <TextView
+        android:id="@+id/tvLabelDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/all_description"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueAddress"
+        tools:layout_editor_absoluteY="80dp" />
+
+    <TextView
+        android:id="@+id/tvVenueDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:textColor="@color/textColorLight"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelDescription"
+        tools:text="Родина Южной кухни в самом центре Краasdasdasdasdas " />
+
+    <TextView
+        android:id="@+id/tvContactsLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueDescription"
+        tools:text="Contacts" />
+
+    <TextView
+        android:id="@+id/tvContacts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColorLight"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvContactsLabel"
+        tools:text="8 (999) 777-66-55" />
+
+    <TextView
+        android:id="@+id/tvVenueOpeningHours"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvContacts"
+        tools:text="Open until 6 pm" />
+
+    <TextView
+        android:id="@+id/tvGalleryLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/all_label_gallery"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueOpeningHours" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
+        android:paddingEnd="@dimen/margin_normal"
+        android:paddingStart="@dimen/margin_normal"
+        android:paddingTop="@dimen/margin_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvGalleryLabel" />
+
+</merge>

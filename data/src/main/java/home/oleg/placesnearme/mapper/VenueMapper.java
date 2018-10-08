@@ -16,26 +16,18 @@ public final class VenueMapper {
     private VenueMapper() {
     }
 
-    public static Venue map(home.oleg.placesnearme.core_network.models.Venue venue) {
+    public static Venue map(home.oleg.placesnearme.network.models.Venue venue) {
         Venue result = new Venue();
 
-        List<Category> categories = new ArrayList<>();
-        for (home.oleg.placesnearme.core_network.models.Category category : venue.getCategories()) {
-            categories.add(CategoryMapper.map(category));
+        for (home.oleg.placesnearme.network.models.Category category : venue.getCategories()) {
+            if (category.getPrimary()) {
+                result.setCategory(CategoryMapper.map(category));
+            }
         }
 
-        result.setCategories(categories);
         result.setId(venue.getId());
 
-        Location location = new Location();
-        location.setAddress(venue.getLocation().getAddress());
-        location.setCc(venue.getLocation().getCc());
-        location.setCity(venue.getLocation().getCity());
-        location.setCountry(venue.getLocation().getCountry());
-        location.setCrossStreet(venue.getLocation().getCrossStreet());
-        location.setFormattedAddress(venue.getLocation().getFormattedAddress());
-        location.setLat(venue.getLocation().getLat());
-        location.setLng(venue.getLocation().getLng());
+        Location location = LocationMapper.map(venue.getLocation());
 
         result.setLocation(location);
         result.setName(venue.getName());
@@ -43,10 +35,10 @@ public final class VenueMapper {
         return result;
     }
 
-    public static List<Venue> map(List<home.oleg.placesnearme.core_network.models.Venue> venues) {
+    public static List<Venue> map(List<home.oleg.placesnearme.network.models.Venue> venues) {
         List<Venue> result = new ArrayList<>();
 
-        for (home.oleg.placesnearme.core_network.models.Venue venue : venues) {
+        for (home.oleg.placesnearme.network.models.Venue venue : venues) {
             result.add(map(venue));
         }
 

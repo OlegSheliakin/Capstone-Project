@@ -1,13 +1,22 @@
 
 package home.oleg.placenearme.models;
 
-public class Category {
+public final class Category {
 
     private String id;
     private String name;
     private String pluralName;
     private Boolean primary;
     private String shortName;
+    private Icon icon;
+
+    public Icon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Icon icon) {
+        this.icon = icon;
+    }
 
     public String getId() {
         return id;

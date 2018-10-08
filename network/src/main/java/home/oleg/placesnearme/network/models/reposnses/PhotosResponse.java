@@ -1,6 +1,6 @@
-package home.oleg.placesnearme.core_network.models.reposnses;
+package home.oleg.placesnearme.network.models.reposnses;
 
-import home.oleg.placesnearme.core_network.models.Photos;
+import home.oleg.placesnearme.network.models.Photos;
 
 public class PhotosResponse {
 

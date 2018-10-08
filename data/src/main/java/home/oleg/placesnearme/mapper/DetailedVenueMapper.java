@@ -12,7 +12,7 @@ public final class DetailedVenueMapper {
     private DetailedVenueMapper() {
     }
 
-    public static DetailedVenue map(home.oleg.placesnearme.core_network.models.DetailedVenue detailedVenue) {
+    public static DetailedVenue map(home.oleg.placesnearme.network.models.DetailedVenue detailedVenue) {
         DetailedVenue result = new DetailedVenue();
         result.setCategories(CategoryMapper.map(detailedVenue.getCategories()));
         result.setBestPhoto(PhotoMapper.map(detailedVenue.getBestPhoto()));

@@ -45,7 +45,7 @@ public class GetVenuesInteractorTest {
     UserLocationRepository userLocationRepository;
 
     @InjectMocks
-    GetRecomendedVenuesInteractor subject;
+    GetRecommendedVenues subject;
 
     private UserLocation fakeUserLocation = new UserLocation(45.0, 45.0);
 

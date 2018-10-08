@@ -3,14 +3,14 @@ ext {
 }
 
 ext.sdk = [
-        compile: 27,
-        target : 27,
+        compile: 28,
+        target : 28,
         min    : 21
 ]
 
 ext.versions = [
         dagger             : "2.17",
-        androidSupport     : "27.1.1",
+        androidSupport     : "28.0.0",
         constraintLayout   : "1.0.2",
         rxJava2            : "2.2.0",
         rxAndroid          : "2.1.0",

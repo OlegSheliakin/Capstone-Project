@@ -1,13 +1,22 @@
 
-package home.oleg.placesnearme.core_network.models;
+package home.oleg.placesnearme.network.models;
 
-public class Category {
+public final class Category {
 
     private String id;
     private String name;
     private String pluralName;
     private Boolean primary;
     private String shortName;
+    private CategoryIcon icon;
+
+    public CategoryIcon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(CategoryIcon icon) {
+        this.icon = icon;
+    }
 
     public String getId() {
         return id;

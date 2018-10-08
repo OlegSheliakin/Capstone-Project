@@ -26,7 +26,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".presentation.feature.main.view.MainActivity">
+        <activity
+            android:name="com.smedialink.feature_main.view.MainActivity"
+            android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

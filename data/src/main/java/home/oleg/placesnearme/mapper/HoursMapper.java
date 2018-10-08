@@ -11,7 +11,7 @@ public final class HoursMapper {
     private HoursMapper() {
     }
 
-    public static Hours map(home.oleg.placesnearme.core_network.models.Hours hours) {
+    public static Hours map(home.oleg.placesnearme.network.models.Hours hours) {
         Hours result = new Hours();
 
         if(hours != null) {

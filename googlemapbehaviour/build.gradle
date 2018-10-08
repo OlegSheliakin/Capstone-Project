@@ -27,6 +27,7 @@ dependencies {
 
     implementation deps.support.appcompat7
     implementation deps.support.design
+
     testImplementation deps.testing.junit
     androidTestImplementation deps.testing.testRunner
 }

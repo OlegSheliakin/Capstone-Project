@@ -25,7 +25,7 @@ public final class LocationMapper {
         return location;
     }
 
-    public static home.oleg.placenearme.models.Location map(home.oleg.placesnearme.core_network.models.Location location) {
+    public static home.oleg.placenearme.models.Location map(home.oleg.placesnearme.network.models.Location location) {
         home.oleg.placenearme.models.Location result = new home.oleg.placenearme.models.Location();
         result.setAddress(location.getAddress());
         result.setCc(location.getCc());

@@ -1,0 +1,46 @@
+package home.oleg.placesnearme.feature_map.di;
+
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+
+import dagger.Binds;
+import dagger.Module;
+import dagger.Provides;
+import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter;
+import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl;
+import home.oleg.placesnearme.feature_map.view.VenuesMapFragment;
+import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
+import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
+import io.reactivex.annotations.NonNull;
+
+@Module
+public abstract class VenuesMapFragmentModule {
+
+    @Provides
+    @NonNull
+    static VenuesViewModel provideMapViewModel(
+            VenuesMapFragment fragment,
+            ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(fragment, factory).get(VenuesViewModel.class);
+    }
+
+    @Provides
+    @NonNull
+    static UserLocationViewModel provideUserLocationViewModel(
+            VenuesMapFragment fragment,
+            ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(fragment, factory).get(UserLocationViewModel.class);
+    }
+
+    @Provides
+    @NonNull
+    static LifecycleOwner provideLifeCycleOwner(VenuesMapFragment mapFragment) {
+        return mapFragment;
+    }
+
+    @Binds
+    @NonNull
+    abstract DrawableConverter provideConverter(DrawableConverterImpl impl);
+
+}

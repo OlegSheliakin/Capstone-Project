@@ -1,14 +1,15 @@
 
-package home.oleg.placesnearme.core_network.models.reposnses;
+package home.oleg.placesnearme.network.models.reposnses;
 
-import home.oleg.placesnearme.core_network.models.Group;
-import home.oleg.placesnearme.core_network.models.Venue;
-import home.oleg.placesnearme.core_network.models.VenueItem;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import home.oleg.placesnearme.network.models.Group;
+import home.oleg.placesnearme.network.models.Venue;
+import home.oleg.placesnearme.network.models.VenueItem;
 
 
 public class ExploreResponse {

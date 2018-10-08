@@ -1,6 +1,6 @@
-package home.oleg.placesnearme.core_network.models.reposnses;
+package home.oleg.placesnearme.network.models.reposnses;
 
-import home.oleg.placesnearme.core_network.models.DetailedVenue;
+import home.oleg.placesnearme.network.models.DetailedVenue;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.

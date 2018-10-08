@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.core_network.models;
+package home.oleg.placesnearme.network.models;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.

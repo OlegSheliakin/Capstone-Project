@@ -1,13 +1,22 @@
 package home.oleg.placesnearme.di.modules;
 
+import android.support.annotation.NonNull;
+
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placesnearme.BuildConfig;
 import home.oleg.placesnearme.network.config.NetworkConfig;
-import io.reactivex.annotations.NonNull;
+import home.oleg.placesnearme.network.service.FourSquareAPIFactory;
+import home.oleg.placesnearme.network.service.IFourSquareAPI;
 
 @Module
 public final class NetworkModule {
+
+    @Provides
+    @NonNull
+    public IFourSquareAPI provideApi(NetworkConfig networkConfig) {
+        return FourSquareAPIFactory.create(networkConfig);
+    }
 
     @Provides
     @NonNull

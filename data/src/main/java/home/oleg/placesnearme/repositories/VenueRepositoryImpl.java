@@ -1,8 +1,8 @@
 package home.oleg.placesnearme.repositories;
 
-import home.oleg.placesnearme.core_network.models.reposnses.ExploreResponse;
-import home.oleg.placesnearme.core_network.models.reposnses.Response;
-import home.oleg.placesnearme.core_network.models.reposnses.VenuesResponse;
+import home.oleg.placesnearme.network.models.reposnses.ExploreResponse;
+import home.oleg.placesnearme.network.models.reposnses.Response;
+import home.oleg.placesnearme.network.models.reposnses.VenuesResponse;
 
 import java.util.List;
 import java.util.Map;

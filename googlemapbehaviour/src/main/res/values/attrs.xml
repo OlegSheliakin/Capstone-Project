@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomBottomSheetBehavior">
-        <attr name="anchorPoint" format="dimension"/>
-        <attr name="defaultState" format="enum">
-            <enum name="stateAnchorPoint" value="3" />
-            <enum name="stateExpanded" value="4"/>
-            <enum name="stateCollapsed" value="5"/>
-            <enum name="stateHidden" value="6"/>
+    <declare-styleable name="GoogleMapsBottomSheetBehavior_Layout">
+        <attr name="behavior_peekHeight"/>
+        <attr name="behavior_hideable" format="boolean" />
+        <attr name="behavior_skipCollapsed" format="boolean" />
+        <attr name="behavior_anchorHeight" format="dimension">
+            <enum name="auto" value="-1"/>
         </attr>
+        <attr name="behavior_anchorColor" format="color" />
+        <attr name="behavior_collapsedColor" format="color" />
+        <attr name="behavior_anchorTextColor" format="color" />
+        <attr name="behavior_collapsedTextColor" format="color" />
+        <attr name="behavior_header_layout" format="reference" />
+        <attr name="behavior_content_layout" format="reference" />
+        <attr name="behavior_parallax_layout" format="reference" />
+        <attr name="header_offset" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="HideViewTwoPhaseBottomSheetBehavior">
+        <attr name="peekHeight" format="dimension"/>
+    </declare-styleable>
 </resources>

@@ -1,6 +1,7 @@
 
-package home.oleg.placesnearme.core_network.models;
+package home.oleg.placesnearme.network.models;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -124,13 +125,13 @@ public class DetailedVenue {
             return Collections.emptyList();
         }
 
-        List<Group<Photo>> groups = photos.getGroups();
+        List<Photo> res = new ArrayList<>();
 
-        if (groups.isEmpty()) {
-            return Collections.emptyList();
+        for (Group<Photo> photoGroup : photos.getGroups()) {
+            res.addAll(photoGroup.getItems());
         }
 
-        return groups.get(0).getItems();
+        return res;
     }
 
     public void setPhotos(PhotosGroup photos) {
