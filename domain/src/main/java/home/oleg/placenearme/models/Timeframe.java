@@ -8,7 +8,6 @@ public class Timeframe {
     private String days;
     private Boolean includesToday;
     private List<Open> open;
-    private List<Object> segments;
 
     public String getDays() {
         return days;
@@ -32,14 +31,6 @@ public class Timeframe {
 
     public void setOpen(List<Open> open) {
         this.open = open;
-    }
-
-    public List<Object> getSegments() {
-        return segments;
-    }
-
-    public void setSegments(List<Object> segments) {
-        this.segments = segments;
     }
 
 }

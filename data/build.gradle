@@ -1,11 +1,5 @@
 apply plugin: 'com.android.library'
 
-def getProps(path) {
-    Properties props = new Properties()
-    props.load(new FileInputStream(file(path)))
-    return props
-}
-
 android {
     compileSdkVersion sdk.compile
 
@@ -16,11 +10,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        getProps('./config/config.props').each { p ->
-            buildConfigField 'String', p.key, p.value
-        }
-
     }
 
     buildTypes {
@@ -40,11 +29,16 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation project(':domain')
+    implementation project(':network')
 
     implementation deps.googlePlayServices.location
 
     testImplementation deps.testing.junit
     androidTestImplementation deps.testing.testRunner
+
+    implementation deps.room.runtime
+    annotationProcessor deps.room.compiler
+    implementation deps.room.rxjava2
 
     implementation deps.network.retrofit
     implementation deps.network.converterGson

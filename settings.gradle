@@ -1,1 +1,13 @@
-include ':app', ':domain', ':data', ':common', ':googlemapbehaviour'
+include ':app',
+        ':feature-venue-detail',
+        ':core-di', 
+        ':feature-map', 
+        ':domain',
+        ':data',
+        ':common',
+        ':googlemapbehaviour',
+        ':network',
+        ':core-presentation',
+        ':feature-venues-history',
+        ':feature-favorite-venues',
+        ':feature-main'

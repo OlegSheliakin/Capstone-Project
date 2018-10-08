@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#7a3e92</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorDivider">#3F51B5</color>
+    <color name="colorButtonDefault">#FF4081</color>
+    <color name="colorButtonPressed">#F8BBD0</color>
+    <color name="colorButtonFocused">#F8BBD0</color>
+    <color name="colorButtonUnable">#BDBDBD</color>
+    <color name="colorButtonText">#ffffff</color>
+    <color name="colorText">#3e3e3e</color>
+    <color name="colorListVenueBackground">#ffffff</color>
+
+    <color name="colorCategoryTravelling">#5693e4</color>
+    <color name="colorCategoryEvents">#f4ce04</color>
+    <color name="colorCategoryFood">#FB822C</color>
+    <color name="colorCategoryDrinks">#5693E4</color>
+    <color name="colorCategoryTopPicks">#FDE900</color>
+    <color name="colorCategorySights">#6CC451</color>
+    <color name="colorCategoryShops">#56E4AF</color>
+    <color name="colorCategoryOutdoors">#DD56E4</color>
+    <color name="colorCategoryServices">#e49f56</color>
+    <color name="colorCategoryArts">#0FAA72</color>
+    <color name="colorCategoryCoffee">#541212</color>
+    <color name="colorCategoryTrending">#FD6000</color>
+    <color name="textColorLight">#787878</color>
+    <color name="colorGray">#888888</color>
+    <color name="colorGrayLight">#d3d3d3</color>
+</resources>

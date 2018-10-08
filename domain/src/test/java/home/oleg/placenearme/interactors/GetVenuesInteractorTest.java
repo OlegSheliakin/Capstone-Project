@@ -23,8 +23,14 @@ import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placenearme.repositories.VenueRequestParams;
 import io.reactivex.Single;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetVenuesInteractorTest {
@@ -39,7 +45,7 @@ public class GetVenuesInteractorTest {
     UserLocationRepository userLocationRepository;
 
     @InjectMocks
-    GetRecomendedVenuesInteractor subject;
+    GetRecommendedVenues subject;
 
     private UserLocation fakeUserLocation = new UserLocation(45.0, 45.0);
 
@@ -63,9 +69,9 @@ public class GetVenuesInteractorTest {
         when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(Collections.emptyList()));
 
-        Pair<Section.Type, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
+        Pair<Section, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.ARTS).blockingGet();
 
-        verify(venueRepository, times(1)).getRecommendedBySection(Section.Type.ARTS, filter);
+        verify(venueRepository, times(1)).getRecommendedBySection(Section.ARTS, filter);
         verifyNoMoreInteractions(detailedVenueRepository);
 
         assertTrue(pair.getSecond().isEmpty());
@@ -77,7 +83,7 @@ public class GetVenuesInteractorTest {
                 .thenReturn(Single.just(fakeVenues));
         when(detailedVenueRepository.getDetailedVenueById(anyString())).thenReturn(Single.just(new DetailedVenue()));
 
-        Pair<Section.Type, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.Type.ARTS).blockingGet();
+        Pair<Section, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.ARTS).blockingGet();
 
         verify(detailedVenueRepository, times(fakeVenues.size())).getDetailedVenueById(any());
 

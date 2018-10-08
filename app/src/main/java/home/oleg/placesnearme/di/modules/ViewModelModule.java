@@ -4,6 +4,9 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import com.smedialink.feature_main.viewmodel.MainViewModel;
+import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
+
 import java.util.Map;
 
 import javax.inject.Provider;
@@ -11,13 +14,12 @@ import javax.inject.Provider;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
-import home.oleg.placenearme.interactors.GetRecomendedVenuesInteractor;
-import home.oleg.placenearme.interactors.GetUserLocationInteractor;
+import home.oleg.placenearme.interactors.GetDetailedVenue;
+import home.oleg.placenearme.interactors.GetRecommendedVenues;
+import home.oleg.placenearme.interactors.GetUserLocation;
 import home.oleg.placesnearme.di.mapkeys.ViewModelKey;
-import home.oleg.placesnearme.presentation.feature.main.viewmodel.MainViewModel;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.UserLocationViewModel;
-import home.oleg.placesnearme.presentation.feature.map.viewmodel.VenuesViewModel;
-import home.oleg.placesnearme.presentation.feature.venue.viewmodel.VenueViewModel;
+import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
+import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 
 /**
  * Created by Oleg Sheliakin on 21.08.2018.
@@ -30,15 +32,15 @@ public final class ViewModelModule {
     @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenueViewModel() {
-        return new VenueViewModel();
+    public static ViewModel provideVenueViewModel(GetDetailedVenue getDetailedVenue) {
+        return new VenueViewModel(getDetailedVenue);
     }
 
     @IntoMap
     @ViewModelKey(VenuesViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideMapViewModel(GetRecomendedVenuesInteractor interactor) {
+    public static ViewModel provideMapViewModel(GetRecommendedVenues interactor) {
         return new VenuesViewModel(interactor);
     }
 
@@ -46,7 +48,7 @@ public final class ViewModelModule {
     @ViewModelKey(UserLocationViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideUserLocationViewModel(GetUserLocationInteractor getUserLocationInteractor) {
+    public static ViewModel provideUserLocationViewModel(GetUserLocation getUserLocationInteractor) {
         return new UserLocationViewModel(getUserLocationInteractor);
     }
 
@@ -60,7 +62,7 @@ public final class ViewModelModule {
 
     @Provides
     @NonNull
-    public static ViewModelProvider.Factory provideFactory(Map<Class<? extends ViewModel>,
+    public ViewModelProvider.Factory provideFactory(Map<Class<? extends ViewModel>,
             Provider<ViewModel>> map) {
         return new ViewModelProvider.Factory() {
 

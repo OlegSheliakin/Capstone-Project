@@ -28,6 +28,11 @@ public final class Optional<T> {
         return Optional.of(function.apply(value));
     }
 
+    @Nullable
+    public T getOrNull() {
+        return value;
+    }
+
     public <X extends Throwable> T getOrElseThrow(X exception) throws X {
         if (value == null) {
             throw exception;

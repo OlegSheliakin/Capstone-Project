@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivVenuePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_venue_s_photo"
+        android:src="@color/colorPrimary" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="@dimen/peek_height_fragment_map"
+        app:header_offset="@dimen/margin_normal"
+        app:layout_behavior="home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior">
+
+        <com.smedialink.feature_venue_detail.venue.view.VenueDetailsView
+            android:id="@+id/venueView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_fragment_venue_details"
+            android:fitsSystemWindows="true"
+            android:paddingBottom="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_normal"
+            android:paddingStart="@dimen/margin_normal" />
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -13,8 +13,6 @@ public class Location {
     private List<String> formattedAddress;
     private Double lat;
     private Double lng;
-    private String postalCode;
-    private String state;
 
     public String getAddress() {
         return address;
@@ -78,22 +76,6 @@ public class Location {
 
     public void setLng(Double lng) {
         this.lng = lng;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
 }

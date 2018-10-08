@@ -7,9 +7,7 @@ public class Photo {
     private Long height;
     private String id;
     private String prefix;
-    private Source source;
     private String suffix;
-    private User user;
     private String visibility;
     private Long width;
 
@@ -45,28 +43,12 @@ public class Photo {
         this.prefix = prefix;
     }
 
-    public Source getSource() {
-        return source;
-    }
-
-    public void setSource(Source source) {
-        this.source = source;
-    }
-
     public String getSuffix() {
         return suffix;
     }
 
     public void setSuffix(String suffix) {
         this.suffix = suffix;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getVisibility() {

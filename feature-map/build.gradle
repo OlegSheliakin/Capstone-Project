@@ -1,0 +1,68 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion sdk.compile
+
+    defaultConfig {
+        minSdkVersion sdk.min
+        targetSdkVersion sdk.target
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':core-presentation')
+    implementation project(':googlemapbehaviour')
+    implementation project(':domain')
+    implementation project(':common')
+    implementation project(':core-di')
+    implementation project(':feature-venue-detail')
+
+    implementation deps.googlePlayServices.maps
+
+    implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
+
+    implementation deps.support.appcompat7
+    implementation deps.support.design
+    implementation deps.support.cardview
+    implementation deps.support.constraintLayout
+
+    implementation deps.permissions.runtime
+    annotationProcessor deps.permissions.compiler
+
+    implementation deps.lifecycle.extensions
+    implementation deps.lifecycle.runtime
+    annotationProcessor deps.lifecycle.compiler
+
+    implementation deps.dagger.runtime
+    annotationProcessor deps.dagger.compiler
+
+    implementation deps.glide.runtime
+    annotationProcessor deps.glide.compiler
+
+    implementation deps.rxjava2.rxjava
+    implementation deps.rxjava2.rxandroid
+
+    testImplementation deps.testing.junit
+    testImplementation deps.testing.mockito
+    testImplementation deps.testing.room
+}

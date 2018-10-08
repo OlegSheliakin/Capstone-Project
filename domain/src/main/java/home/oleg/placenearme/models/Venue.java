@@ -1,22 +1,19 @@
 
 package home.oleg.placenearme.models;
 
-import java.util.List;
-
 public class Venue {
 
-    private List<Category> categories;
+    private Category category;
     private String id;
     private Location location;
     private String name;
-    private VenuePage venuePage;
 
-    public List<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getId() {
@@ -41,14 +38,6 @@ public class Venue {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public VenuePage getVenuePage() {
-        return venuePage;
-    }
-
-    public void setVenuePage(VenuePage venuePage) {
-        this.venuePage = venuePage;
     }
 
 }
