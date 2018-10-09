@@ -6,13 +6,13 @@ package home.oleg.placesnearme.network.models;
  */
 public class VenueItem {
 
-    private Venue venue;
+    private VenueDto venue;
 
-    public Venue getVenue() {
+    public VenueDto getVenue() {
         return venue;
     }
 
-    public void setVenue(Venue venue) {
+    public void setVenue(VenueDto venue) {
         this.venue = venue;
     }
 }

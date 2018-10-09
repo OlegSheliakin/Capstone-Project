@@ -13,6 +13,15 @@ public class Location {
     private List<String> formattedAddress;
     private Double lat;
     private Double lng;
+    private double distance;
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
     public String getAddress() {
         return address;

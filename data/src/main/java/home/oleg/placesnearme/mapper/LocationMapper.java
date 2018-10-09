@@ -27,6 +27,14 @@ public final class LocationMapper {
 
     public static home.oleg.placenearme.models.Location map(home.oleg.placesnearme.network.models.Location location) {
         home.oleg.placenearme.models.Location result = new home.oleg.placenearme.models.Location();
+
+        if (location.getAddress() != null) {
+            result.setAddress(location.getAddress());
+        } else if (location.getFormattedAddress() != null && !location.getFormattedAddress().isEmpty()) {
+            String address = location.getFormattedAddress().get(0);
+            result.setAddress(address);
+        }
+
         result.setAddress(location.getAddress());
         result.setCc(location.getCc());
         result.setCity(location.getCity());

@@ -39,9 +39,6 @@ public class GetVenuesInteractorTest {
     VenueRepository venueRepository;
 
     @Mock
-    DetailedVenueRepository detailedVenueRepository;
-
-    @Mock
     UserLocationRepository userLocationRepository;
 
     @InjectMocks
@@ -69,10 +66,9 @@ public class GetVenuesInteractorTest {
         when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(Collections.emptyList()));
 
-        Pair<Section, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.ARTS).blockingGet();
+        Pair<Section, List<Venue>> pair = subject.getRecommendedSection(Section.ARTS).blockingGet();
 
         verify(venueRepository, times(1)).getRecommendedBySection(Section.ARTS, filter);
-        verifyNoMoreInteractions(detailedVenueRepository);
 
         assertTrue(pair.getSecond().isEmpty());
     }
@@ -81,11 +77,8 @@ public class GetVenuesInteractorTest {
     public void shouldReturnListDetailedVenue() {
         when(venueRepository.getRecommendedBySection(any(), any()))
                 .thenReturn(Single.just(fakeVenues));
-        when(detailedVenueRepository.getDetailedVenueById(anyString())).thenReturn(Single.just(new DetailedVenue()));
 
-        Pair<Section, List<DetailedVenue>> pair = subject.getRecommendedSection(Section.ARTS).blockingGet();
-
-        verify(detailedVenueRepository, times(fakeVenues.size())).getDetailedVenueById(any());
+        Pair<Section, List<Venue>> pair = subject.getRecommendedSection(Section.ARTS).blockingGet();
 
         assertFalse(pair.getSecond().isEmpty());
     }

@@ -15,8 +15,7 @@ public class DetailedVenue {
     private Location location;
     private String name;
     private List<Photo> photos;
-    private Double rating;
-    private Long ratingSignals;
+    private float rating;
 
     public Photo getBestPhoto() {
         return bestPhoto;
@@ -98,19 +97,12 @@ public class DetailedVenue {
         this.photos = photos;
     }
 
-    public Double getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
-    public Long getRatingSignals() {
-        return ratingSignals;
-    }
-
-    public void setRatingSignals(Long ratingSignals) {
-        this.ratingSignals = ratingSignals;
-    }
 }

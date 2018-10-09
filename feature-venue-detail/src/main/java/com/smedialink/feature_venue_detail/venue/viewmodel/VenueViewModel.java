@@ -1,7 +1,5 @@
 package com.smedialink.feature_venue_detail.venue.viewmodel;
 
-import com.smedialink.feature_venue_detail.ShowDetailedVenueAction;
-import com.smedialink.feature_venue_detail.ShowVenueMapAction;
 import com.smedialink.feature_venue_detail.venue.view.VenueView;
 
 import home.oleg.placenearme.interactors.GetDetailedVenue;
@@ -29,12 +27,11 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
     public void setVenue(VenueMapViewData venue) {
         this.venue = venue;
 
-        setAction(ShowVenueMapAction.create(venue));
-
         addToDisposables(getDetailedVenue.getDetailedVenue(venue.getId())
                 .map(VenueViewData::mapFrom)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> setAction(ShowVenueMapAction.create(venue)))
                 .subscribe(
                         detailedVenue -> setAction(ShowDetailedVenueAction.create(detailedVenue)),
                         throwable -> setAction(ViewActions.error(throwable))

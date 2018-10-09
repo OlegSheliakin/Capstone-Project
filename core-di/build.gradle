@@ -27,15 +27,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':core-presentation')
     implementation project(':network')
-
     implementation deps.dagger.runtime
-
     implementation deps.lifecycle.extensions
-
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito
     testImplementation deps.testing.room

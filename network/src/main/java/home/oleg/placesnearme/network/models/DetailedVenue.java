@@ -21,9 +21,7 @@ public class DetailedVenue {
     private Location location;
     private String name;
     private PhotosGroup photos;
-    private Double rating;
-    private String ratingColor;
-    private Long ratingSignals;
+    private float rating;
     private String shortUrl;
     private Stats stats;
     private String storeId;
@@ -138,28 +136,12 @@ public class DetailedVenue {
         this.photos = photos;
     }
 
-    public Double getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
-    }
-
-    public String getRatingColor() {
-        return ratingColor;
-    }
-
-    public void setRatingColor(String ratingColor) {
-        this.ratingColor = ratingColor;
-    }
-
-    public Long getRatingSignals() {
-        return ratingSignals;
-    }
-
-    public void setRatingSignals(Long ratingSignals) {
-        this.ratingSignals = ratingSignals;
     }
 
     public String getShortUrl() {

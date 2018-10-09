@@ -10,12 +10,13 @@ public class VenueMapViewData implements Parcelable {
 
     private String id;
     private String name;
-    private double distance;
-    private String distanceStr;
+    private Double distance;
     private String address;
     private double lat;
     private double lng;
     private IconViewData iconViewData;
+    private String categoryName;
+
     @Nullable
     private Section sectionType;
 
@@ -25,6 +26,14 @@ public class VenueMapViewData implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getName() {
@@ -47,19 +56,11 @@ public class VenueMapViewData implements Parcelable {
         this.name = name;
     }
 
-    public double getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public String getDistanceStr() {
-        return distanceStr;
-    }
-
-    public void setDistanceStr(String distanceStr) {
-        this.distanceStr = distanceStr;
-    }
-
-    public void setDistance(double distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
@@ -96,6 +97,9 @@ public class VenueMapViewData implements Parcelable {
         this.sectionType = sectionType;
     }
 
+    public VenueMapViewData() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -106,26 +110,23 @@ public class VenueMapViewData implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeDouble(this.distance);
-        dest.writeString(this.distanceStr);
         dest.writeString(this.address);
         dest.writeDouble(this.lat);
         dest.writeDouble(this.lng);
         dest.writeParcelable(this.iconViewData, flags);
+        dest.writeString(this.categoryName);
         dest.writeInt(this.sectionType == null ? -1 : this.sectionType.ordinal());
-    }
-
-    public VenueMapViewData() {
     }
 
     protected VenueMapViewData(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
         this.distance = in.readDouble();
-        this.distanceStr = in.readString();
         this.address = in.readString();
         this.lat = in.readDouble();
         this.lng = in.readDouble();
         this.iconViewData = in.readParcelable(IconViewData.class.getClassLoader());
+        this.categoryName = in.readString();
         int tmpSectionType = in.readInt();
         this.sectionType = tmpSectionType == -1 ? null : Section.values()[tmpSectionType];
     }

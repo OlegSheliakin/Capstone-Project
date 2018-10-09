@@ -8,9 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import home.oleg.placesnearme.network.models.Group;
-import home.oleg.placesnearme.network.models.Venue;
+import home.oleg.placesnearme.network.models.VenueDto;
 import home.oleg.placesnearme.network.models.VenueItem;
-
 
 public class ExploreResponse {
 
@@ -27,12 +26,12 @@ public class ExploreResponse {
     @SerializedName("totalResults")
     private Long totalResults;
 
-    public List<Venue> getVenues() {
+    public List<VenueDto> getVenues() {
         if (groups == null || groups.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<Venue> venues = new ArrayList<>();
+        List<VenueDto> venues = new ArrayList<>();
         for (VenueItem venueItem : groups.get(0).getItems()) {
             venues.add(venueItem.getVenue());
         }

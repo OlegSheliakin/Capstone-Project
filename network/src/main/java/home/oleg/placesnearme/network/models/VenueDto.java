@@ -2,7 +2,7 @@ package home.oleg.placesnearme.network.models;
 
 import java.util.List;
 
-public class Venue {
+public class VenueDto {
 
     private List<Category> categories;
     private String id;

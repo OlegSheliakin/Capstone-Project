@@ -1,7 +1,6 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +9,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.smedialink.common.Optional;
 import com.smedialink.feature_venue_detail.R;
-import com.smedialink.feature_venue_detail.venue.adapter.PhotosAdapter;
 
 import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
@@ -22,18 +21,22 @@ import home.oleg.placesnearme.core_presentation.viewdata.IconViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueMapViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
+import io.rmiri.skeleton.SkeletonGroup;
 
 /**
  * Created by Oleg Sheliakin on 20.09.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueDetailsView extends ConstraintLayout implements VenueView {
+public class VenueDetailsView extends SkeletonGroup implements VenueView {
 
     private TextView tvVenueName;
     private TextView tvVenueAddress;
     private TextView tvVenueDescription;
     private TextView tvVenueDistance;
     private TextView tvVenueOpeningHours;
+    private TextView tvCategoryName;
+    private TextView tvContacts;
+    private RatingBar rating;
     private ImageView ivVenueIcon;
     private ImageView ivVenuePhoto;
 
@@ -58,10 +61,11 @@ public class VenueDetailsView extends ConstraintLayout implements VenueView {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         NestedScrollView nestedScrollView = getRootView().findViewById(R.id.nestedScrollView);
+        SkeletonGroup skeletonGroup = getRootView().findViewById(R.id.venuePhotoContainer);
         ivVenuePhoto = getRootView().findViewById(R.id.ivVenuePhoto);
 
         behavior = GoogleMapsBottomSheetBehavior.from(nestedScrollView);
-        behavior.setParallax(ivVenuePhoto);
+        behavior.setParallax(skeletonGroup);
 
         nestedScrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -80,8 +84,12 @@ public class VenueDetailsView extends ConstraintLayout implements VenueView {
                 .getOrNull();
 
         ImageLoader.loadImage(ivVenuePhoto, url);
+
         tvVenueDescription.setText(venue.getDescription());
         tvVenueOpeningHours.setText(venue.getOpeningHoursStatus());
+        tvContacts.setText(venue.getFormattedPhone());
+        rating.setRating(venue.getRating());
+
         photosAdapter.setItems(venue.getPhotos());
     }
 
@@ -89,7 +97,13 @@ public class VenueDetailsView extends ConstraintLayout implements VenueView {
     public void showShortVenue(VenueMapViewData venue) {
         tvVenueName.setText(venue.getName());
         tvVenueAddress.setText(venue.getAddress());
-        tvVenueDistance.setText(venue.getDistanceStr());
+
+        Optional.of(venue.getDistance()).ifPresent(aDouble -> {
+            String distance = getContext().getString(R.string.meters, aDouble.intValue());
+            tvVenueDistance.setText(distance);
+        });
+
+        tvCategoryName.setText(venue.getCategoryName());
 
         String url = Optional.of(venue.getIconViewData())
                 .map(IconViewData::getIconUrlGray)
@@ -112,7 +126,7 @@ public class VenueDetailsView extends ConstraintLayout implements VenueView {
 
     @Override
     public void hideLoading() {
-
+        //finishAnimation();
     }
 
     private void init() {
@@ -124,7 +138,10 @@ public class VenueDetailsView extends ConstraintLayout implements VenueView {
         tvVenueDescription = findViewById(R.id.tvVenueDescription);
         tvVenueDistance = findViewById(R.id.tvVenueDistance);
         tvVenueOpeningHours = findViewById(R.id.tvVenueOpeningHours);
+        tvContacts = findViewById(R.id.tvContacts);
         ivVenueIcon = findViewById(R.id.ivVenueIcon);
+        tvCategoryName = findViewById(R.id.tvCategoryName);
+        rating = findViewById(R.id.ratingBar);
 
         RecyclerView rvPhotos = findViewById(R.id.rvPhotos);
         rvPhotos.setLayoutManager(new LinearLayoutManager(this.getContext()));

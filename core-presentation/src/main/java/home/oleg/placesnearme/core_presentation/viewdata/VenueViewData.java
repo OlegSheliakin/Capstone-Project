@@ -20,6 +20,16 @@ public class VenueViewData {
     private List<PhotoViewData> photoUrls;
     private String description;
     private String openingHoursStatus;
+    private String formattedPhone;
+    private float rating;
+
+    public float getRating() {
+        return rating / 2.0f;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
 
     public List<PhotoViewData> getPhotoUrls() {
         return photoUrls;
@@ -31,6 +41,18 @@ public class VenueViewData {
 
     public void setOpeningHoursStatus(String openingHoursStatus) {
         this.openingHoursStatus = openingHoursStatus;
+    }
+
+    public String getFormattedPhone() {
+        if(formattedPhone == null) {
+            return "-";
+        }
+
+        return formattedPhone;
+    }
+
+    public void setFormattedPhone(String formattedPhone) {
+        this.formattedPhone = formattedPhone;
     }
 
     public String getTitle() {
@@ -86,6 +108,10 @@ public class VenueViewData {
     }
 
     public String getDescription() {
+        if (description == null) {
+            return "-";
+        }
+
         return description;
     }
 
@@ -112,6 +138,11 @@ public class VenueViewData {
         venueViewObject.setLat(venue.getLocation().getLat());
         venueViewObject.setLng(venue.getLocation().getLng());
         venueViewObject.setDescription(venue.getDescription());
+        venueViewObject.setRating(venue.getRating());
+
+        if (venue.getContact() != null) {
+            venueViewObject.setFormattedPhone(venue.getContact().getFormattedPhone());
+        }
 
         if (venue.getHours() != null) {
             venueViewObject.setOpeningHoursStatus(venue.getHours().getStatus());

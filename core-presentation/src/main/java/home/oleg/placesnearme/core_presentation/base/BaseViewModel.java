@@ -5,6 +5,10 @@ import android.arch.lifecycle.ViewModel;
 
 import com.smedialink.common.function.Action;
 
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -17,6 +21,8 @@ public class BaseViewModel<VIEW extends View> extends ViewModel {
     private final MutableLiveData<Action<VIEW>> observer = new MutableLiveData<>();
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    private final Queue<Action<VIEW>> queue = new LinkedList<>();
 
     public MutableLiveData<Action<VIEW>> getObserver() {
         return observer;

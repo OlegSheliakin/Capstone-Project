@@ -50,6 +50,8 @@ dependencies {
     implementation deps.support.constraintLayout
     implementation deps.support.recyclerview
 
+    implementation deps.skeleton
+
     implementation deps.glide.runtime
     annotationProcessor deps.glide.compiler
 

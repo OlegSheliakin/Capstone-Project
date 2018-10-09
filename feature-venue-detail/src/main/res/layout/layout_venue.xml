@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.design.widget.CoordinatorLayout">
+
+    <io.rmiri.skeleton.SkeletonGroup
+        android:id="@+id/venuePhotoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <io.rmiri.skeleton.SkeletonView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivVenuePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/content_description_venue_s_photo" />
+        </io.rmiri.skeleton.SkeletonView>
+    </io.rmiri.skeleton.SkeletonGroup>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="@dimen/peek_height_fragment_map"
+        app:header_offset="@dimen/margin_normal"
+        app:layout_behavior="home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior">
+
+        <com.smedialink.feature_venue_detail.venue.view.VenueDetailsView
+            android:id="@+id/venueView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_fragment_venue_details" />
+
+    </android.support.v4.widget.NestedScrollView>
+
+</merge>

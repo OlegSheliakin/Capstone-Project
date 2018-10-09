@@ -7,7 +7,7 @@ import home.oleg.placesnearme.di.components.ApplicationComponent;
 import home.oleg.placesnearme.di.components.DaggerApplicationComponent;
 
 public class PlacesNearMeApp extends Application implements AppApiProvider {
-    private ApplicationComponent applicationComponent = null;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {

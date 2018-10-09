@@ -22,11 +22,11 @@ import home.oleg.placesnearme.feature_map.view.VenuesMapView;
 public class VenuesMapViewModelFacade {
 
     private final LifecycleOwner lifecycleOwner;
-
     private final VenuesViewModel venuesViewModel;
     private final UserLocationViewModel userLocationViewModel;
-    private @Nullable
-    VenueClickListener venueClickListener;
+
+    @Nullable
+    private VenueClickListener venueClickListener;
 
     public interface VenueClickListener {
         void onVenueSelected(VenueMapViewData venueMapViewData);
@@ -63,10 +63,6 @@ public class VenuesMapViewModelFacade {
 
     public void setVenues(Map<String, VenueMapViewData> venues) {
         venuesViewModel.setVenues(venues);
-    }
-
-    public void geocode(double latitude, double longitude) {
-
     }
 
     public void select(String id) {

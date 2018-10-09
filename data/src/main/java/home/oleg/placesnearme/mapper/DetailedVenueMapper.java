@@ -1,6 +1,7 @@
 package home.oleg.placesnearme.mapper;
 
 
+import home.oleg.placenearme.models.Contact;
 import home.oleg.placenearme.models.DetailedVenue;
 
 /**
@@ -22,8 +23,12 @@ public final class DetailedVenueMapper {
         result.setLocation(LocationMapper.map(detailedVenue.getLocation()));
         result.setId(detailedVenue.getId());
         result.setName(detailedVenue.getName());
-        result.setRatingSignals(detailedVenue.getRatingSignals());
         result.setHours(HoursMapper.map(detailedVenue.getHours()));
+
+        if(detailedVenue.getContact() != null) {
+            Contact contact = ContactMapper.map(detailedVenue.getContact());
+            result.setContact(contact);
+        }
 
         return result;
     }

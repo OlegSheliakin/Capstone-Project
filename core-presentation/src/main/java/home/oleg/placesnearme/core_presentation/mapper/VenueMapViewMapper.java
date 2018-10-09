@@ -9,6 +9,9 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueMapViewData;
 
 public final class VenueMapViewMapper {
 
+    private VenueMapViewMapper() {
+    }
+
     public static VenueMapViewData map(Section section, Venue venue) {
         VenueMapViewData venueMapView = new VenueMapViewData();
         venueMapView.setId(venue.getId());
@@ -17,9 +20,11 @@ public final class VenueMapViewMapper {
         venueMapView.setLat(venue.getLocation().getLat());
         venueMapView.setLng(venue.getLocation().getLng());
         venueMapView.setSectionType(section);
+        venueMapView.setDistance(venue.getLocation().getDistance());
 
-        if(venue.getCategory() != null && venue.getCategory().getIcon() != null) {
+        if (venue.getCategory() != null && venue.getCategory().getIcon() != null) {
             venueMapView.setIconViewData(IconViewMapper.map(venue.getCategory().getIcon()));
+            venueMapView.setCategoryName(venue.getCategory().getName());
         }
 
         return venueMapView;

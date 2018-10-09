@@ -27,7 +27,8 @@ ext.versions = [
         glide              : "4.8.0",
         timber             : "4.7.1",
         bottomNavigation   : "2.1.0",
-        permissionDispather: "3.3.1"
+        permissionDispather: "3.3.1",
+        shimmerVersion     : "v1.0.9"
 ]
 
 def deps = [:]
@@ -99,6 +100,7 @@ deps.permissions = [
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.leakCanary = "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 deps.bottomNavigation = "com.aurelhubert:ahbottomnavigation:$versions.bottomNavigation"
+deps.skeleton = "com.github.rasoulmiri:Skeleton:$versions.shimmerVersion"
 
 ext.deps = deps
 

@@ -3,9 +3,9 @@ package home.oleg.placesnearme.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.Location;
 import home.oleg.placenearme.models.Venue;
+import home.oleg.placesnearme.network.models.VenueDto;
 
 /**
  * Created by Oleg Sheliakin on 25.09.2018.
@@ -16,7 +16,7 @@ public final class VenueMapper {
     private VenueMapper() {
     }
 
-    public static Venue map(home.oleg.placesnearme.network.models.Venue venue) {
+    public static Venue map(VenueDto venue) {
         Venue result = new Venue();
 
         for (home.oleg.placesnearme.network.models.Category category : venue.getCategories()) {
@@ -35,10 +35,10 @@ public final class VenueMapper {
         return result;
     }
 
-    public static List<Venue> map(List<home.oleg.placesnearme.network.models.Venue> venues) {
+    public static List<Venue> map(List<VenueDto> venues) {
         List<Venue> result = new ArrayList<>();
 
-        for (home.oleg.placesnearme.network.models.Venue venue : venues) {
+        for (VenueDto venue : venues) {
             result.add(map(venue));
         }
 

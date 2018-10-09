@@ -1,5 +1,7 @@
 package home.oleg.placesnearme.feature_map.di;
 
+import com.smedialink.feature_venue_detail.venue.di.VenueDetailModule;
+
 import dagger.BindsInstance;
 import dagger.Component;
 import home.oleg.placesnearme.AppApiProvider;
@@ -25,7 +27,10 @@ public interface PlacesMapFragmentComponent {
         PlacesMapFragmentComponent build();
     }
 
-    class Injector {
+    final class Injector {
+        private Injector() {
+        }
+
         public static void inject(VenuesMapFragment fragment) {
             AppApi appApi = AppApiProvider.Initializer.getAppApi(fragment);
             DaggerPlacesMapFragmentComponent.builder()

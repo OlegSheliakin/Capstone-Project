@@ -1,4 +1,4 @@
-package com.smedialink.feature_venue_detail.venue.adapter;
+package com.smedialink.feature_venue_detail.venue.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +15,7 @@ import java.util.List;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
 
-public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
+class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
 
     private final List<PhotoViewData> photoViewDatas = new ArrayList<>();
 

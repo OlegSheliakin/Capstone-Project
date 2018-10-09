@@ -1,4 +1,4 @@
-package com.smedialink.feature_venue_detail;
+package com.smedialink.feature_venue_detail.venue.viewmodel;
 
 import android.support.annotation.NonNull;
 
@@ -12,7 +12,7 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
  * Created by Oleg Sheliakin on 21.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public final class ShowDetailedVenueAction<VIEW extends VenueView> implements Action<VIEW> {
+final class ShowDetailedVenueAction<VIEW extends VenueView> implements Action<VIEW> {
 
     private final VenueViewData data;
 

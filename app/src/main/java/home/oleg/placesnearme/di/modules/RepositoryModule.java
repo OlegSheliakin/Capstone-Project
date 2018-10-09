@@ -7,6 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
+import home.oleg.placenearme.repositories.DistanceRepository;
 import home.oleg.placenearme.repositories.SectionRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
@@ -14,11 +15,17 @@ import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.provider.ReactiveLocationStore;
 import home.oleg.placesnearme.network.service.IFourSquareAPI;
 import home.oleg.placesnearme.repositories.DetailedVenueRepositoryImpl;
+import home.oleg.placesnearme.repositories.DistanceRepositoryImpl;
 import home.oleg.placesnearme.repositories.UserLocationRepositoryImpl;
 import home.oleg.placesnearme.repositories.VenueRepositoryImpl;
 
 @Module
 public class RepositoryModule {
+
+    @Provides
+    public DistanceRepository distanceRepository() {
+        return new DistanceRepositoryImpl();
+    }
 
     @Provides
     public DetailedVenueRepository provideDetailedVenueRepo(IFourSquareAPI api) {

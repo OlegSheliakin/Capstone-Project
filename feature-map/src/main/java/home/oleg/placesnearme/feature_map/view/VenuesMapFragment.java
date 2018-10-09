@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smedialink.common.Optional;
 import com.smedialink.common.Pair;
+import com.smedialink.feature_venue_detail.venue.VenueViewFacade;
 import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 
 import java.util.HashMap;
@@ -39,13 +40,15 @@ import static home.oleg.placesnearme.feature_map.view.VenuesMapFragmentPermissio
 @RuntimePermissions
 public class VenuesMapFragment extends BaseMapFragment implements
         VenuesMapView,
-        GoogleMap.OnMarkerClickListener,
-        GoogleMap.OnMapClickListener, VenuesMapViewModelFacade.VenueClickListener {
+        GoogleMap.OnMarkerClickListener, VenuesMapViewModelFacade.VenueClickListener {
 
     private static final int USER_LOCATION_ZOOM = 16;
 
     @Inject
     VenuesMapViewModelFacade venuesMapViewModelFacade;
+
+    @Inject
+    VenueViewFacade venueViewFacade;
 
     @Inject
     MarkerMapper markerMapper;
@@ -78,8 +81,10 @@ public class VenuesMapFragment extends BaseMapFragment implements
                     .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
         });
 
-        venuesMapViewModelFacade.addOnVenueCLickListener(this);
+        venueViewFacade.onCreateView(view);
+
         venuesMapViewModelFacade.attachView(this);
+        venuesMapViewModelFacade.addOnVenueCLickListener(this);
     }
 
     @Override
@@ -147,7 +152,6 @@ public class VenuesMapFragment extends BaseMapFragment implements
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         googleMap.setMyLocationEnabled(true);
         googleMap.setOnMarkerClickListener(this);
-        googleMap.setOnMapClickListener(this);
 
         venuesMapViewModelFacade.refreshUserLocation();
         venuesMapViewModelFacade.refreshRecommendedVenues();
@@ -159,17 +163,12 @@ public class VenuesMapFragment extends BaseMapFragment implements
         return true;
     }
 
-    @Override
-    public void onMapClick(LatLng latLng) {
-        venuesMapViewModelFacade.geocode(latLng.latitude, latLng.longitude);
-    }
-
     private void injectDependencies() {
         PlacesMapFragmentComponent.Injector.inject(this);
     }
 
     @Override
     public void onVenueSelected(VenueMapViewData venueMapViewData) {
-        VenueFragment.show(getChildFragmentManager(), R.id.container, venueMapViewData);
+        venueViewFacade.setVenue(venueMapViewData);
     }
 }
