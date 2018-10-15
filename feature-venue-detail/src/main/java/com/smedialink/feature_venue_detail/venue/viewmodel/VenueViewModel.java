@@ -2,10 +2,12 @@ package com.smedialink.feature_venue_detail.venue.viewmodel;
 
 import com.smedialink.feature_venue_detail.venue.view.VenueView;
 
+import home.oleg.placenearme.interactors.AddRemoveVenueFavorite;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
+import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
-import home.oleg.placesnearme.core_presentation.view_actions.ViewActions;
-import home.oleg.placesnearme.core_presentation.viewdata.VenueMapViewData;
+import home.oleg.placesnearme.core_presentation.base.ErrorView;
+import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -17,25 +19,57 @@ import io.reactivex.schedulers.Schedulers;
 public class VenueViewModel extends BaseViewModel<VenueView> {
 
     private final GetDetailedVenue getDetailedVenue;
+    private final AddRemoveVenueFavorite addRemoveVenueFavorite;
 
-    private VenueMapViewData venue;
+    private DetailedVenue detailedVenue;
 
-    public VenueViewModel(GetDetailedVenue getDetailedVenue) {
+    public VenueViewModel(GetDetailedVenue getDetailedVenue,
+                          AddRemoveVenueFavorite addRemoveVenueFavorite) {
         this.getDetailedVenue = getDetailedVenue;
+        this.addRemoveVenueFavorite = addRemoveVenueFavorite;
     }
 
-    public void setVenue(VenueMapViewData venue) {
-        this.venue = venue;
-
+    public void setVenue(ShortVenueViewData venue) {
         addToDisposables(getDetailedVenue.getDetailedVenue(venue.getId())
+                .doOnSuccess(detailedVenue -> VenueViewModel.this.detailedVenue = detailedVenue)
                 .map(VenueViewData::mapFrom)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> setAction(ShowVenueMapAction.create(venue)))
+                .doOnSubscribe(disposable -> {
+                    setAction(venueView -> {
+                        venueView.showLoading();
+                        venueView.showShortVenue(venue);
+                    });
+                })
                 .subscribe(
-                        detailedVenue -> setAction(ShowDetailedVenueAction.create(detailedVenue)),
-                        throwable -> setAction(ViewActions.error(throwable))
+                        detailedVenue -> {
+                            setAction(venueView -> {
+                                venueView.hideLoading();
+                                venueView.show(detailedVenue);
+                            });
+                        },
+                        throwable -> {
+                            setAction(venueView -> {
+                                venueView.hideLoading();
+                                venueView.showError();
+                            });
+                        }
                 ));
     }
 
+    public void favoriteClicked() {
+        if(detailedVenue == null) {
+            return;
+        }
+
+        addToDisposables(addRemoveVenueFavorite.execute(detailedVenue)
+                .doOnSuccess(detailedVenue -> VenueViewModel.this.detailedVenue = detailedVenue)
+                .map(VenueViewData::mapFrom)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        detailedVenue -> setAction(venueView -> venueView.show(detailedVenue)),
+                        throwable -> setAction(ErrorView::showError)
+                ));
+    }
 }

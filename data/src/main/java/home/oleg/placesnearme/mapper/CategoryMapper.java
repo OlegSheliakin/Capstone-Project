@@ -18,8 +18,6 @@ public final class CategoryMapper {
         Category result = new Category();
         result.setId(category.getId());
         result.setName(category.getName());
-        result.setPluralName(category.getPluralName());
-        result.setShortName(category.getShortName());
 
         if (category.getIcon() != null) {
             result.setIcon(IconMapper.map(category.getIcon()));

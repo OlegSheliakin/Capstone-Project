@@ -5,8 +5,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.squareup.picasso.Picasso;
 
 import home.oleg.placesnearme.core_presentation.R;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  * Created by Oleg Sheliakin on 21.09.2018.
@@ -24,15 +26,18 @@ public final class ImageLoader {
     public static void loadIcon(ImageView imageView, @Nullable String url) {
         Glide.with(imageView)
                 .load(url)
-                .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.fitCenterTransform())
                 .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.placeholderOf(R.color.colorGrayLight))
                 .into(imageView);
     }
 
-    public static void loadImage(ImageView imageView, String url) {
+    public static void loadImage(ImageView imageView, @Nullable String url) {
         Glide.with(imageView)
                 .load(url)
+                .apply(RequestOptions.fitCenterTransform())
                 .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.placeholderOf(R.color.colorGrayLight))
                 .into(imageView);
     }
 

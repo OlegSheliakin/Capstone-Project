@@ -34,6 +34,10 @@ dependencies {
     implementation project(':common')
     implementation project(':domain')
 
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+
     implementation deps.rxjava2.rxjava
 
     implementation deps.glide.runtime

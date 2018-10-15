@@ -1,11 +1,13 @@
 package home.oleg.placenearme.repositories;
 
+import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Venue;
+import io.reactivex.Completable;
 
 public interface FavoriteVenuesRepository {
 
-    void addToFavorite(Venue venue);
+    Completable addToFavorite(DetailedVenue venue);
 
-    void deleteFromFavorite(long id);
+    Completable deleteFromFavorite(String id);
 
 }

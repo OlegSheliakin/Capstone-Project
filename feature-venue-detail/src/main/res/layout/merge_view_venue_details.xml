@@ -19,10 +19,12 @@
 
     <ImageView
         android:id="@+id/ivVenueIcon"
-        android:layout_width="@dimen/width_all_icon_venue"
-        android:layout_height="@dimen/width_all_icon_venue"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
         android:layout_marginStart="@dimen/margin_normal"
-        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_high"
         android:contentDescription="@string/content_description_venue_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -107,7 +109,7 @@
         android:id="@+id/tvVenueAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="@dimen/margin_small"
         android:ellipsize="end"
         android:maxLines="1"
@@ -227,7 +229,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPhotos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         android:paddingStart="@dimen/margin_normal"
         android:paddingTop="@dimen/margin_small"
         android:paddingEnd="@dimen/margin_normal"

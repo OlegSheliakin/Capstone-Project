@@ -15,8 +15,11 @@ public final class DetailedVenueMapper {
 
     public static DetailedVenue map(home.oleg.placesnearme.network.models.DetailedVenue detailedVenue) {
         DetailedVenue result = new DetailedVenue();
-        result.setCategories(CategoryMapper.map(detailedVenue.getCategories()));
-        result.setBestPhoto(PhotoMapper.map(detailedVenue.getBestPhoto()));
+
+        if (detailedVenue.getCategories() != null && !detailedVenue.getCategories().isEmpty()) {
+            result.setCategory(CategoryMapper.map(detailedVenue.getCategories().get(0)));
+        }
+
         result.setDescription(detailedVenue.getDescription());
         result.setRating(detailedVenue.getRating());
         result.setPhotos(PhotoMapper.map(detailedVenue.getPhotos()));
@@ -25,7 +28,7 @@ public final class DetailedVenueMapper {
         result.setName(detailedVenue.getName());
         result.setHours(HoursMapper.map(detailedVenue.getHours()));
 
-        if(detailedVenue.getContact() != null) {
+        if (detailedVenue.getContact() != null) {
             Contact contact = ContactMapper.map(detailedVenue.getContact());
             result.setContact(contact);
         }

@@ -40,7 +40,7 @@ public final class MainActivity extends AppCompatActivity {
                 return false;
             }
 
-            Fragment fragment = null;
+            Fragment fragment;
             switch (position) {
                 case 0:
                     fragment = new PlacesHistoryFragment();
@@ -50,6 +50,9 @@ public final class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     fragment = new FavoritePlacesFragment();
+                    break;
+                default:
+                    fragment = new VenuesMapFragment();
                     break;
             }
 

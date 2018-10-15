@@ -7,7 +7,7 @@ import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
 import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActions;
-import home.oleg.placesnearme.core_presentation.viewdata.VenueMapViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 import home.oleg.placesnearme.feature_map.view.VenuesView;
 import home.oleg.placesnearme.feature_map.view_action.ShowVenuesAction;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -44,26 +44,26 @@ public final class VenuesViewModel extends BaseViewModel<VenuesView> {
         );
     }
 
-    public void setVenues(Map<String, VenueMapViewData> venues) {
+    public void setVenues(Map<String, ShortVenueViewData> venues) {
         venuesHolder.set(venues);
     }
 
-    public VenueMapViewData getVenue(String id) {
+    public ShortVenueViewData getVenue(String id) {
         return venuesHolder.get(id);
     }
 
     private static final class VenuesHolder {
 
-        private Map<String, VenueMapViewData> venues;
+        private Map<String, ShortVenueViewData> venues;
 
         private VenuesHolder() {
         }
 
-        private void set(Map<String, VenueMapViewData> venues) {
+        private void set(Map<String, ShortVenueViewData> venues) {
             this.venues = new HashMap<>(venues);
         }
 
-        private VenueMapViewData get(String id) {
+        private ShortVenueViewData get(String id) {
             return venues.get(id);
         }
     }

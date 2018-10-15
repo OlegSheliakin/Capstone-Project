@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:fitsSystemWindows="true"
         app:behavior_hideable="true"
         app:behavior_peekHeight="@dimen/peek_height_fragment_map"
         app:header_offset="@dimen/margin_normal"
@@ -26,8 +25,7 @@
             android:id="@+id/venueView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_fragment_venue_details"
-            android:fitsSystemWindows="true" />
+            android:background="@drawable/bg_fragment_venue_details"/>
 
     </android.support.v4.widget.NestedScrollView>
 

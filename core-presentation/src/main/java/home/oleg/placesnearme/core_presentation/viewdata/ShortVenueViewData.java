@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 
 import home.oleg.placenearme.models.Section;
 
-public class VenueMapViewData implements Parcelable {
+public class ShortVenueViewData implements Parcelable {
 
     private String id;
-    private String name;
+    private String title;
     private Double distance;
     private String address;
     private double lat;
@@ -36,8 +36,8 @@ public class VenueMapViewData implements Parcelable {
         this.categoryName = categoryName;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public IconViewData getIconViewData() {
@@ -52,8 +52,8 @@ public class VenueMapViewData implements Parcelable {
         return iconViewData.getIconUrlGray();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Double getDistance() {
@@ -97,7 +97,7 @@ public class VenueMapViewData implements Parcelable {
         this.sectionType = sectionType;
     }
 
-    public VenueMapViewData() {
+    public ShortVenueViewData() {
     }
 
     @Override
@@ -108,7 +108,7 @@ public class VenueMapViewData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
-        dest.writeString(this.name);
+        dest.writeString(this.title);
         dest.writeDouble(this.distance);
         dest.writeString(this.address);
         dest.writeDouble(this.lat);
@@ -118,9 +118,9 @@ public class VenueMapViewData implements Parcelable {
         dest.writeInt(this.sectionType == null ? -1 : this.sectionType.ordinal());
     }
 
-    protected VenueMapViewData(Parcel in) {
+    protected ShortVenueViewData(Parcel in) {
         this.id = in.readString();
-        this.name = in.readString();
+        this.title = in.readString();
         this.distance = in.readDouble();
         this.address = in.readString();
         this.lat = in.readDouble();
@@ -131,15 +131,15 @@ public class VenueMapViewData implements Parcelable {
         this.sectionType = tmpSectionType == -1 ? null : Section.values()[tmpSectionType];
     }
 
-    public static final Parcelable.Creator<VenueMapViewData> CREATOR = new Parcelable.Creator<VenueMapViewData>() {
+    public static final Parcelable.Creator<ShortVenueViewData> CREATOR = new Parcelable.Creator<ShortVenueViewData>() {
         @Override
-        public VenueMapViewData createFromParcel(Parcel source) {
-            return new VenueMapViewData(source);
+        public ShortVenueViewData createFromParcel(Parcel source) {
+            return new ShortVenueViewData(source);
         }
 
         @Override
-        public VenueMapViewData[] newArray(int size) {
-            return new VenueMapViewData[size];
+        public ShortVenueViewData[] newArray(int size) {
+            return new ShortVenueViewData[size];
         }
     };
 }

@@ -2,7 +2,7 @@ package com.smedialink.feature_venue_detail.venue.view;
 
 import home.oleg.placesnearme.core_presentation.base.ErrorView;
 import home.oleg.placesnearme.core_presentation.base.LoadingView;
-import home.oleg.placesnearme.core_presentation.viewdata.VenueMapViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
 /**
@@ -12,5 +12,5 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 public interface VenueView extends LoadingView, ErrorView {
     void show(VenueViewData venue);
 
-    void showShortVenue(VenueMapViewData venue);
+    void showShortVenue(ShortVenueViewData venue);
 }

@@ -4,22 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="android.support.design.widget.CoordinatorLayout">
 
-    <io.rmiri.skeleton.SkeletonGroup
-        android:id="@+id/venuePhotoContainer"
+    <ImageView
+        android:id="@+id/ivVenuePhoto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_venue_s_photo" />
 
-        <io.rmiri.skeleton.SkeletonView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/ivVenuePhoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_description_venue_s_photo" />
-        </io.rmiri.skeleton.SkeletonView>
-    </io.rmiri.skeleton.SkeletonGroup>
+    <home.oleg.coordinator_behavior.MergedAppBarLayout
+        android:id="@+id/mergedappbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -38,5 +33,17 @@
             android:background="@drawable/bg_fragment_venue_details" />
 
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabFavoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/margin_high"
+        android:layout_marginEnd="@dimen/margin_high"
+        app:backgroundTint="@android:color/white"
+        app:fabSize="mini"
+        app:layout_behavior="home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior"
+        app:srcCompat="@drawable/fab_favorite_state_drawable" />
 
 </merge>

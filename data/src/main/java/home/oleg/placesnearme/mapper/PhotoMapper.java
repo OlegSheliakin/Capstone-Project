@@ -17,13 +17,11 @@ public final class PhotoMapper {
     public static Photo map(home.oleg.placesnearme.network.models.Photo photo) {
         Photo result = new Photo();
 
-        result.setCreatedAt(photo.getCreatedAt());
         result.setHeight(photo.getHeight());
         result.setId(photo.getId());
         result.setPrefix(photo.getPrefix());
         result.setSuffix(photo.getSuffix());
         result.setWidth(photo.getWidth());
-        result.setVisibility(photo.getVisibility());
         return result;
     }
 

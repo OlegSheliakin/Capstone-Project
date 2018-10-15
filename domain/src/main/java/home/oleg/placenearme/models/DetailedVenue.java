@@ -5,32 +5,40 @@ import java.util.List;
 
 public class DetailedVenue {
 
-    private Photo bestPhoto;
-    private List<Category> categories;
+    private Category category;
     private Contact contact;
-    private Long createdAt;
     private String description;
     private Hours hours;
     private String id;
     private Location location;
     private String name;
     private List<Photo> photos;
+    private double distance;
+    private boolean isFavorite;
     private float rating;
 
-    public Photo getBestPhoto() {
-        return bestPhoto;
+    public double getDistance() {
+        return distance;
     }
 
-    public void setBestPhoto(Photo bestPhoto) {
-        this.bestPhoto = bestPhoto;
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category categorie) {
+        this.category = categorie;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     public Contact getContact() {
@@ -39,14 +47,6 @@ public class DetailedVenue {
 
     public void setContact(Contact contact) {
         this.contact = contact;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getDescription() {

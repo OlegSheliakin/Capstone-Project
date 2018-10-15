@@ -3,21 +3,11 @@ package home.oleg.placenearme.models;
 
 public class Photo {
 
-    private Long createdAt;
     private Long height;
     private String id;
     private String prefix;
     private String suffix;
-    private String visibility;
     private Long width;
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
-    }
 
     public Long getHeight() {
         return height;
@@ -49,14 +39,6 @@ public class Photo {
 
     public void setSuffix(String suffix) {
         this.suffix = suffix;
-    }
-
-    public String getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(String visibility) {
-        this.visibility = visibility;
     }
 
     public Long getWidth() {

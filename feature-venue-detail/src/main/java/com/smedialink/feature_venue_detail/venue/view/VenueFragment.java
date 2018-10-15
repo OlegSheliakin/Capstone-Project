@@ -15,7 +15,7 @@ import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
 import javax.inject.Inject;
 
-import home.oleg.placesnearme.core_presentation.viewdata.VenueMapViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
 public class VenueFragment extends Fragment implements VenueView {
@@ -30,14 +30,14 @@ public class VenueFragment extends Fragment implements VenueView {
     public static void show(
             @NonNull FragmentManager fragmentManager,
             @IdRes int containerId,
-            @NonNull VenueMapViewData venueMapViewData) {
+            @NonNull ShortVenueViewData venueMapViewData) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_VENUE, venueMapViewData);
 
         VenueFragment fragment = (VenueFragment) fragmentManager.findFragmentById(containerId);
         if (fragment != null) {
             fragment.setArguments(bundle);
-            fragment.uodateVenuee();
+            fragment.updateVenue();
         } else {
             VenueFragment venueFragment = new VenueFragment();
             venueFragment.setArguments(bundle);
@@ -49,9 +49,9 @@ public class VenueFragment extends Fragment implements VenueView {
         }
     }
 
-    public void uodateVenuee() {
+    public void updateVenue() {
         assert getArguments() != null;
-        VenueMapViewData venueMapViewData = getArguments().getParcelable(KEY_VENUE);
+        ShortVenueViewData venueMapViewData = getArguments().getParcelable(KEY_VENUE);
         venueViewModel.setVenue(venueMapViewData);
     }
 
@@ -65,7 +65,7 @@ public class VenueFragment extends Fragment implements VenueView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         venueDetailsView = view.findViewById(R.id.venueView);
-        uodateVenuee();
+        updateVenue();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class VenueFragment extends Fragment implements VenueView {
     }
 
     @Override
-    public void showShortVenue(VenueMapViewData venue) {
+    public void showShortVenue(ShortVenueViewData venue) {
         venueDetailsView.showShortVenue(venue);
     }
 

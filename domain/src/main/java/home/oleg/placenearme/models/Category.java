@@ -5,9 +5,6 @@ public final class Category {
 
     private String id;
     private String name;
-    private String pluralName;
-    private Boolean primary;
-    private String shortName;
     private Icon icon;
 
     public Icon getIcon() {
@@ -32,30 +29,6 @@ public final class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPluralName() {
-        return pluralName;
-    }
-
-    public void setPluralName(String pluralName) {
-        this.pluralName = pluralName;
-    }
-
-    public Boolean getPrimary() {
-        return primary;
-    }
-
-    public void setPrimary(Boolean primary) {
-        this.primary = primary;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
     }
 
 }

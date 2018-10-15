@@ -5,12 +5,17 @@ import android.support.annotation.NonNull;
 
 import com.smedialink.common.ErrorHandler;
 
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import home.oleg.placesnearme.DataBaseFactory;
 import home.oleg.placesnearme.PlacesNearMeApp;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProviderImpl;
+import home.oleg.placesnearme.database.AppDatabase;
+import home.oleg.placesnearme.database.AppDatabase_Impl;
 import timber.log.Timber;
 
 /**

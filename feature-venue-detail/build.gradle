@@ -51,9 +51,8 @@ dependencies {
     implementation deps.support.recyclerview
 
     implementation deps.skeleton
-
-    implementation deps.glide.runtime
-    annotationProcessor deps.glide.compiler
+    implementation 'com.ethanhua:skeleton:1.1.1'
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
 
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito

@@ -25,6 +25,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation project(':core-presentation')
     implementation deps.support.appcompat7
     implementation deps.support.design
 

@@ -1073,11 +1073,6 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
             view.setY(reference - lp.bottomMargin - lp.height);
         }
-
-        // set the padding on the map
-        /*if (map != null) {
-            map.setPadding(0, 0, 0, mParentHeight - reference);
-        }*/
     }
 
     @VisibleForTesting

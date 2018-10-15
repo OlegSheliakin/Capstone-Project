@@ -15,7 +15,6 @@ public final class HoursMapper {
         Hours result = new Hours();
 
         if(hours != null) {
-            result.setIsLocalHoliday(hours.getIsLocalHoliday());
             result.setIsOpen(hours.getIsOpen());
             result.setStatus(hours.getStatus());
         }

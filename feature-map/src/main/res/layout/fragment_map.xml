@@ -7,9 +7,9 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
-    <include layout="@layout/layout_venue"/>
+    <include layout="@layout/layout_venue" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/fabs"

@@ -16,8 +16,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smedialink.common.Optional;
 import com.smedialink.common.Pair;
-import com.smedialink.feature_venue_detail.venue.VenueViewFacade;
-import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
+import com.smedialink.feature_venue_detail.venue.view.VenueViewFacade;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +25,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import home.oleg.placenearme.models.UserLocation;
-import home.oleg.placesnearme.core_presentation.viewdata.VenueMapViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 import home.oleg.placesnearme.feature_map.R;
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent;
 import home.oleg.placesnearme.feature_map.marker.MarkerMapper;
@@ -100,14 +99,14 @@ public class VenuesMapFragment extends BaseMapFragment implements
     }
 
     @Override
-    public void show(@NonNull List<VenueMapViewData> items) {
+    public void show(@NonNull List<ShortVenueViewData> items) {
         Optional.of(googleMap).ifPresent(map -> {
             map.clear();
 
-            List<Pair<MarkerOptions, VenueMapViewData>> pairs = markerMapper.mapFrom(items);
-            Map<String, VenueMapViewData> markerVenueViewDataMap = new HashMap<>();
+            List<Pair<MarkerOptions, ShortVenueViewData>> pairs = markerMapper.mapFrom(items);
+            Map<String, ShortVenueViewData> markerVenueViewDataMap = new HashMap<>();
 
-            for (Pair<MarkerOptions, VenueMapViewData> pair : pairs) {
+            for (Pair<MarkerOptions, ShortVenueViewData> pair : pairs) {
                 String id = map.addMarker(pair.getFirst()).getId();
                 markerVenueViewDataMap.put(id, pair.getSecond());
             }
@@ -168,7 +167,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
     }
 
     @Override
-    public void onVenueSelected(VenueMapViewData venueMapViewData) {
+    public void onVenueSelected(ShortVenueViewData venueMapViewData) {
         venueViewFacade.setVenue(venueMapViewData);
     }
 }

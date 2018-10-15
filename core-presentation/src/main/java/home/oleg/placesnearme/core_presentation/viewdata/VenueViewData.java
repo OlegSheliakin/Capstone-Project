@@ -1,27 +1,44 @@
 package home.oleg.placesnearme.core_presentation.viewdata;
 
+import android.support.annotation.NonNull;
+
+import com.smedialink.common.Optional;
+import com.smedialink.common.function.Action;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.DetailedVenue;
+import home.oleg.placenearme.models.Hours;
 import home.oleg.placenearme.models.Photo;
+import home.oleg.placesnearme.core_presentation.mapper.IconViewMapper;
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewData {
+public class VenueViewData extends ShortVenueViewData {
 
-    private String title;
-    private String address;
-    private double lat;
-    private double lng;
     private List<PhotoViewData> photoUrls;
     private String description;
     private String openingHoursStatus;
     private String formattedPhone;
+    private boolean isFavorite;
     private float rating;
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 
     public float getRating() {
         return rating / 2.0f;
@@ -44,7 +61,7 @@ public class VenueViewData {
     }
 
     public String getFormattedPhone() {
-        if(formattedPhone == null) {
+        if (formattedPhone == null) {
             return "-";
         }
 
@@ -53,38 +70,6 @@ public class VenueViewData {
 
     public void setFormattedPhone(String formattedPhone) {
         this.formattedPhone = formattedPhone;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
     }
 
     public PhotoViewData getBestPhoto() {
@@ -134,19 +119,24 @@ public class VenueViewData {
     public static VenueViewData mapFrom(DetailedVenue venue) {
         VenueViewData venueViewObject = new VenueViewData();
         venueViewObject.setTitle(venue.getName());
+        venueViewObject.setDistance(venue.getDistance());
+
+        if (venue.getCategory() != null && venue.getCategory().getIcon() != null) {
+            venueViewObject.setIconViewData(IconViewMapper.map(venue.getCategory().getIcon()));
+            venueViewObject.setCategoryName(venue.getCategory().getName());
+        }
+
         venueViewObject.setAddress(venue.getLocation().getAddress());
         venueViewObject.setLat(venue.getLocation().getLat());
         venueViewObject.setLng(venue.getLocation().getLng());
         venueViewObject.setDescription(venue.getDescription());
         venueViewObject.setRating(venue.getRating());
+        venueViewObject.setFavorite(venue.isFavorite());
 
-        if (venue.getContact() != null) {
-            venueViewObject.setFormattedPhone(venue.getContact().getFormattedPhone());
-        }
-
-        if (venue.getHours() != null) {
-            venueViewObject.setOpeningHoursStatus(venue.getHours().getStatus());
-        }
+        Optional.of(venue.getContact())
+                .ifPresent(contact -> venueViewObject.setFormattedPhone(contact.getFormattedPhone()));
+        Optional.of(venue.getHours())
+                .ifPresent(hours -> venueViewObject.setOpeningHoursStatus(hours.getStatus()));
 
         List<Photo> photos = venue.getPhotos();
 
@@ -157,9 +147,6 @@ public class VenueViewData {
         venueViewObject.setPhotoUrls(photoUrls);
 
         return venueViewObject;
-    }
-
-    public VenueViewData() {
     }
 
 }

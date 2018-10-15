@@ -14,6 +14,7 @@ import javax.inject.Provider;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
+import home.oleg.placenearme.interactors.AddRemoveVenueFavorite;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placenearme.interactors.GetUserLocation;
@@ -32,8 +33,8 @@ public final class ViewModelModule {
     @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenueViewModel(GetDetailedVenue getDetailedVenue) {
-        return new VenueViewModel(getDetailedVenue);
+    public static ViewModel provideVenueViewModel(GetDetailedVenue getDetailedVenue, AddRemoveVenueFavorite addRemoveVenueFavorite) {
+        return new VenueViewModel(getDetailedVenue, addRemoveVenueFavorite);
     }
 
     @IntoMap

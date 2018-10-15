@@ -35,12 +35,6 @@ public final class LocationMapper {
             result.setAddress(address);
         }
 
-        result.setAddress(location.getAddress());
-        result.setCc(location.getCc());
-        result.setCity(location.getCity());
-        result.setCountry(location.getCountry());
-        result.setCrossStreet(location.getCrossStreet());
-        result.setFormattedAddress(location.getFormattedAddress());
         result.setLat(location.getLat());
         result.setLng(location.getLng());
         return result;
