@@ -15,7 +15,16 @@ public class DetailedVenue {
     private List<Photo> photos;
     private double distance;
     private boolean isFavorite;
+    private boolean isVisited;
     private float rating;
+
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
+    }
 
     public double getDistance() {
         return distance;
