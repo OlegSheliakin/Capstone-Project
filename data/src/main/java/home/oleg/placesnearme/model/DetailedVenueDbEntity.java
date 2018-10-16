@@ -4,12 +4,15 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Date;
+
 @Entity(tableName = "detailed_venue")
 public class DetailedVenueDbEntity {
 
     @PrimaryKey
     @NonNull
     private String id;
+    private Date createdAt;
     private String title;
     private String address;
     private double lat;
@@ -22,6 +25,14 @@ public class DetailedVenueDbEntity {
     @NonNull
     public String getId() {
         return id;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public void setId(@NonNull String id) {
