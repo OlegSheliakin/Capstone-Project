@@ -3,24 +3,24 @@ package home.oleg.placenearme.models;
 
 public final class Category {
 
-    private String id;
     private String name;
-    private Icon icon;
+    private String iconPrefix;
+    private String iconSuffix;
 
-    public Icon getIcon() {
-        return icon;
+    public String getIconPrefix() {
+        return iconPrefix;
     }
 
-    public void setIcon(Icon icon) {
-        this.icon = icon;
+    public void setIconPrefix(String iconPrefix) {
+        this.iconPrefix = iconPrefix;
     }
 
-    public String getId() {
-        return id;
+    public String getIconSuffix() {
+        return iconSuffix;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIconSuffix(String iconSuffix) {
+        this.iconSuffix = iconSuffix;
     }
 
     public String getName() {

@@ -5,6 +5,7 @@ import java.util.List;
 
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.Venue;
+import home.oleg.placesnearme.core_presentation.viewdata.IconViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 
 public final class VenueMapViewMapper {
@@ -20,10 +21,13 @@ public final class VenueMapViewMapper {
         venueMapView.setLat(venue.getLocation().getLat());
         venueMapView.setLng(venue.getLocation().getLng());
         venueMapView.setSectionType(section);
-        venueMapView.setDistance(venue.getLocation().getDistance());
+        venueMapView.setDistance(venue.getDistance());
 
-        if (venue.getCategory() != null && venue.getCategory().getIcon() != null) {
-            venueMapView.setIconViewData(IconViewMapper.map(venue.getCategory().getIcon()));
+        if (venue.getCategory() != null) {
+            IconViewData icon = IconViewMapper.map(
+                    venue.getCategory().getIconPrefix(),
+                    venue.getCategory().getIconSuffix());
+            venueMapView.setIconViewData(icon);
             venueMapView.setCategoryName(venue.getCategory().getName());
         }
 

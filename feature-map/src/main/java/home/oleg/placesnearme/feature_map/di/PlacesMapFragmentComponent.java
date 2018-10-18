@@ -1,13 +1,11 @@
 package home.oleg.placesnearme.feature_map.di;
 
-import com.smedialink.feature_venue_detail.venue.di.VenueDetailModule;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import home.oleg.placesnearme.AppApiProvider;
 import home.oleg.placesnearme.api.AppApi;
-import home.oleg.placesnearme.scopes.FeatureScope;
 import home.oleg.placesnearme.feature_map.view.VenuesMapFragment;
+import home.oleg.placesnearme.scopes.FeatureScope;
 
 @FeatureScope
 @Component(dependencies = AppApi.class, modules = {

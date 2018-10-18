@@ -1,13 +1,12 @@
 package home.oleg.placesnearme.network.service;
 
 
+import java.util.Map;
+
 import home.oleg.placesnearme.network.models.reposnses.ExploreResponse;
 import home.oleg.placesnearme.network.models.reposnses.PhotosResponse;
 import home.oleg.placesnearme.network.models.reposnses.Response;
 import home.oleg.placesnearme.network.models.reposnses.VenueDetailResponse;
-
-import java.util.Map;
-
 import home.oleg.placesnearme.network.models.reposnses.VenuesResponse;
 import io.reactivex.Single;
 import retrofit2.http.GET;

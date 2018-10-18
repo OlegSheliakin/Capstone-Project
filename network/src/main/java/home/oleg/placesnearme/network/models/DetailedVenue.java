@@ -9,7 +9,6 @@ import io.reactivex.annotations.NonNull;
 
 public class DetailedVenue {
 
-    private Photo bestPhoto;
     private String canonicalUrl;
     private List<Category> categories;
     private Contact contact;
@@ -27,11 +26,6 @@ public class DetailedVenue {
     private String storeId;
     private String timeZone;
     private String url;
-    private Boolean verified;
-
-    public Photo getBestPhoto() {
-        return bestPhoto;
-    }
 
     public String getCanonicalUrl() {
         return canonicalUrl;
@@ -182,14 +176,6 @@ public class DetailedVenue {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Boolean getVerified() {
-        return verified;
-    }
-
-    public void setVerified(Boolean verified) {
-        this.verified = verified;
     }
 
 }

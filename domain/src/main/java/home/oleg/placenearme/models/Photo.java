@@ -4,7 +4,6 @@ package home.oleg.placenearme.models;
 public class Photo {
 
     private Long height;
-    private String id;
     private String prefix;
     private String suffix;
     private Long width;
@@ -15,14 +14,6 @@ public class Photo {
 
     public void setHeight(Long height) {
         this.height = height;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPrefix() {

@@ -3,7 +3,6 @@ package home.oleg.placenearme.interactors;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository;
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 public class AddRemoveVenueFavorite {
 
@@ -13,15 +12,11 @@ public class AddRemoveVenueFavorite {
         this.favoriteVenuesRepository = favoriteVenuesRepository;
     }
 
-    public Single<DetailedVenue> execute(DetailedVenue detailedVenue) {
+    public Completable execute(DetailedVenue detailedVenue) {
         if (detailedVenue.isFavorite()) {
-            return favoriteVenuesRepository.deleteFromFavorite(detailedVenue.getId())
-                    .andThen(Single.just(detailedVenue))
-                    .doOnSuccess(dv -> dv.setFavorite(false));
+            return favoriteVenuesRepository.addToFavorite(detailedVenue);
         } else {
-            return favoriteVenuesRepository.addToFavorite(detailedVenue)
-                    .andThen(Single.just(detailedVenue))
-                    .doOnSuccess(dv -> dv.setFavorite(true));
+            return favoriteVenuesRepository.deleteFromFavorite(detailedVenue);
         }
     }
 }

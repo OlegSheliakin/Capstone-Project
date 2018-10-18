@@ -1,6 +1,7 @@
 
 package home.oleg.placenearme.models;
 
+import java.util.Collections;
 import java.util.List;
 
 public class DetailedVenue {
@@ -13,18 +14,9 @@ public class DetailedVenue {
     private Location location;
     private String name;
     private List<Photo> photos;
-    private double distance;
     private boolean isFavorite;
-    private boolean isVisited;
     private float rating;
-
-    public boolean isVisited() {
-        return isVisited;
-    }
-
-    public void setVisited(boolean visited) {
-        isVisited = visited;
-    }
+    private double distance;
 
     public double getDistance() {
         return distance;
@@ -34,12 +26,20 @@ public class DetailedVenue {
         this.distance = distance;
     }
 
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category categorie) {
-        this.category = categorie;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public boolean isFavorite() {
@@ -48,14 +48,6 @@ public class DetailedVenue {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
     }
 
     public String getDescription() {
@@ -99,7 +91,10 @@ public class DetailedVenue {
     }
 
     public List<Photo> getPhotos() {
-        return photos;
+        if(photos == null) {
+            return Collections.emptyList();
+        }
+        return Collections.unmodifiableList(photos);
     }
 
     public void setPhotos(List<Photo> photos) {

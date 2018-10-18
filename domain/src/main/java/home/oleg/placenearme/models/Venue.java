@@ -7,6 +7,15 @@ public class Venue {
     private String id;
     private Location location;
     private String name;
+    private double distance;
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
     public Category getCategory() {
         return category;

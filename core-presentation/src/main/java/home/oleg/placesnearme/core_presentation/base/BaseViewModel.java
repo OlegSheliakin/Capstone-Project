@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel;
 
 import com.smedialink.common.function.Action;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 

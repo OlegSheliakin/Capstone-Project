@@ -1,7 +1,6 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.arch.lifecycle.LifecycleOwner;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
@@ -11,13 +10,10 @@ import android.widget.ImageView;
 
 import com.smedialink.common.Optional;
 import com.smedialink.feature_venue_detail.R;
-import com.smedialink.feature_venue_detail.venue.view.VenueDetailsView;
-import com.smedialink.feature_venue_detail.venue.view.VenueView;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
 import javax.inject.Inject;
 
-import home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior;
 import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior;
 import home.oleg.coordinator_behavior.MergedAppBarLayout;
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior;

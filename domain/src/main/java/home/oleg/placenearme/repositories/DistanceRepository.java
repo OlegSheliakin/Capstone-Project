@@ -1,7 +1,6 @@
 package home.oleg.placenearme.repositories;
 
 import home.oleg.placenearme.models.LatLng;
-import home.oleg.placenearme.models.Location;
 
 /**
  * Created by Oleg Sheliakin on 09.10.2018.

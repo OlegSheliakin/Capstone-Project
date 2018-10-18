@@ -6,7 +6,6 @@ import home.oleg.placenearme.interactors.AddRemoveVenueFavorite;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
-import home.oleg.placesnearme.core_presentation.base.ErrorView;
 import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,7 +30,7 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
 
     public void setVenue(ShortVenueViewData venue) {
         addToDisposables(getDetailedVenue.getDetailedVenue(venue.getId())
-                .doOnSuccess(detailedVenue -> VenueViewModel.this.detailedVenue = detailedVenue)
+                .doOnNext(detailedVenue -> VenueViewModel.this.detailedVenue = detailedVenue)
                 .map(VenueViewData::mapFrom)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -58,18 +57,14 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
     }
 
     public void favoriteClicked() {
-        if(detailedVenue == null) {
+        if (detailedVenue == null) {
             return;
         }
 
         addToDisposables(addRemoveVenueFavorite.execute(detailedVenue)
-                .doOnSuccess(detailedVenue -> VenueViewModel.this.detailedVenue = detailedVenue)
-                .map(VenueViewData::mapFrom)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        detailedVenue -> setAction(venueView -> venueView.show(detailedVenue)),
-                        throwable -> setAction(ErrorView::showError)
-                ));
+                .subscribe(() -> {
+                }, throwable -> {
+                }));
     }
 }

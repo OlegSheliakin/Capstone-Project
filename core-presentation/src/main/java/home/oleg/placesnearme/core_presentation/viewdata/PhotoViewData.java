@@ -1,8 +1,5 @@
 package home.oleg.placesnearme.core_presentation.viewdata;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import home.oleg.placenearme.models.Photo;
 
 /**

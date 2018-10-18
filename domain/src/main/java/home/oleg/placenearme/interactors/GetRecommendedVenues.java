@@ -2,7 +2,6 @@ package home.oleg.placenearme.interactors;
 
 import com.smedialink.common.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import home.oleg.placenearme.models.LatLng;
@@ -16,7 +15,6 @@ import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placenearme.repositories.VenueRequestParams;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 public class GetRecommendedVenues {
     private final VenueRepository venueRepository;
@@ -57,7 +55,7 @@ public class GetRecommendedVenues {
             LatLng to = new LatLng(venue.getLocation().getLat(), venue.getLocation().getLng());
             LatLng from = new LatLng(userLocation.getLat(), userLocation.getLng());
             double distance = distanceRepository.evaluate(from, to);
-            venue.getLocation().setDistance(distance);
+            venue.setDistance(distance);
         }
     }
 

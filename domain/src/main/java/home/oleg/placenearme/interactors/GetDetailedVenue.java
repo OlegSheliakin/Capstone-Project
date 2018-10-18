@@ -2,7 +2,7 @@ package home.oleg.placenearme.interactors;
 
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
-import io.reactivex.Single;
+import io.reactivex.Flowable;
 
 public class GetDetailedVenue {
 
@@ -12,7 +12,8 @@ public class GetDetailedVenue {
         this.detailedVenueRepository = detailedVenueRepository;
     }
 
-    public Single<DetailedVenue> getDetailedVenue(String id) {
+    public Flowable<DetailedVenue> getDetailedVenue(String id) {
         return detailedVenueRepository.getDetailedVenueById(id);
     }
+
 }

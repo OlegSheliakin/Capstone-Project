@@ -5,7 +5,6 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 
-import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
 import dagger.Binds;

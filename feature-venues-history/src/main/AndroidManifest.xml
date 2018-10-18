@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="home.oleg.placesnearme.feature_venues_history" />
+<manifest package="home.oleg.placesnearme.feature_venues_history" />

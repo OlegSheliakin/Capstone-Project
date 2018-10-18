@@ -1,14 +1,10 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,10 +14,8 @@ import com.smedialink.feature_venue_detail.R;
 
 import java.util.Collections;
 
-import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.IconViewData;
-import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.rmiri.skeleton.SkeletonGroup;

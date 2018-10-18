@@ -1,17 +1,12 @@
 package home.oleg.placesnearme.core_presentation.viewdata;
 
-import android.support.annotation.NonNull;
-
 import com.smedialink.common.Optional;
-import com.smedialink.common.function.Action;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.DetailedVenue;
-import home.oleg.placenearme.models.Hours;
 import home.oleg.placenearme.models.Photo;
 import home.oleg.placesnearme.core_presentation.mapper.IconViewMapper;
 
@@ -121,8 +116,11 @@ public class VenueViewData extends ShortVenueViewData {
         venueViewObject.setTitle(venue.getName());
         venueViewObject.setDistance(venue.getDistance());
 
-        if (venue.getCategory() != null && venue.getCategory().getIcon() != null) {
-            venueViewObject.setIconViewData(IconViewMapper.map(venue.getCategory().getIcon()));
+        if (venue.getCategory() != null) {
+            IconViewData icon = IconViewMapper.map(
+                    venue.getCategory().getIconPrefix(),
+                    venue.getCategory().getIconSuffix());
+            venueViewObject.setIconViewData(icon);
             venueViewObject.setCategoryName(venue.getCategory().getName());
         }
 

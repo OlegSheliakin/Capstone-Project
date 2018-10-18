@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.presentation.feature.favorite_places;
+package home.oleg.feature_favorite_venues;
 
 import android.arch.lifecycle.ViewModel;
 

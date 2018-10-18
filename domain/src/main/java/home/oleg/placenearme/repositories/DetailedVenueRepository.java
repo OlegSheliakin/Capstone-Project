@@ -1,9 +1,9 @@
 package home.oleg.placenearme.repositories;
 
 import home.oleg.placenearme.models.DetailedVenue;
-import io.reactivex.Single;
+import io.reactivex.Flowable;
 
 public interface DetailedVenueRepository {
 
-    Single<DetailedVenue> getDetailedVenueById(String venueId);
+    Flowable<DetailedVenue> getDetailedVenueById(String venueId);
 }

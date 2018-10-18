@@ -5,10 +5,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.squareup.picasso.Picasso;
 
 import home.oleg.placesnearme.core_presentation.R;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  * Created by Oleg Sheliakin on 21.09.2018.
