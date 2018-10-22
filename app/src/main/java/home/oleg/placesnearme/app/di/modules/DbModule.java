@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import home.oleg.placesnearme.data.DataBaseFactory;
+import home.oleg.placesnearme.data.DaoProviderFactory;
 import home.oleg.placesnearme.data.dao.DetailedVenueWithPhotosDao;
 import home.oleg.placesnearme.data.database.DaoProvider;
 
@@ -16,7 +16,7 @@ public class DbModule {
     @Singleton
     @Provides
     static DaoProvider provideDaoProvider(Context context) {
-        return DataBaseFactory.create(context);
+        return DaoProviderFactory.create(context);
     }
 
     @Singleton

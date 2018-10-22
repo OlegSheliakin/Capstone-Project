@@ -5,8 +5,13 @@ import com.smedialink.common.Optional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
+import home.oleg.placenearme.models.Category;
+import home.oleg.placenearme.models.Contact;
 import home.oleg.placenearme.models.DetailedVenue;
+import home.oleg.placenearme.models.Hours;
+import home.oleg.placenearme.models.Location;
 import home.oleg.placenearme.models.Photo;
 import home.oleg.placesnearme.core_presentation.mapper.IconViewMapper;
 
@@ -14,7 +19,7 @@ import home.oleg.placesnearme.core_presentation.mapper.IconViewMapper;
  * Created by Oleg Sheliakin on 14.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewData extends ShortVenueViewData {
+public class VenueViewData extends PreviewVenueViewData {
 
     private List<PhotoViewData> photoUrls;
     private String description;
@@ -22,6 +27,7 @@ public class VenueViewData extends ShortVenueViewData {
     private String formattedPhone;
     private boolean isFavorite;
     private float rating;
+    private Boolean open;
 
     public boolean isFavorite() {
         return isFavorite;
@@ -53,6 +59,10 @@ public class VenueViewData extends ShortVenueViewData {
 
     public void setOpeningHoursStatus(String openingHoursStatus) {
         this.openingHoursStatus = openingHoursStatus;
+    }
+
+    public void setOpen(Boolean open) {
+        this.open = open;
     }
 
     public String getFormattedPhone() {
@@ -111,30 +121,76 @@ public class VenueViewData extends ShortVenueViewData {
         return list;
     }
 
+    public DetailedVenue mapToDetailVenue() {
+        DetailedVenue detailedVenue = new DetailedVenue();
+
+        detailedVenue.setFavorite(isFavorite());
+        detailedVenue.setName(getTitle());
+        List<Photo> photoUrls = new ArrayList<>();
+        for (PhotoViewData photo : getPhotos()) {
+            photoUrls.add(PhotoViewData.map(photo));
+        }
+        detailedVenue.setPhotos(photoUrls);
+
+        detailedVenue.setId(getId());
+        detailedVenue.setDescription(getDescription());
+        detailedVenue.setDistance(getDistance());
+        detailedVenue.setRating(getRating());
+
+        Location location = new Location();
+        location.setLng(getLng());
+        location.setLat(getLat());
+        location.setAddress(getAddress());
+        detailedVenue.setLocation(location);
+
+        Contact contact = new Contact();
+        contact.setFormattedPhone(getFormattedPhone());
+        detailedVenue.setContact(contact);
+
+        Category category = new Category();
+        if (getIconViewData() != null) {
+            category.setIconSuffix(getIconViewData().getSuffix());
+            category.setIconPrefix(getIconViewData().getPrefix());
+        }
+        category.setName(getCategoryName());
+        detailedVenue.setCategory(category);
+
+        Hours hours = new Hours();
+        hours.setIsOpen(isOpen());
+        hours.setStatus(getOpeningHoursStatus());
+        detailedVenue.setHours(hours);
+
+        return detailedVenue;
+    }
+
     public static VenueViewData mapFrom(DetailedVenue venue) {
-        VenueViewData venueViewObject = new VenueViewData();
-        venueViewObject.setTitle(venue.getName());
-        venueViewObject.setDistance(venue.getDistance());
+        VenueViewData venueViewData = new VenueViewData();
+        venueViewData.setId(venue.getId());
+        venueViewData.setTitle(venue.getName());
+        venueViewData.setDistance(venue.getDistance());
 
         if (venue.getCategory() != null) {
             IconViewData icon = IconViewMapper.map(
                     venue.getCategory().getIconPrefix(),
                     venue.getCategory().getIconSuffix());
-            venueViewObject.setIconViewData(icon);
-            venueViewObject.setCategoryName(venue.getCategory().getName());
+            venueViewData.setIconViewData(icon);
+            venueViewData.setCategoryName(venue.getCategory().getName());
         }
 
-        venueViewObject.setAddress(venue.getLocation().getAddress());
-        venueViewObject.setLat(venue.getLocation().getLat());
-        venueViewObject.setLng(venue.getLocation().getLng());
-        venueViewObject.setDescription(venue.getDescription());
-        venueViewObject.setRating(venue.getRating());
-        venueViewObject.setFavorite(venue.isFavorite());
+        venueViewData.setAddress(venue.getLocation().getAddress());
+        venueViewData.setLat(venue.getLocation().getLat());
+        venueViewData.setLng(venue.getLocation().getLng());
+        venueViewData.setDescription(venue.getDescription());
+        venueViewData.setRating(venue.getRating());
+        venueViewData.setFavorite(venue.isFavorite());
+        if (venue.getHours() != null) {
+            venueViewData.setOpen(venue.getHours().getIsOpen());
+        }
 
         Optional.of(venue.getContact())
-                .ifPresent(contact -> venueViewObject.setFormattedPhone(contact.getFormattedPhone()));
+                .ifPresent(contact -> venueViewData.setFormattedPhone(contact.getFormattedPhone()));
         Optional.of(venue.getHours())
-                .ifPresent(hours -> venueViewObject.setOpeningHoursStatus(hours.getStatus()));
+                .ifPresent(hours -> venueViewData.setOpeningHoursStatus(hours.getStatus()));
 
         List<Photo> photos = venue.getPhotos();
 
@@ -142,9 +198,31 @@ public class VenueViewData extends ShortVenueViewData {
         for (Photo photo : photos) {
             photoUrls.add(PhotoViewData.map(photo));
         }
-        venueViewObject.setPhotoUrls(photoUrls);
+        venueViewData.setPhotoUrls(photoUrls);
 
-        return venueViewObject;
+        return venueViewData;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VenueViewData that = (VenueViewData) o;
+        return isFavorite == that.isFavorite &&
+                Float.compare(that.rating, rating) == 0 &&
+                Objects.equals(photoUrls, that.photoUrls) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(openingHoursStatus, that.openingHoursStatus) &&
+                Objects.equals(formattedPhone, that.formattedPhone);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(photoUrls, description, openingHoursStatus, formattedPhone, isFavorite, rating);
+    }
+
+    public Boolean isOpen() {
+        return open;
+    }
 }

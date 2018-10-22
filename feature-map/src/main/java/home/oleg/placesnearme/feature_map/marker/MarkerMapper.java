@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -28,7 +28,7 @@ public class MarkerMapper {
     }
 
     @NonNull
-    public Pair<MarkerOptions, ShortVenueViewData> mapFrom(@NonNull ShortVenueViewData venueViewData) {
+    public Pair<MarkerOptions, PreviewVenueViewData> mapFrom(@NonNull PreviewVenueViewData venueViewData) {
         LatLng latLng = new LatLng(venueViewData.getLat(), venueViewData.getLng());
         return new Pair<>(new MarkerOptions()
                 .icon(markerIconProvider.getIconByCategory(venueViewData.getSectionType()))
@@ -36,14 +36,14 @@ public class MarkerMapper {
     }
 
     @NonNull
-    public List<Pair<MarkerOptions, ShortVenueViewData>> mapFrom(@NonNull Collection<ShortVenueViewData> venueViewDatas) {
+    public List<Pair<MarkerOptions, PreviewVenueViewData>> mapFrom(@NonNull Collection<PreviewVenueViewData> venueViewDatas) {
         if(venueViewDatas.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<Pair<MarkerOptions, ShortVenueViewData>> markerOptions = new ArrayList<>();
+        List<Pair<MarkerOptions, PreviewVenueViewData>> markerOptions = new ArrayList<>();
 
-        for (ShortVenueViewData venueViewData : venueViewDatas) {
+        for (PreviewVenueViewData venueViewData : venueViewDatas) {
             markerOptions.add(mapFrom(venueViewData));
         }
 

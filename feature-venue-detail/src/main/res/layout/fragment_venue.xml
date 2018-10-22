@@ -8,6 +8,7 @@
         android:id="@+id/ivVenuePhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorGrayLight"
         android:contentDescription="@string/content_description_venue_s_photo"
         android:src="@color/colorPrimary" />
 
@@ -25,7 +26,7 @@
             android:id="@+id/venueView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_fragment_venue_details"/>
+            android:background="@drawable/bg_fragment_venue_details" />
 
     </android.support.v4.widget.NestedScrollView>
 

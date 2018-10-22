@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 import com.smedialink.feature_main.viewmodel.MainViewModel;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
@@ -14,8 +15,10 @@ import javax.inject.Provider;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
-import home.oleg.placenearme.interactors.AddRemoveVenueFavorite;
+import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
+import home.oleg.placenearme.interactors.CreateVenueFavorite;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
+import home.oleg.placenearme.interactors.GetFavoriteVenues;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placenearme.interactors.GetUserLocation;
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey;
@@ -30,11 +33,27 @@ import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 public final class ViewModelModule {
 
     @IntoMap
+    @ViewModelKey(CreateFavoriteViewModel.class)
+    @Provides
+    @NonNull
+    public static ViewModel provideCreateFavoriteViewModel(CreateVenueFavorite createVenueFavorite) {
+        return new CreateFavoriteViewModel(createVenueFavorite);
+    }
+
+    @IntoMap
+    @ViewModelKey(FavoritePlacesViewModel.class)
+    @Provides
+    @NonNull
+    public static ViewModel provideFavoritePlacesViewModel(GetFavoriteVenues getFavoriteVenues) {
+        return new FavoritePlacesViewModel(getFavoriteVenues);
+    }
+
+    @IntoMap
     @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenueViewModel(GetDetailedVenue getDetailedVenue, AddRemoveVenueFavorite addRemoveVenueFavorite) {
-        return new VenueViewModel(getDetailedVenue, addRemoveVenueFavorite);
+    public static ViewModel provideVenueViewModel(GetDetailedVenue getDetailedVenue) {
+        return new VenueViewModel(getDetailedVenue);
     }
 
     @IntoMap

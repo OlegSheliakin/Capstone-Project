@@ -23,6 +23,15 @@ public class IconViewData implements Parcelable {
         this.suffix = suffix;
     }
 
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
     public String getIconUrlWhite() {
         return prefix + SIZE + suffix;
     }

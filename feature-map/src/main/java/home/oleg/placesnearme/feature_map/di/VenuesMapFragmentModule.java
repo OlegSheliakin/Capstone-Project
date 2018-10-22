@@ -5,6 +5,8 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 
+import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
+import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
 import dagger.Binds;
@@ -26,6 +28,13 @@ public abstract class VenuesMapFragmentModule {
         return fragment.getActivity();
     }
 
+    @Provides
+    @NonNull
+    static CreateFavoriteViewModel provideCreateFavoriteViewModel(
+            VenuesMapFragment fragment,
+            ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(fragment, factory).get(CreateFavoriteViewModel.class);
+    }
     @Provides
     @NonNull
     static VenueViewModel provideVenueViewModel(

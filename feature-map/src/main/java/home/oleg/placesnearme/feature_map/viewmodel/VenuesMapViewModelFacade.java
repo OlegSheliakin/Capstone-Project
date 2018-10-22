@@ -3,12 +3,14 @@ package home.oleg.placesnearme.feature_map.viewmodel;
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.Nullable;
 
+import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
+
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
-import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.view.VenuesMapView;
 
 /**
@@ -25,7 +27,7 @@ public class VenuesMapViewModelFacade {
     private VenueClickListener venueClickListener;
 
     public interface VenueClickListener {
-        void onVenueSelected(ShortVenueViewData venueMapViewData);
+        void onVenueSelected(PreviewVenueViewData venueMapViewData);
     }
 
     @Inject
@@ -57,12 +59,12 @@ public class VenuesMapViewModelFacade {
         userLocationViewModel.getUserLocation();
     }
 
-    public void setVenues(Map<String, ShortVenueViewData> venues) {
+    public void setVenues(Map<String, PreviewVenueViewData> venues) {
         venuesViewModel.setVenues(venues);
     }
 
     public void select(String id) {
-        ShortVenueViewData venueMapViewData = venuesViewModel.getVenue(id);
+        PreviewVenueViewData venueMapViewData = venuesViewModel.getVenue(id);
         com.smedialink.common.Optional.of(venueClickListener)
                 .ifPresent(venueClickListener -> venueClickListener.onVenueSelected(venueMapViewData));
     }

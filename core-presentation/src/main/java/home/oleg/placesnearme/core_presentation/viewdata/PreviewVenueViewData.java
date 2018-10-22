@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import home.oleg.placenearme.models.Section;
 
-public class ShortVenueViewData implements Parcelable {
+public class PreviewVenueViewData implements Parcelable {
 
     private String id;
     private String title;
@@ -97,7 +97,7 @@ public class ShortVenueViewData implements Parcelable {
         this.sectionType = sectionType;
     }
 
-    public ShortVenueViewData() {
+    public PreviewVenueViewData() {
     }
 
     @Override
@@ -118,7 +118,7 @@ public class ShortVenueViewData implements Parcelable {
         dest.writeInt(this.sectionType == null ? -1 : this.sectionType.ordinal());
     }
 
-    protected ShortVenueViewData(Parcel in) {
+    protected PreviewVenueViewData(Parcel in) {
         this.id = in.readString();
         this.title = in.readString();
         this.distance = in.readDouble();
@@ -131,15 +131,15 @@ public class ShortVenueViewData implements Parcelable {
         this.sectionType = tmpSectionType == -1 ? null : Section.values()[tmpSectionType];
     }
 
-    public static final Parcelable.Creator<ShortVenueViewData> CREATOR = new Parcelable.Creator<ShortVenueViewData>() {
+    public static final Parcelable.Creator<PreviewVenueViewData> CREATOR = new Parcelable.Creator<PreviewVenueViewData>() {
         @Override
-        public ShortVenueViewData createFromParcel(Parcel source) {
-            return new ShortVenueViewData(source);
+        public PreviewVenueViewData createFromParcel(Parcel source) {
+            return new PreviewVenueViewData(source);
         }
 
         @Override
-        public ShortVenueViewData[] newArray(int size) {
-            return new ShortVenueViewData[size];
+        public PreviewVenueViewData[] newArray(int size) {
+            return new PreviewVenueViewData[size];
         }
     };
 }

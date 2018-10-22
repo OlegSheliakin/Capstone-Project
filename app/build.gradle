@@ -51,6 +51,8 @@ dependencies {
     implementation project(':feature-map')
     implementation project(':feature-main')
     implementation project(':feature-venue-detail')
+    implementation project(':feature-favorite-venues')
+    implementation project(':feature-add-favorite')
 
     implementation deps.support.supportV13
     implementation deps.lifecycle.extensions

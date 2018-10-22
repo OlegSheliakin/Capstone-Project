@@ -15,7 +15,7 @@ import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
 import javax.inject.Inject;
 
-import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
 public class VenueFragment extends Fragment implements VenueView {
@@ -30,7 +30,7 @@ public class VenueFragment extends Fragment implements VenueView {
     public static void show(
             @NonNull FragmentManager fragmentManager,
             @IdRes int containerId,
-            @NonNull ShortVenueViewData venueMapViewData) {
+            @NonNull PreviewVenueViewData venueMapViewData) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_VENUE, venueMapViewData);
 
@@ -51,7 +51,7 @@ public class VenueFragment extends Fragment implements VenueView {
 
     public void updateVenue() {
         assert getArguments() != null;
-        ShortVenueViewData venueMapViewData = getArguments().getParcelable(KEY_VENUE);
+        PreviewVenueViewData venueMapViewData = getArguments().getParcelable(KEY_VENUE);
         venueViewModel.setVenue(venueMapViewData);
     }
 
@@ -74,8 +74,8 @@ public class VenueFragment extends Fragment implements VenueView {
     }
 
     @Override
-    public void showShortVenue(ShortVenueViewData venue) {
-        venueDetailsView.showShortVenue(venue);
+    public void showPreviewVenue(PreviewVenueViewData venue) {
+        venueDetailsView.showPreview(venue);
     }
 
     @Override

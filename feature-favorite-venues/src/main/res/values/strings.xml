@@ -1,3 +1,4 @@
 <resources>
     <string title="app_name">feature-favorite-venues</string>
+    <string name="favorite_venue_empty_description">Here will be you list of favorite places</string>
 </resources>

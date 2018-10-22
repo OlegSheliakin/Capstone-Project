@@ -18,6 +18,7 @@ import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
 import home.oleg.placesnearme.data.model.PhotoDbEntity;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -180,8 +181,8 @@ public class DetailedVenueWithPhotosDaoTes {
         detailedVenueWithPhotos.getVenue().setFavorite(false);
         dao.insert(detailedVenueWithPhotos);
 
-        List<DetailedVenueWithPhotos> actualVenues = dao.getAllFavorites().blockingFirst();
+        DetailedVenueWithPhotos actualVenue = dao.getById("1").blockingGet();
 
-        assertTrue(actualVenues.isEmpty());
+        assertFalse(actualVenue.getVenue().isFavorite());
     }
 }

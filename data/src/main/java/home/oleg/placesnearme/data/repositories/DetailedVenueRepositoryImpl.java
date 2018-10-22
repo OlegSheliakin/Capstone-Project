@@ -27,8 +27,8 @@ public class DetailedVenueRepositoryImpl implements DetailedVenueRepository {
     @Override
     public Flowable<DetailedVenue> getDetailedVenueById(String venueId) {
         return Flowable.merge(
-                getFromNetwork(venueId).toFlowable(),
-                dao.observeVenue(venueId).map(DetailedVenueMapper::map)
+                dao.observeVenue(venueId).map(DetailedVenueMapper::map),
+                getFromNetwork(venueId).toFlowable()
         ).debounce(300, TimeUnit.MILLISECONDS);
     }
 

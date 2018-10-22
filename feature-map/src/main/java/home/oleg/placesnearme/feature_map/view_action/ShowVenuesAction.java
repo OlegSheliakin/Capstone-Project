@@ -8,7 +8,7 @@ import com.smedialink.common.function.Action;
 import java.util.ArrayList;
 import java.util.List;
 
-import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.view.VenuesView;
 
 /**
@@ -17,13 +17,13 @@ import home.oleg.placesnearme.feature_map.view.VenuesView;
  */
 public final class ShowVenuesAction<VIEW extends VenuesView> implements Action<VIEW> {
 
-    private final List<ShortVenueViewData> data;
+    private final List<PreviewVenueViewData> data;
 
-    private ShowVenuesAction(List<ShortVenueViewData> data) {
+    private ShowVenuesAction(List<PreviewVenueViewData> data) {
         this.data = new ArrayList<>(data);
     }
 
-    public static <VIEW extends VenuesView> ShowVenuesAction<VIEW> create(List<ShortVenueViewData> data) {
+    public static <VIEW extends VenuesView> ShowVenuesAction<VIEW> create(List<PreviewVenueViewData> data) {
         return new ShowVenuesAction<>(data);
     }
 

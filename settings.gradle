@@ -1,4 +1,4 @@
-include ':app',
+include ':app', ':feature-add-favorite',
         ':feature-venue-detail',
         ':core-di', 
         ':feature-map', 

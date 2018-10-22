@@ -25,7 +25,7 @@ public abstract class DetailedVenueWithPhotosDao {
     public abstract Flowable<List<PhotoDbEntity>> getAllPhotos();
 
     @Transaction
-    @Query("SELECT * FROM detailed_venue WHERE id LIKE :venueId")
+    @Query("SELECT * FROM detailed_venue WHERE id LIKE :venueId LIMIT 1")
     public abstract Flowable<DetailedVenueWithPhotos> observeVenue(String venueId);
 
     @Transaction

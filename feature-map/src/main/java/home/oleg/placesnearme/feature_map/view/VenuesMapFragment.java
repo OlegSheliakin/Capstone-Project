@@ -25,7 +25,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import home.oleg.placenearme.models.UserLocation;
-import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.R;
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent;
 import home.oleg.placesnearme.feature_map.marker.MarkerMapper;
@@ -39,7 +39,8 @@ import static home.oleg.placesnearme.feature_map.view.VenuesMapFragmentPermissio
 @RuntimePermissions
 public class VenuesMapFragment extends BaseMapFragment implements
         VenuesMapView,
-        GoogleMap.OnMarkerClickListener, VenuesMapViewModelFacade.VenueClickListener {
+        GoogleMap.OnMarkerClickListener,
+        VenuesMapViewModelFacade.VenueClickListener {
 
     private static final int USER_LOCATION_ZOOM = 16;
 
@@ -48,6 +49,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
     @Inject
     VenueViewFacade venueViewFacade;
+
 
     @Inject
     MarkerMapper markerMapper;
@@ -99,14 +101,14 @@ public class VenuesMapFragment extends BaseMapFragment implements
     }
 
     @Override
-    public void show(@NonNull List<ShortVenueViewData> items) {
+    public void show(@NonNull List<PreviewVenueViewData> items) {
         Optional.of(googleMap).ifPresent(map -> {
             map.clear();
 
-            List<Pair<MarkerOptions, ShortVenueViewData>> pairs = markerMapper.mapFrom(items);
-            Map<String, ShortVenueViewData> markerVenueViewDataMap = new HashMap<>();
+            List<Pair<MarkerOptions, PreviewVenueViewData>> pairs = markerMapper.mapFrom(items);
+            Map<String, PreviewVenueViewData> markerVenueViewDataMap = new HashMap<>();
 
-            for (Pair<MarkerOptions, ShortVenueViewData> pair : pairs) {
+            for (Pair<MarkerOptions, PreviewVenueViewData> pair : pairs) {
                 String id = map.addMarker(pair.getFirst()).getId();
                 markerVenueViewDataMap.put(id, pair.getSecond());
             }
@@ -167,7 +169,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
     }
 
     @Override
-    public void onVenueSelected(ShortVenueViewData venueMapViewData) {
+    public void onVenueSelected(PreviewVenueViewData venueMapViewData) {
         venueViewFacade.setVenue(venueMapViewData);
     }
 }

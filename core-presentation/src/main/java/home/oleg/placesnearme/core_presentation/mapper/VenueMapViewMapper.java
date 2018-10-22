@@ -6,15 +6,15 @@ import java.util.List;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.Venue;
 import home.oleg.placesnearme.core_presentation.viewdata.IconViewData;
-import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 
 public final class VenueMapViewMapper {
 
     private VenueMapViewMapper() {
     }
 
-    public static ShortVenueViewData map(Section section, Venue venue) {
-        ShortVenueViewData venueMapView = new ShortVenueViewData();
+    public static PreviewVenueViewData map(Section section, Venue venue) {
+        PreviewVenueViewData venueMapView = new PreviewVenueViewData();
         venueMapView.setId(venue.getId());
         venueMapView.setTitle(venue.getName());
         venueMapView.setAddress(venue.getLocation().getAddress());
@@ -34,8 +34,8 @@ public final class VenueMapViewMapper {
         return venueMapView;
     }
 
-    public static List<ShortVenueViewData> map(Section section, List<Venue> venues) {
-        List<ShortVenueViewData> venueMapViewDataList = new ArrayList<>();
+    public static List<PreviewVenueViewData> map(Section section, List<Venue> venues) {
+        List<PreviewVenueViewData> venueMapViewDataList = new ArrayList<>();
 
         for (Venue venue : venues) {
             venueMapViewDataList.add(map(section, venue));

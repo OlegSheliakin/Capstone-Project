@@ -36,6 +36,7 @@ dependencies {
     implementation project(':common')
     implementation project(':core-di')
     implementation project(':feature-venue-detail')
+    implementation project(':feature-add-favorite')
 
     implementation deps.googlePlayServices.maps
 

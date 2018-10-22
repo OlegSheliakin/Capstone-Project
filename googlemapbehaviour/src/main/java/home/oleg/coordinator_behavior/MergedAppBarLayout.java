@@ -30,7 +30,6 @@ public class MergedAppBarLayout extends AppBarLayout {
         setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         getContext().setTheme(R.style.AppTheme_AppBarOverlay);
 
-        background = findViewById(R.id.background);
         toolbar = findViewById(R.id.expanded_toolbar);
     }
 }

@@ -80,10 +80,11 @@ public final class DetailedVenueMapper {
         detailedVenue.setRating(venueDbEntity.getRating());
 
         detailedVenue.setContact(venueDbEntity.getContact());
-        detailedVenue.setLocation(detailedVenue.getLocation());
+        detailedVenue.setLocation(venueDbEntity.getLocation());
 
         detailedVenue.setDescription(venueDbEntity.getDescription());
         detailedVenue.setFavorite(venueDbEntity.isFavorite());
+        detailedVenue.setCategory(venueDbEntity.getCategory());
 
         List<Photo> photoList = PhotoMapper.mapFromDb(detailedVenueWithPhotos.getPhotos());
         detailedVenue.setPhotos(photoList);

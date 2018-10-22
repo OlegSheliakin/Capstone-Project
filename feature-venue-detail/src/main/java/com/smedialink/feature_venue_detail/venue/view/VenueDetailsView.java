@@ -16,7 +16,7 @@ import java.util.Collections;
 
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.IconViewData;
-import home.oleg.placesnearme.core_presentation.viewdata.ShortVenueViewData;
+import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.rmiri.skeleton.SkeletonGroup;
 
@@ -62,7 +62,7 @@ public class VenueDetailsView extends SkeletonGroup {
         photosAdapter.setItems(venue.getPhotos());
     }
 
-    public void showShortVenue(ShortVenueViewData venue) {
+    public void showPreview(PreviewVenueViewData venue) {
         tvVenueName.setText(venue.getTitle());
         tvVenueAddress.setText(venue.getAddress());
 

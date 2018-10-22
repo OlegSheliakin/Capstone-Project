@@ -29,9 +29,27 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(':core-presentation')
+    implementation project(':domain')
+    implementation project(':common')
+    implementation project(':core-di')
+    implementation project(':feature-add-favorite')
+
+    implementation deps.lifecycle.extensions
+    implementation deps.lifecycle.runtime
+    annotationProcessor deps.lifecycle.compiler
+
+    implementation deps.rxjava2.rxjava
+    implementation deps.rxjava2.rxandroid
+
+    implementation deps.dagger.runtime
+    annotationProcessor deps.dagger.compiler
 
     implementation deps.support.appcompat7
+    implementation deps.support.recyclerview
+    implementation deps.support.constraintLayout
+    implementation deps.support.design
 
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito

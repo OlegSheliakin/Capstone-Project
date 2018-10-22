@@ -350,8 +350,7 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
             updateHeaderColor(mAnchorColor, mAnchorTextColor);
             if (parallax != null) {
                 int reference = savedTop - parallax.getHeight();
-                parallax.setY(reference);
-                parallax.setVisibility(View.VISIBLE);
+                dispatchOnSlide(savedTop);
                 anchorViews(reference);
             } else {
                 anchorViews(mAnchorOffset);
@@ -1034,8 +1033,6 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
 
         // move the parallax relative to the bottomsheet and update colors
         if (parallax != null) {
-            int height = parallax.getHeight();
-            float y = parallax.getY();
             if (slideOffset <= 0) {
                 updateHeaderColor(mCollapsedColor, mCollapsedTextColor);
                 parallax.setVisibility(View.INVISIBLE);

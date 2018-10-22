@@ -10,9 +10,7 @@
         android:id="@+id/expanded_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/white"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
         app:title="@string/key_binding_default_toolbar_name"
         app:titleTextColor="@android:color/black" />
 
