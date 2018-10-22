@@ -24,7 +24,7 @@ public abstract class VenueHistoryDao {
     public abstract void insert(DetailedVenueHistoryDbEntity detailedVenueHistoryDbEntity);
 
     @Query("SELECT detailed_venue.*, MAX(venue_history.createdAt) as createdAt FROM detailed_venue INNER JOIN venue_history ON venue_history.venueId = detailed_venue.id")
-    public abstract Single<DetailedVenueWithPhotos> getCurrent();
+    public abstract Single<DetailedVenueHistory> getCurrent();
 
     @Query("DELETE FROM venue_history WHERE venue_history.venueId = :venueId")
     public abstract void remove(String venueId);

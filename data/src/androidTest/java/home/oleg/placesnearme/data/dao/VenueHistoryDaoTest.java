@@ -91,8 +91,8 @@ public class VenueHistoryDaoTest {
 
     @Test
     public void shouldReturnLatestFromHistory() {
+        //insert first to detail venue
         DetailedVenueWithPhotos detailedVenueWithPhotos = new DetailedVenueWithPhotos();
-
         DetailedVenueDbEntity detailedVenue = FakesStore.getVenue("1");
         List<PhotoDbEntity> photoDbEntities = FakesStore.getListPhotos();
 
@@ -100,24 +100,30 @@ public class VenueHistoryDaoTest {
         detailedVenueWithPhotos.setVenue(detailedVenue);
         detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos);
 
-        //add another venue(use the same that above)
-        detailedVenueWithPhotos.getVenue().setId("2");
-        detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos);
+        //insert second to detail venue
+        DetailedVenueWithPhotos detailedVenueWithPhotos2 = new DetailedVenueWithPhotos();
+        DetailedVenueDbEntity detailedVenue2 = FakesStore.getVenue("2");
+        List<PhotoDbEntity> photoDbEntities2 = FakesStore.getListPhotos();
+        detailedVenueWithPhotos2.setPhotos(photoDbEntities2);
+        detailedVenueWithPhotos2.setVenue(detailedVenue2);
+        detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos2);
 
+        //insert first to history
         DetailedVenueHistoryDbEntity detailedVenueHistoryDbEntity1 = new DetailedVenueHistoryDbEntity();
         detailedVenueHistoryDbEntity1.setCreatedAt(System.currentTimeMillis());
         detailedVenueHistoryDbEntity1.setVenueId(detailedVenue.getId());
         dao.insert(detailedVenueHistoryDbEntity1);
 
+        //insert second to history(latest)
         DetailedVenueHistoryDbEntity detailedVenueHistoryDbEntity2 = new DetailedVenueHistoryDbEntity();
-        detailedVenueHistoryDbEntity2.setCreatedAt(0);
-        detailedVenueHistoryDbEntity2.setVenueId("2");
+        detailedVenueHistoryDbEntity2.setCreatedAt(System.currentTimeMillis()); // --> latest
+        detailedVenueHistoryDbEntity2.setVenueId(detailedVenue2.getId());
         dao.insert(detailedVenueHistoryDbEntity2);
 
         List<DetailedVenueHistory> history = dao.getAllHistory().blockingFirst();
+        DetailedVenueHistory current = dao.getCurrent().blockingGet();
 
-        assertEquals(2, history.size());
-       // assertNotNull(current);
-        //assertEquals("2", current.getVenue().getId());
+        assertNotNull(current);
+        assertEquals(detailedVenue2.getId(), current.getDetailedVenueWithPhotos().getVenue().getId());
     }
 }
