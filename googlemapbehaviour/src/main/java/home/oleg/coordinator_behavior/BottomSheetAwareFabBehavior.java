@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
 
-public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton> {
+public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View> {
 
     private WeakReference<GoogleMapsBottomSheetBehavior> bottomSheetBehaviorWeakReference;
 
@@ -23,12 +23,12 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<Floa
     }
 
     @Override
-    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull FloatingActionButton child, @NonNull View dependency) {
+    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         return dependency instanceof NestedScrollView;
     }
 
     @Override
-    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull FloatingActionButton child, @NonNull View dependency) {
+    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         if (anchorHeight == -1) {
             anchorHeight = getWeekReference(dependency).get().getAnchorOffset();
             child.setScaleX(0);

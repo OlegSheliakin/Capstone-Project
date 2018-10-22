@@ -1,0 +1,123 @@
+package home.oleg.placesnearme.data.dao;
+
+import android.arch.persistence.room.Room;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.Collections;
+import java.util.List;
+
+import home.oleg.placesnearme.data.FakesStore;
+import home.oleg.placesnearme.data.database.AppDatabase;
+import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;
+import home.oleg.placesnearme.data.model.DetailedVenueHistory;
+import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity;
+import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
+import home.oleg.placesnearme.data.model.PhotoDbEntity;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+@RunWith(AndroidJUnit4.class)
+public class VenueHistoryDaoTest {
+
+    private DetailedVenueWithPhotosDao detailedVenueWithPhotosDao;
+    private VenueHistoryDao dao;
+
+    @Before
+    public void setUp() {
+        AppDatabase appDatabase = Room
+                .inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), AppDatabase.class)
+                .build();
+        dao = appDatabase.getVenueHistoryDao();
+        detailedVenueWithPhotosDao = appDatabase.getDetailedVenueWithPhotosDao();
+    }
+
+    @Test
+    public void shouldAddToHistory() {
+        DetailedVenueWithPhotos detailedVenueWithPhotos = new DetailedVenueWithPhotos();
+
+        DetailedVenueDbEntity detailedVenue = FakesStore.getVenue("1");
+        List<PhotoDbEntity> photoDbEntities = FakesStore.getListPhotos();
+
+        detailedVenueWithPhotos.setPhotos(photoDbEntities);
+        detailedVenueWithPhotos.setVenue(detailedVenue);
+        detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos);
+
+        DetailedVenueHistoryDbEntity detailedVenueHistoryDbEntity = new DetailedVenueHistoryDbEntity();
+        detailedVenueHistoryDbEntity.setCreatedAt(123);
+        detailedVenueHistoryDbEntity.setVenueId(detailedVenue.getId());
+        dao.insert(detailedVenueHistoryDbEntity);
+
+        List<DetailedVenueHistory> history = dao.getAllHistory().blockingFirst();
+
+        assertEquals(1, history.size());
+
+        DetailedVenueDbEntity actual = history.get(0).getDetailedVenueWithPhotos().getVenue();
+        assertTrue(detailedVenueWithPhotos.getVenue().equals(actual));
+    }
+
+    @Test
+    public void shouldRemoveFromHistory() {
+        DetailedVenueWithPhotos detailedVenueWithPhotos = new DetailedVenueWithPhotos();
+
+        DetailedVenueDbEntity detailedVenue = FakesStore.getVenue("1");
+        List<PhotoDbEntity> photoDbEntities = FakesStore.getListPhotos();
+
+        detailedVenueWithPhotos.setPhotos(photoDbEntities);
+        detailedVenueWithPhotos.setVenue(detailedVenue);
+        detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos);
+
+        DetailedVenueHistoryDbEntity detailedVenueHistoryDbEntity = new DetailedVenueHistoryDbEntity();
+        detailedVenueHistoryDbEntity.setCreatedAt(123);
+        detailedVenueHistoryDbEntity.setVenueId(detailedVenue.getId());
+        dao.insert(detailedVenueHistoryDbEntity);
+
+        dao.remove(detailedVenueHistoryDbEntity.getVenueId());
+
+        List<DetailedVenueHistory> history = dao.getAllHistory().blockingFirst();
+        List<DetailedVenueWithPhotos> allVenus = detailedVenueWithPhotosDao.getAll().blockingFirst();
+
+        //check if deleting venue from history do not delete it from detail_venue table
+        assertEquals(1, allVenus.size());
+        assertTrue(history.isEmpty());
+    }
+
+    @Test
+    public void shouldReturnLatestFromHistory() {
+        DetailedVenueWithPhotos detailedVenueWithPhotos = new DetailedVenueWithPhotos();
+
+        DetailedVenueDbEntity detailedVenue = FakesStore.getVenue("1");
+        List<PhotoDbEntity> photoDbEntities = FakesStore.getListPhotos();
+
+        detailedVenueWithPhotos.setPhotos(photoDbEntities);
+        detailedVenueWithPhotos.setVenue(detailedVenue);
+        detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos);
+
+        //add another venue(use the same that above)
+        detailedVenueWithPhotos.getVenue().setId("2");
+        detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos);
+
+        DetailedVenueHistoryDbEntity detailedVenueHistoryDbEntity1 = new DetailedVenueHistoryDbEntity();
+        detailedVenueHistoryDbEntity1.setCreatedAt(System.currentTimeMillis());
+        detailedVenueHistoryDbEntity1.setVenueId(detailedVenue.getId());
+        dao.insert(detailedVenueHistoryDbEntity1);
+
+        DetailedVenueHistoryDbEntity detailedVenueHistoryDbEntity2 = new DetailedVenueHistoryDbEntity();
+        detailedVenueHistoryDbEntity2.setCreatedAt(0);
+        detailedVenueHistoryDbEntity2.setVenueId("2");
+        dao.insert(detailedVenueHistoryDbEntity2);
+
+        List<DetailedVenueHistory> history = dao.getAllHistory().blockingFirst();
+
+        assertEquals(2, history.size());
+       // assertNotNull(current);
+        //assertEquals("2", current.getVenue().getId());
+    }
+}

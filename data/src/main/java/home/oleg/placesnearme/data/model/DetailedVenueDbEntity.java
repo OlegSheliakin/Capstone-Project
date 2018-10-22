@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Objects;
+
 import home.oleg.placenearme.models.Category;
 import home.oleg.placenearme.models.Contact;
 import home.oleg.placenearme.models.Location;
@@ -19,6 +21,7 @@ public class DetailedVenueDbEntity {
     private String description;
     private float rating;
     private boolean isFavorite;
+    private boolean isHereNow;
 
     @Embedded
     private Location location;
@@ -32,6 +35,14 @@ public class DetailedVenueDbEntity {
     @NonNull
     public String getId() {
         return id;
+    }
+
+    public boolean isHereNow() {
+        return isHereNow;
+    }
+
+    public void setHereNow(boolean hereNow) {
+        isHereNow = hereNow;
     }
 
     public boolean isFavorite() {
@@ -92,5 +103,27 @@ public class DetailedVenueDbEntity {
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DetailedVenueDbEntity that = (DetailedVenueDbEntity) o;
+        return Float.compare(that.rating, rating) == 0 &&
+                isFavorite == that.isFavorite &&
+                isHereNow == that.isHereNow &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(contact, that.contact) &&
+                Objects.equals(category, that.category);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, title, description, rating, isFavorite, isHereNow, location, contact, category);
     }
 }

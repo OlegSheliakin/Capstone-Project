@@ -14,9 +14,18 @@ public class DetailedVenue {
     private Location location;
     private String name;
     private List<Photo> photos;
+    private boolean hereNow;
     private boolean isFavorite;
     private float rating;
     private double distance;
+
+    public boolean isHereNow() {
+        return hereNow;
+    }
+
+    public void setHereNow(boolean hereNow) {
+        this.hereNow = hereNow;
+    }
 
     public double getDistance() {
         return distance;

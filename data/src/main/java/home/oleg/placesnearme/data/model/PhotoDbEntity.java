@@ -6,6 +6,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Objects;
+
 import home.oleg.placenearme.models.Photo;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
@@ -47,5 +49,21 @@ public class PhotoDbEntity {
 
     public void setPhoto(Photo photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhotoDbEntity that = (PhotoDbEntity) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(venueId, that.venueId) &&
+                Objects.equals(photo, that.photo);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, venueId, photo);
     }
 }

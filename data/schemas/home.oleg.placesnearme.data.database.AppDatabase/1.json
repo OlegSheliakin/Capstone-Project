@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8d93d1c04df86c36990e61e6dd2574cd",
+    "identityHash": "af7d1be8810095cd81aca70e6462dd83",
     "entities": [
       {
         "tableName": "detailed_venue",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT, `description` TEXT, `rating` REAL NOT NULL, `isFavorite` INTEGER NOT NULL, `address` TEXT, `lat` REAL, `lng` REAL, `formattedPhone` TEXT, `name` TEXT, `iconPrefix` TEXT, `iconSuffix` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT, `description` TEXT, `rating` REAL NOT NULL, `isFavorite` INTEGER NOT NULL, `isHereNow` INTEGER NOT NULL, `address` TEXT, `lat` REAL, `lng` REAL, `formattedPhone` TEXT, `name` TEXT, `iconPrefix` TEXT, `iconSuffix` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -35,6 +35,12 @@
           {
             "fieldPath": "isFavorite",
             "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHereNow",
+            "columnName": "isHereNow",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -160,11 +166,64 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "venue_history",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `venueId` TEXT, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`venueId`) REFERENCES `detailed_venue`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "venueId",
+            "columnName": "venueId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_venue_history_venueId",
+            "unique": false,
+            "columnNames": [
+              "venueId"
+            ],
+            "createSql": "CREATE  INDEX `index_venue_history_venueId` ON `${TABLE_NAME}` (`venueId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "detailed_venue",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "venueId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8d93d1c04df86c36990e61e6dd2574cd\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"af7d1be8810095cd81aca70e6462dd83\")"
     ]
   }
 }

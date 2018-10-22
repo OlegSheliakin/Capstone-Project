@@ -1,11 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion sdk.compile
+    compileSdkVersion 28
+
+
 
     defaultConfig {
-        minSdkVersion sdk.min
-        targetSdkVersion sdk.target
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -18,11 +20,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    compileOptions {
-        sourceCompatibility javaVersion
-        targetCompatibility javaVersion
     }
 
 }
@@ -52,5 +49,4 @@ dependencies {
 
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito
-    testImplementation deps.testing.room
 }

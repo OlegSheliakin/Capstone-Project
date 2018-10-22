@@ -10,15 +10,20 @@ import org.junit.runner.RunWith;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.DoubleAccumulator;
 
+import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placesnearme.data.FakesStore;
 import home.oleg.placesnearme.data.database.AppDatabase;
 import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;
+import home.oleg.placesnearme.data.model.DetailedVenueHistory;
+import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity;
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
 import home.oleg.placesnearme.data.model.PhotoDbEntity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -185,4 +190,5 @@ public class DetailedVenueWithPhotosDaoTes {
 
         assertFalse(actualVenue.getVenue().isFavorite());
     }
+
 }

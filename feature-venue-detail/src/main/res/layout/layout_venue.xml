@@ -34,16 +34,34 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <com.smedialink.feature_add_favorite.FavoriteButton
-        android:id="@+id/fabFavoriteButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/margin_high"
-        android:layout_marginEnd="@dimen/margin_high"
-        app:backgroundTint="@android:color/white"
-        app:fabSize="mini"
-        app:layout_behavior="home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior"
-        app:srcCompat="@drawable/fab_favorite_state_drawable" />
+        android:orientation="vertical"
+        app:layout_behavior="home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior">
 
+        <com.smedialink.feature_add_favorite.FavoriteButton
+            android:id="@+id/fabCheckInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/margin_high"
+            android:layout_marginEnd="@dimen/margin_high"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_place" />
+
+        <com.smedialink.feature_add_favorite.FavoriteButton
+            android:id="@+id/fabFavoriteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/margin_high"
+            android:layout_marginEnd="@dimen/margin_high"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/fab_favorite_state_drawable" />
+
+    </LinearLayout>
 </merge>

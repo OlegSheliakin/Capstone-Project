@@ -5,9 +5,10 @@ import android.arch.persistence.room.Relation;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
-public class DetailedVenueWithPhotos {
+public final class DetailedVenueWithPhotos {
 
     @Embedded
     private DetailedVenueDbEntity venue;
@@ -32,5 +33,20 @@ public class DetailedVenueWithPhotos {
 
     public void setPhotos(List<PhotoDbEntity> photos) {
         this.photos = photos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DetailedVenueWithPhotos that = (DetailedVenueWithPhotos) o;
+        return Objects.equals(venue, that.venue) &&
+                Objects.equals(photos, that.photos);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(venue, photos);
     }
 }
