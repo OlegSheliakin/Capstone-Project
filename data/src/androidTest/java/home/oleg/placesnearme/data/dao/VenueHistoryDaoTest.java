@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Collections;
 import java.util.List;
 
 import home.oleg.placesnearme.data.FakesStore;
@@ -27,8 +26,8 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class VenueHistoryDaoTest {
 
-    private DetailedVenueWithPhotosDao detailedVenueWithPhotosDao;
-    private VenueHistoryDao dao;
+    private DetailedVenueDao detailedVenueWithPhotosDao;
+    private DetailedVenueHistoryDao dao;
 
     @Before
     public void setUp() {

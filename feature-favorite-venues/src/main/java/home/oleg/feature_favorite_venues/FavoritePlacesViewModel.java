@@ -1,6 +1,7 @@
 package home.oleg.feature_favorite_venues;
 
 import home.oleg.placenearme.interactors.GetFavoriteVenues;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,7 +25,7 @@ public class FavoritePlacesViewModel extends BaseViewModel<FavoriteView> {
         addToDisposables(getFavoriteVenues.execute()
                 .map(VenueViewData::mapFrom)
                 .map(VenueViewItem::map)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(detailedVenues -> {
                     if (!detailedVenues.isEmpty()) {

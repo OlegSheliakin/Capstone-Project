@@ -2,6 +2,7 @@ package home.oleg.feature_favorite_venues;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,15 +15,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import home.oleg.placesnearme.core_presentation.recyclerview.BaseVenueAdapter;
+import home.oleg.placesnearme.core_presentation.recyclerview.EmptyViewItem;
+import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenuesDiffCallback;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
-public final class FavoriteVenuesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
 
-    private final List<ItemViewType> data = new ArrayList<>();
-    private final FavoriteClicksListener favoriteClicksListener;
+    private final FavoriteVenuesAdapter.FavoriteClicksListener favoriteClicksListener;
+
+    public FavoriteVenuesAdapter(@NonNull DiffUtil.ItemCallback<ItemViewType> diffCallback,
+                                 @NonNull FavoriteVenuesAdapter.FavoriteClicksListener favoriteClicksListener) {
+        super(diffCallback);
+        this.favoriteClicksListener = favoriteClicksListener;
+    }
 
     public interface FavoriteClicksListener {
         void favoriteClicked(VenueViewData venueViewData);
@@ -30,73 +39,22 @@ public final class FavoriteVenuesAdapter extends RecyclerView.Adapter<RecyclerVi
         void showOnMapClicked(VenueViewData venueViewData);
     }
 
-    @Inject
-    public FavoriteVenuesAdapter(FavoriteClicksListener favoriteClicksListener) {
-        this.favoriteClicksListener = favoriteClicksListener;
-    }
-
-    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        RecyclerView.ViewHolder holder;
-
-        switch (viewType) {
-            case 1:
-                View venueView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_favorite_venue, viewGroup, false);
-                holder = new ViewHolder(venueView, favoriteClicksListener);
-                break;
-            default:
-                View emptyView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_empty, viewGroup, false);
-                holder = new EmptyViewHolder(emptyView);
-                break;
-        }
-
-        return holder;
+    protected BaseVenueAdapter.VenueItemHolder getVenueItemHolder(View view) {
+        return new FavoriteVenuesAdapter.ViewHolder(view, favoriteClicksListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        ItemViewType itemViewType = data.get(i);
-
-        if (itemViewType instanceof VenueViewItem && viewHolder instanceof ViewHolder) {
-            ((ViewHolder) viewHolder).bind((VenueViewItem) itemViewType);
-        }
+    protected int getVenueItemLayoutRes() {
+        return R.layout.item_favorite_venue;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return data.get(position).getViewType();
+    protected int getEmptyItemLayoutRes() {
+        return R.layout.item_empty;
     }
 
-    public void showEmpty() {
-        List<ItemViewType> newList = Collections.singletonList(new EmptyViewItem());
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
-                new FavoriteVenusDiffCallback(this.data, newList)
-        );
-
-        diffResult.dispatchUpdatesTo(this);
-
-        data.clear();
-        data.addAll(newList);
-
-    }
-
-    public void setItems(List<VenueViewItem> detailedVenues) {
-        List<ItemViewType> newList = new ArrayList<>(detailedVenues);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
-                new FavoriteVenusDiffCallback(data, newList));
-        diffResult.dispatchUpdatesTo(this);
-
-        data.clear();
-        data.addAll(newList);
-    }
-
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
-
-    private static class ViewHolder extends RecyclerView.ViewHolder {
+    private static final class ViewHolder extends BaseVenueAdapter.VenueItemHolder {
 
         private ImageView ivPhoto;
         private TextView tvName;
@@ -104,9 +62,10 @@ public final class FavoriteVenuesAdapter extends RecyclerView.Adapter<RecyclerVi
         private FloatingActionButton fabAddToFavorite;
         private FloatingActionButton fabShowOnMap;
 
-        private FavoriteClicksListener favoriteClicksListener;
+        private FavoriteVenuesAdapter.FavoriteClicksListener favoriteClicksListener;
 
-        private ViewHolder(@NonNull View itemView, FavoriteClicksListener favoriteClicksListener) {
+        private ViewHolder(@NonNull View itemView,
+                           @NonNull FavoriteVenuesAdapter.FavoriteClicksListener favoriteClicksListener) {
             super(itemView);
             this.favoriteClicksListener = favoriteClicksListener;
 
@@ -117,7 +76,8 @@ public final class FavoriteVenuesAdapter extends RecyclerView.Adapter<RecyclerVi
             this.fabShowOnMap = itemView.findViewById(R.id.fabShowOnMap);
         }
 
-        private void bind(VenueViewItem venueViewItem) {
+        @Override
+        protected void bind(VenueViewItem venueViewItem) {
             VenueViewData venueViewData = venueViewItem.getVenueViewData();
 
             tvName.setText(venueViewData.getTitle());
@@ -140,10 +100,4 @@ public final class FavoriteVenuesAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    private static class EmptyViewHolder extends RecyclerView.ViewHolder {
-
-        private EmptyViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
 }

@@ -40,6 +40,8 @@ dependencies {
 
     implementation deps.rxjava2.rxjava
 
+    implementation deps.support.recyclerview
+
     implementation deps.glide.runtime
     annotationProcessor deps.glide.compiler
 

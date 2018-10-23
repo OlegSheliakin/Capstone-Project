@@ -2,14 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <include layout="@layout/status_bar" />
+    <include layout="@layout/toolbar" />
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvHistoryVenues"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="History" />
+        android:background="@android:color/white"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="56dp"
+        tools:listitem="@layout/item_history_venue" />
 
 </LinearLayout>

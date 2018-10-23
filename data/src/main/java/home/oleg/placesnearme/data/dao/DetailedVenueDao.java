@@ -2,6 +2,7 @@ package home.oleg.placesnearme.data.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -21,7 +22,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao
-public abstract class DetailedVenueWithPhotosDao {
+public abstract class DetailedVenueDao {
 
     @VisibleForTesting
     @Transaction
@@ -58,11 +59,19 @@ public abstract class DetailedVenueWithPhotosDao {
     @Query("SELECT * FROM detailed_venue WHERE id LIKE :id")
     public abstract DetailedVenueDbEntity getDetailedVenueById(String id);
 
+    @Transaction
+    @Update
+    public abstract void update(DetailedVenueDbEntity venueDbEntity, List<PhotoDbEntity> photoDbEntityList);
+
     @Update
     public abstract void update(DetailedVenueDbEntity venueDbEntity);
 
+    @Update
+    public abstract void update(List<PhotoDbEntity> photoDbEntityList);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insertDetailedVenue(DetailedVenueDbEntity detailedVenueDbEntity, List<PhotoDbEntity> photoDbEntityList);
+    public abstract void insertDetailedVenue(DetailedVenueDbEntity detailedVenueDbEntity,
+                                             List<PhotoDbEntity> photoDbEntityList);
 
     @Query("DELETE FROM detailed_venue")
     public abstract void deleteAll();

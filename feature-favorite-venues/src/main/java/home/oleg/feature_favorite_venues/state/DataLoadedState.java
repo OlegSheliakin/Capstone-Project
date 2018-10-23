@@ -3,7 +3,7 @@ package home.oleg.feature_favorite_venues.state;
 import java.util.List;
 
 import home.oleg.feature_favorite_venues.FavoriteView;
-import home.oleg.feature_favorite_venues.VenueViewItem;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 
 public class DataLoadedState implements State<FavoriteView> {
 

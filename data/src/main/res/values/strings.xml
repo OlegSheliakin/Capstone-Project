@@ -1,5 +1,3 @@
 <resources>
-    <string title="app_name">data</string>
-
-    <string title="venue_detail_label_contacts">Contacts</string>
+    <string name="venue_detail_label_contacts">Contacts</string>
 </resources>

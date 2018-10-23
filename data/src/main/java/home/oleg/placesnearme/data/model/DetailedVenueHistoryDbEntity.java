@@ -13,7 +13,8 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 entity = DetailedVenueDbEntity.class,
                 parentColumns = "id",
                 childColumns = "venueId",
-                onDelete = CASCADE))
+                onDelete = CASCADE,
+                onUpdate = CASCADE))
 public class DetailedVenueHistoryDbEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -21,6 +22,15 @@ public class DetailedVenueHistoryDbEntity {
     @ColumnInfo(index = true)
     private String venueId;
     private long createdAt;
+    private boolean lastCheckIn;
+
+    public boolean isLastCheckIn() {
+        return lastCheckIn;
+    }
+
+    public void setLastCheckIn(boolean lastCheckIn) {
+        this.lastCheckIn = lastCheckIn;
+    }
 
     public Long getId() {
         return id;

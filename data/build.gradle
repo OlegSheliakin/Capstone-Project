@@ -37,7 +37,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation project(':domain')
-    implementation project(':network')
+    implementation project(':core-network')
 
     implementation deps.googlePlayServices.location
 

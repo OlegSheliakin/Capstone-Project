@@ -11,22 +11,32 @@ import home.oleg.placenearme.repositories.DistanceRepository;
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository;
 import home.oleg.placenearme.repositories.SectionRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
+import home.oleg.placenearme.repositories.VenueHistoryRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placesnearme.app.PlacesNearMeApp;
-import home.oleg.placesnearme.data.dao.DetailedVenueWithPhotosDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueHistoryDao;
 import home.oleg.placesnearme.data.provider.ReactiveLocationStore;
 import home.oleg.placesnearme.data.repositories.DetailedVenueRepositoryImpl;
 import home.oleg.placesnearme.data.repositories.DistanceRepositoryImpl;
 import home.oleg.placesnearme.data.repositories.FavoriteVenueRepositoryImpl;
 import home.oleg.placesnearme.data.repositories.UserLocationRepositoryImpl;
+import home.oleg.placesnearme.data.repositories.VenueHistoryRepositoryImpl;
 import home.oleg.placesnearme.data.repositories.VenueRepositoryImpl;
 import home.oleg.placesnearme.network.service.IFourSquareAPI;
 
 @Module
-public class RepositoryModule {
+public final class RepositoryModule {
 
     @Provides
-    public FavoriteVenuesRepository provideFavoriteVenuesRepository(DetailedVenueWithPhotosDao dao) {
+    public VenueHistoryRepository provideVenueHistoryRepository(
+            DetailedVenueDao detailedVenueWithPhotosDao,
+            DetailedVenueHistoryDao venueHistoryDao) {
+        return new VenueHistoryRepositoryImpl(detailedVenueWithPhotosDao, venueHistoryDao);
+    }
+
+    @Provides
+    public FavoriteVenuesRepository provideFavoriteVenuesRepository(DetailedVenueDao dao) {
         return new FavoriteVenueRepositoryImpl(dao);
     }
 
@@ -36,7 +46,7 @@ public class RepositoryModule {
     }
 
     @Provides
-    public DetailedVenueRepository provideDetailedVenueRepo(IFourSquareAPI api, DetailedVenueWithPhotosDao dao) {
+    public DetailedVenueRepository provideDetailedVenueRepo(IFourSquareAPI api, DetailedVenueDao dao) {
         return new DetailedVenueRepositoryImpl(api, dao);
     }
 

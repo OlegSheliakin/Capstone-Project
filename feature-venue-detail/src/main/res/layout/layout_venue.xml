@@ -41,7 +41,7 @@
         android:orientation="vertical"
         app:layout_behavior="home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior">
 
-        <com.smedialink.feature_add_favorite.FavoriteButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabCheckInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

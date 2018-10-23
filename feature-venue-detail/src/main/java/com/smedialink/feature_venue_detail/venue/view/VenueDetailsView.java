@@ -1,6 +1,7 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -18,13 +19,12 @@ import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.IconViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
-import io.rmiri.skeleton.SkeletonGroup;
 
 /**
  * Created by Oleg Sheliakin on 20.09.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueDetailsView extends SkeletonGroup {
+public class VenueDetailsView extends ConstraintLayout {
 
     private TextView tvVenueName;
     private TextView tvVenueAddress;
@@ -93,8 +93,6 @@ public class VenueDetailsView extends SkeletonGroup {
     private void init() {
         LayoutInflater.from(getContext())
                 .inflate(R.layout.merge_view_venue_details, this, true);
-
-        setAutoPlay(false);
 
         tvVenueName = findViewById(R.id.tvVenueName);
         tvVenueAddress = findViewById(R.id.tvVenueAddress);

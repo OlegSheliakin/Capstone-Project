@@ -10,14 +10,10 @@ import org.junit.runner.RunWith;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.DoubleAccumulator;
 
-import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placesnearme.data.FakesStore;
 import home.oleg.placesnearme.data.database.AppDatabase;
 import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;
-import home.oleg.placesnearme.data.model.DetailedVenueHistory;
-import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity;
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
 import home.oleg.placesnearme.data.model.PhotoDbEntity;
 
@@ -30,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class DetailedVenueWithPhotosDaoTes {
 
     private AppDatabase appDatabase;
-    private DetailedVenueWithPhotosDao dao;
+    private DetailedVenueDao dao;
 
     @Before
     public void setUp() {

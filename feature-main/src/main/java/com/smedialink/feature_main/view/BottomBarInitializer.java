@@ -27,7 +27,7 @@ public class BottomBarInitializer {
 
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(null, R.drawable.ic_place);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(null, R.drawable.button_map);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(null, R.drawable.ic_add_favorite);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(null, R.drawable.fab_favorite_state_drawable);
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
         bottomNavigation.addItem(item3);

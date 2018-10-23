@@ -2,7 +2,9 @@ package home.oleg.placesnearme.app.di.modules;
 
 import dagger.Module;
 import dagger.Provides;
+import home.oleg.placenearme.interactors.CheckInOut;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
+import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placenearme.interactors.GetFavoriteVenues;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
@@ -12,10 +14,23 @@ import home.oleg.placenearme.repositories.DistanceRepository;
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository;
 import home.oleg.placenearme.repositories.SectionRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
+import home.oleg.placenearme.repositories.VenueHistoryRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
 
 @Module
-public class InteractorModule {
+public final class InteractorModule {
+
+    @Provides
+    public CheckInOut provideCheckInOut(VenueHistoryRepository venueHistoryRepository) {
+        return new CheckInOut(venueHistoryRepository);
+    }
+
+    @Provides
+    public GetAllHistory provideGetAllHistory(VenueHistoryRepository venueHistoryRepository,
+                                              UserLocationRepository userLocationRepository,
+                                              DistanceRepository distanceRepository) {
+        return new GetAllHistory(venueHistoryRepository, userLocationRepository, distanceRepository);
+    }
 
     @Provides
     public CreateVenueFavorite provideAddRemoveVenueFavorite(FavoriteVenuesRepository favoriteVenuesRepository) {
@@ -36,8 +51,9 @@ public class InteractorModule {
     }
 
     @Provides
-    public GetDetailedVenue provideGetDetailedVenueInteractor(DetailedVenueRepository detailedVenueRepository) {
-        return new GetDetailedVenue(detailedVenueRepository);
+    public GetDetailedVenue provideGetDetailedVenueInteractor(DetailedVenueRepository detailedVenueRepository,
+                                                              VenueHistoryRepository venueHistoryRepository) {
+        return new GetDetailedVenue(detailedVenueRepository, venueHistoryRepository);
     }
 
     @Provides

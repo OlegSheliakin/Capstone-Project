@@ -7,11 +7,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placesnearme.data.DaoProviderFactory;
-import home.oleg.placesnearme.data.dao.DetailedVenueWithPhotosDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueHistoryDao;
 import home.oleg.placesnearme.data.database.DaoProvider;
 
 @Module
-public class DbModule {
+public final class DbModule {
 
     @Singleton
     @Provides
@@ -21,9 +22,14 @@ public class DbModule {
 
     @Singleton
     @Provides
-    static DetailedVenueWithPhotosDao provideDetailedVenueWithPhotosDao(DaoProvider provider) {
+    static DetailedVenueDao provideDetailedVenueWithPhotosDao(DaoProvider provider) {
         return provider.getDetailedVenueWithPhotosDao();
     }
 
+    @Singleton
+    @Provides
+    static DetailedVenueHistoryDao provideDetailedVenueHistoryDao(DaoProvider provider) {
+        return provider.getVenueHistoryDao();
+    }
 
 }

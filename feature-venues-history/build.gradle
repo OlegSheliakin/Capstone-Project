@@ -34,6 +34,7 @@ dependencies {
     implementation project(':domain')
     implementation project(':common')
     implementation project(':core-di')
+    implementation project(':feature-add-favorite')
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
@@ -41,6 +42,8 @@ dependencies {
 
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
+
+    implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
 
     implementation deps.dagger.runtime
     annotationProcessor deps.dagger.compiler

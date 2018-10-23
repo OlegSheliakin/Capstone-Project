@@ -10,10 +10,20 @@ import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
 import dagger.Module;
 import dagger.Provides;
+import home.oleg.feature_add_history.CheckInViewModel;
 import io.reactivex.annotations.NonNull;
 
 @Module
 public final class VenueDetailModule {
+
+    @Provides
+    @NonNull
+    static CheckInViewModel provideCheckInViewModel(
+            VenueFragment fragment,
+            ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(fragment, factory).get(CheckInViewModel.class);
+    }
+
     @Provides
     @NonNull
     static VenueViewModel provideVenueViewModel(

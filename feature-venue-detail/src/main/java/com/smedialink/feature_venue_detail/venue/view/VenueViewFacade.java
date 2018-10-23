@@ -2,6 +2,7 @@ package com.smedialink.feature_venue_detail.venue.view;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -19,6 +20,8 @@ import javax.inject.Inject;
 import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior;
 import home.oleg.coordinator_behavior.MergedAppBarLayout;
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior;
+import home.oleg.feature_add_history.CheckInViewModel;
+import home.oleg.feature_add_history.CheckInOutView;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
@@ -29,15 +32,18 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
  * Created by Oleg Sheliakin on 09.10.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewFacade implements VenueView, CreateFavoriteView {
+public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOutView {
 
     private final LifecycleOwner lifecycleOwner;
+
     private final VenueViewModel venueViewModel;
     private final CreateFavoriteViewModel createFavoriteViewModel;
+    private final CheckInViewModel checkInViewModel;
 
     private VenueDetailsView venueDetailsView;
     private ImageView ivVenuePhoto;
     private FavoriteButton favoriteButton;
+    private FloatingActionButton fabCheckInButton;
     private MergedAppBarLayoutBehavior mergedAppBarLayoutBehavior;
     private GoogleMapsBottomSheetBehavior behavior;
 
@@ -45,16 +51,20 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView {
     public VenueViewFacade(
             LifecycleOwner lifecycleOwner,
             VenueViewModel venueViewModel,
-            CreateFavoriteViewModel createFavoriteViewModel) {
+            CreateFavoriteViewModel createFavoriteViewModel,
+            CheckInViewModel checkInViewModel) {
         this.lifecycleOwner = lifecycleOwner;
         this.venueViewModel = venueViewModel;
         this.createFavoriteViewModel = createFavoriteViewModel;
+        this.checkInViewModel = checkInViewModel;
     }
 
     public void onCreateView(View view) {
         venueDetailsView = view.findViewById(R.id.venueView);
         ivVenuePhoto = view.findViewById(R.id.ivVenuePhoto);
 
+        fabCheckInButton = view.findViewById(R.id.fabCheckInButton);
+        fabCheckInButton.setOnClickListener(v -> checkInViewModel.manage(venueViewModel.getVenueViewData()));
         favoriteButton = view.findViewById(R.id.fabFavoriteButton);
         favoriteButton.setOnClickListener(v -> createFavoriteViewModel.manageFavorite(venueViewModel.getVenueViewData()));
 
@@ -62,6 +72,7 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView {
 
         venueViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
         createFavoriteViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
+        checkInViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
     }
 
     public void setVenue(PreviewVenueViewData venueMapViewData) {
@@ -79,6 +90,7 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView {
 
         venueDetailsView.show(venue);
         favoriteButton.setSelected(venue.isFavorite());
+        fabCheckInButton.setSelected(venue.isHere());
     }
 
     @Override
@@ -130,6 +142,16 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView {
 
     @Override
     public void favoriteRemoved() {
+        //ignore
+    }
+
+    @Override
+    public void checkedIn() {
+        //ignore
+    }
+
+    @Override
+    public void checkedOut() {
         //ignore
     }
 }

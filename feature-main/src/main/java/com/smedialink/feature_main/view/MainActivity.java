@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import home.oleg.feature_favorite_venues.FavoritePlacesFragment;
 import home.oleg.placesnearme.feature_map.view.VenuesMapFragment;
-import home.oleg.placesnearme.feature_venues_history.PlacesHistoryFragment;
+import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment;
 
 public final class MainActivity extends AppCompatActivity {
 
@@ -43,7 +43,7 @@ public final class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (position) {
                 case 0:
-                    fragment = new PlacesHistoryFragment();
+                    fragment = new VenuesHistoryFragment();
                     break;
                 case 1:
                     fragment = new VenuesMapFragment();

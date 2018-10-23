@@ -15,7 +15,8 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:clipToPadding="false"
-        android:padding="@dimen/margin_normal"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="56dp"
         tools:listitem="@layout/item_favorite_venue" />
 
 </LinearLayout>

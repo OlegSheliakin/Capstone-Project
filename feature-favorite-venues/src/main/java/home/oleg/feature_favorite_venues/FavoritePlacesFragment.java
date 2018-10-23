@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,12 +18,13 @@ import com.smedialink.common.Optional;
 import com.smedialink.feature_add_favorite.CreateFavoriteView;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import home.oleg.feature_favorite_venues.di.FavoriteVenuesComponent;
-import home.oleg.placenearme.models.DetailedVenue;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
@@ -75,7 +75,7 @@ public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAd
 
     @Override
     public void showData(List<VenueViewItem> detailedVenues) {
-        adapter.setItems(detailedVenues);
+        adapter.submitList(new ArrayList<>(detailedVenues));
     }
 
     @Override

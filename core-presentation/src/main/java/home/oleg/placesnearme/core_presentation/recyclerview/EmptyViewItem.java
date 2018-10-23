@@ -1,4 +1,4 @@
-package home.oleg.feature_favorite_venues;
+package home.oleg.placesnearme.core_presentation.recyclerview;
 
 public class EmptyViewItem implements ItemViewType {
 

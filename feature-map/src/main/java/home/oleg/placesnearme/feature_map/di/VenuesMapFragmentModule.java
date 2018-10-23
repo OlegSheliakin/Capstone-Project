@@ -12,6 +12,7 @@ import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import home.oleg.feature_add_history.CheckInViewModel;
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter;
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl;
 import home.oleg.placesnearme.feature_map.view.VenuesMapFragment;
@@ -30,11 +31,20 @@ public abstract class VenuesMapFragmentModule {
 
     @Provides
     @NonNull
+    static CheckInViewModel provideCheckInViewModel(
+            VenuesMapFragment fragment,
+            ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(fragment, factory).get(CheckInViewModel.class);
+    }
+
+    @Provides
+    @NonNull
     static CreateFavoriteViewModel provideCreateFavoriteViewModel(
             VenuesMapFragment fragment,
             ViewModelProvider.Factory factory) {
         return ViewModelProviders.of(fragment, factory).get(CreateFavoriteViewModel.class);
     }
+
     @Provides
     @NonNull
     static VenueViewModel provideVenueViewModel(

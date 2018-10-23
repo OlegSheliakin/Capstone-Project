@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:Skeleton="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,13 +19,13 @@
 
     <ImageView
         android:id="@+id/ivVenueIcon"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_width="?attr/actionBarSize"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_high"
         android:contentDescription="@string/content_description_venue_icon"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,34 +39,26 @@
         android:textColor="@color/colorText"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tvCategoryName"
-        app:layout_constraintEnd_toStartOf="@+id/skeletonRating"
+        app:layout_constraintEnd_toStartOf="@+id/ratingBar"
         app:layout_constraintStart_toEndOf="@+id/ivVenueIcon"
         app:layout_constraintTop_toTopOf="@+id/ivVenueIcon"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="TextView" />
 
-    <io.rmiri.skeleton.SkeletonView
-        android:id="@+id/skeletonRating"
+    <hyogeun.github.com.colorratingbarlib.ColorRatingBar
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_normal"
-        Skeleton:SK_cornerRadius="@dimen/radius_skeleton_text"
-        Skeleton:SK_shapeType="rect"
+        android:numStars="5"
+        android:stepSize="0.1"
+        app:empty_color="@color/colorGrayLight"
         app:layout_constraintBottom_toBottomOf="@id/tvVenueName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvVenueName"
-        app:layout_constraintTop_toTopOf="@id/tvVenueName">
-
-        <hyogeun.github.com.colorratingbarlib.ColorRatingBar
-            android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="0.1"
-            app:empty_color="@color/colorGrayLight"
-            app:progress_color="@color/colorGray" />
-    </io.rmiri.skeleton.SkeletonView>
+        app:layout_constraintTop_toTopOf="@id/tvVenueName"
+        app:progress_color="@color/colorGray" />
 
     <TextView
         android:id="@+id/tvVenueDistance"
@@ -76,7 +68,7 @@
         android:maxLines="1"
         android:textColor="@color/textColorLight"
         app:layout_constraintBottom_toBottomOf="@+id/tvVenueAddress"
-        app:layout_constraintEnd_toEndOf="@id/skeletonRating"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
         app:layout_constraintTop_toTopOf="@+id/tvVenueAddress"
         tools:text="TextView" />
 
@@ -100,7 +92,7 @@
         android:maxLines="1"
         android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="@+id/ivVenueIcon"
-        app:layout_constraintEnd_toEndOf="@id/skeletonRating"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
         app:layout_constraintStart_toEndOf="@+id/ivVenueIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvVenueName"
         tools:text="TextView" />
@@ -129,29 +121,19 @@
         android:maxLines="1"
         android:text="@string/all_description"
         android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="@id/skeletonRating"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
         app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvVenueAddress" />
 
-    <io.rmiri.skeleton.SkeletonView
-        android:id="@+id/skeletonDescription"
+    <TextView
+        android:id="@+id/tvVenueDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        Skeleton:SK_cornerRadius="@dimen/radius_skeleton_text"
-        Skeleton:SK_shapeType="rect"
-        Skeleton:SK_textLineNumber="3"
         android:layout_marginTop="@dimen/margin_normal"
-        app:layout_constraintEnd_toEndOf="@id/skeletonRating"
+        android:textColor="@color/textColorLight"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
         app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
-        app:layout_constraintTop_toBottomOf="@+id/tvLabelDescription">
-
-        <TextView
-            android:id="@+id/tvVenueDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorLight" />
-
-    </io.rmiri.skeleton.SkeletonView>
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelDescription" />
 
     <TextView
         android:id="@+id/tvContactsLabel"
@@ -162,80 +144,63 @@
         android:maxLines="1"
         android:text="@string/venue_detail_label_contacts"
         android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="@id/skeletonRating"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
         app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
-        app:layout_constraintTop_toBottomOf="@+id/skeletonDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueDescription" />
 
-    <io.rmiri.skeleton.SkeletonView
-        android:id="@+id/skeletonContacts"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        Skeleton:SK_cornerRadius="@dimen/radius_skeleton_text"
-        Skeleton:SK_shapeType="rect"
-        android:layout_marginTop="@dimen/margin_small"
-        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
-        Skeleton:layout_constraintEnd_toEndOf="@+id/skeletonRating"
-        app:layout_constraintTop_toBottomOf="@+id/tvContactsLabel">
-
-        <TextView
-            android:id="@+id/tvContacts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="phone"
-            android:drawableStart="@drawable/ic_phone"
-            android:drawablePadding="@dimen/margin_extra_small"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/textColorLight"
-            android:textColorLink="@color/colorPrimary"
-            tools:text="8 (999) 777-66-55" />
-    </io.rmiri.skeleton.SkeletonView>
-
-    <io.rmiri.skeleton.SkeletonView
-        android:id="@+id/skeletonOpeningHours"
+    <TextView
+        android:id="@+id/tvContacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        Skeleton:SK_cornerRadius="@dimen/radius_skeleton_text"
-        Skeleton:SK_shapeType="rect"
-        app:layout_constraintEnd_toEndOf="@id/skeletonRating"
+        android:layout_marginTop="@dimen/margin_small"
+        android:autoLink="phone"
+        android:drawableStart="@drawable/ic_phone"
+        android:drawablePadding="@dimen/margin_extra_small"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColorLight"
+        android:textColorLink="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
-        app:layout_constraintTop_toBottomOf="@+id/skeletonContacts">
+        app:layout_constraintTop_toBottomOf="@+id/tvContactsLabel"
+        tools:text="8 (999) 777-66-55" />
 
-        <TextView
-            android:id="@+id/tvVenueOpeningHours"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/colorText"
-            tools:text="Open until 6 pm" />
-
-    </io.rmiri.skeleton.SkeletonView>
+    <TextView
+        android:id="@+id/tvVenueOpeningHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorText"
+        app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvContacts"
+        tools:text="Open until 6 pm" />
 
     <TextView
         android:id="@+id/tvGalleryLabel"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:layout_marginTop="@dimen/margin_normal"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/all_label_gallery"
         android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="@id/skeletonRating"
+        app:layout_constraintEnd_toEndOf="@id/ratingBar"
         app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
-        app:layout_constraintTop_toBottomOf="@+id/skeletonOpeningHours" />
+        app:layout_constraintTop_toBottomOf="@+id/tvVenueOpeningHours" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPhotos"
         android:layout_width="match_parent"
         android:layout_height="500dp"
+        android:orientation="horizontal"
         android:paddingStart="@dimen/margin_normal"
         android:paddingTop="@dimen/margin_small"
         android:paddingEnd="@dimen/margin_normal"
         android:paddingBottom="@dimen/margin_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGalleryLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvGalleryLabel"
+        tools:listitem="@layout/item_photo" />
 
-</android.support.constraint.ConstraintLayout>
+</merge>

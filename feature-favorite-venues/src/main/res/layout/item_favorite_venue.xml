@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/margin_normal"
+    android:paddingTop="@dimen/margin_small"
+    android:paddingEnd="@dimen/margin_normal"
+    android:paddingBottom="@dimen/margin_small">
 
     <android.support.v7.widget.CardView
         android:id="@+id/crdPhoto"
@@ -28,8 +32,8 @@
         android:id="@+id/fabAddToFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_high"
         android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_high"
         app:backgroundTint="@android:color/white"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="@+id/crdPhoto"
@@ -40,8 +44,8 @@
         android:id="@+id/fabShowOnMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_high"
         android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_high"
         android:tint="@color/colorPrimaryDark"
         app:backgroundTint="@android:color/white"
         app:fabSize="mini"
@@ -65,8 +69,8 @@
         android:id="@+id/tvAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColorLight"
         android:layout_marginBottom="@dimen/margin_small"
+        android:textColor="@color/textColorLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvName"
         app:layout_constraintStart_toStartOf="@+id/tvName"

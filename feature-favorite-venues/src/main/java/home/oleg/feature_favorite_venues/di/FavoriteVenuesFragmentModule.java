@@ -10,6 +10,7 @@ import dagger.Provides;
 import home.oleg.feature_favorite_venues.FavoritePlacesFragment;
 import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
 import home.oleg.feature_favorite_venues.FavoriteVenuesAdapter;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenuesDiffCallback;
 import io.reactivex.annotations.NonNull;
 
 @Module
@@ -19,7 +20,7 @@ public abstract class FavoriteVenuesFragmentModule {
     @NonNull
     static FavoriteVenuesAdapter provideFavoriteVenuesAdapter(
             FavoritePlacesFragment fragment) {
-        return new FavoriteVenuesAdapter(fragment);
+        return new FavoriteVenuesAdapter(VenuesDiffCallback.VENUES_DIFF_CALLBACK, fragment);
     }
 
     @Provides

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "af7d1be8810095cd81aca70e6462dd83",
+    "identityHash": "e8b1642947a58d4e49be768de46398f3",
     "entities": [
       {
         "tableName": "detailed_venue",
@@ -169,7 +169,7 @@
       },
       {
         "tableName": "venue_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `venueId` TEXT, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`venueId`) REFERENCES `detailed_venue`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `venueId` TEXT, `createdAt` INTEGER NOT NULL, `lastCheckIn` INTEGER NOT NULL, FOREIGN KEY(`venueId`) REFERENCES `detailed_venue`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -186,6 +186,12 @@
           {
             "fieldPath": "createdAt",
             "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastCheckIn",
+            "columnName": "lastCheckIn",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -210,7 +216,7 @@
           {
             "table": "detailed_venue",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "venueId"
             ],
@@ -223,7 +229,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"af7d1be8810095cd81aca70e6462dd83\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e8b1642947a58d4e49be768de46398f3\")"
     ]
   }
 }

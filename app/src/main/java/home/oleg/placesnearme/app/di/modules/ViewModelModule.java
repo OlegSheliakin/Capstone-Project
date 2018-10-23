@@ -15,8 +15,11 @@ import javax.inject.Provider;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
+import home.oleg.feature_add_history.CheckInViewModel;
 import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
+import home.oleg.placenearme.interactors.CheckInOut;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
+import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placenearme.interactors.GetFavoriteVenues;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
@@ -24,6 +27,7 @@ import home.oleg.placenearme.interactors.GetUserLocation;
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey;
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
+import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel;
 
 /**
  * Created by Oleg Sheliakin on 21.08.2018.
@@ -31,6 +35,22 @@ import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
  */
 @Module
 public final class ViewModelModule {
+
+    @IntoMap
+    @ViewModelKey(CheckInViewModel.class)
+    @Provides
+    @NonNull
+    public static ViewModel provideCheckInViewModel(CheckInOut checkInOut) {
+        return new CheckInViewModel(checkInOut);
+    }
+
+    @IntoMap
+    @ViewModelKey(VenuesHistoryViewModel.class)
+    @Provides
+    @NonNull
+    public static ViewModel provideVenuesHistoryViewModel(GetAllHistory getAllHistory) {
+        return new VenuesHistoryViewModel(getAllHistory);
+    }
 
     @IntoMap
     @ViewModelKey(CreateFavoriteViewModel.class)

@@ -1,9 +1,9 @@
 package home.oleg.placesnearme.data.database;
 
-import home.oleg.placesnearme.data.dao.DetailedVenueWithPhotosDao;
-import home.oleg.placesnearme.data.dao.VenueHistoryDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueHistoryDao;
 
 public interface DaoProvider {
-    DetailedVenueWithPhotosDao getDetailedVenueWithPhotosDao();
-    VenueHistoryDao getVenueHistoryDao();
+    DetailedVenueDao getDetailedVenueWithPhotosDao();
+    DetailedVenueHistoryDao getVenueHistoryDao();
 }

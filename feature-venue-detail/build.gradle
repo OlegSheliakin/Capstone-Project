@@ -35,6 +35,7 @@ dependencies {
     implementation project(':common')
     implementation project(':core-di')
     implementation project(':feature-add-favorite')
+    implementation project(':feature-add-history')
     implementation project(':googlemapbehaviour')
 
     implementation deps.lifecycle.extensions
@@ -44,18 +45,15 @@ dependencies {
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
 
+    implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
+
     implementation deps.dagger.runtime
     annotationProcessor deps.dagger.compiler
 
     implementation deps.support.appcompat7
     implementation deps.support.constraintLayout
     implementation deps.support.recyclerview
-
-    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
-
-    implementation deps.skeleton
-    implementation 'com.ethanhua:skeleton:1.1.1'
-    implementation 'io.supercharge:shimmerlayout:2.1.0'
+    implementation deps.support.design
 
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito

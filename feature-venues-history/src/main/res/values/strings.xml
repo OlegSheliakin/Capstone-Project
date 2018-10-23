@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">feature-venues-history</string>
+    <string name="history_empty_description">Here will be your history of venues</string>
+    <string name="history_title">History</string>
 </resources>

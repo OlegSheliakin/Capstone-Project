@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
-import home.oleg.placesnearme.data.dao.DetailedVenueWithPhotosDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueDao;
 import home.oleg.placesnearme.data.mapper.DetailedVenueMapper;
 import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
@@ -17,9 +17,9 @@ import io.reactivex.Single;
 public class DetailedVenueRepositoryImpl implements DetailedVenueRepository {
 
     private final IFourSquareAPI api;
-    private final DetailedVenueWithPhotosDao dao;
+    private final DetailedVenueDao dao;
 
-    public DetailedVenueRepositoryImpl(IFourSquareAPI api, DetailedVenueWithPhotosDao dao) {
+    public DetailedVenueRepositoryImpl(IFourSquareAPI api, DetailedVenueDao dao) {
         this.api = api;
         this.dao = dao;
     }
@@ -43,7 +43,7 @@ public class DetailedVenueRepositoryImpl implements DetailedVenueRepository {
                         detailedVenue.setFavorite(detailedVenueDbEntity.isFavorite());
 
                         DetailedVenueWithPhotos detailedVenueWithPhotos = DetailedVenueMapper.map(detailedVenue);
-                        dao.insert(detailedVenueWithPhotos);
+                        dao.update(detailedVenueWithPhotos.getVenue(), detailedVenueWithPhotos.getPhotos());
                         return Single.never();
                     }
 

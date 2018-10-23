@@ -4,7 +4,7 @@ import java.util.List;
 
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository;
-import home.oleg.placesnearme.data.dao.DetailedVenueWithPhotosDao;
+import home.oleg.placesnearme.data.dao.DetailedVenueDao;
 import home.oleg.placesnearme.data.mapper.DetailedVenueMapper;
 import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
@@ -13,9 +13,9 @@ import io.reactivex.Flowable;
 
 public class FavoriteVenueRepositoryImpl implements FavoriteVenuesRepository {
 
-    private final DetailedVenueWithPhotosDao dao;
+    private final DetailedVenueDao dao;
 
-    public FavoriteVenueRepositoryImpl(DetailedVenueWithPhotosDao dao) {
+    public FavoriteVenueRepositoryImpl(DetailedVenueDao dao) {
         this.dao = dao;
     }
 
@@ -29,7 +29,13 @@ public class FavoriteVenueRepositoryImpl implements FavoriteVenuesRepository {
         return Completable.fromAction(() -> {
             DetailedVenueWithPhotos detailedVenueWithPhotos = DetailedVenueMapper.map(venue);
             detailedVenueWithPhotos.getVenue().setFavorite(true);
-            dao.insert(detailedVenueWithPhotos);
+
+            DetailedVenueDbEntity oldDetailedVenueDbEntity = dao.getDetailedVenueById(venue.getId());
+            if (oldDetailedVenueDbEntity != null) {
+                dao.update(detailedVenueWithPhotos.getVenue(), detailedVenueWithPhotos.getPhotos());
+            } else {
+                dao.insert(detailedVenueWithPhotos);
+            }
         });
     }
 

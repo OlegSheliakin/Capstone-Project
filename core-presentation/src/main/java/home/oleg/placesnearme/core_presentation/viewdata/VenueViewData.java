@@ -26,8 +26,21 @@ public class VenueViewData extends PreviewVenueViewData {
     private String openingHoursStatus;
     private String formattedPhone;
     private boolean isFavorite;
+    private boolean isHere;
     private float rating;
     private Boolean open;
+
+    public boolean isHere() {
+        return isHere;
+    }
+
+    public void setHere(boolean here) {
+        isHere = here;
+    }
+
+    public Boolean getOpen() {
+        return open;
+    }
 
     public boolean isFavorite() {
         return isFavorite;
@@ -159,7 +172,7 @@ public class VenueViewData extends PreviewVenueViewData {
         hours.setIsOpen(isOpen());
         hours.setStatus(getOpeningHoursStatus());
         detailedVenue.setHours(hours);
-
+        detailedVenue.setHereNow(isHere());
         return detailedVenue;
     }
 
@@ -199,6 +212,7 @@ public class VenueViewData extends PreviewVenueViewData {
             photoUrls.add(PhotoViewData.map(photo));
         }
         venueViewData.setPhotoUrls(photoUrls);
+        venueViewData.setHere(venue.isHereNow());
 
         return venueViewData;
     }
