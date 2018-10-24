@@ -1,29 +1,18 @@
 package home.oleg.placesnearme.feature_venues_history;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.smedialink.common.Optional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import home.oleg.placesnearme.core_presentation.recyclerview.BaseVenueAdapter;
-import home.oleg.placesnearme.core_presentation.recyclerview.EmptyViewItem;
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType;
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
-import home.oleg.placesnearme.core_presentation.recyclerview.VenuesDiffCallback;
 import home.oleg.placesnearme.core_presentation.utils.DistanceUtil;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
@@ -96,7 +85,7 @@ public final class HistoryVenuesAdapter extends BaseVenueAdapter {
             });
 
             tvCategoryName.setText(venueViewData.getCategoryName());
-            ratingBar.setRating(venueViewData.getRating());
+            ratingBar.setRating(venueViewData.getAdoptedRating());
 
             fabAddToFavorite.setOnClickListener(v -> {
                 favoriteClicksListener.favoriteClicked(venueViewData);

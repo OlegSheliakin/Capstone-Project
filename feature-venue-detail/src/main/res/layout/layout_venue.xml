@@ -43,25 +43,23 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabCheckInButton"
+            style="@style/CheckInButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="@dimen/margin_high"
             android:layout_marginEnd="@dimen/margin_high"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_place" />
+            android:layout_marginStart="@dimen/margin_high" />
 
-        <com.smedialink.feature_add_favorite.FavoriteButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabFavoriteButton"
+            style="@style/FavoriteButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="@dimen/margin_high"
             android:layout_marginEnd="@dimen/margin_high"
-            app:backgroundTint="@android:color/white"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/fab_favorite_state_drawable" />
+            android:layout_marginStart="@dimen/margin_high" />
 
     </LinearLayout>
 </merge>

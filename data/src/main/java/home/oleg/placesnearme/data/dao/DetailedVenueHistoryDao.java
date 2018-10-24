@@ -32,7 +32,7 @@ public interface DetailedVenueHistoryDao {
     Single<DetailedVenueHistory> getCurrent();
 
     @Query("SELECT * FROM venue_history WHERE lastCheckIn = 1")
-    Maybe<DetailedVenueHistoryDbEntity> getLastCheckIn();
+    Flowable<DetailedVenueHistoryDbEntity> getLastCheckIn();
 
     @Query("DELETE FROM venue_history WHERE venue_history.venueId = :venueId")
     void remove(String venueId);

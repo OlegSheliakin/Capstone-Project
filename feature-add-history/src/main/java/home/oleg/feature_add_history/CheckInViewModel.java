@@ -1,6 +1,11 @@
 package home.oleg.feature_add_history;
 
-import home.oleg.placenearme.interactors.CheckInOut;
+import android.support.annotation.NonNull;
+
+import com.smedialink.common.function.Action;
+
+import home.oleg.feature_add_history.interactor.CheckInOut;
+import home.oleg.feature_add_history.view.CheckInOutView;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.Single;
@@ -20,13 +25,26 @@ public class CheckInViewModel extends BaseViewModel<CheckInOutView> {
     }
 
     public void manage(VenueViewData venueViewData) {
+        if (venueViewData == null) {
+            setState(checkInOutView -> {
+
+            });
+            return;
+        }
+
         addToDisposables(
                 Single.fromCallable(venueViewData::mapToDetailVenue)
-                        .flatMapCompletable(checkInOut::execute)
+                        .flatMap(checkInOut::execute)
                         .subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                () -> setAction(CheckInOutView::checkedIn),
+                                isChecked -> {
+                                    if (isChecked) {
+                                        setState(CheckInOutView::checkedIn);
+                                    } else {
+                                        setState(CheckInOutView::checkedOut);
+                                    }
+                                },
                                 Throwable::printStackTrace)
         );
     }

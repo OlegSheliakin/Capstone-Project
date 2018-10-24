@@ -39,7 +39,7 @@ public abstract class BaseViewModel<VIEW extends View> extends ViewModel {
         return compositeDisposable.add(disposable);
     }
 
-    protected void setAction(Action<VIEW> action) {
+    protected void setState(Action<VIEW> action) {
         observer.setValue(action);
     }
 

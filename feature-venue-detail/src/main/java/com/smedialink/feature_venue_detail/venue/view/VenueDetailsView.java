@@ -57,7 +57,7 @@ public class VenueDetailsView extends ConstraintLayout {
         tvVenueDescription.setText(venue.getDescription());
         tvVenueOpeningHours.setText(venue.getOpeningHoursStatus());
         tvContacts.setText(venue.getFormattedPhone());
-        rating.setRating(venue.getRating());
+        rating.setRating(venue.getAdoptedRating());
 
         photosAdapter.setItems(venue.getPhotos());
     }

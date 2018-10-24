@@ -43,13 +43,13 @@ public class VenueHistoryRepositoryImpl implements VenueHistoryRepository {
     }
 
     @Override
-    public Single<Boolean> isHereNow(String id) {
+    public Flowable<Boolean> isHereNow(String id) {
         return venueHistoryDao.getLastCheckIn()
-                .flatMapSingle(historyDbEntity -> {
+                .flatMap(historyDbEntity -> {
                     if (historyDbEntity.getVenueId().equals(id)) {
-                        return Single.just(true);
+                        return Flowable.just(true);
                     } else {
-                        return Single.just(false);
+                        return Flowable.just(false);
                     }
                     //if last is empty, then will be thrown an error.
                     //convert error to false -> it means is not here now

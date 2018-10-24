@@ -17,7 +17,7 @@ import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import home.oleg.feature_add_history.CheckInViewModel;
 import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
-import home.oleg.placenearme.interactors.CheckInOut;
+import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
 import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;

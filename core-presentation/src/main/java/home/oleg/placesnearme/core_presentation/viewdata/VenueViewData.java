@@ -54,8 +54,12 @@ public class VenueViewData extends PreviewVenueViewData {
         this.rating = rating;
     }
 
-    public float getRating() {
+    public float getAdoptedRating() {
         return rating / 2.0f;
+    }
+
+    public float getRating() {
+        return rating;
     }
 
     public void setRating(Float rating) {
@@ -173,6 +177,7 @@ public class VenueViewData extends PreviewVenueViewData {
         hours.setStatus(getOpeningHoursStatus());
         detailedVenue.setHours(hours);
         detailedVenue.setHereNow(isHere());
+        detailedVenue.setDistance(getDistance());
         return detailedVenue;
     }
 

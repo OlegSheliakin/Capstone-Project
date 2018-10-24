@@ -30,9 +30,9 @@ public class VenuesHistoryViewModel extends BaseViewModel<VenuesHistoryView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(venues -> {
                             if(venues.isEmpty()) {
-                                setAction(VenuesHistoryView::showEmpty);
+                                setState(VenuesHistoryView::showEmpty);
                             } else {
-                                setAction(venuesHistoryView -> venuesHistoryView.showData(venues));
+                                setState(venuesHistoryView -> venuesHistoryView.showData(venues));
                             }
                         }, Throwable::printStackTrace)
         );

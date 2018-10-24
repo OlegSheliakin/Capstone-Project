@@ -14,7 +14,7 @@ public interface VenueHistoryRepository {
 
     Completable checkOutFromCurrent();
 
-    Single<Boolean> isHereNow(String venueId);
+    Flowable<Boolean> isHereNow(String venueId);
 
     Completable checkIn(DetailedVenue detailedVenue);
 

@@ -18,7 +18,7 @@ public class GetDetailedVenue {
 
     public Flowable<DetailedVenue> getDetailedVenue(String id) {
         return detailedVenueRepository.getDetailedVenueById(id)
-                .flatMapSingle(detailedVenue -> venueHistoryRepository.isHereNow(id)
+                .flatMap(detailedVenue -> venueHistoryRepository.isHereNow(id)
                         .map(isHere -> {
                             detailedVenue.setHereNow(isHere);
                             return detailedVenue;

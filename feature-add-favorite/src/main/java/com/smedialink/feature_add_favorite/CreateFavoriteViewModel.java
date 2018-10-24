@@ -15,14 +15,16 @@ public class CreateFavoriteViewModel extends BaseViewModel<CreateFavoriteView> {
     }
 
     public void manageFavorite(VenueViewData venueViewData) {
+        if (venueViewData == null) return;
+
         addToDisposables(addRemoveVenueFavorite.execute(venueViewData.mapToDetailVenue())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isFavorite -> {
                     if (isFavorite) {
-                        setAction(CreateFavoriteView::favoriteAdded);
+                        setState(CreateFavoriteView::favoriteAdded);
                     } else {
-                        setAction(CreateFavoriteView::favoriteRemoved);
+                        setState(CreateFavoriteView::favoriteRemoved);
                     }
                 }, Throwable::printStackTrace));
     }

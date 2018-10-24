@@ -7,7 +7,7 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <include layout="@layout/layout_venue" />
 
@@ -25,10 +25,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_high"
             android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginStart="@dimen/margin_high"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_current_location" />
 
         <android.support.design.widget.FloatingActionButton
@@ -36,10 +38,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginStart="@dimen/margin_high"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@id/fabCurrentLocation"
-            app:layout_constraintStart_toStartOf="@id/fabCurrentLocation"
+            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_remove_black_24dp" />
 
         <android.support.design.widget.FloatingActionButton
@@ -47,10 +51,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginStart="@dimen/margin_high"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@id/fabZoomOut"
-            app:layout_constraintStart_toStartOf="@id/fabCurrentLocation"
+            app:layout_constraintStart_toStartOf="parent"
+
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
     </android.support.constraint.ConstraintLayout>

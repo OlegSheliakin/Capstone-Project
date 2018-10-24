@@ -32,14 +32,14 @@ public final class VenuesViewModel extends BaseViewModel<VenuesView> {
                 .map(sectionListPair -> VenueMapViewMapper.map(sectionListPair.getFirst(), sectionListPair.getSecond()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(d -> setAction(ViewActions.showLoading()))
+                .doOnSubscribe(d -> setState(ViewActions.showLoading()))
                 .subscribe(venues -> {
-                            setAction(ViewActions.hideLoading());
-                            setAction(ShowVenuesAction.create(venues));
+                            setState(ViewActions.hideLoading());
+                            setState(ShowVenuesAction.create(venues));
                         },
                         throwable -> {
-                            setAction(ViewActions.hideLoading());
-                            setAction(ViewActions.error(throwable));
+                            setState(ViewActions.hideLoading());
+                            setState(ViewActions.error(throwable));
                         })
         );
     }

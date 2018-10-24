@@ -29,9 +29,9 @@ public class FavoritePlacesViewModel extends BaseViewModel<FavoriteView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(detailedVenues -> {
                     if (!detailedVenues.isEmpty()) {
-                        setAction(favoriteView -> favoriteView.showData(detailedVenues));
+                        setState(favoriteView -> favoriteView.showData(detailedVenues));
                     } else {
-                        setAction(FavoriteView::showEmpty);
+                        setState(FavoriteView::showEmpty);
                     }
 
                 }, Throwable::printStackTrace));

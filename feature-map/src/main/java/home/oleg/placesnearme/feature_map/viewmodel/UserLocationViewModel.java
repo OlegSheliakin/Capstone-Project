@@ -25,8 +25,8 @@ public class UserLocationViewModel extends BaseViewModel<UserLocationView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        location -> setAction(ShowUserLocationAction.create(location)),
-                        throwable -> setAction(ViewActions.error(throwable)))
+                        location -> setState(ShowUserLocationAction.create(location)),
+                        throwable -> setState(ViewActions.error(throwable)))
         );
     }
 

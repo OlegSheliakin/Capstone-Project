@@ -5,12 +5,15 @@ import android.support.annotation.NonNull;
 import com.smedialink.common.Optional;
 import com.smedialink.feature_venue_detail.venue.view.VenueView;
 
+import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
+import home.oleg.placesnearme.core_presentation.base.ErrorView;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -37,18 +40,18 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
                 .doOnNext(data -> this.venueViewData = data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> setAction(venueView -> {
+                .doOnSubscribe(disposable -> setState(venueView -> {
                     venueView.showLoading();
                     venueView.showPreviewVenue(venue);
                 }))
                 .subscribe(
-                        detailedVenue -> setAction(venueView -> {
+                        detailedVenue -> setState(venueView -> {
                             venueView.hideLoading();
                             venueView.show(detailedVenue);
                         }),
-                        throwable ->  {
+                        throwable -> {
                             throwable.printStackTrace();
-                            setAction(venueView -> {
+                            setState(venueView -> {
                                 venueView.hideLoading();
                                 venueView.showError();
                             });

@@ -2,7 +2,7 @@ package home.oleg.placesnearme.app.di.modules;
 
 import dagger.Module;
 import dagger.Provides;
-import home.oleg.placenearme.interactors.CheckInOut;
+import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
 import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;

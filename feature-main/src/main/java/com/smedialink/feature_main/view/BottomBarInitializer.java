@@ -25,7 +25,7 @@ public class BottomBarInitializer {
         bottomNavigation.setDefaultBackgroundColor(Color.TRANSPARENT);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(null, R.drawable.ic_place);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(null, R.drawable.fab_location_pin_state_drawable);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(null, R.drawable.button_map);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(null, R.drawable.fab_favorite_state_drawable);
         bottomNavigation.addItem(item1);

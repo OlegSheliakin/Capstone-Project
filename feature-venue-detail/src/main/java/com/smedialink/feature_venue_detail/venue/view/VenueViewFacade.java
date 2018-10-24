@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.smedialink.common.Optional;
 import com.smedialink.feature_add_favorite.CreateFavoriteView;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
-import com.smedialink.feature_add_favorite.FavoriteButton;
 import com.smedialink.feature_venue_detail.R;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
@@ -21,7 +20,7 @@ import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior;
 import home.oleg.coordinator_behavior.MergedAppBarLayout;
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior;
 import home.oleg.feature_add_history.CheckInViewModel;
-import home.oleg.feature_add_history.CheckInOutView;
+import home.oleg.feature_add_history.view.CheckInOutView;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
@@ -42,7 +41,7 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
 
     private VenueDetailsView venueDetailsView;
     private ImageView ivVenuePhoto;
-    private FavoriteButton favoriteButton;
+    private FloatingActionButton favoriteButton;
     private FloatingActionButton fabCheckInButton;
     private MergedAppBarLayoutBehavior mergedAppBarLayoutBehavior;
     private GoogleMapsBottomSheetBehavior behavior;

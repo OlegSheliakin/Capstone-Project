@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FavoriteButtonStyle">
+        <item name="android:tint">@color/colorPrimaryDark</item>
+        <item name="android:src">@drawable/fab_favorite_state_drawable</item>
+        <item name="backgroundTint">@android:color/white</item>
+        <item name="fabSize">mini</item>
+    </style>
+
+</resources>
