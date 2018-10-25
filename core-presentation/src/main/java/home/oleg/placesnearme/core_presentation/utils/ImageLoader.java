@@ -3,8 +3,6 @@ package home.oleg.placesnearme.core_presentation.utils;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.squareup.picasso.Picasso;
 
 import home.oleg.placesnearme.core_presentation.R;
@@ -20,7 +18,7 @@ public final class ImageLoader {
     }
 
     public static void clear(ImageView imageView) {
-        Glide.with(imageView).clear(imageView);
+        Picasso.get().cancelRequest(imageView);
     }
 
     public static void loadIcon(ImageView imageView, @Nullable String url) {

@@ -1,6 +1,7 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
@@ -21,6 +22,8 @@ import home.oleg.coordinator_behavior.MergedAppBarLayout;
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior;
 import home.oleg.feature_add_history.CheckInViewModel;
 import home.oleg.feature_add_history.view.CheckInOutView;
+import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
@@ -31,13 +34,14 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
  * Created by Oleg Sheliakin on 09.10.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOutView {
+public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOutView, VenueDetailsView.RetryClickListener {
 
     private final LifecycleOwner lifecycleOwner;
 
     private final VenueViewModel venueViewModel;
     private final CreateFavoriteViewModel createFavoriteViewModel;
     private final CheckInViewModel checkInViewModel;
+    private ShowHideBottomBarListener showHideBottomBarListener;
 
     private VenueDetailsView venueDetailsView;
     private ImageView ivVenuePhoto;
@@ -59,11 +63,14 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     }
 
     public void onCreateView(View view) {
+
         venueDetailsView = view.findViewById(R.id.venueView);
+        venueDetailsView.setRetryClickListener(this);
         ivVenuePhoto = view.findViewById(R.id.ivVenuePhoto);
 
         fabCheckInButton = view.findViewById(R.id.fabCheckInButton);
         fabCheckInButton.setOnClickListener(v -> checkInViewModel.manage(venueViewModel.getVenueViewData()));
+
         favoriteButton = view.findViewById(R.id.fabFavoriteButton);
         favoriteButton.setOnClickListener(v -> createFavoriteViewModel.manageFavorite(venueViewModel.getVenueViewData()));
 
@@ -74,13 +81,21 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
         checkInViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
     }
 
+    public void setShowHideBottomBarListener(ShowHideBottomBarListener showHideBottomBarListener) {
+        this.showHideBottomBarListener = showHideBottomBarListener;
+    }
+
     public void setVenue(PreviewVenueViewData venueMapViewData) {
         Optional.of(venueDetailsView).ifPresent(VenueDetailsView::clearContent);
-        venueViewModel.setVenue(venueMapViewData);
+        venueViewModel.setVenue(venueMapViewData.getId());
+        venueDetailsView.setRetryClickListener(() -> venueViewModel.setVenue(venueMapViewData.getId()));
+        openBottomIfNeed();
     }
 
     @Override
     public void show(VenueViewData venue) {
+        mergedAppBarLayoutBehavior.setToolbarTitle(venue.getTitle());
+
         String url = Optional.of(venue.getBestPhoto())
                 .map(PhotoViewData::getFullSizeUrl)
                 .getOrNull();
@@ -93,26 +108,25 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     }
 
     @Override
-    public void showPreviewVenue(PreviewVenueViewData venue) {
-        venueDetailsView.clearContent();
-        venueDetailsView.showPreview(venue);
-        mergedAppBarLayoutBehavior.setToolbarTitle(venue.getTitle());
-        behavior.setState(GoogleMapsBottomSheetBehavior.STATE_COLLAPSED);
-    }
-
-    @Override
     public void showError() {
-        ImageLoader.loadImage(ivVenuePhoto, null);
+        venueDetailsView.showError("Something goes wrong");
     }
 
     @Override
     public void showLoading() {
-
+        venueDetailsView.showLoading();
     }
 
     @Override
     public void hideLoading() {
+        venueDetailsView.hideLoading();
+    }
 
+    private void openBottomIfNeed() {
+        int state = behavior.getState();
+        if (state == GoogleMapsBottomSheetBehavior.STATE_HIDDEN) {
+            behavior.setState(GoogleMapsBottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     private void initBehavior(View view) {
@@ -124,12 +138,19 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
         MergedAppBarLayout mergedAppBarLayout = view.findViewById(R.id.mergedappbarlayout);
         mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(mergedAppBarLayout);
 
-        nestedScrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        behavior.setBottomSheetCallback(new GoogleMapsBottomSheetBehavior.BottomSheetCallback() {
             @Override
-            public void onGlobalLayout() {
-                CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(ivVenuePhoto.getMeasuredWidth(), behavior.getHeaderHeight());
-                ivVenuePhoto.setLayoutParams(layoutParams);
-                nestedScrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == GoogleMapsBottomSheetBehavior.STATE_HIDDEN) {
+                    showHideBottomBarListener.hideBottomBar();
+                } else {
+                    showHideBottomBarListener.showBottomBar();
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
             }
         });
     }
@@ -152,5 +173,10 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     @Override
     public void checkedOut() {
         //ignore
+    }
+
+    @Override
+    public void onRetryClick() {
+
     }
 }

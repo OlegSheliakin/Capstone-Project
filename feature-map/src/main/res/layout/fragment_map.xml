@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         app:layout_behavior="home.oleg.coordinator_behavior.HideViewTwoPhaseBottomSheetBehavior"
-        app:peekHeight="@dimen/peek_height_fragment_map">
+        app:peekHeight="@dimen/peek_height_venue">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabCurrentLocation"
@@ -42,9 +42,11 @@
             android:layout_marginStart="@dimen/margin_high"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
+            android:clickable="true"
             app:layout_constraintBottom_toTopOf="@id/fabCurrentLocation"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_remove_black_24dp" />
+            app:srcCompat="@drawable/ic_remove_black_24dp"
+            android:focusable="true" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabZoomIn"
@@ -53,12 +55,13 @@
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_high"
             android:layout_marginStart="@dimen/margin_high"
+            android:clickable="true"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@id/fabZoomOut"
             app:layout_constraintStart_toStartOf="parent"
-
-            app:srcCompat="@drawable/ic_add_black_24dp" />
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            android:focusable="true" />
 
     </android.support.constraint.ConstraintLayout>
 

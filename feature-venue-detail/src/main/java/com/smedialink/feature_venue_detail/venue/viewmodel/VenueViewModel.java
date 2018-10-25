@@ -5,15 +5,14 @@ import android.support.annotation.NonNull;
 import com.smedialink.common.Optional;
 import com.smedialink.feature_venue_detail.venue.view.VenueView;
 
-import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
 import home.oleg.placesnearme.core_presentation.base.ErrorView;
+import home.oleg.placesnearme.core_presentation.base.LoadingView;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -32,18 +31,15 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
         this.getDetailedVenue = getDetailedVenue;
     }
 
-    public void setVenue(PreviewVenueViewData venue) {
+    public void setVenue(String venueId) {
         Optional.of(disposable).ifPresent(Disposable::dispose);
 
-        disposable = getDetailedVenue.getDetailedVenue(venue.getId())
+        disposable = getDetailedVenue.getDetailedVenue(venueId)
                 .map(VenueViewData::mapFrom)
                 .doOnNext(data -> this.venueViewData = data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> setState(venueView -> {
-                    venueView.showLoading();
-                    venueView.showPreviewVenue(venue);
-                }))
+                .doOnSubscribe(disposable -> setState(LoadingView::showLoading))
                 .subscribe(
                         detailedVenue -> setState(venueView -> {
                             venueView.hideLoading();
@@ -55,6 +51,23 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
                                 venueView.hideLoading();
                                 venueView.showError();
                             });
+                        });
+    }
+
+    public void load(String venueId) {
+        Optional.of(disposable).ifPresent(Disposable::dispose);
+
+        disposable = getDetailedVenue.getCachedDetailVenue(venueId)
+                .map(VenueViewData::mapFrom)
+                .doOnNext(data -> this.venueViewData = data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        detailedVenue -> setState(venueView -> {
+                            venueView.show(detailedVenue);
+                        }),
+                        throwable -> {
+                            setState(ErrorView::showError);
                         });
     }
 

@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View> {
 
     private WeakReference<GoogleMapsBottomSheetBehavior> bottomSheetBehaviorWeakReference;
+    private boolean isInitialized;
 
+    private List<FloatingActionButton> fabs = new ArrayList<>();
     private int anchorHeight = -1;
+    private boolean enabled;
     private static int RANGE = 50;
 
     public BottomSheetAwareFabBehavior(Context context, AttributeSet attrs) {
@@ -29,11 +34,9 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
 
     @Override
     public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
-        if (anchorHeight == -1) {
-            anchorHeight = getWeekReference(dependency).get().getAnchorOffset();
-            child.setScaleX(0);
-            child.setScaleY(0);
-            child.setEnabled(false);
+        if (!isInitialized) {
+            init(dependency, child);
+            updateEnable(false);
         } else {
             float dependencyY = dependency.getY();
 
@@ -46,7 +49,7 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
             }
 
 
-            child.setEnabled(scale > 0);
+            updateEnable(scale > 0);
 
             child.setScaleY(scale);
             child.setScaleX(scale);
@@ -55,6 +58,42 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
         }
 
         return super.onDependentViewChanged(parent, child, dependency);
+    }
+
+    private void init(View dependency, View child) {
+        if (child instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) child;
+            int childCount = ((ViewGroup) child).getChildCount();
+            if (childCount < 1) {
+                return;
+            }
+
+            for (int i = 0; i < childCount; i++) {
+                View view = viewGroup.getChildAt(i);
+                if (view instanceof FloatingActionButton) {
+                    fabs.add((FloatingActionButton) view);
+                }
+            }
+
+            anchorHeight = getWeekReference(dependency).get().getHeaderHeight();
+            child.setScaleX(0);
+            child.setScaleY(0);
+            isInitialized = true;
+        } else {
+            throw new IllegalStateException("this behavior can be applied only to viewgroup");
+        }
+    }
+
+    private void updateEnable(boolean isEnabled) {
+        if (isEnabled == enabled) {
+            return;
+        }
+
+        for (FloatingActionButton fab : fabs) {
+            fab.setEnabled(isEnabled);
+        }
+
+        enabled = isEnabled;
     }
 
     private WeakReference<GoogleMapsBottomSheetBehavior> getWeekReference(View view) {

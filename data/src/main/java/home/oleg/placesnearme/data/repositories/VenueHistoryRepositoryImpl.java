@@ -2,9 +2,9 @@ package home.oleg.placesnearme.data.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import home.oleg.placenearme.models.DetailedVenue;
-import home.oleg.placenearme.models.DetailedVenueWithCreatedDate;
 import home.oleg.placenearme.repositories.VenueHistoryRepository;
 import home.oleg.placesnearme.data.dao.DetailedVenueDao;
 import home.oleg.placesnearme.data.dao.DetailedVenueHistoryDao;
@@ -13,11 +13,7 @@ import home.oleg.placesnearme.data.model.DetailedVenueHistory;
 import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity;
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
-import io.reactivex.functions.Function;
 
 public class VenueHistoryRepositoryImpl implements VenueHistoryRepository {
 
@@ -37,23 +33,17 @@ public class VenueHistoryRepositoryImpl implements VenueHistoryRepository {
 
     @Override
     public Completable checkOutFromCurrent() {
-        return venueHistoryDao
-                .getLastCheckIn()
+        return venueHistoryDao.getLastCheckIn()
                 .flatMapCompletable(this::dropCheckIn);
     }
 
     @Override
     public Flowable<Boolean> isHereNow(String id) {
-        return venueHistoryDao.getLastCheckIn()
-                .flatMap(historyDbEntity -> {
-                    if (historyDbEntity.getVenueId().equals(id)) {
-                        return Flowable.just(true);
-                    } else {
-                        return Flowable.just(false);
-                    }
-                    //if last is empty, then will be thrown an error.
-                    //convert error to false -> it means is not here now
-                }).onErrorReturnItem(false);
+        return Flowable.merge(
+                Flowable.just(false),
+                venueHistoryDao.observeById(id)
+                        .map(DetailedVenueHistoryDbEntity::isLastCheckIn)
+                        .debounce(200, TimeUnit.MILLISECONDS));
     }
 
     @Override

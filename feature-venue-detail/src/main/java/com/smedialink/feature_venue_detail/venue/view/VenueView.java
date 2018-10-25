@@ -11,6 +11,4 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
  */
 public interface VenueView extends LoadingView, ErrorView {
     void show(VenueViewData venue);
-
-    void showPreviewVenue(PreviewVenueViewData venue);
 }

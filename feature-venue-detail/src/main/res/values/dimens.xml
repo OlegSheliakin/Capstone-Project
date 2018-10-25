@@ -2,6 +2,8 @@
 <resources>
     <dimen name="radius_image_venue_photo">8dp</dimen>
     <dimen name="width_venue_photo">232dp</dimen>
-    <dimen name="height_venue_photo">154dp</dimen>
+    <dimen name="height_venue_photo">240dp</dimen>
+    <dimen name="anchor_height_venue_photo">100dp</dimen>
+    <dimen name="peek_height_venue">160dp</dimen>
     <dimen name="radius_skeleton_text">6dp</dimen>
 </resources>

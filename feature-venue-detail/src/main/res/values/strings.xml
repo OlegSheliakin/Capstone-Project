@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">feature-venue-detail</string>
     <string name="venue_detail_label_contacts">Contacts</string>
+    <string name="retry">Retry</string>
 </resources>

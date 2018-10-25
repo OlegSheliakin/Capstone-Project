@@ -1,87 +1,59 @@
 package com.smedialink.feature_main.view;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.smedialink.feature_main.R;
-import com.smedialink.feature_main.di.DaggerMainActivityComponent;
+import com.smedialink.feature_main.di.MainActivityComponent;
+import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 
 import javax.inject.Inject;
 
-import home.oleg.feature_favorite_venues.FavoritePlacesFragment;
-import home.oleg.placesnearme.feature_map.view.VenuesMapFragment;
-import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment;
+import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
-public final class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity implements ShowHideBottomBarListener {
 
     @Inject
-    BottomBarInitializer bottomBarInitializer;
+    BottomBarDelegate bottomBarDelegate;
+
+    private VenueFragment venueFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
         setContentView(R.layout.activity_main);
+
+        venueFragment = (VenueFragment) getSupportFragmentManager().findFragmentById(R.id.venueFragment);
         initBottomBar();
     }
 
+    @Override
+    public void showBottomBar() {
+        bottomBarDelegate.showBottomBar();
+    }
+
+    @Override
+    public void hideBottomBar() {
+        bottomBarDelegate.hideBottomBar();
+    }
+
+    @Override
+    public void showVenueDetail(VenueViewData venueViewData) {
+        venueFragment.showVenue(venueViewData.getId());
+    }
+
     private void injectDependencies() {
-        DaggerMainActivityComponent.builder().build().inject(this);
+        MainActivityComponent.Injector.inject(this);
     }
 
     private void initBottomBar() {
         AHBottomNavigation bottomNavigation = findViewById(R.id.bottomNavigationBar);
-        bottomBarInitializer.initialize(bottomNavigation);
-        bottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
-            if (wasSelected) {
-                return false;
-            }
-
-            Fragment fragment;
-            switch (position) {
-                case 0:
-                    fragment = new VenuesHistoryFragment();
-                    break;
-                case 1:
-                    fragment = new VenuesMapFragment();
-                    break;
-                case 2:
-                    fragment = new FavoritePlacesFragment();
-                    break;
-                default:
-                    fragment = new VenuesMapFragment();
-                    break;
-            }
-
-            String tag = String.valueOf(position);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-            Fragment curFrag = getSupportFragmentManager().findFragmentById(R.id.container);
-            if (curFrag != null) {
-                if (curFrag instanceof VenuesMapFragment) {
-                    fragmentTransaction.hide(curFrag);
-                } else {
-                    fragmentTransaction.detach(curFrag);
-                }
-            }
-
-            Fragment curFragment = getSupportFragmentManager().findFragmentByTag(tag);
-            if (curFragment == null) {
-                fragmentTransaction.add(R.id.container, fragment, tag);
-            } else if (curFragment instanceof VenuesMapFragment) {
-                fragmentTransaction.show(curFragment);
-            } else {
-                fragmentTransaction.attach(curFragment);
-            }
-
-            fragmentTransaction.commit();
-            return true;
-        });
-
-        bottomNavigation.setCurrentItem(1, true);
+        View containerBottomBar = findViewById(R.id.containerBottomBar);
+        bottomBarDelegate.attach(containerBottomBar, bottomNavigation);
     }
 
 }

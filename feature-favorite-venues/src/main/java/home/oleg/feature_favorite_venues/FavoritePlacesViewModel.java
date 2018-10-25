@@ -5,6 +5,7 @@ import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -33,8 +34,12 @@ public class FavoritePlacesViewModel extends BaseViewModel<FavoriteView> {
                     } else {
                         setState(FavoriteView::showEmpty);
                     }
-
-                }, Throwable::printStackTrace));
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                }));
     }
 
 }

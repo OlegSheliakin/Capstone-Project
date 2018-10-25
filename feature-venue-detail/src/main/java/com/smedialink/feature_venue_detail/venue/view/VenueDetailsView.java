@@ -1,12 +1,18 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -17,14 +23,13 @@ import java.util.Collections;
 
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.IconViewData;
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
 /**
  * Created by Oleg Sheliakin on 20.09.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueDetailsView extends ConstraintLayout {
+public class VenueDetailsView extends FrameLayout {
 
     private TextView tvVenueName;
     private TextView tvVenueAddress;
@@ -34,7 +39,16 @@ public class VenueDetailsView extends ConstraintLayout {
     private TextView tvCategoryName;
     private TextView tvContacts;
     private RatingBar rating;
+    private ViewGroup content;
     private ImageView ivVenueIcon;
+    private ProgressBar progressBar;
+    private Button retryButton;
+    private TextView tvError;
+    private RetryClickListener retryClickListener;
+
+    public interface RetryClickListener {
+        void onRetryClick();
+    }
 
     private PhotosAdapter photosAdapter = new PhotosAdapter();
 
@@ -51,18 +65,24 @@ public class VenueDetailsView extends ConstraintLayout {
         init();
     }
 
+    public void setRetryClickListener(@NonNull RetryClickListener retryClickListener) {
+        this.retryClickListener = retryClickListener;
+
+        retryButton.setOnClickListener(v -> retryClickListener.onRetryClick());
+    }
+
     public void show(VenueViewData venue) {
-        tvVenueName.setText(venue.getTitle());
-        tvVenueAddress.setText(venue.getAddress());
+        tvError.setVisibility(GONE);
+        retryButton.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
+
         tvVenueDescription.setText(venue.getDescription());
         tvVenueOpeningHours.setText(venue.getOpeningHoursStatus());
         tvContacts.setText(venue.getFormattedPhone());
         rating.setRating(venue.getAdoptedRating());
 
         photosAdapter.setItems(venue.getPhotos());
-    }
 
-    public void showPreview(PreviewVenueViewData venue) {
         tvVenueName.setText(venue.getTitle());
         tvVenueAddress.setText(venue.getAddress());
 
@@ -78,6 +98,8 @@ public class VenueDetailsView extends ConstraintLayout {
                 .getOrNull();
 
         ImageLoader.loadIcon(ivVenueIcon, url);
+
+        content.setVisibility(VISIBLE);
     }
 
     public void clearContent() {
@@ -88,11 +110,34 @@ public class VenueDetailsView extends ConstraintLayout {
         tvVenueOpeningHours.setText("");
         rating.setRating(0f);
         photosAdapter.setItems(Collections.emptyList());
+        tvError.setText("");
+    }
+
+    public void showLoading() {
+        tvError.setVisibility(GONE);
+        retryButton.setVisibility(GONE);
+        progressBar.setVisibility(VISIBLE);
+    }
+
+    public void hideLoading() {
+        tvError.setVisibility(GONE);
+        retryButton.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
+    }
+
+    public void showError(String text) {
+        retryButton.setVisibility(VISIBLE);
+        tvError.setVisibility(VISIBLE);
+        tvError.setText(text);
+        progressBar.setVisibility(GONE);
     }
 
     private void init() {
         LayoutInflater.from(getContext())
-                .inflate(R.layout.merge_view_venue_details, this, true);
+                .inflate(R.layout.view_venue_details, this, true);
+
+        content = findViewById(R.id.content);
+        content.setVisibility(INVISIBLE);
 
         tvVenueName = findViewById(R.id.tvVenueName);
         tvVenueAddress = findViewById(R.id.tvVenueAddress);
@@ -103,6 +148,9 @@ public class VenueDetailsView extends ConstraintLayout {
         ivVenueIcon = findViewById(R.id.ivVenueIcon);
         tvCategoryName = findViewById(R.id.tvCategoryName);
         rating = findViewById(R.id.ratingBar);
+        progressBar = findViewById(R.id.progressBar);
+        tvError = findViewById(R.id.tvError);
+        retryButton = findViewById(R.id.retryButton);
 
         RecyclerView rvPhotos = findViewById(R.id.rvPhotos);
         rvPhotos.setLayoutManager(new LinearLayoutManager(this.getContext()));

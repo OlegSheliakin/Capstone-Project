@@ -37,6 +37,8 @@ public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
         void favoriteClicked(VenueViewData venueViewData);
 
         void showOnMapClicked(VenueViewData venueViewData);
+
+        void onItemClicked(VenueViewData venueViewData);
     }
 
     @Override
@@ -79,7 +81,6 @@ public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
         @Override
         protected void bind(VenueViewItem venueViewItem) {
             VenueViewData venueViewData = venueViewItem.getVenueViewData();
-
             tvName.setText(venueViewData.getTitle());
             fabAddToFavorite.setSelected(venueViewData.isFavorite());
             fabAddToFavorite.setOnClickListener(v -> {
@@ -89,6 +90,8 @@ public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
             fabShowOnMap.setOnClickListener(v -> {
                 favoriteClicksListener.showOnMapClicked(venueViewData);
             });
+
+            itemView.setOnClickListener(v -> favoriteClicksListener.onItemClicked(venueViewData));
 
             if (venueViewData.getBestPhoto() != null) {
                 ImageLoader.loadImage(ivPhoto, venueViewData.getBestPhoto().getFullSizeUrl());

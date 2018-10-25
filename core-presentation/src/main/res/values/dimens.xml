@@ -22,7 +22,6 @@
 
     <dimen name="height_image_view_venue_photo">266dp</dimen>
     <dimen name="anchor_point_bottom_sheet">250dp</dimen>
-    <dimen name="peek_height_fragment_map">160dp</dimen>
     <dimen name="width_line_venue_detail">36dp</dimen>
     <dimen name="height_line_venue_detail">4dp</dimen>
     <dimen name="radius_item_photo_card">12dp</dimen>

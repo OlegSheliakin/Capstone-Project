@@ -19,6 +19,7 @@ import android.support.v4.view.AbsSavedState;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -326,13 +327,18 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
         }
         if (mAnchorHeightAuto) {
             if (mAnchorHeightMin == 0) {
-                mAnchorHeightMin = mParentHeight - parent.getWidth() * 9 / 16;
+                /*if(mParentHeight < parent.getWidth()) {
+                    mAnchorHeightMin = mParentHeight - parent.getWidth() * 9 / 16;
+                } else {
+                    mAnchorHeightMin = mParentHeight * parallax.getHeight();
+                }*/
+               // mAnchorHeightMin = mParentHeight - parallax.getHeight();
             }
-            mAnchorHeight = mAnchorHeightMin;
+            mAnchorHeight = mParentHeight - parallax.getHeight();
         }
         mMinOffset = Math.max(0, mParentHeight - child.getHeight());
         mMaxOffset = Math.max(mParentHeight - mPeekHeight, mMinOffset);
-        mAnchorOffset = Math.min(mParentHeight - mAnchorHeight, mMaxOffset);
+        mAnchorOffset = Math.min(mParentHeight - mAnchorHeight, mMaxOffset) - headerOffset;
         if (mState == STATE_EXPANDED) {
             ViewCompat.offsetTopAndBottom(child, mMinOffset);
             updateHeaderColor(mAnchorColor, mAnchorTextColor);
@@ -607,7 +613,7 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
     }
 
     public final int getHeaderHeight() {
-        return mAnchorOffset + headerOffset;
+        return parallax.getHeight();
     }
 
     /**
@@ -855,13 +861,13 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
         }
         mState = state;
         // determine visibility of parallax
-        if (parallax != null) {
+      /*  if (parallax != null) {
             if (mState == STATE_COLLAPSED || mState == STATE_HIDDEN) {
-                parallax.setVisibility(View.GONE);
+                parallax.setVisibility(View.INVISIBLE);
             } else {
                 parallax.setVisibility(View.VISIBLE);
             }
-        }
+        }*/
         if (state == STATE_COLLAPSED) {
             updateHeaderColor(mCollapsedColor, mCollapsedTextColor);
         } else if (mViewRef.get().getTop() < mMaxOffset && !stateFlag) {
@@ -1024,6 +1030,8 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
     private void dispatchOnSlide(int top) {
         View bottomSheet = mViewRef.get();
 
+        if(bottomSheet == null) return;
+
         float slideOffset;
         if (top > mMaxOffset) {
             slideOffset = (float) (mMaxOffset - top) / mPeekHeight;
@@ -1036,6 +1044,8 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
             if (slideOffset <= 0) {
                 updateHeaderColor(mCollapsedColor, mCollapsedTextColor);
                 parallax.setVisibility(View.INVISIBLE);
+            } else {
+                parallax.setVisibility(View.VISIBLE);
             }
 
             int mCurrentChildY = (top - mAnchorOffset) * mMaxOffset / (mMaxOffset - headerOffset - mAnchorOffset);

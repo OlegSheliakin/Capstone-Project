@@ -22,13 +22,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import home.oleg.placesnearme.feature_venues_history.di.VenueHistoryComponent;
 
 public class VenuesHistoryFragment extends Fragment
-        implements HistoryVenuesAdapter.FavoriteClicksListener, VenuesHistoryView, CreateFavoriteView {
+        implements HistoryVenuesAdapter.HistoryClicksListener, VenuesHistoryView, CreateFavoriteView {
 
     @Inject
     HistoryVenuesAdapter historyVenuesAdapter;
@@ -39,6 +40,8 @@ public class VenuesHistoryFragment extends Fragment
     @Inject
     CreateFavoriteViewModel createFavoriteViewModel;
 
+    private ShowHideBottomBarListener showHideBottomBarListener;
+
     public VenuesHistoryFragment() {
         // Required empty public constructor
     }
@@ -47,6 +50,9 @@ public class VenuesHistoryFragment extends Fragment
     public void onAttach(Context context) {
         injectDependencies(context);
         super.onAttach(context);
+        if (context instanceof ShowHideBottomBarListener) {
+            this.showHideBottomBarListener = (ShowHideBottomBarListener) context;
+        }
     }
 
     @Override
@@ -85,8 +91,8 @@ public class VenuesHistoryFragment extends Fragment
     }
 
     @Override
-    public void showOnMapClicked(VenueViewData venueViewData) {
-
+    public void onItemClicked(VenueViewData venueViewData) {
+        showHideBottomBarListener.showVenueDetail(venueViewData);
     }
 
     @Override

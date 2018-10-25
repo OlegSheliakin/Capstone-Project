@@ -1,5 +1,7 @@
 package home.oleg.placesnearme.data.repositories;
 
+import android.util.Log;
+
 import java.util.concurrent.TimeUnit;
 
 import home.oleg.placenearme.models.DetailedVenue;
@@ -26,10 +28,17 @@ public class DetailedVenueRepositoryImpl implements DetailedVenueRepository {
 
     @Override
     public Flowable<DetailedVenue> getDetailedVenueById(String venueId) {
-        return Flowable.merge(
-                dao.observeVenue(venueId).map(DetailedVenueMapper::map),
-                getFromNetwork(venueId).toFlowable()
-        ).debounce(300, TimeUnit.MILLISECONDS);
+        return Flowable.concat(fetch(venueId).toFlowable(), stream(venueId));
+    }
+
+    @Override
+    public Flowable<DetailedVenue> stream(String venueId) {
+        return dao.observeVenue(venueId).map(DetailedVenueMapper::map);
+    }
+
+    @Override
+    public Single<DetailedVenue> fetch(String venueId) {
+        return getFromNetwork(venueId);
     }
 
     private Single<DetailedVenue> getFromNetwork(String venueId) {

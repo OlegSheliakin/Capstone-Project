@@ -19,19 +19,19 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
 public final class HistoryVenuesAdapter extends BaseVenueAdapter {
 
-    private final HistoryVenuesAdapter.FavoriteClicksListener favoriteClicksListener;
+    private final HistoryVenuesAdapter.HistoryClicksListener favoriteClicksListener;
 
     public HistoryVenuesAdapter(
             @NonNull DiffUtil.ItemCallback<ItemViewType> diffCallback,
-            HistoryVenuesAdapter.FavoriteClicksListener favoriteClicksListener) {
+            HistoryVenuesAdapter.HistoryClicksListener favoriteClicksListener) {
         super(diffCallback);
         this.favoriteClicksListener = favoriteClicksListener;
     }
 
-    public interface FavoriteClicksListener {
+    public interface HistoryClicksListener {
         void favoriteClicked(VenueViewData venueViewData);
 
-        void showOnMapClicked(VenueViewData venueViewData);
+        void onItemClicked(VenueViewData venueViewData);
     }
 
     @Override
@@ -59,11 +59,11 @@ public final class HistoryVenuesAdapter extends BaseVenueAdapter {
         private RatingBar ratingBar;
         private FloatingActionButton fabAddToFavorite;
 
-        private HistoryVenuesAdapter.FavoriteClicksListener favoriteClicksListener;
+        private HistoryVenuesAdapter.HistoryClicksListener historyClicksListener;
 
-        private ViewHolder(@NonNull View itemView, HistoryVenuesAdapter.FavoriteClicksListener favoriteClicksListener) {
+        private ViewHolder(@NonNull View itemView, HistoryVenuesAdapter.HistoryClicksListener historyClicksListener) {
             super(itemView);
-            this.favoriteClicksListener = favoriteClicksListener;
+            this.historyClicksListener = historyClicksListener;
 
             this.ivVenueIcon = itemView.findViewById(R.id.ivVenueIcon);
             this.tvVenueName = itemView.findViewById(R.id.tvVenueName);
@@ -87,9 +87,8 @@ public final class HistoryVenuesAdapter extends BaseVenueAdapter {
             tvCategoryName.setText(venueViewData.getCategoryName());
             ratingBar.setRating(venueViewData.getAdoptedRating());
 
-            fabAddToFavorite.setOnClickListener(v -> {
-                favoriteClicksListener.favoriteClicked(venueViewData);
-            });
+            fabAddToFavorite.setOnClickListener(v -> historyClicksListener.favoriteClicked(venueViewData));
+            itemView.setOnClickListener(v -> historyClicksListener.onItemClicked(venueViewData));
 
             if (venueViewData.getBestPhoto() != null) {
                 ImageLoader.loadIcon(ivVenueIcon, venueViewData.getCategoryIconUrl());

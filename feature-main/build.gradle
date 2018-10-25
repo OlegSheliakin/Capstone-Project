@@ -4,9 +4,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core-di')
+    implementation project(':core-presentation')
     implementation project(':feature-favorite-venues')
     implementation project(':feature-venues-history')
     implementation project(':feature-map')
+    implementation project(':feature-venue-detail')
+    implementation project(':feature-add-favorite')
+    implementation project(':feature-add-history')
 
     implementation deps.lifecycle.extensions
 

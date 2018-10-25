@@ -4,6 +4,8 @@ import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.VenueHistoryRepository;
 import io.reactivex.Flowable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
 
 public class GetDetailedVenue {
 
@@ -17,12 +19,20 @@ public class GetDetailedVenue {
     }
 
     public Flowable<DetailedVenue> getDetailedVenue(String id) {
-        return detailedVenueRepository.getDetailedVenueById(id)
-                .flatMap(detailedVenue -> venueHistoryRepository.isHereNow(id)
-                        .map(isHere -> {
-                            detailedVenue.setHereNow(isHere);
-                            return detailedVenue;
-                        }));
+        return get(id, detailedVenueRepository.getDetailedVenueById(id));
+    }
+
+    public Flowable<DetailedVenue> getCachedDetailVenue(String id) {
+        return get(id, detailedVenueRepository.stream(id));
+    }
+
+    private Flowable<DetailedVenue> get(String id, Flowable<DetailedVenue> detailedVenueFlowable) {
+        return Flowable.combineLatest(
+                venueHistoryRepository.isHereNow(id),
+                detailedVenueFlowable, (aBoolean, detailedVenue) -> {
+                    detailedVenue.setHereNow(aBoolean);
+                    return detailedVenue;
+                });
     }
 
 }

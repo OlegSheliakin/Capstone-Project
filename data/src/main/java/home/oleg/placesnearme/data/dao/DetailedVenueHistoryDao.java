@@ -31,8 +31,14 @@ public interface DetailedVenueHistoryDao {
             "INNER JOIN venue_history ON venue_history.lastCheckIn = 1")
     Single<DetailedVenueHistory> getCurrent();
 
+    @Query("SELECT * FROM venue_history WHERE venue_history.venueId = :venueId")
+    Flowable<DetailedVenueHistoryDbEntity> observeById(String venueId);
+
     @Query("SELECT * FROM venue_history WHERE lastCheckIn = 1")
-    Flowable<DetailedVenueHistoryDbEntity> getLastCheckIn();
+    Maybe<DetailedVenueHistoryDbEntity> getLastCheckIn();
+
+    @Query("SELECT * FROM venue_history WHERE lastCheckIn = 1")
+    DetailedVenueHistoryDbEntity getLastCheckInEagelry();
 
     @Query("DELETE FROM venue_history WHERE venue_history.venueId = :venueId")
     void remove(String venueId);

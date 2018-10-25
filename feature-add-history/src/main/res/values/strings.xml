@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">feature-add-history</string>
+    <string name="add_favorite_message_success_added">Added to favorites</string>
+    <string name="add_favorite_message_success_removed">Removed from favorites</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.smedialink.feature_venue_detail.venue.di;
 
 import android.app.Activity;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 
@@ -45,4 +46,11 @@ public final class VenueDetailModule {
     static Activity provideActivity(VenueFragment fragment) {
         return fragment.getActivity();
     }
+
+    @Provides
+    @NonNull
+    static LifecycleOwner provideLifecycleOwner(VenueFragment fragment) {
+        return fragment;
+    }
+
 }

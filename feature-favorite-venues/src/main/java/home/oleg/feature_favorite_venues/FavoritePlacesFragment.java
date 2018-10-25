@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.smedialink.common.Optional;
 import com.smedialink.feature_add_favorite.CreateFavoriteView;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
+import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import home.oleg.feature_favorite_venues.di.FavoriteVenuesComponent;
+import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
@@ -39,6 +41,9 @@ public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAd
     @Inject
     FavoriteVenuesAdapter adapter;
 
+
+    private ShowHideBottomBarListener showHideBottomBarListener;
+
     public FavoritePlacesFragment() {
     }
 
@@ -46,6 +51,9 @@ public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAd
     public void onAttach(Context context) {
         injectDependencies();
         super.onAttach(context);
+        if (context instanceof ShowHideBottomBarListener) {
+            this.showHideBottomBarListener = (ShowHideBottomBarListener) context;
+        }
     }
 
     @Override
@@ -101,6 +109,11 @@ public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAd
     @Override
     public void showOnMapClicked(VenueViewData venueViewData) {
         Toast.makeText(getContext(), "show on map clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemClicked(VenueViewData venueViewData) {
+        showHideBottomBarListener.showVenueDetail(venueViewData);
     }
 
     private void injectDependencies() {

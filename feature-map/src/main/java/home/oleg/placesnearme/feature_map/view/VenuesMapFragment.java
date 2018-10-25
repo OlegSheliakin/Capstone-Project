@@ -3,6 +3,7 @@ package home.oleg.placesnearme.feature_map.view;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import home.oleg.placenearme.models.UserLocation;
+import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.R;
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent;
@@ -50,9 +52,10 @@ public class VenuesMapFragment extends BaseMapFragment implements
     @Inject
     VenueViewFacade venueViewFacade;
 
-
     @Inject
     MarkerMapper markerMapper;
+
+    private ShowHideBottomBarListener showHideBottomBarListener;
 
     private GoogleMap googleMap;
 
@@ -60,6 +63,10 @@ public class VenuesMapFragment extends BaseMapFragment implements
     public void onAttach(Context context) {
         super.onAttach(context);
         injectDependencies();
+
+        if(context instanceof ShowHideBottomBarListener) {
+            this.showHideBottomBarListener = (ShowHideBottomBarListener) context;
+        }
     }
 
     @Override
@@ -83,6 +90,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
         });
 
         venueViewFacade.onCreateView(view);
+        venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener);
 
         venuesMapViewModelFacade.attachView(this);
         venuesMapViewModelFacade.addOnVenueCLickListener(this);
@@ -172,4 +180,5 @@ public class VenuesMapFragment extends BaseMapFragment implements
     public void onVenueSelected(PreviewVenueViewData venueMapViewData) {
         venueViewFacade.setVenue(venueMapViewData);
     }
+
 }

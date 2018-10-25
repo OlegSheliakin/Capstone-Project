@@ -42,8 +42,7 @@ dependencies {
 
     implementation deps.support.recyclerview
 
-    implementation deps.glide.runtime
-    annotationProcessor deps.glide.compiler
+    implementation 'com.github.GrenderG:Toasty:1.3.0'
 
     implementation deps.lifecycle.extensions
 
