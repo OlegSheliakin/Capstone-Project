@@ -27,4 +27,5 @@
     <dimen name="radius_item_photo_card">12dp</dimen>
 
     <dimen name="size_fab_mini">40dp</dimen>
+    <dimen name="status_bar_height">24dp</dimen>
 </resources>
