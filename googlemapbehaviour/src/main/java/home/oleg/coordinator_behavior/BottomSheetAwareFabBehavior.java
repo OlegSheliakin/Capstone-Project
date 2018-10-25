@@ -36,23 +36,13 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
     public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         if (!isInitialized) {
             init(dependency, child);
-            updateEnable(false);
         } else {
             float dependencyY = dependency.getY();
-
-            float scale = 1f - (dependencyY - anchorHeight) / RANGE;
-
-            if (scale > 1) {
-                scale = 1;
-            } else if (scale < 0) {
-                scale = 0;
-            }
-
-
-            updateEnable(scale > 0);
-
-            child.setScaleY(scale);
-            child.setScaleX(scale);
+         if(dependencyY < anchorHeight) {
+             updateEnable(true);
+         } else {
+             updateEnable(false);
+         }
 
             return true;
         }
@@ -71,13 +61,12 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
             for (int i = 0; i < childCount; i++) {
                 View view = viewGroup.getChildAt(i);
                 if (view instanceof FloatingActionButton) {
+                    ((FloatingActionButton) view).hide();
                     fabs.add((FloatingActionButton) view);
                 }
             }
 
             anchorHeight = getWeekReference(dependency).get().getHeaderHeight();
-            child.setScaleX(0);
-            child.setScaleY(0);
             isInitialized = true;
         } else {
             throw new IllegalStateException("this behavior can be applied only to viewgroup");
@@ -90,7 +79,11 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
         }
 
         for (FloatingActionButton fab : fabs) {
-            fab.setEnabled(isEnabled);
+            if(isEnabled){
+                fab.show();
+            } else {
+                fab.hide();
+            }
         }
 
         enabled = isEnabled;

@@ -9,33 +9,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabSearch"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="top|end"
+        app:backgroundTint="@android:color/white"
+        android:layout_marginStart="@dimen/margin_high"
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:layout_marginEnd="@dimen/margin_high"
+        android:layout_marginBottom="@dimen/margin_high"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_search" />
 
-        <include layout="@layout/status_bar" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginBottom="@dimen/margin_high"
-            android:layout_marginEnd="@dimen/margin_high"
-            android:layout_marginStart="@dimen/margin_high"
-            android:layout_marginTop="@dimen/status_bar_height"
-            app:backgroundTint="@android:color/white"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_search" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvSections"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <include layout="@layout/status_bar" />
+    <include layout="@layout/layout_search" />
 
     <include layout="@layout/layout_venue" />
 
@@ -51,9 +38,9 @@
             android:id="@+id/fabCurrentLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_high"
-            android:layout_marginEnd="@dimen/margin_high"
             android:layout_marginStart="@dimen/margin_high"
+            android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginBottom="@dimen/margin_high"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -65,11 +52,9 @@
             android:id="@+id/fabZoomOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_high"
             android:layout_marginStart="@dimen/margin_high"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginBottom="@dimen/margin_normal"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@id/fabCurrentLocation"
@@ -80,11 +65,9 @@
             android:id="@+id/fabZoomIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_high"
             android:layout_marginStart="@dimen/margin_high"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginBottom="@dimen/margin_normal"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@id/fabZoomOut"

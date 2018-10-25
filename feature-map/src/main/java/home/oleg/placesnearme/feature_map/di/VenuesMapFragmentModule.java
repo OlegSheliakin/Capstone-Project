@@ -8,13 +8,19 @@ import android.arch.lifecycle.ViewModelProviders;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
+import java.util.List;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.feature_add_history.CheckInViewModel;
+import home.oleg.placesnearme.feature_map.adapter.CheckedItem;
+import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter;
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter;
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl;
+import home.oleg.placesnearme.feature_map.sections.SectionProvider;
 import home.oleg.placesnearme.feature_map.view.VenuesMapFragment;
+import home.oleg.placesnearme.feature_map.viewdata.SectionViewData;
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 import io.reactivex.annotations.NonNull;
@@ -78,4 +84,10 @@ public abstract class VenuesMapFragmentModule {
     @NonNull
     abstract DrawableConverter provideConverter(DrawableConverterImpl impl);
 
+    @Provides
+    public static SectionsAdapter provideSectionsAdapter(VenuesMapFragment venuesMapFragment) {
+        SectionProvider sectionProvider = new SectionProvider();
+        List<CheckedItem<SectionViewData>> seCheckedItems = CheckedItem.wrap(sectionProvider.getSections());
+        return new SectionsAdapter(seCheckedItems, venuesMapFragment);
+    }
 }

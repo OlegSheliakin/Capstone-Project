@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tvSectionName"
-    android:layout_width="80dp"
+    android:id="@+id/tvSection"
+    android:layout_width="@dimen/width_tv_section"
+    android:textColor="@color/textColorLight"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/margin_small"
     android:drawablePadding="@dimen/margin_small"

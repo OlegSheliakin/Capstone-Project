@@ -8,7 +8,6 @@
     <string name="dial">Dial</string>
     <string name="meters">%1$d m</string>
     <string name="kms">%1$.2f km</string>
-    <string name="nothing_around_you">There are nothing around you. Try to increase radius</string>
     <string name="progress_bar_message">Please wait, searching is in progress</string>
     <string name="distance">m.</string>
     <string name="error_no_location">Sorry, cannot get your location. Try to use Network and Wi-Fi for determining location</string>
@@ -21,5 +20,4 @@
     <string name="content_description_venue_s_photo">Venue\'s photo</string>
     <string name="all_description">Description</string>
     <string name="all_label_gallery">Gallery</string>
-
 </resources>

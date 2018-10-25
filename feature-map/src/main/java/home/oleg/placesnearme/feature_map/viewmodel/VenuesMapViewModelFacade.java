@@ -3,12 +3,11 @@ package home.oleg.placesnearme.feature_map.viewmodel;
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.Nullable;
 
-import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
-
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import home.oleg.placenearme.models.Section;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.view.VenuesMapView;
@@ -46,13 +45,10 @@ public class VenuesMapViewModelFacade {
     public void attachView(VenuesMapView venuesMapView) {
         venuesViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(venuesMapView));
         userLocationViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(venuesMapView));
-
-        refreshRecommendedVenues();
-        refreshUserLocation();
     }
 
-    public void refreshRecommendedVenues() {
-        venuesViewModel.getRecommendedVenues();
+    public void refreshRecommendedVenues(Section section) {
+        venuesViewModel.getRecommendedVenues(section);
     }
 
     public void refreshUserLocation() {

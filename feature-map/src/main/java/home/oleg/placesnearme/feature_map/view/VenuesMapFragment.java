@@ -3,11 +3,13 @@ package home.oleg.placesnearme.feature_map.view;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,12 +27,19 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.R;
+import home.oleg.placesnearme.feature_map.R2;
+import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter;
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent;
-import home.oleg.placesnearme.feature_map.marker.MarkerMapper;
+import home.oleg.placesnearme.feature_map.mapper.MarkerMapper;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesMapViewModelFacade;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -42,9 +51,9 @@ import static home.oleg.placesnearme.feature_map.view.VenuesMapFragmentPermissio
 public class VenuesMapFragment extends BaseMapFragment implements
         VenuesMapView,
         GoogleMap.OnMarkerClickListener,
-        VenuesMapViewModelFacade.VenueClickListener {
+        VenuesMapViewModelFacade.VenueClickListener, SectionsAdapter.SectionSelectListener {
 
-    private static final int USER_LOCATION_ZOOM = 16;
+    private static final int USER_LOCATION_ZOOM = 14;
 
     @Inject
     VenuesMapViewModelFacade venuesMapViewModelFacade;
@@ -55,16 +64,27 @@ public class VenuesMapFragment extends BaseMapFragment implements
     @Inject
     MarkerMapper markerMapper;
 
+    @Inject
+    SectionsAdapter sectionsAdapter;
+
+    @BindView(R2.id.searchAppBar)
+    AppBarLayout searchAppBar;
+
+    @BindView(R2.id.fabSearch)
+    FloatingActionButton fabSearch;
+
     private ShowHideBottomBarListener showHideBottomBarListener;
 
     private GoogleMap googleMap;
+
+    private Unbinder unbinder;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         injectDependencies();
 
-        if(context instanceof ShowHideBottomBarListener) {
+        if (context instanceof ShowHideBottomBarListener) {
             this.showHideBottomBarListener = (ShowHideBottomBarListener) context;
         }
     }
@@ -72,28 +92,40 @@ public class VenuesMapFragment extends BaseMapFragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FloatingActionButton fabCurrentLocation = view.findViewById(R.id.fabCurrentLocation);
-        FloatingActionButton fabZoomIn = view.findViewById(R.id.fabZoomIn);
-        FloatingActionButton fabZoomOut = view.findViewById(R.id.fabZoomOut);
+        unbinder = ButterKnife.bind(this, view);
 
-        fabCurrentLocation.setOnClickListener(v ->
-                onShowCurrentLocationClickedWithPermissionCheck(this));
-
-        fabZoomIn.setOnClickListener(v -> {
-            Optional.of(googleMap)
-                    .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomIn()));
-        });
-
-        fabZoomOut.setOnClickListener(v -> {
-            Optional.of(googleMap)
-                    .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
-        });
+        RecyclerView rvSections = view.findViewById(R.id.rvSections);
+        rvSections.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvSections.setAdapter(sectionsAdapter);
 
         venueViewFacade.onCreateView(view);
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener);
 
         venuesMapViewModelFacade.attachView(this);
         venuesMapViewModelFacade.addOnVenueCLickListener(this);
+    }
+
+    @OnClick(R2.id.fabSearch)
+    public void oSearchClicked() {
+        fabSearch.hide();
+        searchAppBar.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R2.id.fabZoomIn)
+    public void onZoomInClicked() {
+        Optional.of(googleMap)
+                .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomIn()));
+    }
+
+    @OnClick(R2.id.fabZoomOut)
+    public void onZoomOutClicked() {
+        Optional.of(googleMap)
+                .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
+    }
+
+    @OnClick(R2.id.fabCurrentLocation)
+    public void onMyLocationClicked() {
+        onShowCurrentLocationClickedWithPermissionCheck(this);
     }
 
     @Override
@@ -149,6 +181,12 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
     @SuppressLint("MissingPermission")
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     void onShowCurrentLocationClicked() {
@@ -163,11 +201,16 @@ public class VenuesMapFragment extends BaseMapFragment implements
         googleMap.setOnMarkerClickListener(this);
 
         venuesMapViewModelFacade.refreshUserLocation();
-        venuesMapViewModelFacade.refreshRecommendedVenues();
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        searchAppBar.setVisibility(View.GONE);
+        fabSearch.show();
+
+        Optional.of(googleMap).ifPresent(map -> {
+
+        });
         venuesMapViewModelFacade.select(marker.getId());
         return true;
     }
@@ -181,4 +224,8 @@ public class VenuesMapFragment extends BaseMapFragment implements
         venueViewFacade.setVenue(venueMapViewData);
     }
 
+    @Override
+    public void sectionSelected(Section section) {
+        venuesMapViewModelFacade.refreshRecommendedVenues(section);
+    }
 }

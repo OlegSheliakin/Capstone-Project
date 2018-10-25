@@ -4,10 +4,10 @@
     android:viewportHeight="36"
     android:viewportWidth="36">
     <path
-        android:fillColor="@color/colorCategoryDrinks"
+        android:fillColor="#5693E4"
         android:fillType="nonZero"
         android:pathData="M18,18m-17,0a17,17 0,1 1,34 0a17,17 0,1 1,-34 0"
-        android:strokeColor="@color/colorCategoryDrinks"
+        android:strokeColor="#5693E4"
         android:strokeWidth="1.5" />
     <path
         android:fillColor="#FFF"

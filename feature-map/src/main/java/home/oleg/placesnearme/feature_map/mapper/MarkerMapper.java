@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.marker;
+package home.oleg.placesnearme.feature_map.mapper;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;

@@ -28,7 +28,8 @@ ext.versions = [
         timber             : "4.7.1",
         bottomNavigation   : "2.1.0",
         permissionDispather: "3.3.1",
-        shimmerVersion     : "v1.0.9"
+        shimmerVersion     : "v1.0.9",
+        butterKnifeVersion     : "9.0.0-rc1"
 ]
 
 def deps = [:]
@@ -97,6 +98,12 @@ deps.permissions = [
         runtime : "com.github.hotchemi:permissionsdispatcher:$versions.permissionDispather",
         compiler: "com.github.hotchemi:permissionsdispatcher-processor:$versions.permissionDispather"
 ]
+
+deps.butterknife = [
+        runtime : "com.jakewharton:butterknife:$versions.butterKnifeVersion",
+        compiler: "com.jakewharton:butterknife-compiler:$versions.butterKnifeVersion"
+]
+
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.leakCanary = "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 deps.bottomNavigation = "com.aurelhubert:ahbottomnavigation:$versions.bottomNavigation"

@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="label_section_top" type="id">Top</item>
-    <item name="label_section_arts" type="id">Arts</item>
-    <item name="label_section_coffee" type="id">coffee</item>
-    <item name="label_section_drinks" type="id">Drinks</item>
-    <item name="label_section_food" type="id">Food</item>
-    <item name="label_section_outdoors" type="id">Outdoors</item>
-    <item name="label_section_shops" type="id">Shops</item>
-    <item name="label_section_sights" type="id">Sights</item>
-    <item name="label_section_trending" type="id">Trending</item>
+    <string name="label_section_top">Top</string>
+    <string name="label_section_arts">Arts</string>
+    <string name="label_section_coffee">coffee</string>
+    <string name="label_section_drinks">Drinks</string>
+    <string name="label_section_food" >Food</string>
+    <string name="label_section_outdoors">Outdoors</string>
+    <string name="label_section_shops">Shops</string>
+    <string name="label_section_sights" >Sights</string>
+    <string name="label_section_trending">Trending</string>
 </resources>

@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.mapper;
+package home.oleg.placesnearme.feature_map.sections;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,21 +21,21 @@ public final class SectionProvider {
         sectionViewDataList.add(
                 new SectionViewData(Section.TOP, R.string.label_section_top, R.drawable.state_top_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.ARTS, R.string.label_section_arts, R.drawable.state_top_section));
+                new SectionViewData(Section.ARTS, R.string.label_section_arts, R.drawable.state_arts_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.COFFEE, R.string.label_section_coffee, R.drawable.state_top_section));
+                new SectionViewData(Section.COFFEE, R.string.label_section_coffee, R.drawable.state_coffee_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.DRINKS, R.string.label_section_drinks, R.drawable.state_top_section));
+                new SectionViewData(Section.DRINKS, R.string.label_section_drinks, R.drawable.state_drinks_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.FOOD, R.string.label_section_food, R.drawable.state_top_section));
+                new SectionViewData(Section.FOOD, R.string.label_section_food, R.drawable.state_food_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.OUTDOORS, R.string.label_section_outdoors, R.drawable.state_top_section));
+                new SectionViewData(Section.OUTDOORS, R.string.label_section_outdoors, R.drawable.state_outdoors_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.SHOPS, R.string.label_section_shops, R.drawable.state_top_section));
+                new SectionViewData(Section.SHOPS, R.string.label_section_shops, R.drawable.state_shops_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.SIGHTS, R.string.label_section_sights, R.drawable.state_top_section));
+                new SectionViewData(Section.SIGHTS, R.string.label_section_sights, R.drawable.state_sights_section));
         sectionViewDataList.add(
-                new SectionViewData(Section.TRENDING, R.string.label_section_trending, R.drawable.state_top_section));
+                new SectionViewData(Section.TRENDING, R.string.label_section_trending, R.drawable.state_trends_section));
     }
 
     public List<SectionViewData> getSections() {

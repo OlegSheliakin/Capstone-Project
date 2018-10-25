@@ -21,6 +21,9 @@ dependencies {
     implementation deps.support.cardview
     implementation deps.support.constraintLayout
 
+    implementation deps.butterknife.runtime
+    annotationProcessor deps.butterknife.compiler
+
     implementation deps.permissions.runtime
     annotationProcessor deps.permissions.compiler
 
@@ -30,9 +33,6 @@ dependencies {
 
     implementation deps.dagger.runtime
     annotationProcessor deps.dagger.compiler
-
-    implementation deps.glide.runtime
-    annotationProcessor deps.glide.compiler
 
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid

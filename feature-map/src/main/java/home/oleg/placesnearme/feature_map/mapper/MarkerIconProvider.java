@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.marker;
+package home.oleg.placesnearme.feature_map.mapper;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;

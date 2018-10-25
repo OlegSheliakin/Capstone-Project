@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
+import home.oleg.placenearme.models.Section;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
 import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActions;
@@ -27,8 +28,8 @@ public final class VenuesViewModel extends BaseViewModel<VenuesView> {
         this.interactor = interactor;
     }
 
-    public void getRecommendedVenues() {
-        addToDisposables(interactor.getRecommendedSection()
+    public void getRecommendedVenues(Section section) {
+        addToDisposables(interactor.getRecommendedSection(section)
                 .map(sectionListPair -> VenueMapViewMapper.map(sectionListPair.getFirst(), sectionListPair.getSecond()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
