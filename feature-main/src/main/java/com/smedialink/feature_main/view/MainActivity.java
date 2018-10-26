@@ -28,7 +28,7 @@ public final class MainActivity extends AppCompatActivity implements ShowHideBot
         setContentView(R.layout.activity_main);
 
         venueFragment = (VenueFragment) getSupportFragmentManager().findFragmentById(R.id.venueFragment);
-        initBottomBar();
+        initBottomBar(savedInstanceState);
     }
 
     @Override
@@ -50,10 +50,10 @@ public final class MainActivity extends AppCompatActivity implements ShowHideBot
         MainActivityComponent.Injector.inject(this);
     }
 
-    private void initBottomBar() {
+    private void initBottomBar(Bundle savedInstanceState) {
         AHBottomNavigation bottomNavigation = findViewById(R.id.bottomNavigationBar);
         View containerBottomBar = findViewById(R.id.containerBottomBar);
-        bottomBarDelegate.attach(containerBottomBar, bottomNavigation);
+        bottomBarDelegate.attach(containerBottomBar, bottomNavigation, savedInstanceState);
     }
 
 }

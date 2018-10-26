@@ -1,6 +1,7 @@
 package com.smedialink.feature_main.view;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -26,7 +27,7 @@ public class BottomBarDelegate implements ShowHideBottomBarListener {
         this.bottomBarTabListener = bottomBarTabListener;
     }
 
-    public void attach(View containerBottomBar, AHBottomNavigation bottomNavigation) {
+    public void attach(View containerBottomBar, AHBottomNavigation bottomNavigation, Bundle savedInstanceState) {
         this.containerBottomBar = containerBottomBar;
         bottomNavigation.setAccentColor(Color.WHITE);
         bottomNavigation.setInactiveColor(Color.WHITE);
@@ -42,21 +43,29 @@ public class BottomBarDelegate implements ShowHideBottomBarListener {
         bottomNavigation.addItem(item3);
 
         bottomNavigation.setOnTabSelectedListener(bottomBarTabListener);
-        bottomNavigation.setCurrentItem(1);
+
+        if (savedInstanceState == null) {
+            bottomNavigation.setCurrentItem(1);
+        }
     }
 
     @Override
     public void showBottomBar() {
-        containerBottomBar.animate().translationY(containerBottomBar.getHeight()).start();
+        if (containerBottomBar.getTranslationY() == 0) {
+            containerBottomBar.animate().translationY(containerBottomBar.getHeight()).start();
+        }
     }
 
     @Override
     public void hideBottomBar() {
-        containerBottomBar.animate().translationY(0).start();
+        if (containerBottomBar.getTranslationY() > 0) {
+            containerBottomBar.animate().translationY(0).start();
+        }
     }
 
     @Override
     public void showVenueDetail(VenueViewData venueViewData) {
 
     }
+
 }

@@ -24,6 +24,8 @@ dependencies {
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
 
+    implementation 'com.github.ybq:AndroidSpinKit:v1.0.0'
+
     implementation deps.permissions.runtime
     annotationProcessor deps.permissions.compiler
 

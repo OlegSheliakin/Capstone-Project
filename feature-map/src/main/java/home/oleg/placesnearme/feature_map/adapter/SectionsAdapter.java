@@ -27,6 +27,16 @@ public class SectionsAdapter extends RecyclerView.Adapter<SectionsAdapter.ViewHo
         this.sectionSelectListener = sectionSelectListener;
     }
 
+    public int getSelectedItemPosition() {
+        int selectedItemPosition = -1;
+        for (int i = 0; i < checkedItems.size(); i++) {
+            if(checkedItems.get(i).isChecked()) {
+                selectedItemPosition = i;
+            }
+        }
+        return selectedItemPosition;
+    }
+
     public interface SectionSelectListener {
         void sectionSelected(Section section);
     }
@@ -50,12 +60,20 @@ public class SectionsAdapter extends RecyclerView.Adapter<SectionsAdapter.ViewHo
 
     @Override
     public void itemSelected(int position) {
+        setSelected(position);
+        sectionSelectListener.sectionSelected(checkedItems.get(position).getData().getSection());
+    }
+
+    public void setSelected(int position) {
+        if (position == -1) {
+            return;
+        }
+
         for (CheckedItem<SectionViewData> checkedItem : checkedItems) {
             checkedItem.setChecked(false);
         }
         checkedItems.get(position).setChecked(true);
         notifyDataSetChanged();
-        sectionSelectListener.sectionSelected(checkedItems.get(position).getData().getSection());
     }
 
     static final class ViewHolder extends RecyclerView.ViewHolder {

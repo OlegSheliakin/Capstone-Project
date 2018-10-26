@@ -20,6 +20,9 @@ dependencies {
 
     implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
 
+    implementation deps.butterknife.runtime
+    annotationProcessor deps.butterknife.compiler
+
     implementation deps.dagger.runtime
     annotationProcessor deps.dagger.compiler
 

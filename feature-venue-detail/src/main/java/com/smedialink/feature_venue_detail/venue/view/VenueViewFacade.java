@@ -1,6 +1,7 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -49,6 +50,9 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     private FloatingActionButton fabCheckInButton;
     private MergedAppBarLayoutBehavior mergedAppBarLayoutBehavior;
     private GoogleMapsBottomSheetBehavior behavior;
+    private NestedScrollView nestedScrollView;
+
+    private int behaviorState = GoogleMapsBottomSheetBehavior.STATE_HIDDEN;
 
     @Inject
     public VenueViewFacade(
@@ -63,7 +67,6 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     }
 
     public void onCreateView(View view) {
-
         venueDetailsView = view.findViewById(R.id.venueView);
         venueDetailsView.setRetryClickListener(this);
         ivVenuePhoto = view.findViewById(R.id.ivVenuePhoto);
@@ -79,6 +82,23 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
         venueViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
         createFavoriteViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
         checkInViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
+    }
+
+    public void onSaveState(Bundle state) {
+        behaviorState = behavior.getState();
+        state.putInt("state", behaviorState);
+    }
+
+    public void onRestoreState(Bundle state) {
+        behaviorState = state.getInt("state");
+        nestedScrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                behavior.setState(behaviorState);
+                nestedScrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
     }
 
     public void setShowHideBottomBarListener(ShowHideBottomBarListener showHideBottomBarListener) {
@@ -130,7 +150,7 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     }
 
     private void initBehavior(View view) {
-        NestedScrollView nestedScrollView = view.findViewById(R.id.nestedScrollView);
+        nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
         behavior = GoogleMapsBottomSheetBehavior.from(nestedScrollView);
         behavior.setParallax(ivVenuePhoto);

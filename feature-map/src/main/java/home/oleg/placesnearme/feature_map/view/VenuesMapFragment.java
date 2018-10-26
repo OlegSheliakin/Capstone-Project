@@ -34,13 +34,18 @@ import butterknife.Unbinder;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.R;
 import home.oleg.placesnearme.feature_map.R2;
 import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter;
+import home.oleg.placesnearme.feature_map.custom.LoadingView;
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent;
 import home.oleg.placesnearme.feature_map.mapper.MarkerMapper;
-import home.oleg.placesnearme.feature_map.viewmodel.VenuesMapViewModelFacade;
+import home.oleg.placesnearme.feature_map.state.LocationViewState;
+import home.oleg.placesnearme.feature_map.state.MapViewState;
+import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
+import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -49,14 +54,20 @@ import static home.oleg.placesnearme.feature_map.view.VenuesMapFragmentPermissio
 
 @RuntimePermissions
 public class VenuesMapFragment extends BaseMapFragment implements
-        VenuesMapView,
-        GoogleMap.OnMarkerClickListener,
-        VenuesMapViewModelFacade.VenueClickListener, SectionsAdapter.SectionSelectListener {
+        GoogleMap.OnMarkerClickListener, SectionsAdapter.SectionSelectListener {
 
+    private static final String KEY_SEARCH_VISIBILITY = "key_search_visibility";
+    private static final String KEY_SEARCH_SELECTED_ITEM_POSITION = "key_search_selected_item_position";
     private static final int USER_LOCATION_ZOOM = 14;
 
     @Inject
-    VenuesMapViewModelFacade venuesMapViewModelFacade;
+    ToastDelegate toastDelegate;
+
+    @Inject
+    VenuesViewModel venuesViewModel;
+
+    @Inject
+    UserLocationViewModel userLocationViewModel;
 
     @Inject
     VenueViewFacade venueViewFacade;
@@ -72,6 +83,9 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
     @BindView(R2.id.fabSearch)
     FloatingActionButton fabSearch;
+
+    @BindView(R2.id.loadingView)
+    LoadingView loadingView;
 
     private ShowHideBottomBarListener showHideBottomBarListener;
 
@@ -93,6 +107,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
+        toastDelegate.attach(view.getContext());
 
         RecyclerView rvSections = view.findViewById(R.id.rvSections);
         rvSections.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -100,27 +115,49 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
         venueViewFacade.onCreateView(view);
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener);
+    }
 
-        venuesMapViewModelFacade.attachView(this);
-        venuesMapViewModelFacade.addOnVenueCLickListener(this);
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        boolean shouldShowSearch = searchAppBar.getVisibility() == View.VISIBLE;
+        outState.putBoolean(KEY_SEARCH_VISIBILITY, shouldShowSearch);
+        outState.putInt(KEY_SEARCH_SELECTED_ITEM_POSITION, sectionsAdapter.getSelectedItemPosition());
+        venueViewFacade.onSaveState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            int position = savedInstanceState.getInt(KEY_SEARCH_SELECTED_ITEM_POSITION);
+            boolean shouldShow = savedInstanceState.getBoolean(KEY_SEARCH_VISIBILITY);
+            showSearch(shouldShow);
+            sectionsAdapter.setSelected(position);
+            venueViewFacade.onRestoreState(savedInstanceState);
+        } else {
+            showSearch(false);
+        }
+    }
+
+    @OnClick(R2.id.btnClose)
+    public void onCloseSearchClicked() {
+        showSearch(false);
     }
 
     @OnClick(R2.id.fabSearch)
     public void oSearchClicked() {
-        fabSearch.hide();
-        searchAppBar.setVisibility(View.VISIBLE);
+        showSearch(true);
     }
 
     @OnClick(R2.id.fabZoomIn)
     public void onZoomInClicked() {
-        Optional.of(googleMap)
-                .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomIn()));
+        Optional.of(googleMap).ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomIn()));
     }
 
     @OnClick(R2.id.fabZoomOut)
     public void onZoomOutClicked() {
-        Optional.of(googleMap)
-                .ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
+        Optional.of(googleMap).ifPresent(m -> m.animateCamera(CameraUpdateFactory.zoomOut()));
     }
 
     @OnClick(R2.id.fabCurrentLocation)
@@ -131,6 +168,8 @@ public class VenuesMapFragment extends BaseMapFragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        venuesViewModel.getState().observe(this, this::render);
+        userLocationViewModel.getState().observe(this, this::renderLocationState);
         initLocationSettingsWithPermissionCheck(this, googleMap);
     }
 
@@ -140,8 +179,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
         VenuesMapFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
-    @Override
-    public void show(@NonNull List<PreviewVenueViewData> items) {
+    private void show(@NonNull List<PreviewVenueViewData> items) {
         Optional.of(googleMap).ifPresent(map -> {
             map.clear();
 
@@ -153,32 +191,16 @@ public class VenuesMapFragment extends BaseMapFragment implements
                 markerVenueViewDataMap.put(id, pair.getSecond());
             }
 
-            venuesMapViewModelFacade.setVenues(markerVenueViewDataMap);
+            venuesViewModel.setVenues(markerVenueViewDataMap);
         });
     }
 
-    @Override
-    public void show(UserLocation userLocation) {
+    private void show(UserLocation userLocation) {
         LatLng latLng = new LatLng(userLocation.getLat(), userLocation.getLng());
 
         Optional.of(googleMap).ifPresent(googleMap -> {
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM));
         });
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
     }
 
     @Override
@@ -190,7 +212,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
     @SuppressLint("MissingPermission")
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     void onShowCurrentLocationClicked() {
-        venuesMapViewModelFacade.refreshUserLocation();
+        userLocationViewModel.getUserLocation();
     }
 
     @SuppressLint("MissingPermission")
@@ -200,32 +222,59 @@ public class VenuesMapFragment extends BaseMapFragment implements
         googleMap.setMyLocationEnabled(true);
         googleMap.setOnMarkerClickListener(this);
 
-        venuesMapViewModelFacade.refreshUserLocation();
+        userLocationViewModel.getUserLocation();
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        searchAppBar.setVisibility(View.GONE);
-        fabSearch.show();
-
-        Optional.of(googleMap).ifPresent(map -> {
-
-        });
-        venuesMapViewModelFacade.select(marker.getId());
+        PreviewVenueViewData venueMapViewData = venuesViewModel.getVenue(marker.getId());
+        onVenueSelected(venueMapViewData);
         return true;
+    }
+
+    @Override
+    public void sectionSelected(Section section) {
+        venuesViewModel.getRecommendedVenues(section);
+    }
+    
+    private void render(MapViewState mapViewState) {
+        if (mapViewState.getError() != null) {
+            toastDelegate.showError("Error");
+        }
+
+        if (!mapViewState.getVenueViewDataList().isEmpty()) {
+            show(mapViewState.getVenueViewDataList());
+        }
+
+        if (mapViewState.isVenuesLoading() && mapViewState.getError() == null) {
+            loadingView.showLoading();
+        } else {
+            loadingView.hideLoading();
+        }
+
+    }
+
+    private void showSearch(boolean shouldShow) {
+        if (shouldShow) {
+            searchAppBar.setVisibility(View.VISIBLE);
+            fabSearch.hide();
+        } else {
+            searchAppBar.setVisibility(View.GONE);
+            fabSearch.show();
+        }
+    }
+
+    private void renderLocationState(LocationViewState locationViewState) {
+        if (locationViewState.getUserLocation() != null) {
+            show(locationViewState.getUserLocation());
+        }
     }
 
     private void injectDependencies() {
         PlacesMapFragmentComponent.Injector.inject(this);
     }
 
-    @Override
-    public void onVenueSelected(PreviewVenueViewData venueMapViewData) {
+    private void onVenueSelected(PreviewVenueViewData venueMapViewData) {
         venueViewFacade.setVenue(venueMapViewData);
-    }
-
-    @Override
-    public void sectionSelected(Section section) {
-        venuesMapViewModelFacade.refreshRecommendedVenues(section);
     }
 }

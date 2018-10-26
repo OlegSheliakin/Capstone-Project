@@ -1028,9 +1028,8 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
     };
 
     private void dispatchOnSlide(int top) {
+        if(mViewRef == null) return;
         View bottomSheet = mViewRef.get();
-
-        if(bottomSheet == null) return;
 
         float slideOffset;
         if (top > mMaxOffset) {
