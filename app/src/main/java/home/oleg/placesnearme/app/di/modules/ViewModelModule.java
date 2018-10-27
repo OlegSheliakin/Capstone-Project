@@ -19,12 +19,14 @@ import home.oleg.feature_add_history.CheckInViewModel;
 import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
 import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
+import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placenearme.interactors.GetFavoriteVenues;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placenearme.interactors.GetUserLocation;
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey;
+import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel;
@@ -48,8 +50,8 @@ public final class ViewModelModule {
     @ViewModelKey(VenuesHistoryViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenuesHistoryViewModel(GetAllHistory getAllHistory) {
-        return new VenuesHistoryViewModel(getAllHistory);
+    public static ViewModel provideVenuesHistoryViewModel(GetAllHistory getAllHistory, EvaluateDistance evaluateDistance) {
+        return new VenuesHistoryViewModel(getAllHistory, evaluateDistance);
     }
 
     @IntoMap
@@ -72,16 +74,16 @@ public final class ViewModelModule {
     @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenueViewModel(GetDetailedVenue getDetailedVenue) {
-        return new VenueViewModel(getDetailedVenue);
+    public static ViewModel provideVenueViewModel(ErrorHanlder errorHanlder, GetDetailedVenue getDetailedVenue, EvaluateDistance evaluateDistance) {
+        return new VenueViewModel(errorHanlder, getDetailedVenue, evaluateDistance);
     }
 
     @IntoMap
     @ViewModelKey(VenuesViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideMapViewModel(GetRecommendedVenues interactor) {
-        return new VenuesViewModel(interactor);
+    public static ViewModel provideMapViewModel(ErrorHanlder errorHanlder, GetRecommendedVenues interactor) {
+        return new VenuesViewModel(errorHanlder, interactor);
     }
 
     @IntoMap

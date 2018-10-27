@@ -1,5 +1,6 @@
 package home.oleg.placesnearme.feature_venues_history;
 
+import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
@@ -14,9 +15,11 @@ import io.reactivex.schedulers.Schedulers;
 public class VenuesHistoryViewModel extends BaseViewModel<VenuesHistoryView> {
 
     private final GetAllHistory getAllHistory;
+    private final EvaluateDistance evaluateDistance;
 
-    public VenuesHistoryViewModel(GetAllHistory getAllHistory) {
+    public VenuesHistoryViewModel(GetAllHistory getAllHistory, EvaluateDistance evaluateDistance) {
         this.getAllHistory = getAllHistory;
+        this.evaluateDistance = evaluateDistance;
     }
 
     @Override
@@ -24,6 +27,7 @@ public class VenuesHistoryViewModel extends BaseViewModel<VenuesHistoryView> {
         super.onObserverCreated();
         addToDisposables(
                 getAllHistory.getAllHistory()
+                        .flatMapSingle(evaluateDistance::evaluateDistance)
                         .map(VenueViewData::mapFrom)
                         .map(VenueViewItem::map)
                         .subscribeOn(Schedulers.computation())

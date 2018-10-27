@@ -1,18 +1,17 @@
 package home.oleg.placesnearme.app.di.modules;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-
-import com.smedialink.common.ErrorHandler;
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placesnearme.app.PlacesNearMeApp;
+import home.oleg.placesnearme.core_presentation.error_handler.MainErrorHandler;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProviderImpl;
-import timber.log.Timber;
-
+import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
@@ -27,14 +26,17 @@ public abstract class CoreModule {
         return app;
     }
 
+    @Provides
+    @NonNull
+    static SharedPreferences provideSharedPreferences(PlacesNearMeApp app) {
+        return app.getSharedPreferences(PlacesNearMeApp.class.getSimpleName(), Context.MODE_PRIVATE);
+    }
+
     @Binds
     @NonNull
     abstract ResourceProvider provideResourceProvider(ResourceProviderImpl impl);
 
-    //TODO implement error handler
-    @Provides
+    @Binds
     @NonNull
-    static ErrorHandler provideErrorHandler() {
-        return Timber::e;
-    }
+    abstract ErrorHanlder provideErrorHandler(MainErrorHandler impl);
 }

@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
+import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placenearme.interactors.GetFavoriteVenues;
@@ -21,15 +22,19 @@ import home.oleg.placenearme.repositories.VenueRepository;
 public final class InteractorModule {
 
     @Provides
+    public EvaluateDistance provideEvaluateDistance(UserLocationRepository userLocationRepository,
+                                                    DistanceRepository distanceRepository) {
+        return new EvaluateDistance(userLocationRepository, distanceRepository);
+    }
+
+    @Provides
     public CheckInOut provideCheckInOut(VenueHistoryRepository venueHistoryRepository) {
         return new CheckInOut(venueHistoryRepository);
     }
 
     @Provides
-    public GetAllHistory provideGetAllHistory(VenueHistoryRepository venueHistoryRepository,
-                                              UserLocationRepository userLocationRepository,
-                                              DistanceRepository distanceRepository) {
-        return new GetAllHistory(venueHistoryRepository, userLocationRepository, distanceRepository);
+    public GetAllHistory provideGetAllHistory(VenueHistoryRepository venueHistoryRepository) {
+        return new GetAllHistory(venueHistoryRepository);
     }
 
     @Provides
@@ -40,9 +45,8 @@ public final class InteractorModule {
     @Provides
     public GetRecommendedVenues provideGetVenuesInteractor(UserLocationRepository userLocationRepository,
                                                            VenueRepository venueRepository,
-                                                           SectionRepository categoryRepository,
-                                                           DistanceRepository distanceRepository) {
-        return new GetRecommendedVenues(venueRepository, userLocationRepository, distanceRepository, categoryRepository);
+                                                           SectionRepository categoryRepository) {
+        return new GetRecommendedVenues(venueRepository, userLocationRepository, categoryRepository);
     }
 
     @Provides

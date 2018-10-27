@@ -19,16 +19,13 @@ import io.reactivex.annotations.NonNull;
 public class GetRecommendedVenues {
     private final VenueRepository venueRepository;
     private final UserLocationRepository locationRepository;
-    private final DistanceRepository distanceRepository;
     private final SectionRepository categoryRepository;
 
     public GetRecommendedVenues(VenueRepository venueRepository,
                                 UserLocationRepository locationRepository,
-                                DistanceRepository distanceRepository,
                                 SectionRepository categoryRepository) {
         this.venueRepository = venueRepository;
         this.locationRepository = locationRepository;
-        this.distanceRepository = distanceRepository;
         this.categoryRepository = categoryRepository;
     }
 
@@ -45,19 +42,10 @@ public class GetRecommendedVenues {
         return locationRepository.getLocation()
                 .flatMap(userLocation ->
                         venueRepository.getRecommendedBySection(section, createFilter(userLocation))
-                                .doOnSuccess(venues -> evaluateDistance(userLocation, venues))
                 )
                 .map(venues -> new Pair<>(section, venues));
     }
 
-    private void evaluateDistance(UserLocation userLocation, List<Venue> venues) {
-        for (Venue venue : venues) {
-            LatLng to = new LatLng(venue.getLocation().getLat(), venue.getLocation().getLng());
-            LatLng from = new LatLng(userLocation.getLat(), userLocation.getLng());
-            double distance = distanceRepository.evaluate(from, to);
-            venue.setDistance(distance);
-        }
-    }
 
     private VenueRequestParams createFilter(UserLocation userLocation) {
         return VenueRequestParams.withLocation(

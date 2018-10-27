@@ -2,7 +2,6 @@
     <string name="app_name">Places Near Me</string>
     <string name="title_activity_basic">Places Near Me</string>
 
-    <string name="connection_error">Check the network connection</string>
     <string name="progress_dialog_searching">Searching</string>
     <string name="go_to">GoTo</string>
     <string name="dial">Dial</string>
@@ -20,4 +19,11 @@
     <string name="content_description_venue_s_photo">Venue\'s photo</string>
     <string name="all_description">Description</string>
     <string name="all_label_gallery">Gallery</string>
+
+    <!--erros-->
+    <string name="unexpected_error">Something went wrong</string>
+    <string name="error_limit_exceeded">Daily call quota exceeded</string>
+    <string name="no_internet_connection">Check the network connection</string>
+    <string name="timeout_error">Low Signal</string>
+
 </resources>

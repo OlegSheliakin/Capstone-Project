@@ -5,11 +5,12 @@ import android.support.annotation.NonNull;
 import com.smedialink.common.Optional;
 import com.smedialink.feature_venue_detail.venue.view.VenueView;
 
+import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
 import home.oleg.placesnearme.core_presentation.base.ErrorView;
 import home.oleg.placesnearme.core_presentation.base.LoadingView;
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
+import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -21,20 +22,25 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class VenueViewModel extends BaseViewModel<VenueView> {
 
+    private final ErrorHanlder errorHanlder;
     private final GetDetailedVenue getDetailedVenue;
+    private final EvaluateDistance evaluateDistance;
 
     private Disposable disposable;
 
     private VenueViewData venueViewData;
 
-    public VenueViewModel(GetDetailedVenue getDetailedVenue) {
+    public VenueViewModel(ErrorHanlder errorHanlder, GetDetailedVenue getDetailedVenue, EvaluateDistance evaluateDistance) {
+        this.errorHanlder = errorHanlder;
         this.getDetailedVenue = getDetailedVenue;
+        this.evaluateDistance = evaluateDistance;
     }
 
     public void setVenue(String venueId) {
         Optional.of(disposable).ifPresent(Disposable::dispose);
 
         disposable = getDetailedVenue.getDetailedVenue(venueId)
+                .flatMapSingle(evaluateDistance::evaluateDistance)
                 .map(VenueViewData::mapFrom)
                 .doOnNext(data -> this.venueViewData = data)
                 .subscribeOn(Schedulers.io())

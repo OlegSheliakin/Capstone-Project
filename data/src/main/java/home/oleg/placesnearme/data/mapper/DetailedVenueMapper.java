@@ -8,6 +8,7 @@ import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.Photo;
 import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
+import home.oleg.placesnearme.data.provider.LocationStore;
 
 /**
  * Created by Oleg Sheliakin on 25.09.2018.
@@ -15,7 +16,10 @@ import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
  */
 public final class DetailedVenueMapper {
 
-    private DetailedVenueMapper() {
+    private final LocationStore locationStore;
+
+    private DetailedVenueMapper(LocationStore locationStore) {
+        this.locationStore = locationStore;
     }
 
     public static DetailedVenue map(home.oleg.placesnearme.network.models.DetailedVenue detailedVenue) {
@@ -24,6 +28,7 @@ public final class DetailedVenueMapper {
         if (detailedVenue.getCategories() != null && !detailedVenue.getCategories().isEmpty()) {
             result.setCategory(CategoryMapper.map(detailedVenue.getCategories().get(0)));
         }
+
 
         result.setDescription(detailedVenue.getDescription());
         result.setRating(detailedVenue.getRating());

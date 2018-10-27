@@ -114,18 +114,21 @@ public class VenueDetailsView extends FrameLayout {
     }
 
     public void showLoading() {
+        content.setVisibility(GONE);
         tvError.setVisibility(GONE);
         retryButton.setVisibility(GONE);
         progressBar.setVisibility(VISIBLE);
     }
 
     public void hideLoading() {
+        content.setVisibility(VISIBLE);
         tvError.setVisibility(GONE);
         retryButton.setVisibility(GONE);
         progressBar.setVisibility(GONE);
     }
 
     public void showError(String text) {
+        content.setVisibility(GONE);
         retryButton.setVisibility(VISIBLE);
         tvError.setVisibility(VISIBLE);
         tvError.setText(text);

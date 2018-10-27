@@ -4,9 +4,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import home.oleg.placenearme.interactors.GetUserLocation;
-import home.oleg.placesnearme.feature_map.state.LocationViewState;
+import home.oleg.placenearme.models.UserLocation;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -17,16 +16,14 @@ import io.reactivex.schedulers.Schedulers;
 public class UserLocationViewModel extends ViewModel {
 
     private final GetUserLocation userLocationInteractor;
-    private final MutableLiveData<LocationViewState> state = new MutableLiveData<>();
+    private final MutableLiveData<UserLocation> state = new MutableLiveData<>();
     private Disposable disposable;
 
     public UserLocationViewModel(GetUserLocation userLocationInteractor) {
         this.userLocationInteractor = userLocationInteractor;
-
-        state.setValue(LocationViewState.initial());
     }
 
-    public MutableLiveData<LocationViewState> getState() {
+    public MutableLiveData<UserLocation> getState() {
         return state;
     }
 
@@ -39,10 +36,7 @@ public class UserLocationViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        location -> {
-                            state.setValue(LocationViewState.showLocation(location));
-                        },
-                        ignored -> {
-                        });
+                        state::setValue,
+                        ignored -> {  });
     }
 }

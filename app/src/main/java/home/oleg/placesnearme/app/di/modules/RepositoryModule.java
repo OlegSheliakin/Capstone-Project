@@ -1,6 +1,7 @@
 package home.oleg.placesnearme.app.di.modules;
 
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import dagger.Module;
@@ -16,6 +17,7 @@ import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placesnearme.app.PlacesNearMeApp;
 import home.oleg.placesnearme.data.dao.DetailedVenueDao;
 import home.oleg.placesnearme.data.dao.DetailedVenueHistoryDao;
+import home.oleg.placesnearme.data.provider.CachedLocationsStore;
 import home.oleg.placesnearme.data.provider.ReactiveLocationStore;
 import home.oleg.placesnearme.data.repositories.DetailedVenueRepositoryImpl;
 import home.oleg.placesnearme.data.repositories.DistanceRepositoryImpl;
@@ -55,7 +57,6 @@ public final class RepositoryModule {
         return new VenueRepositoryImpl(api);
     }
 
-    //TODO create real repo
     @Provides
     public SectionRepository provideCategoryRepo() {
         return () -> Section.TOP;
@@ -68,7 +69,13 @@ public final class RepositoryModule {
     }
 
     @Provides
-    public UserLocationRepository provideUserLocationRepo(ReactiveLocationStore reactiveLocationStore) {
-        return new UserLocationRepositoryImpl(reactiveLocationStore);
+    @NonNull
+    static CachedLocationsStore provideCachedLocationsStore(SharedPreferences sharedPreferences) {
+        return new CachedLocationsStore(sharedPreferences);
+    }
+
+    @Provides
+    public UserLocationRepository provideUserLocationRepo(ReactiveLocationStore reactiveLocationStore, CachedLocationsStore cachedLocationsStore) {
+        return new UserLocationRepositoryImpl(reactiveLocationStore, cachedLocationsStore);
     }
 }

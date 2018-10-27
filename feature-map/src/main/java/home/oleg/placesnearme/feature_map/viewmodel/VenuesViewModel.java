@@ -4,17 +4,19 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placenearme.models.Section;
+import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
+import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
 import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
-import home.oleg.placesnearme.feature_map.state.LocationViewState;
 import home.oleg.placesnearme.feature_map.state.MapViewState;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -24,17 +26,25 @@ import io.reactivex.schedulers.Schedulers;
 public final class VenuesViewModel extends ViewModel {
 
     private Disposable searchDisposable;
+    private final ErrorHanlder errorHanlder;
     private final GetRecommendedVenues interactor;
     private final VenuesViewModel.VenuesHolder venuesHolder = new VenuesViewModel.VenuesHolder();
     private final MutableLiveData<MapViewState> state = new MutableLiveData<>();
+    private final MutableLiveData<List<PreviewVenueViewData>> data = new MutableLiveData<>();
 
-    public VenuesViewModel(@NonNull GetRecommendedVenues interactor) {
+    public VenuesViewModel(ErrorHanlder errorHanlder,
+                           @NonNull GetRecommendedVenues interactor) {
+        this.errorHanlder = errorHanlder;
         this.interactor = interactor;
         state.setValue(MapViewState.initial());
     }
 
     public MutableLiveData<MapViewState> getState() {
         return state;
+    }
+
+    public MutableLiveData<List<PreviewVenueViewData>> getData() {
+        return data;
     }
 
     public void getRecommendedVenues(Section section) {
@@ -46,21 +56,19 @@ public final class VenuesViewModel extends ViewModel {
                 .map(sectionListPair -> VenueMapViewMapper.map(sectionListPair.getFirst(), sectionListPair.getSecond()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(d -> state.setValue(MapViewState.loading(state.getValue())))
+                .doOnSubscribe(d -> state.setValue(MapViewState.loading(state.getValue(), true)))
                 .subscribe(venues -> {
-                            state.setValue(MapViewState.showVenues(state.getValue(), venues));
+                            state.setValue(MapViewState.loading(state.getValue(), false));
+                            data.setValue(venues);
                         },
                         throwable -> {
-                            state.setValue(MapViewState.error(state.getValue(), throwable));
+                            ErrorEvent errorEvent = errorHanlder.handle(throwable);
+                            state.setValue(MapViewState.error(state.getValue(), errorEvent));
                         });
     }
 
     public void setVenues(Map<String, PreviewVenueViewData> venues) {
         venuesHolder.set(venues);
-    }
-
-    public void errorShown() {
-        state.setValue(MapViewState.errorShown(state.getValue()));
     }
 
     public PreviewVenueViewData getVenue(String id) {

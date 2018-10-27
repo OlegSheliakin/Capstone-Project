@@ -21,6 +21,7 @@ import com.smedialink.common.Optional;
 import com.smedialink.common.Pair;
 import com.smedialink.feature_venue_detail.venue.view.VenueViewFacade;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import butterknife.Unbinder;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.R;
@@ -42,7 +44,6 @@ import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter;
 import home.oleg.placesnearme.feature_map.custom.LoadingView;
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent;
 import home.oleg.placesnearme.feature_map.mapper.MarkerMapper;
-import home.oleg.placesnearme.feature_map.state.LocationViewState;
 import home.oleg.placesnearme.feature_map.state.MapViewState;
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
@@ -169,7 +170,8 @@ public class VenuesMapFragment extends BaseMapFragment implements
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         venuesViewModel.getState().observe(this, this::render);
-        userLocationViewModel.getState().observe(this, this::renderLocationState);
+        venuesViewModel.getData().observe(this, this::show);
+        userLocationViewModel.getState().observe(this, this::renderLocation);
         initLocationSettingsWithPermissionCheck(this, googleMap);
     }
 
@@ -179,7 +181,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
         VenuesMapFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
-    private void show(@NonNull List<PreviewVenueViewData> items) {
+    private void show(@NonNull Collection<PreviewVenueViewData> items) {
         Optional.of(googleMap).ifPresent(map -> {
             map.clear();
 
@@ -192,14 +194,6 @@ public class VenuesMapFragment extends BaseMapFragment implements
             }
 
             venuesViewModel.setVenues(markerVenueViewDataMap);
-        });
-    }
-
-    private void show(UserLocation userLocation) {
-        LatLng latLng = new LatLng(userLocation.getLat(), userLocation.getLng());
-
-        Optional.of(googleMap).ifPresent(googleMap -> {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM));
         });
     }
 
@@ -236,20 +230,21 @@ public class VenuesMapFragment extends BaseMapFragment implements
     public void sectionSelected(Section section) {
         venuesViewModel.getRecommendedVenues(section);
     }
-    
+
     private void render(MapViewState mapViewState) {
         if (mapViewState.getError() != null) {
-            toastDelegate.showError("Error");
+            ErrorEvent errorEvent = mapViewState.getError();
+            errorEvent.handle(() -> toastDelegate.showError(errorEvent.getErrorText()));
         }
 
-        if (!mapViewState.getVenueViewDataList().isEmpty()) {
-            show(mapViewState.getVenueViewDataList());
-        }
+        showSearch(mapViewState.isSearchShown());
 
-        if (mapViewState.isVenuesLoading() && mapViewState.getError() == null) {
+        if (mapViewState.isVenuesLoading()) {
             loadingView.showLoading();
+        } else if (mapViewState.getError() != null) {
+            loadingView.showRetry();
         } else {
-            loadingView.hideLoading();
+            loadingView.hide();
         }
 
     }
@@ -264,10 +259,12 @@ public class VenuesMapFragment extends BaseMapFragment implements
         }
     }
 
-    private void renderLocationState(LocationViewState locationViewState) {
-        if (locationViewState.getUserLocation() != null) {
-            show(locationViewState.getUserLocation());
-        }
+    private void renderLocation(UserLocation userLocation) {
+        LatLng latLng = new LatLng(userLocation.getLat(), userLocation.getLng());
+
+        Optional.of(googleMap).ifPresent(googleMap -> {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM));
+        });
     }
 
     private void injectDependencies() {

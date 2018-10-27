@@ -51,13 +51,13 @@ public class LoadingView extends FrameLayout {
         spinKitView.setVisibility(VISIBLE);
     }
 
-    public void hideLoading() {
+    public void hide() {
         this.setVisibility(GONE);
         retryButton.setVisibility(GONE);
         spinKitView.setVisibility(GONE);
     }
 
-    public void showError() {
+    public void showRetry() {
         this.setVisibility(VISIBLE);
         retryButton.setVisibility(VISIBLE);
         spinKitView.setVisibility(GONE);

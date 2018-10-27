@@ -17,37 +17,14 @@ import io.reactivex.Flowable;
 public final class GetAllHistory {
 
     private final VenueHistoryRepository venueHistoryRepository;
-    private final UserLocationRepository locationRepository;
-    private final DistanceRepository distanceRepository;
 
-    public GetAllHistory(VenueHistoryRepository venueHistoryRepository,
-                         UserLocationRepository locationRepository,
-                         DistanceRepository distanceRepository) {
+    public GetAllHistory(VenueHistoryRepository venueHistoryRepository) {
         this.venueHistoryRepository = venueHistoryRepository;
-        this.locationRepository = locationRepository;
-        this.distanceRepository = distanceRepository;
     }
 
     public Flowable<List<DetailedVenue>> getAllHistory() {
         return venueHistoryRepository
-                .getHistory()
-                .flatMapSingle(detailedVenues -> locationRepository
-                        .getLocation()
-                        .map(userLocation -> evaluateDistance(userLocation, detailedVenues))
-                );
+                .getHistory();
     }
 
-    private List<DetailedVenue> evaluateDistance(UserLocation userLocation, List<DetailedVenue> venues) {
-        List<DetailedVenue> detailedVenues = new ArrayList<>();
-        for (DetailedVenue venue : venues) {
-            LatLng to = new LatLng(venue.getLocation().getLat(), venue.getLocation().getLng());
-            LatLng from = new LatLng(userLocation.getLat(), userLocation.getLng());
-            double distance = distanceRepository.evaluate(from, to);
-            venue.setDistance(distance);
-            detailedVenues.add(venue);
-        }
-
-        Collections.sort(detailedVenues, (venue, t1) -> Double.compare(venue.getDistance(), t1.getDistance()));
-        return detailedVenues;
-    }
 }
