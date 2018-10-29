@@ -52,7 +52,7 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
                             venueView.show(detailedVenue);
                         }),
                         throwable -> {
-                            throwable.printStackTrace();
+                            errorHanlder.handle(throwable);
                             setState(venueView -> {
                                 venueView.hideLoading();
                                 venueView.showError();

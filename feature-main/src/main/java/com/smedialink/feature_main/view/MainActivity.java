@@ -6,18 +6,24 @@ import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.smedialink.feature_main.R;
+import com.smedialink.feature_main.delegate.BackPressedDelegate;
+import com.smedialink.feature_main.delegate.BottomBarDelegate;
 import com.smedialink.feature_main.di.MainActivityComponent;
 import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 
 import javax.inject.Inject;
 
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.base.BackHandler;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
 public final class MainActivity extends AppCompatActivity implements ShowHideBottomBarListener {
 
     @Inject
     BottomBarDelegate bottomBarDelegate;
+
+    @Inject
+    BackPressedDelegate backPressedDelegate;
 
     private VenueFragment venueFragment;
 
@@ -56,4 +62,13 @@ public final class MainActivity extends AppCompatActivity implements ShowHideBot
         bottomBarDelegate.attach(containerBottomBar, bottomNavigation, savedInstanceState);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (venueFragment.isShown()) {
+            venueFragment.dismiss();
+            return;
+        }
+
+        backPressedDelegate.onBackPressed();
+    }
 }

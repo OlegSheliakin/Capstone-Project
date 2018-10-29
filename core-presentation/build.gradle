@@ -48,5 +48,7 @@ dependencies {
 
     implementation deps.lifecycle.extensions
 
+    implementation deps.timber
+
     implementation "javax.inject:javax.inject:1"
 }

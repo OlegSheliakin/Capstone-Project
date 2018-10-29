@@ -3,11 +3,13 @@ package home.oleg.placesnearme.feature_map.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.smedialink.common.Optional;
+import com.smedialink.common.function.Function;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
@@ -56,15 +58,32 @@ public final class VenuesViewModel extends ViewModel {
                 .map(sectionListPair -> VenueMapViewMapper.map(sectionListPair.getFirst(), sectionListPair.getSecond()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(d -> state.setValue(MapViewState.loading(state.getValue(), true)))
+                .doOnSubscribe(d -> changeState(mapViewState -> mapViewState.toBuilder().venueLoading(true).build()))
                 .subscribe(venues -> {
-                            state.setValue(MapViewState.loading(state.getValue(), false));
+                            changeState(mapViewState -> mapViewState.toBuilder().venueLoading(false).build());
                             data.setValue(venues);
                         },
                         throwable -> {
                             ErrorEvent errorEvent = errorHanlder.handle(throwable);
-                            state.setValue(MapViewState.error(state.getValue(), errorEvent));
+                            changeState(mapViewState -> mapViewState.toBuilder()
+                                    .venueLoading(false)
+                                    .error(errorEvent).build());
                         });
+    }
+
+    public void openSearch() {
+        changeState(mapViewState -> mapViewState.toBuilder().searchShown(true).build());
+    }
+
+    public void closeSearch() {
+        changeState(mapViewState -> mapViewState.toBuilder().searchShown(false).build());
+    }
+
+    private void changeState(Function<MapViewState, MapViewState> function) {
+        Optional.of(state.getValue()).ifPresent(mapViewState -> {
+            MapViewState newState = function.apply(mapViewState);
+            state.setValue(newState);
+        });
     }
 
     public void setVenues(Map<String, PreviewVenueViewData> venues) {

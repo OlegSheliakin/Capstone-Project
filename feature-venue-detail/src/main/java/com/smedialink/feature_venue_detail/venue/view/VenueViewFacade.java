@@ -35,7 +35,7 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
  * Created by Oleg Sheliakin on 09.10.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOutView, VenueDetailsView.RetryClickListener {
+public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOutView {
 
     private final LifecycleOwner lifecycleOwner;
 
@@ -68,7 +68,6 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
 
     public void onCreateView(View view) {
         venueDetailsView = view.findViewById(R.id.venueView);
-        venueDetailsView.setRetryClickListener(this);
         ivVenuePhoto = view.findViewById(R.id.ivVenuePhoto);
 
         fabCheckInButton = view.findViewById(R.id.fabCheckInButton);
@@ -158,6 +157,8 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
         MergedAppBarLayout mergedAppBarLayout = view.findViewById(R.id.mergedappbarlayout);
         mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(mergedAppBarLayout);
 
+        mergedAppBarLayoutBehavior.setNavigationOnClickListener(v -> behavior.setState(GoogleMapsBottomSheetBehavior.STATE_HIDDEN));
+
         behavior.setBottomSheetCallback(new GoogleMapsBottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -173,6 +174,14 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
 
             }
         });
+    }
+
+    public boolean isShown() {
+        return behavior.getState() != GoogleMapsBottomSheetBehavior.STATE_HIDDEN;
+    }
+
+    public void dismiss() {
+        behavior.setState(GoogleMapsBottomSheetBehavior.STATE_HIDDEN);
     }
 
     @Override
@@ -195,8 +204,4 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
         //ignore
     }
 
-    @Override
-    public void onRetryClick() {
-
-    }
 }

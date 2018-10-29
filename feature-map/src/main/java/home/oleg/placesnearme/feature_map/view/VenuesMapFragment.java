@@ -35,6 +35,7 @@ import butterknife.Unbinder;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.base.BackHandler;
 import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
@@ -55,7 +56,7 @@ import static home.oleg.placesnearme.feature_map.view.VenuesMapFragmentPermissio
 
 @RuntimePermissions
 public class VenuesMapFragment extends BaseMapFragment implements
-        GoogleMap.OnMarkerClickListener, SectionsAdapter.SectionSelectListener {
+        GoogleMap.OnMarkerClickListener, SectionsAdapter.SectionSelectListener, BackHandler {
 
     private static final String KEY_SEARCH_VISIBILITY = "key_search_visibility";
     private static final String KEY_SEARCH_SELECTED_ITEM_POSITION = "key_search_selected_item_position";
@@ -109,7 +110,7 @@ public class VenuesMapFragment extends BaseMapFragment implements
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         toastDelegate.attach(view.getContext());
-
+        
         RecyclerView rvSections = view.findViewById(R.id.rvSections);
         rvSections.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvSections.setAdapter(sectionsAdapter);
@@ -143,12 +144,12 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
     @OnClick(R2.id.btnClose)
     public void onCloseSearchClicked() {
-        showSearch(false);
+        venuesViewModel.closeSearch();
     }
 
     @OnClick(R2.id.fabSearch)
     public void oSearchClicked() {
-        showSearch(true);
+        venuesViewModel.openSearch();
     }
 
     @OnClick(R2.id.fabZoomIn)
@@ -273,5 +274,21 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
     private void onVenueSelected(PreviewVenueViewData venueMapViewData) {
         venueViewFacade.setVenue(venueMapViewData);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (venueViewFacade.isShown()) {
+            venueViewFacade.dismiss();
+            return true;
+        }
+
+        boolean isSearchVisible = searchAppBar.getVisibility() == View.VISIBLE;
+        if (isSearchVisible) {
+            venuesViewModel.closeSearch();
+            return true;
+        }
+
+        return false;
     }
 }

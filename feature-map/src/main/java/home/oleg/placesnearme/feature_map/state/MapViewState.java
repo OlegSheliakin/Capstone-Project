@@ -4,47 +4,62 @@ import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 
 public class MapViewState {
 
-    @NonNull
-  //  private final List<PreviewVenueViewData> venueViewDataList;
     private final boolean isVenuesLoading;
     private final boolean isSearchShown;
     private final ErrorEvent error;
 
-    public MapViewState(/*List<PreviewVenueViewData> venueViewDataList,*/
-                        boolean isVenuesLoading,
-                        boolean isSearchShown,
-                        ErrorEvent error) {
-     //   this.venueViewDataList = venueViewDataList;
+    private MapViewState(boolean isVenuesLoading,
+                         boolean isSearchShown,
+                         ErrorEvent error) {
         this.isVenuesLoading = isVenuesLoading;
         this.isSearchShown = isSearchShown;
         this.error = error;
     }
 
     public static MapViewState initial() {
-        return new MapViewState(/*Collections.emptyList(),*/ false, false, null);
+        return new MapViewState(false, false, null);
     }
 
-    public static MapViewState loading(MapViewState previous, boolean isLoading) {
-        return new MapViewState(/*previous.getVenueViewDataList(),*/ isLoading, previous.isSearchShown, null);
+    public Builder toBuilder() {
+        MapViewState.Builder builder = new Builder();
+        builder.error(error);
+        builder.searchShown(isSearchShown);
+        builder.venueLoading(isVenuesLoading);
+
+        return builder;
     }
 
-    public static MapViewState showVenues(MapViewState previous, List<PreviewVenueViewData> venueViewDataList) {
-        return new MapViewState(/*venueViewDataList,*/ false, previous.isSearchShown, null);
-    }
+    public static class Builder {
+        private boolean isVenuesLoading;
+        private boolean isSearchShown;
+        private ErrorEvent error;
 
-    public static MapViewState error(MapViewState previous, ErrorEvent errorEvent) {
-        return new MapViewState(/*previous.getVenueViewDataList(),*/ false, previous.isSearchShown, errorEvent);
-    }
+        public Builder venueLoading(boolean isVenuesLoading) {
+            this.isVenuesLoading = isVenuesLoading;
+            return this;
+        }
 
-   /* public List<PreviewVenueViewData> getVenueViewDataList() {
-        return venueViewDataList;
-    }*/
+        public Builder searchShown(boolean isSearchShown) {
+            this.isSearchShown = isSearchShown;
+            return this;
+        }
+
+        public Builder error(ErrorEvent error) {
+            this.error = error;
+            return this;
+        }
+
+        public MapViewState build() {
+            return new MapViewState(isVenuesLoading, isSearchShown, error);
+        }
+    }
 
     public boolean isVenuesLoading() {
         return isVenuesLoading;

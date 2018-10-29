@@ -1,7 +1,5 @@
 package home.oleg.placesnearme.core_presentation.error_handler;
 
-import com.smedialink.common.function.Function;
-
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -14,6 +12,7 @@ import home.oleg.placesnearme.core_presentation.R;
 import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
 import retrofit2.HttpException;
+import timber.log.Timber;
 
 /**
  * Created by Oleg Sheliakin on 27.10.2018.
@@ -38,7 +37,8 @@ public class MainErrorHandler implements ErrorHanlder {
 
     @Override
     public ErrorEvent handle(Throwable throwable) {
-        //todo add logger
+        Timber.e(throwable);
+
         Integer stringRes = null;
 
         if(throwable instanceof HttpException) {

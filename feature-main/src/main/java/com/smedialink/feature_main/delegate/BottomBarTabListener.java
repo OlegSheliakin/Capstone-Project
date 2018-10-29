@@ -1,4 +1,4 @@
-package com.smedialink.feature_main.view;
+package com.smedialink.feature_main.delegate;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.smedialink.feature_main.R;
+
+import javax.inject.Inject;
 
 import home.oleg.feature_favorite_venues.FavoritePlacesFragment;
 import home.oleg.placesnearme.feature_map.view.VenuesMapFragment;
@@ -15,6 +17,7 @@ public class BottomBarTabListener implements AHBottomNavigation.OnTabSelectedLis
 
     private final FragmentManager fragmentManager;
 
+    @Inject
     public BottomBarTabListener(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
     }

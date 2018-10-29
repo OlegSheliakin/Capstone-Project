@@ -1,4 +1,4 @@
-package com.smedialink.feature_main.view;
+package com.smedialink.feature_main.delegate;
 
 import android.graphics.Color;
 import android.os.Bundle;

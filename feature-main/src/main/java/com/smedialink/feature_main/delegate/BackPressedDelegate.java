@@ -1,0 +1,37 @@
+package com.smedialink.feature_main.delegate;
+
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+
+import com.smedialink.feature_main.R;
+import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
+
+import javax.inject.Inject;
+
+import home.oleg.placesnearme.core_presentation.base.BackHandler;
+
+public class BackPressedDelegate implements OnBackPressListener {
+
+    private final AppCompatActivity appCompatActivity;
+
+    @Inject
+    public BackPressedDelegate(AppCompatActivity appCompatActivity) {
+        this.appCompatActivity = appCompatActivity;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment curFrag = appCompatActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+        boolean intercepted = false;
+
+        if (curFrag != null && curFrag instanceof BackHandler) {
+            intercepted = ((BackHandler) curFrag).onBackPressed();
+        }
+
+        if (!intercepted) {
+            appCompatActivity.onBackPressed();
+        }
+
+    }
+
+}

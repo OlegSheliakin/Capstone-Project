@@ -170,4 +170,12 @@ public class VenueFragment extends Fragment implements VenueView, CreateFavorite
     public void checkedOut() {
         toastDelegate.showSuccess("You have checked out");
     }
+
+    public boolean isShown() {
+        return behavior.getState() != GoogleMapsBottomSheetBehavior.STATE_HIDDEN;
+    }
+
+    public void dismiss() {
+        behavior.setState(GoogleMapsBottomSheetBehavior.STATE_HIDDEN);
+    }
 }

@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.smedialink.common.Optional;
 import com.smedialink.feature_venue_detail.R;
 
@@ -41,7 +42,7 @@ public class VenueDetailsView extends FrameLayout {
     private RatingBar rating;
     private ViewGroup content;
     private ImageView ivVenueIcon;
-    private ProgressBar progressBar;
+    private SpinKitView progressBar;
     private Button retryButton;
     private TextView tvError;
     private RetryClickListener retryClickListener;
@@ -151,7 +152,7 @@ public class VenueDetailsView extends FrameLayout {
         ivVenueIcon = findViewById(R.id.ivVenueIcon);
         tvCategoryName = findViewById(R.id.tvCategoryName);
         rating = findViewById(R.id.ratingBar);
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.spinKit);
         tvError = findViewById(R.id.tvError);
         retryButton = findViewById(R.id.retryButton);
 
