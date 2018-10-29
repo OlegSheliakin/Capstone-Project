@@ -6,7 +6,6 @@ import android.widget.Toast;
 import javax.inject.Inject;
 
 import es.dmoral.toasty.Toasty;
-import home.oleg.placesnearme.core_presentation.base.ErrorView;
 
 public class ToastDelegate {
 

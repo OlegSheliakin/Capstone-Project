@@ -2,8 +2,8 @@ package home.oleg.placesnearme.feature_venues_history;
 
 import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetAllHistory;
-import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import home.oleg.placesnearme.core_presentation.R;
-
 /**
  * Created by Oleg Sheliakin on 23.10.2018.
  * Contact me by email - olegsheliakin@gmail.com

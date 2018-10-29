@@ -6,7 +6,7 @@ import java.util.List;
 
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.models.LatLng;
-import home.oleg.placenearme.models.UserLocation;
+import home.oleg.placenearme.models.Venue;
 import home.oleg.placenearme.repositories.DistanceRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import io.reactivex.Single;
@@ -38,6 +38,22 @@ public class EvaluateDistance {
 
             Collections.sort(detailedVenues, (venue, t1) -> Double.compare(venue.getDistance(), t1.getDistance()));
             return detailedVenues;
+        });
+    }
+
+    public Single<List<Venue>> evaluateVenueDistance(Iterable<Venue> venues) {
+        return locationRepository.getLocation().map(userLocation -> {
+            List<Venue> result = new ArrayList<>();
+            for (Venue venue : venues) {
+                LatLng to = new LatLng(venue.getLocation().getLat(), venue.getLocation().getLng());
+                LatLng from = new LatLng(userLocation.getLat(), userLocation.getLng());
+                double distance = distanceRepository.evaluate(from, to);
+                venue.setDistance(distance);
+                result.add(venue);
+            }
+
+            Collections.sort(result, (venue, t1) -> Double.compare(venue.getDistance(), t1.getDistance()));
+            return result;
         });
     }
 

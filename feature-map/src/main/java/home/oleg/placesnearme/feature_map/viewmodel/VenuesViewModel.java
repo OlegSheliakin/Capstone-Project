@@ -58,7 +58,9 @@ public final class VenuesViewModel extends ViewModel {
                 .map(sectionListPair -> VenueMapViewMapper.map(sectionListPair.getFirst(), sectionListPair.getSecond()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(d -> changeState(mapViewState -> mapViewState.toBuilder().venueLoading(true).build()))
+                .doOnSubscribe(d -> changeState(mapViewState -> mapViewState.toBuilder()
+                        .error(null)
+                        .venueLoading(true).build()))
                 .subscribe(venues -> {
                             changeState(mapViewState -> mapViewState.toBuilder().venueLoading(false).build());
                             data.setValue(venues);

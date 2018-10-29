@@ -2,7 +2,6 @@ package home.oleg.placenearme.interactors;
 
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository;
-import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class CreateVenueFavorite {

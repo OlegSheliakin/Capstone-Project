@@ -2,8 +2,8 @@ package home.oleg.placesnearme.feature_venues_history;
 
 import java.util.List;
 
-import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.base.View;
+import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 
 /**
  * Created by Oleg Sheliakin on 23.10.2018.

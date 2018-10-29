@@ -1,0 +1,21 @@
+apply from: '../base_gradle.gradle'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':core-presentation')
+    implementation project(':domain')
+    implementation project(':common')
+    implementation project(':core-di')
+
+    implementation deps.rxjava2.rxjava
+    implementation deps.rxjava2.rxandroid
+
+    implementation deps.support.appcompat7
+
+    implementation deps.dagger.runtime
+    annotationProcessor deps.dagger.compiler
+
+    testImplementation deps.testing.junit
+    testImplementation deps.testing.mockito
+}

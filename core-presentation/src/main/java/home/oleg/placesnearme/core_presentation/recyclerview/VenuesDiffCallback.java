@@ -2,8 +2,6 @@ package home.oleg.placesnearme.core_presentation.recyclerview;
 
 import android.support.v7.util.DiffUtil;
 
-import java.util.List;
-
 import io.reactivex.annotations.NonNull;
 
 public final class VenuesDiffCallback extends DiffUtil.ItemCallback<ItemViewType> {

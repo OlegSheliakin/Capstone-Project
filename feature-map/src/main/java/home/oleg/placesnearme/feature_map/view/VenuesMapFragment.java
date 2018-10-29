@@ -110,10 +110,15 @@ public class VenuesMapFragment extends BaseMapFragment implements
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         toastDelegate.attach(view.getContext());
-        
+
         RecyclerView rvSections = view.findViewById(R.id.rvSections);
         rvSections.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvSections.setAdapter(sectionsAdapter);
+
+        loadingView.setOnRetryCLickListener(v -> {
+            Section section = sectionsAdapter.getSelectedItem();
+            Optional.of(section).ifPresent(section1 -> venuesViewModel.getRecommendedVenues(section1));
+        });
 
         venueViewFacade.onCreateView(view);
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener);

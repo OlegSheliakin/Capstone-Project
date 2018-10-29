@@ -1,31 +1,49 @@
 package com.smedialink.feature_add_favorite;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
-import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
+import home.oleg.placesnearme.core_presentation.base.MessageEvent;
+import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CreateFavoriteViewModel extends BaseViewModel<CreateFavoriteView> {
+public class CreateFavoriteViewModel extends ViewModel {
 
     private final CreateVenueFavorite addRemoveVenueFavorite;
+    private final MutableLiveData<MessageEvent> state = new MutableLiveData<>();
+    private final ResourceProvider resourceProvider;
 
-    public CreateFavoriteViewModel(CreateVenueFavorite addRemoveVenueFavorite) {
+    private Disposable disposable;
+
+    public CreateFavoriteViewModel(CreateVenueFavorite addRemoveVenueFavorite,
+                                   ResourceProvider resourceProvider) {
         this.addRemoveVenueFavorite = addRemoveVenueFavorite;
+        this.resourceProvider = resourceProvider;
+    }
+
+    public MutableLiveData<MessageEvent> getState() {
+        return state;
     }
 
     public void manageFavorite(VenueViewData venueViewData) {
         if (venueViewData == null) return;
 
-        addToDisposables(addRemoveVenueFavorite.execute(venueViewData.mapToDetailVenue())
+        disposable = addRemoveVenueFavorite.execute(venueViewData.mapToDetailVenue())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isFavorite -> {
+                    int stringsRes;
                     if (isFavorite) {
-                        setState(CreateFavoriteView::favoriteAdded);
+                        stringsRes = R.string.add_favorite_message_success_added;
                     } else {
-                        setState(CreateFavoriteView::favoriteRemoved);
+                        stringsRes = R.string.add_favorite_message_success_removed;
                     }
-                }, Throwable::printStackTrace));
+                    MessageEvent messageEvent = new MessageEvent(resourceProvider.getString(stringsRes));
+                    state.setValue(messageEvent);
+                }, Throwable::printStackTrace);
     }
 }

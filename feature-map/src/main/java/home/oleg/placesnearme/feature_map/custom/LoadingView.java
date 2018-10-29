@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 
@@ -43,6 +42,10 @@ public class LoadingView extends FrameLayout {
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.view_loading, this, true);
         ButterKnife.bind(this);
+    }
+
+    public void setOnRetryCLickListener(OnClickListener onRetryCLickListener) {
+        retryButton.setOnClickListener(onRetryCLickListener);
     }
 
     public void showLoading() {

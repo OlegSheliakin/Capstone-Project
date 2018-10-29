@@ -2,24 +2,14 @@ package home.oleg.feature_favorite_venues;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import home.oleg.placesnearme.core_presentation.recyclerview.BaseVenueAdapter;
-import home.oleg.placesnearme.core_presentation.recyclerview.EmptyViewItem;
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType;
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
-import home.oleg.placesnearme.core_presentation.recyclerview.VenuesDiffCallback;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
@@ -35,8 +25,6 @@ public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
 
     public interface FavoriteClicksListener {
         void favoriteClicked(VenueViewData venueViewData);
-
-        void showOnMapClicked(VenueViewData venueViewData);
 
         void onItemClicked(VenueViewData venueViewData);
     }
@@ -62,7 +50,6 @@ public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
         private TextView tvName;
         private TextView tvAddress;
         private FloatingActionButton fabAddToFavorite;
-        private FloatingActionButton fabShowOnMap;
 
         private FavoriteVenuesAdapter.FavoriteClicksListener favoriteClicksListener;
 
@@ -75,7 +62,6 @@ public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
             this.tvName = itemView.findViewById(R.id.tvName);
             this.tvAddress = itemView.findViewById(R.id.tvAddress);
             this.fabAddToFavorite = itemView.findViewById(R.id.fabAddToFavorite);
-            this.fabShowOnMap = itemView.findViewById(R.id.fabShowOnMap);
         }
 
         @Override
@@ -85,10 +71,6 @@ public final class FavoriteVenuesAdapter extends BaseVenueAdapter {
             fabAddToFavorite.setSelected(venueViewData.isFavorite());
             fabAddToFavorite.setOnClickListener(v -> {
                 favoriteClicksListener.favoriteClicked(venueViewData);
-            });
-
-            fabShowOnMap.setOnClickListener(v -> {
-                favoriteClicksListener.showOnMapClicked(venueViewData);
             });
 
             itemView.setOnClickListener(v -> favoriteClicksListener.onItemClicked(venueViewData));

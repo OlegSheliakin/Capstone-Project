@@ -4,11 +4,9 @@ import com.smedialink.common.Pair;
 
 import java.util.List;
 
-import home.oleg.placenearme.models.LatLng;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
-import home.oleg.placenearme.repositories.DistanceRepository;
 import home.oleg.placenearme.repositories.SectionRepository;
 import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;

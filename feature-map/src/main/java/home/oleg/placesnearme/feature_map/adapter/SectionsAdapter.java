@@ -30,11 +30,19 @@ public class SectionsAdapter extends RecyclerView.Adapter<SectionsAdapter.ViewHo
     public int getSelectedItemPosition() {
         int selectedItemPosition = -1;
         for (int i = 0; i < checkedItems.size(); i++) {
-            if(checkedItems.get(i).isChecked()) {
+            if (checkedItems.get(i).isChecked()) {
                 selectedItemPosition = i;
             }
         }
         return selectedItemPosition;
+    }
+
+    public Section getSelectedItem() {
+        int selectedItemPosition = getSelectedItemPosition();
+        if (selectedItemPosition != -1) {
+            return checkedItems.get(selectedItemPosition).getData().getSection();
+        }
+        return null;
     }
 
     public interface SectionSelectListener {

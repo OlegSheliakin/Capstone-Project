@@ -2,7 +2,6 @@ package home.oleg.feature_add_history.interactor;
 
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.VenueHistoryRepository;
-import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class CheckInOut {

@@ -1,25 +1,22 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.smedialink.common.Optional;
-import com.smedialink.feature_add_favorite.CreateFavoriteView;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 import com.smedialink.feature_venue_detail.R;
+import com.smedialink.feature_venue_detail.state.VenueViewState;
 import com.smedialink.feature_venue_detail.venue.di.VenueDetailComponent;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
@@ -29,16 +26,13 @@ import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior;
 import home.oleg.coordinator_behavior.MergedAppBarLayout;
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior;
 import home.oleg.feature_add_history.CheckInViewModel;
-import home.oleg.feature_add_history.view.CheckInOutView;
-import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.base.MessageEvent;
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
-import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
-public class VenueFragment extends Fragment implements VenueView, CreateFavoriteView, CheckInOutView {
+public class VenueFragment extends Fragment implements Observer<MessageEvent> {
 
     private static String KEY_VENUE_ID = "key_venue_id";
 
@@ -82,16 +76,19 @@ public class VenueFragment extends Fragment implements VenueView, CreateFavorite
         super.onViewCreated(view, savedInstanceState);
         venueDetailsView = view.findViewById(R.id.venueView);
         ivVenuePhoto = view.findViewById(R.id.ivVenuePhoto);
+
         initBehavior(view);
+
+        venueDetailsView.hideLoading();
 
         fabCheckInButton = view.findViewById(R.id.fabCheckInButton);
         fabCheckInButton.setOnClickListener(v -> checkInViewModel.manage(venueViewModel.getVenueViewData()));
         favoriteButton = view.findViewById(R.id.fabFavoriteButton);
         favoriteButton.setOnClickListener(v -> createFavoriteViewModel.manageFavorite(venueViewModel.getVenueViewData()));
 
-        venueViewModel.getObserver().observe(this, ViewActionObserver.create(this));
-        createFavoriteViewModel.getObserver().observe(this, ViewActionObserver.create(this));
-        checkInViewModel.getObserver().observe(this, ViewActionObserver.create(this));
+        venueViewModel.getState().observe(this, this::render);
+        createFavoriteViewModel.getState().observe(this, this);
+        checkInViewModel.getState().observe(this, this);
 
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey(KEY_VENUE_ID)) {
@@ -109,8 +106,42 @@ public class VenueFragment extends Fragment implements VenueView, CreateFavorite
         venueViewModel.load(venueId);
     }
 
+    private void initBehavior(View view) {
+        NestedScrollView nestedScrollView = view.findViewById(R.id.nestedScrollView);
+        toastDelegate.attach(view.getContext());
+
+        behavior = GoogleMapsBottomSheetBehavior.from(nestedScrollView);
+        behavior.setParallax(ivVenuePhoto);
+        behavior.setSkipCollapsed(true);
+
+        MergedAppBarLayout mergedAppBarLayout = view.findViewById(R.id.mergedappbarlayout);
+        mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(mergedAppBarLayout);
+
+        mergedAppBarLayoutBehavior.setNavigationOnClickListener(v ->
+                behavior.setState(GoogleMapsBottomSheetBehavior.STATE_HIDDEN));
+    }
+
+    public boolean isShown() {
+        return behavior.getState() != GoogleMapsBottomSheetBehavior.STATE_HIDDEN;
+    }
+
+    public void dismiss() {
+        behavior.setState(GoogleMapsBottomSheetBehavior.STATE_HIDDEN);
+    }
+
     @Override
-    public void show(VenueViewData venue) {
+    public void onChanged(@Nullable MessageEvent messageEvent) {
+        Optional.of(messageEvent).ifPresent(event ->
+                event.handle(() -> toastDelegate.showSuccess(event.getText())));
+    }
+
+    private void render(VenueViewState venueViewState) {
+        if (venueViewState.getVenueViewData() != null) {
+            show(venueViewState.getVenueViewData());
+        }
+    }
+
+    private void show(VenueViewData venue) {
         venueDetailsView.show(venue);
 
         String url = Optional.of(venue.getBestPhoto())
@@ -122,60 +153,5 @@ public class VenueFragment extends Fragment implements VenueView, CreateFavorite
         mergedAppBarLayoutBehavior.setToolbarTitle(venue.getTitle());
         favoriteButton.setSelected(venue.isFavorite());
         fabCheckInButton.setSelected(venue.isHere());
-    }
-
-    @Override
-    public void showError() {
-        toastDelegate.showError("Something goes wrong");
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    private void initBehavior(View view) {
-        NestedScrollView nestedScrollView = view.findViewById(R.id.nestedScrollView);
-        toastDelegate.attach(view.getContext());
-
-        behavior = GoogleMapsBottomSheetBehavior.from(nestedScrollView);
-        behavior.setParallax(ivVenuePhoto);
-        behavior.setSkipCollapsed(true);
-
-        MergedAppBarLayout mergedAppBarLayout = view.findViewById(R.id.mergedappbarlayout);
-        mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(mergedAppBarLayout);
-    }
-
-    @Override
-    public void favoriteAdded() {
-        toastDelegate.showSuccess("Added to favorites");
-    }
-
-    @Override
-    public void favoriteRemoved() {
-        toastDelegate.showSuccess("Removed to favorites");
-    }
-
-    @Override
-    public void checkedIn() {
-        toastDelegate.showSuccess("You have checked in");
-    }
-
-    @Override
-    public void checkedOut() {
-        toastDelegate.showSuccess("You have checked out");
-    }
-
-    public boolean isShown() {
-        return behavior.getState() != GoogleMapsBottomSheetBehavior.STATE_HIDDEN;
-    }
-
-    public void dismiss() {
-        behavior.setState(GoogleMapsBottomSheetBehavior.STATE_HIDDEN);
     }
 }

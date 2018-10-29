@@ -1,9 +1,10 @@
 package com.smedialink.feature_venue_detail.venue.view;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
@@ -11,9 +12,9 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.smedialink.common.Optional;
-import com.smedialink.feature_add_favorite.CreateFavoriteView;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 import com.smedialink.feature_venue_detail.R;
+import com.smedialink.feature_venue_detail.state.VenueViewState;
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel;
 
 import javax.inject.Inject;
@@ -22,11 +23,11 @@ import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior;
 import home.oleg.coordinator_behavior.MergedAppBarLayout;
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior;
 import home.oleg.feature_add_history.CheckInViewModel;
-import home.oleg.feature_add_history.view.CheckInOutView;
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
+import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
+import home.oleg.placesnearme.core_presentation.base.MessageEvent;
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate;
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader;
-import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
@@ -35,13 +36,15 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
  * Created by Oleg Sheliakin on 09.10.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOutView {
+public class VenueViewFacade implements Observer<MessageEvent> {
 
+    private static final String KEY_STATE_BEHAVIOR = "key_state_behavior";
     private final LifecycleOwner lifecycleOwner;
 
     private final VenueViewModel venueViewModel;
     private final CreateFavoriteViewModel createFavoriteViewModel;
     private final CheckInViewModel checkInViewModel;
+    private final ToastDelegate toastDelegate;
     private ShowHideBottomBarListener showHideBottomBarListener;
 
     private VenueDetailsView venueDetailsView;
@@ -59,17 +62,18 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
             LifecycleOwner lifecycleOwner,
             VenueViewModel venueViewModel,
             CreateFavoriteViewModel createFavoriteViewModel,
-            CheckInViewModel checkInViewModel) {
+            CheckInViewModel checkInViewModel, ToastDelegate toastDelegate) {
         this.lifecycleOwner = lifecycleOwner;
         this.venueViewModel = venueViewModel;
         this.createFavoriteViewModel = createFavoriteViewModel;
         this.checkInViewModel = checkInViewModel;
+        this.toastDelegate = toastDelegate;
     }
 
     public void onCreateView(View view) {
         venueDetailsView = view.findViewById(R.id.venueView);
         ivVenuePhoto = view.findViewById(R.id.ivVenuePhoto);
-
+        toastDelegate.attach(view.getContext());
         fabCheckInButton = view.findViewById(R.id.fabCheckInButton);
         fabCheckInButton.setOnClickListener(v -> checkInViewModel.manage(venueViewModel.getVenueViewData()));
 
@@ -78,18 +82,18 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
 
         initBehavior(view);
 
-        venueViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
-        createFavoriteViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
-        checkInViewModel.getObserver().observe(lifecycleOwner, ViewActionObserver.create(this));
+        venueViewModel.getState().observe(lifecycleOwner, this::render);
+        createFavoriteViewModel.getState().observe(lifecycleOwner, this);
+        checkInViewModel.getState().observe(lifecycleOwner, this);
     }
 
     public void onSaveState(Bundle state) {
         behaviorState = behavior.getState();
-        state.putInt("state", behaviorState);
+        state.putInt(KEY_STATE_BEHAVIOR, behaviorState);
     }
 
     public void onRestoreState(Bundle state) {
-        behaviorState = state.getInt("state");
+        behaviorState = state.getInt(KEY_STATE_BEHAVIOR);
         nestedScrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -97,7 +101,6 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
                 nestedScrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-
     }
 
     public void setShowHideBottomBarListener(ShowHideBottomBarListener showHideBottomBarListener) {
@@ -107,38 +110,8 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     public void setVenue(PreviewVenueViewData venueMapViewData) {
         Optional.of(venueDetailsView).ifPresent(VenueDetailsView::clearContent);
         venueViewModel.setVenue(venueMapViewData.getId());
-        venueDetailsView.setRetryClickListener(() -> venueViewModel.setVenue(venueMapViewData.getId()));
+        venueDetailsView.setRetryClickListener(v -> venueViewModel.setVenue(venueMapViewData.getId()));
         openBottomIfNeed();
-    }
-
-    @Override
-    public void show(VenueViewData venue) {
-        mergedAppBarLayoutBehavior.setToolbarTitle(venue.getTitle());
-
-        String url = Optional.of(venue.getBestPhoto())
-                .map(PhotoViewData::getFullSizeUrl)
-                .getOrNull();
-
-        ImageLoader.loadImage(ivVenuePhoto, url);
-
-        venueDetailsView.show(venue);
-        favoriteButton.setSelected(venue.isFavorite());
-        fabCheckInButton.setSelected(venue.isHere());
-    }
-
-    @Override
-    public void showError() {
-        venueDetailsView.showError("Something goes wrong");
-    }
-
-    @Override
-    public void showLoading() {
-        venueDetailsView.showLoading();
-    }
-
-    @Override
-    public void hideLoading() {
-        venueDetailsView.hideLoading();
     }
 
     private void openBottomIfNeed() {
@@ -185,23 +158,42 @@ public class VenueViewFacade implements VenueView, CreateFavoriteView, CheckInOu
     }
 
     @Override
-    public void favoriteAdded() {
-        //ignore
+    public void onChanged(@Nullable MessageEvent messageEvent) {
+        Optional.of(messageEvent).ifPresent(event ->
+                event.handle(() -> toastDelegate.showSuccess(event.getText())));
     }
 
-    @Override
-    public void favoriteRemoved() {
-        //ignore
+    private void render(VenueViewState venueViewState) {
+        if (venueViewState == null) {
+            return;
+        }
+
+        if (venueViewState.isLoading()) {
+            venueDetailsView.showLoading();
+            return;
+        } else if (venueViewState.getErrorEvent() != null) {
+            ErrorEvent errorEvent = venueViewState.getErrorEvent();
+            venueDetailsView.showError(errorEvent.getErrorText());
+            return;
+        }
+
+        if (venueViewState.getVenueViewData() != null) {
+            venueDetailsView.hideLoading();
+            showVenue(venueViewState.getVenueViewData());
+        }
     }
 
-    @Override
-    public void checkedIn() {
-        //ignore
-    }
+    private void showVenue(VenueViewData venue) {
+        mergedAppBarLayoutBehavior.setToolbarTitle(venue.getTitle());
 
-    @Override
-    public void checkedOut() {
-        //ignore
-    }
+        String url = Optional.of(venue.getBestPhoto())
+                .map(PhotoViewData::getFullSizeUrl)
+                .getOrNull();
 
+        ImageLoader.loadImage(ivVenuePhoto, url);
+
+        venueDetailsView.show(venue);
+        favoriteButton.setSelected(venue.isFavorite());
+        fabCheckInButton.setSelected(venue.isHere());
+    }
 }

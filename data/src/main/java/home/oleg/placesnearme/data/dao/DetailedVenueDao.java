@@ -1,8 +1,6 @@
 package home.oleg.placesnearme.data.dao;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -12,10 +10,7 @@ import android.support.annotation.VisibleForTesting;
 
 import java.util.List;
 
-import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;
-import home.oleg.placesnearme.data.model.DetailedVenueHistory;
-import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity;
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
 import home.oleg.placesnearme.data.model.PhotoDbEntity;
 import io.reactivex.Flowable;

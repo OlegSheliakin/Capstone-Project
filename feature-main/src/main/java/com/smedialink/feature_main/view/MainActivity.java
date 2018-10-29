@@ -14,7 +14,6 @@ import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 import javax.inject.Inject;
 
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
-import home.oleg.placesnearme.core_presentation.base.BackHandler;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
 public final class MainActivity extends AppCompatActivity implements ShowHideBottomBarListener {

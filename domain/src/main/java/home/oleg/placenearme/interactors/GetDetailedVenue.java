@@ -4,8 +4,6 @@ import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.VenueHistoryRepository;
 import io.reactivex.Flowable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 
 public class GetDetailedVenue {
 

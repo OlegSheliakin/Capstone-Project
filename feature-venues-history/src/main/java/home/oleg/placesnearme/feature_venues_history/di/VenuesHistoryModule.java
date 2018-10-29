@@ -2,17 +2,15 @@ package home.oleg.placesnearme.feature_venues_history.di;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.v7.util.DiffUtil;
 
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 
 import dagger.Module;
 import dagger.Provides;
-import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType;
 import home.oleg.placesnearme.core_presentation.recyclerview.VenuesDiffCallback;
 import home.oleg.placesnearme.feature_venues_history.HistoryVenuesAdapter;
-import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel;
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment;
+import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel;
 import io.reactivex.annotations.NonNull;
 
 @Module

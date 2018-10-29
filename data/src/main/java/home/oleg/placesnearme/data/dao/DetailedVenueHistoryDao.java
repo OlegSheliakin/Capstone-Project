@@ -10,8 +10,6 @@ import java.util.List;
 
 import home.oleg.placesnearme.data.model.DetailedVenueHistory;
 import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity;
-import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos;
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;

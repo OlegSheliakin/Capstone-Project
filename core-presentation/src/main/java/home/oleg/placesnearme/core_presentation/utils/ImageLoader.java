@@ -1,9 +1,13 @@
 package home.oleg.placesnearme.core_presentation.utils;
 
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 import home.oleg.placesnearme.core_presentation.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -37,6 +41,13 @@ public final class ImageLoader {
                 .placeholder(R.color.colorGrayLight)
                 .error(R.color.colorGrayLight)
                 .into(imageView);
+    }
+
+    public static Bitmap loadIcon(RemoteViews remoteViews, int id, @Nullable String url, int appwidgetId) throws IOException {
+        return Picasso.get()
+                .load(url)
+                .transform(new CropCircleTransformation())
+                .get();
     }
 
 }

@@ -18,6 +18,7 @@
     <dimen name="margin_extra_small">4dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_high">24dp</dimen>
+    <dimen name="all_fragment_margin_bottom">64dp</dimen>
     <dimen name="width_all_icon_venue">48dp</dimen>
 
     <dimen name="height_image_view_venue_photo">266dp</dimen>

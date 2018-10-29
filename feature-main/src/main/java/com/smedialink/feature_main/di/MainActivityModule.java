@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.smedialink.feature_main.delegate.BottomBarTabListener;
 import com.smedialink.feature_main.view.MainActivity;
 
 import dagger.Module;

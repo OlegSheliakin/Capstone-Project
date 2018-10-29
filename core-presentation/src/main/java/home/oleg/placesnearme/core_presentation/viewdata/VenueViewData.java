@@ -218,7 +218,7 @@ public class VenueViewData extends PreviewVenueViewData {
         }
         venueViewData.setPhotoUrls(photoUrls);
         venueViewData.setHere(venue.isHereNow());
-
+        venueViewData.setDistance(venue.getDistance());
         return venueViewData;
     }
 

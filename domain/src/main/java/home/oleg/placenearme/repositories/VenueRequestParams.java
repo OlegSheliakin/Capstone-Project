@@ -20,7 +20,7 @@ public final class VenueRequestParams {
     }
 
     public static VenueRequestParams withLocation(double lat, double lng) {
-        return new VenueRequestParams(5000, lat, lng);
+        return new VenueRequestParams(500, lat, lng);
     }
 
     public int getRadius() {

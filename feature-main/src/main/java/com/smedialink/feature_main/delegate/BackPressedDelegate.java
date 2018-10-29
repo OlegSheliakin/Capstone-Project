@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.smedialink.feature_main.R;
-import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 
 import javax.inject.Inject;
 

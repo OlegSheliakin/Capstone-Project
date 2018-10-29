@@ -1,13 +1,6 @@
 package home.oleg.placesnearme.feature_map.state;
 
-import android.support.annotation.NonNull;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 
 public class MapViewState {
 

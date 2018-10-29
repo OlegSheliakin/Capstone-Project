@@ -2,17 +2,14 @@ package com.smedialink.feature_venue_detail.venue.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -45,11 +42,6 @@ public class VenueDetailsView extends FrameLayout {
     private SpinKitView progressBar;
     private Button retryButton;
     private TextView tvError;
-    private RetryClickListener retryClickListener;
-
-    public interface RetryClickListener {
-        void onRetryClick();
-    }
 
     private PhotosAdapter photosAdapter = new PhotosAdapter();
 
@@ -66,10 +58,8 @@ public class VenueDetailsView extends FrameLayout {
         init();
     }
 
-    public void setRetryClickListener(@NonNull RetryClickListener retryClickListener) {
-        this.retryClickListener = retryClickListener;
-
-        retryButton.setOnClickListener(v -> retryClickListener.onRetryClick());
+    public void setRetryClickListener(@NonNull OnClickListener retryClickListener) {
+        retryButton.setOnClickListener(retryClickListener);
     }
 
     public void show(VenueViewData venue) {
@@ -78,7 +68,6 @@ public class VenueDetailsView extends FrameLayout {
         progressBar.setVisibility(GONE);
 
         tvVenueDescription.setText(venue.getDescription());
-        tvVenueOpeningHours.setText(venue.getOpeningHoursStatus());
         tvContacts.setText(venue.getFormattedPhone());
         rating.setRating(venue.getAdoptedRating());
 
@@ -108,7 +97,6 @@ public class VenueDetailsView extends FrameLayout {
         tvVenueAddress.setText("");
         tvVenueDescription.setText("");
         tvContacts.setText("");
-        tvVenueOpeningHours.setText("");
         rating.setRating(0f);
         photosAdapter.setItems(Collections.emptyList());
         tvError.setText("");
@@ -147,7 +135,6 @@ public class VenueDetailsView extends FrameLayout {
         tvVenueAddress = findViewById(R.id.tvVenueAddress);
         tvVenueDescription = findViewById(R.id.tvVenueDescription);
         tvVenueDistance = findViewById(R.id.tvVenueDistance);
-        tvVenueOpeningHours = findViewById(R.id.tvVenueOpeningHours);
         tvContacts = findViewById(R.id.tvContacts);
         ivVenueIcon = findViewById(R.id.ivVenueIcon);
         tvCategoryName = findViewById(R.id.tvCategoryName);

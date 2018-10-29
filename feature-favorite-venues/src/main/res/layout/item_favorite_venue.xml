@@ -38,19 +38,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/crdPhoto"
         app:layout_constraintEnd_toEndOf="@+id/crdPhoto" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabShowOnMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_small"
-        android:layout_marginBottom="@dimen/margin_high"
-        android:tint="@color/colorPrimaryDark"
-        app:backgroundTint="@android:color/white"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="@+id/crdPhoto"
-        app:layout_constraintEnd_toStartOf="@+id/fabAddToFavorite"
-        app:srcCompat="@drawable/ic_map" />
-
     <TextView
         android:id="@+id/tvName"
         android:layout_width="0dp"

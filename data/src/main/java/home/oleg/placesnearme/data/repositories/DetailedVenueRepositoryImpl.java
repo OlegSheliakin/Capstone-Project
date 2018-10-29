@@ -1,9 +1,5 @@
 package home.oleg.placesnearme.data.repositories;
 
-import android.util.Log;
-
-import java.util.concurrent.TimeUnit;
-
 import home.oleg.placenearme.models.DetailedVenue;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placesnearme.data.dao.DetailedVenueDao;

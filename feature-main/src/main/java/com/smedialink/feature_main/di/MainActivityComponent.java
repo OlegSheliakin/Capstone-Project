@@ -1,14 +1,9 @@
 package com.smedialink.feature_main.di;
 
 import com.smedialink.feature_main.view.MainActivity;
-import com.smedialink.feature_venue_detail.venue.di.DaggerVenueDetailComponent;
-import com.smedialink.feature_venue_detail.venue.di.VenueDetailComponent;
-import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import home.oleg.placesnearme.AppApiProvider;
-import home.oleg.placesnearme.api.AppApi;
 import home.oleg.placesnearme.scopes.FeatureScope;
 
 @FeatureScope

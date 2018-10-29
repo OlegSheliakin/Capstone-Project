@@ -16,8 +16,8 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import home.oleg.feature_add_history.CheckInViewModel;
-import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
 import home.oleg.feature_add_history.interactor.CheckInOut;
+import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
 import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetAllHistory;
@@ -27,6 +27,7 @@ import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placenearme.interactors.GetUserLocation;
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey;
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
+import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel;
@@ -42,8 +43,8 @@ public final class ViewModelModule {
     @ViewModelKey(CheckInViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideCheckInViewModel(CheckInOut checkInOut) {
-        return new CheckInViewModel(checkInOut);
+    public static ViewModel provideCheckInViewModel(CheckInOut checkInOut, ResourceProvider resourceProvider) {
+        return new CheckInViewModel(checkInOut, resourceProvider);
     }
 
     @IntoMap
@@ -58,8 +59,8 @@ public final class ViewModelModule {
     @ViewModelKey(CreateFavoriteViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideCreateFavoriteViewModel(CreateVenueFavorite createVenueFavorite) {
-        return new CreateFavoriteViewModel(createVenueFavorite);
+    public static ViewModel provideCreateFavoriteViewModel(CreateVenueFavorite createVenueFavorite, ResourceProvider resourceProvider) {
+        return new CreateFavoriteViewModel(createVenueFavorite, resourceProvider);
     }
 
     @IntoMap

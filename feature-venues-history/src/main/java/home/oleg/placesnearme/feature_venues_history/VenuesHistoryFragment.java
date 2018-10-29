@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.smedialink.common.Optional;
-import com.smedialink.feature_add_favorite.CreateFavoriteView;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import home.oleg.placesnearme.feature_venues_history.di.VenueHistoryComponent;
 
 public class VenuesHistoryFragment extends Fragment
-        implements HistoryVenuesAdapter.HistoryClicksListener, VenuesHistoryView, CreateFavoriteView {
+        implements HistoryVenuesAdapter.HistoryClicksListener, VenuesHistoryView {
 
     @Inject
     HistoryVenuesAdapter historyVenuesAdapter;
@@ -41,10 +40,6 @@ public class VenuesHistoryFragment extends Fragment
     CreateFavoriteViewModel createFavoriteViewModel;
 
     private ShowHideBottomBarListener showHideBottomBarListener;
-
-    public VenuesHistoryFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -58,7 +53,6 @@ public class VenuesHistoryFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_places_history, container, false);
     }
 
@@ -78,7 +72,6 @@ public class VenuesHistoryFragment extends Fragment
                 });
 
         placesHistoryViewModel.getObserver().observe(this, ViewActionObserver.create(this));
-        createFavoriteViewModel.getObserver().observe(this, ViewActionObserver.create(this));
     }
 
     private void injectDependencies(Context context) {
@@ -105,13 +98,4 @@ public class VenuesHistoryFragment extends Fragment
         historyVenuesAdapter.showEmpty();
     }
 
-    @Override
-    public void favoriteAdded() {
-
-    }
-
-    @Override
-    public void favoriteRemoved() {
-
-    }
 }

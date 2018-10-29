@@ -1,12 +1,10 @@
 package home.oleg.placesnearme.core_presentation.base;
 
-import com.smedialink.common.function.Action;
-
 /**
  * Created by Oleg Sheliakin on 27.10.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public abstract class Event {
+public class Event {
 
     private boolean isHandled;
 

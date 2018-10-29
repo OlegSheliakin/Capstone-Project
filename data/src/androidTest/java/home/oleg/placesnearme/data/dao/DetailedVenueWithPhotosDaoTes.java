@@ -19,8 +19,6 @@ import home.oleg.placesnearme.data.model.PhotoDbEntity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class DetailedVenueWithPhotosDaoTes {

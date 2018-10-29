@@ -12,12 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.smedialink.common.Optional;
-import com.smedialink.feature_add_favorite.CreateFavoriteView;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
-import com.smedialink.feature_venue_detail.venue.view.VenueFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +27,7 @@ import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem;
 import home.oleg.placesnearme.core_presentation.view_actions.ViewActionObserver;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 
-public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAdapter.FavoriteClicksListener, FavoriteView, CreateFavoriteView {
+public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAdapter.FavoriteClicksListener, FavoriteView {
 
     @Inject
     FavoritePlacesViewModel favoritePlacesViewModel;
@@ -41,11 +38,7 @@ public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAd
     @Inject
     FavoriteVenuesAdapter adapter;
 
-
     private ShowHideBottomBarListener showHideBottomBarListener;
-
-    public FavoritePlacesFragment() {
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -74,11 +67,10 @@ public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAd
         Optional.of((AppCompatActivity) getActivity())
                 .ifPresent(appCompatActivity -> {
                     appCompatActivity.setSupportActionBar(toolbar);
-                    appCompatActivity.getSupportActionBar().setTitle("Favorite");
+                    appCompatActivity.getSupportActionBar().setTitle(R.string.fragment_title_favorite);
                 });
 
         favoritePlacesViewModel.getObserver().observe(this, ViewActionObserver.create(this));
-        createFavoriteViewModel.getObserver().observe(this, ViewActionObserver.create(this));
     }
 
     @Override
@@ -92,23 +84,8 @@ public class FavoritePlacesFragment extends Fragment implements FavoriteVenuesAd
     }
 
     @Override
-    public void favoriteAdded() {
-        //todo show toast
-    }
-
-    @Override
-    public void favoriteRemoved() {
-        //todo show toast
-    }
-
-    @Override
     public void favoriteClicked(VenueViewData venueViewData) {
         createFavoriteViewModel.manageFavorite(venueViewData);
-    }
-
-    @Override
-    public void showOnMapClicked(VenueViewData venueViewData) {
-        Toast.makeText(getContext(), "show on map clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override

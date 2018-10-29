@@ -55,6 +55,7 @@ dependencies {
     implementation project(':feature-add-favorite')
     implementation project(':feature-add-history')
     implementation project(':feature-venues-history')
+    implementation project(':feature-widget')
 
     implementation deps.support.supportV13
     implementation deps.lifecycle.extensions

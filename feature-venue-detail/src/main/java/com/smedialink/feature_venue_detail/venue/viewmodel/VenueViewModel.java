@@ -1,15 +1,15 @@
 package com.smedialink.feature_venue_detail.venue.viewmodel;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import com.smedialink.common.Optional;
-import com.smedialink.feature_venue_detail.venue.view.VenueView;
+import com.smedialink.feature_venue_detail.state.VenueViewState;
 
 import home.oleg.placenearme.interactors.EvaluateDistance;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
-import home.oleg.placesnearme.core_presentation.base.BaseViewModel;
-import home.oleg.placesnearme.core_presentation.base.ErrorView;
-import home.oleg.placesnearme.core_presentation.base.LoadingView;
+import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,8 +20,9 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Oleg Sheliakin on 18.09.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-public class VenueViewModel extends BaseViewModel<VenueView> {
+public class VenueViewModel extends ViewModel {
 
+    private final MutableLiveData<VenueViewState> state = new MutableLiveData<>();
     private final ErrorHanlder errorHanlder;
     private final GetDetailedVenue getDetailedVenue;
     private final EvaluateDistance evaluateDistance;
@@ -36,6 +37,10 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
         this.evaluateDistance = evaluateDistance;
     }
 
+    public MutableLiveData<VenueViewState> getState() {
+        return state;
+    }
+
     public void setVenue(String venueId) {
         Optional.of(disposable).ifPresent(Disposable::dispose);
 
@@ -45,18 +50,12 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
                 .doOnNext(data -> this.venueViewData = data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> setState(LoadingView::showLoading))
+                .doOnSubscribe(disposable -> state.setValue(VenueViewState.loading()))
                 .subscribe(
-                        detailedVenue -> setState(venueView -> {
-                            venueView.hideLoading();
-                            venueView.show(detailedVenue);
-                        }),
+                        detailedVenue -> state.setValue(VenueViewState.success(detailedVenue)),
                         throwable -> {
-                            errorHanlder.handle(throwable);
-                            setState(venueView -> {
-                                venueView.hideLoading();
-                                venueView.showError();
-                            });
+                            ErrorEvent errorEvent = errorHanlder.handle(throwable);
+                            state.setValue(VenueViewState.error(errorEvent));
                         });
     }
 
@@ -64,16 +63,16 @@ public class VenueViewModel extends BaseViewModel<VenueView> {
         Optional.of(disposable).ifPresent(Disposable::dispose);
 
         disposable = getDetailedVenue.getCachedDetailVenue(venueId)
+                .flatMapSingle(evaluateDistance::evaluateDistance)
                 .map(VenueViewData::mapFrom)
                 .doOnNext(data -> this.venueViewData = data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        detailedVenue -> setState(venueView -> {
-                            venueView.show(detailedVenue);
-                        }),
+                        detailedVenue -> state.setValue(VenueViewState.success(detailedVenue)),
                         throwable -> {
-                            setState(ErrorView::showError);
+                            ErrorEvent errorEvent = errorHanlder.handle(throwable);
+                            state.setValue(VenueViewState.error(errorEvent));
                         });
     }
 

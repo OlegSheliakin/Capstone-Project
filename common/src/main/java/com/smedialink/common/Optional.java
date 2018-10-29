@@ -25,7 +25,11 @@ public final class Optional<T> {
     }
 
     public <R> Optional<R> map(@NonNull Function<T, R> function) {
-        return Optional.of(function.apply(value));
+        if(value != null) {
+            return Optional.of(function.apply(value));
+        } else {
+            return Optional.of(null);
+        }
     }
 
     @Nullable
