@@ -28,6 +28,7 @@ import home.oleg.placenearme.interactors.GetUserLocation;
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey;
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
+import home.oleg.placesnearme.feature_map.manager.NetworkConnectivityManager;
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel;
@@ -75,7 +76,9 @@ public final class ViewModelModule {
     @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenueViewModel(ErrorHanlder errorHanlder, GetDetailedVenue getDetailedVenue, EvaluateDistance evaluateDistance) {
+    public static ViewModel provideVenueViewModel(ErrorHanlder errorHanlder,
+                                                  GetDetailedVenue getDetailedVenue,
+                                                  EvaluateDistance evaluateDistance) {
         return new VenueViewModel(errorHanlder, getDetailedVenue, evaluateDistance);
     }
 
@@ -83,8 +86,11 @@ public final class ViewModelModule {
     @ViewModelKey(VenuesViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideMapViewModel(ErrorHanlder errorHanlder, GetRecommendedVenues interactor) {
-        return new VenuesViewModel(errorHanlder, interactor);
+    public static ViewModel provideMapViewModel(ErrorHanlder errorHanlder,
+                                                GetRecommendedVenues interactor,
+                                                ResourceProvider resourceProvider,
+                                                NetworkConnectivityManager connectivityManager) {
+        return new VenuesViewModel(errorHanlder, interactor, resourceProvider, connectivityManager);
     }
 
     @IntoMap

@@ -13,9 +13,13 @@ import java.util.Map;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
+import home.oleg.placesnearme.core_presentation.base.MessageEvent;
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
 import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper;
+import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
+import home.oleg.placesnearme.feature_map.R;
+import home.oleg.placesnearme.feature_map.manager.NetworkConnectivityManager;
 import home.oleg.placesnearme.feature_map.state.MapViewState;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -25,19 +29,25 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Oleg on 10.08.2018.
  */
-public final class VenuesViewModel extends ViewModel {
+public final class VenuesViewModel extends ViewModel implements NetworkConnectivityManager.Callback {
 
     private Disposable searchDisposable;
     private final ErrorHanlder errorHanlder;
     private final GetRecommendedVenues interactor;
+    private final ResourceProvider resourceProvider;
+    private final NetworkConnectivityManager connectivityManager;
     private final VenuesViewModel.VenuesHolder venuesHolder = new VenuesViewModel.VenuesHolder();
     private final MutableLiveData<MapViewState> state = new MutableLiveData<>();
+    private final MutableLiveData<MessageEvent> internetConnectionState = new MutableLiveData<>();
     private final MutableLiveData<List<PreviewVenueViewData>> data = new MutableLiveData<>();
 
     public VenuesViewModel(ErrorHanlder errorHanlder,
-                           @NonNull GetRecommendedVenues interactor) {
+                           @NonNull GetRecommendedVenues interactor,
+                           ResourceProvider resourceProvider, NetworkConnectivityManager connectivityManager) {
         this.errorHanlder = errorHanlder;
         this.interactor = interactor;
+        this.resourceProvider = resourceProvider;
+        this.connectivityManager = connectivityManager;
         state.setValue(MapViewState.initial());
     }
 
@@ -47,6 +57,10 @@ public final class VenuesViewModel extends ViewModel {
 
     public MutableLiveData<List<PreviewVenueViewData>> getData() {
         return data;
+    }
+
+    public void checkConnection() {
+        connectivityManager.checkConnection(this);
     }
 
     public void getRecommendedVenues(Section section) {
@@ -94,6 +108,20 @@ public final class VenuesViewModel extends ViewModel {
 
     public PreviewVenueViewData getVenue(String id) {
         return venuesHolder.get(id);
+    }
+
+    @Override
+    public void connectionAvailable() {
+    }
+
+    @Override
+    public void connectionNotAvailable() {
+        internetConnectionState.setValue(
+                new MessageEvent(resourceProvider.getString(R.string.no_internet_connection)));
+    }
+
+    public MutableLiveData<MessageEvent> getConnectionState() {
+        return internetConnectionState;
     }
 
     private static final class VenuesHolder {

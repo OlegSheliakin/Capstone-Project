@@ -19,17 +19,15 @@ public class BackPressedDelegate implements OnBackPressListener {
     }
 
     @Override
-    public void onBackPressed() {
+    public boolean onBackPressed() {
         Fragment curFrag = appCompatActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         boolean intercepted = false;
 
-        if (curFrag != null && curFrag instanceof BackHandler) {
+        if (curFrag instanceof BackHandler) {
             intercepted = ((BackHandler) curFrag).onBackPressed();
         }
 
-        if (!intercepted) {
-            appCompatActivity.onBackPressed();
-        }
+       return intercepted;
 
     }
 

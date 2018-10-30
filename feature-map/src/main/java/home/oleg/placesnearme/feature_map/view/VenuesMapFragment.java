@@ -2,6 +2,7 @@ package home.oleg.placesnearme.feature_map.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,6 +38,8 @@ import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener;
 import home.oleg.placesnearme.core_presentation.base.BackHandler;
 import home.oleg.placesnearme.core_presentation.base.ErrorEvent;
+import home.oleg.placesnearme.core_presentation.base.Event;
+import home.oleg.placesnearme.core_presentation.base.MessageEvent;
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate;
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData;
 import home.oleg.placesnearme.feature_map.R;
@@ -122,6 +125,11 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
         venueViewFacade.onCreateView(view);
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener);
+        venuesViewModel.checkConnection();
+        venuesViewModel.getConnectionState()
+                .observe(this,
+                        messageEvent -> messageEvent.handle(() ->
+                                toastDelegate.showError(messageEvent.getText())));
     }
 
     @Override

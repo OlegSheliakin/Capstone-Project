@@ -68,6 +68,8 @@ public final class MainActivity extends AppCompatActivity implements ShowHideBot
             return;
         }
 
-        backPressedDelegate.onBackPressed();
+        if (!backPressedDelegate.onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 }
