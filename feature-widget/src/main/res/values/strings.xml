@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">featur-widget</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="content_description_refresh_button">Refresh button</string>
+    <string name="label_loading">Loading…</string>
 </resources>

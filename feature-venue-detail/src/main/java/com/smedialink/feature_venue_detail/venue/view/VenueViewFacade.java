@@ -137,6 +137,7 @@ public class VenueViewFacade implements Observer<MessageEvent> {
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == GoogleMapsBottomSheetBehavior.STATE_HIDDEN) {
                     showHideBottomBarListener.hideBottomBar();
+                    venueViewModel.cancel();
                 } else {
                     showHideBottomBarListener.showBottomBar();
                 }

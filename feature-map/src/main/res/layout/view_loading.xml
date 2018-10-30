@@ -4,6 +4,7 @@
     android:layout_width="@dimen/size_error_view"
     android:layout_height="@dimen/size_error_view"
     android:layout_margin="@dimen/margin_normal"
+    app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="@dimen/radius_corner_error_view">
 
     <com.github.ybq.android.spinkit.SpinKitView

@@ -2,4 +2,5 @@
     <string name="app_name">feature-add-favorite</string>
     <string name="add_favorite_message_success_added">Added to favorites</string>
     <string name="add_favorite_message_success_removed">Removed from favorites</string>
+    <string name="content_description_add_to_favorite_button">Add to favorite button</string>
 </resources>

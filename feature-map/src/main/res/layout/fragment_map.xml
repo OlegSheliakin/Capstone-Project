@@ -17,6 +17,7 @@
         android:layout_marginBottom="@dimen/margin_high"
         android:layout_marginEnd="@dimen/margin_high"
         android:layout_marginStart="@dimen/margin_high"
+        android:contentDescription="@string/content_description_search_button"
         android:layout_marginTop="@dimen/margin_extra_high"
         app:backgroundTint="@android:color/white"
         app:fabSize="mini"
@@ -34,7 +35,6 @@
     <include layout="@layout/layout_venue" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/fabs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_high"
             android:layout_marginEnd="@dimen/margin_high"
+            android:contentDescription="@string/content_description_current_location_button"
             android:layout_marginStart="@dimen/margin_high"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
@@ -61,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_high"
+            android:contentDescription="@string/content_description_zoom_out_button"
             android:layout_marginStart="@dimen/margin_high"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
@@ -75,6 +77,7 @@
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_high"
             android:layout_marginStart="@dimen/margin_high"
+            android:contentDescription="@string/content_description_zoom_in_button"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@id/fabZoomOut"

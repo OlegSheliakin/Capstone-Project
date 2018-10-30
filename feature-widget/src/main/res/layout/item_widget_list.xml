@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/ivIcon"
+        android:contentDescription="@string/content_description_venue_icon"
         android:layout_width="@dimen/size_icon"
         android:layout_height="@dimen/size_icon" />
 

@@ -8,4 +8,9 @@
     <string name="label_section_shops">Shops</string>
     <string name="label_section_sights" >Sights</string>
     <string name="label_section_trending">Trending</string>
+    <string name="content_description_close">Close button</string>
+    <string name="content_description_search_button">Search button</string>
+    <string name="content_description_current_location_button">Current location button</string>
+    <string name="content_description_zoom_out_button">Zoom out button</string>
+    <string name="content_description_zoom_in_button">Zoom in button</string>
 </resources>

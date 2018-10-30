@@ -24,7 +24,10 @@ public class DetailedVenueRepositoryImpl implements DetailedVenueRepository {
 
     @Override
     public Flowable<DetailedVenue> getDetailedVenueById(String venueId) {
-        return Flowable.concat(fetch(venueId).toFlowable(), stream(venueId));
+        return Flowable.merge(
+                fetch(venueId).toFlowable(),
+                stream(venueId).skip(1)
+        );
     }
 
     @Override

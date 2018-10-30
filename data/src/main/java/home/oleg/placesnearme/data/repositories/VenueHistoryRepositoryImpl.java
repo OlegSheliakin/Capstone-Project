@@ -42,8 +42,7 @@ public class VenueHistoryRepositoryImpl implements VenueHistoryRepository {
         return Flowable.merge(
                 Flowable.just(false),
                 venueHistoryDao.observeById(id)
-                        .map(DetailedVenueHistoryDbEntity::isLastCheckIn)
-                        .debounce(200, TimeUnit.MILLISECONDS));
+                        .map(DetailedVenueHistoryDbEntity::isLastCheckIn));
     }
 
     @Override

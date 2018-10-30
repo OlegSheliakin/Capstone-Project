@@ -1,4 +1,4 @@
-API_VERSION = "here_is_your_api_version"
-CLIENT_ID = "here_is_your_client_id"
-CLIENT_SECRET = "here_is_your_client_secret"
+API_VERSION = "your_api_version"
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_secret"
 BASE_URL = "https://api.foursquare.com/"

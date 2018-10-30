@@ -80,4 +80,8 @@ public class VenueViewModel extends ViewModel {
     public VenueViewData getVenueViewData() {
         return venueViewData;
     }
+
+    public void cancel() {
+        Optional.of(disposable).ifPresent(Disposable::dispose);
+    }
 }

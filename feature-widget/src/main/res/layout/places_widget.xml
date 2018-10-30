@@ -12,6 +12,7 @@
         android:padding="@dimen/margin_normal"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/content_description_refresh_button"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_refresh_black_24dp" />
 

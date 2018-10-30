@@ -5,5 +5,4 @@
     <dimen name="height_venue_photo">160dp</dimen>
     <dimen name="anchor_height_venue_photo">100dp</dimen>
     <dimen name="peek_height_venue">160dp</dimen>
-    <dimen name="radius_skeleton_text">6dp</dimen>
 </resources>
