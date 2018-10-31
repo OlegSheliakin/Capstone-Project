@@ -14,7 +14,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.smedialink.common.Optional;
 import com.smedialink.feature_venue_detail.R;
 
 import java.util.Collections;

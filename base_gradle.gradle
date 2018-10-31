@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion sdk.compile
@@ -26,4 +27,11 @@ android {
         targetCompatibility javaVersion
     }
 
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    testImplementation deps.testing.junit
+    testImplementation deps.testing.mockito
 }

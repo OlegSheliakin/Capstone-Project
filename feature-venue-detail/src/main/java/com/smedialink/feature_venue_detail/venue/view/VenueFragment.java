@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.smedialink.common.Optional;
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel;
 import com.smedialink.feature_venue_detail.R;
 import com.smedialink.feature_venue_detail.state.VenueViewState;

@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 repositories {
     maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+    mavenCentral()
 }
 
 def getProps(path) {
@@ -56,7 +58,6 @@ dependencies {
 
     implementation project(':data')
     implementation project(':domain')
-    implementation project(':common')
 
     implementation project(':feature-map')
     implementation project(':feature-main')
@@ -70,8 +71,11 @@ dependencies {
     implementation deps.support.supportV13
     implementation deps.lifecycle.extensions
 
+    implementation deps.rxjava2.rxjava
+    
     implementation deps.dagger.runtime
     annotationProcessor deps.dagger.compiler
 
     implementation deps.timber
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

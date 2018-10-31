@@ -5,7 +5,6 @@ dependencies {
 
     implementation project(':core-presentation')
     implementation project(':domain')
-    implementation project(':common')
     implementation project(':core-di')
 
     implementation deps.rxjava2.rxjava
@@ -15,7 +14,4 @@ dependencies {
 
     implementation deps.dagger.runtime
     annotationProcessor deps.dagger.compiler
-
-    testImplementation deps.testing.junit
-    testImplementation deps.testing.mockito
 }

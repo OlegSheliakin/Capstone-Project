@@ -21,7 +21,4 @@ dependencies {
     implementation deps.bottomNavigation
 
     implementation deps.support.appcompat7
-    testImplementation deps.testing.junit
-    testImplementation deps.testing.mockito
-    testImplementation deps.testing.room
 }

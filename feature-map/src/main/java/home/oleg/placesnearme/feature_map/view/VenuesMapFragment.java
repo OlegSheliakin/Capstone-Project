@@ -125,11 +125,6 @@ public class VenuesMapFragment extends BaseMapFragment implements
 
         venueViewFacade.onCreateView(view);
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener);
-        venuesViewModel.checkConnection();
-        venuesViewModel.getConnectionState()
-                .observe(this,
-                        messageEvent -> messageEvent.handle(() ->
-                                toastDelegate.showError(messageEvent.getText())));
     }
 
     @Override

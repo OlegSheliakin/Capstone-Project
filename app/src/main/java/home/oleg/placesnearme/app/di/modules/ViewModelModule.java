@@ -20,15 +20,14 @@ import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.feature_favorite_venues.FavoritePlacesViewModel;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
 import home.oleg.placenearme.interactors.EvaluateDistance;
-import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
-import home.oleg.placenearme.interactors.GetFavoriteVenues;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
-import home.oleg.placenearme.interactors.GetUserLocation;
+import home.oleg.placenearme.repositories.FavoriteVenuesRepository;
+import home.oleg.placenearme.repositories.UserLocationRepository;
+import home.oleg.placenearme.repositories.VenueHistoryRepository;
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey;
-import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
+import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
-import home.oleg.placesnearme.feature_map.manager.NetworkConnectivityManager;
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel;
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel;
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel;
@@ -52,8 +51,8 @@ public final class ViewModelModule {
     @ViewModelKey(VenuesHistoryViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenuesHistoryViewModel(GetAllHistory getAllHistory, EvaluateDistance evaluateDistance) {
-        return new VenuesHistoryViewModel(getAllHistory, evaluateDistance);
+    public static ViewModel provideVenuesHistoryViewModel(VenueHistoryRepository venueHistoryRepository, EvaluateDistance evaluateDistance) {
+        return new VenuesHistoryViewModel(venueHistoryRepository::getHistory, evaluateDistance);
     }
 
     @IntoMap
@@ -68,37 +67,39 @@ public final class ViewModelModule {
     @ViewModelKey(FavoritePlacesViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideFavoritePlacesViewModel(GetFavoriteVenues getFavoriteVenues) {
-        return new FavoritePlacesViewModel(getFavoriteVenues);
+    public static ViewModel provideFavoritePlacesViewModel(FavoriteVenuesRepository favoriteVenuesRepository) {
+        return new FavoritePlacesViewModel(favoriteVenuesRepository::observeFavorites);
     }
 
     @IntoMap
     @ViewModelKey(VenueViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideVenueViewModel(ErrorHanlder errorHanlder,
+    public static ViewModel provideVenueViewModel(ErrorHandler errorHanlder,
                                                   GetDetailedVenue getDetailedVenue,
                                                   EvaluateDistance evaluateDistance) {
-        return new VenueViewModel(errorHanlder, getDetailedVenue, evaluateDistance);
+        return new VenueViewModel(
+                errorHanlder,
+                getDetailedVenue::getDetailedVenue,
+                getDetailedVenue::getCachedDetailVenue,
+                evaluateDistance::evaluateDistance);
     }
 
     @IntoMap
     @ViewModelKey(VenuesViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideMapViewModel(ErrorHanlder errorHanlder,
-                                                GetRecommendedVenues interactor,
-                                                ResourceProvider resourceProvider,
-                                                NetworkConnectivityManager connectivityManager) {
-        return new VenuesViewModel(errorHanlder, interactor, resourceProvider, connectivityManager);
+    public static ViewModel provideMapViewModel(ErrorHandler errorHandler,
+                                                GetRecommendedVenues interactor) {
+        return new VenuesViewModel(errorHandler, interactor::getRecommendedSection);
     }
 
     @IntoMap
     @ViewModelKey(UserLocationViewModel.class)
     @Provides
     @NonNull
-    public static ViewModel provideUserLocationViewModel(GetUserLocation getUserLocationInteractor) {
-        return new UserLocationViewModel(getUserLocationInteractor);
+    public static ViewModel provideUserLocationViewModel(UserLocationRepository userLocationRepository) {
+        return new UserLocationViewModel(userLocationRepository::getLocation);
     }
 
     @IntoMap

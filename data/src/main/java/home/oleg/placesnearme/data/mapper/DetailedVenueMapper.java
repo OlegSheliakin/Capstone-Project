@@ -26,7 +26,7 @@ public final class DetailedVenueMapper {
         DetailedVenue result = new DetailedVenue();
 
         if (detailedVenue.getCategories() != null && !detailedVenue.getCategories().isEmpty()) {
-            result.setCategory(CategoryMapper.map(detailedVenue.getCategories().get(0)));
+            result.setCategory(CategoryMapper.INSTANCE.map(detailedVenue.getCategories().get(0)));
         }
 
 
@@ -39,7 +39,7 @@ public final class DetailedVenueMapper {
         result.setHours(HoursMapper.map(detailedVenue.getHours()));
 
         if (detailedVenue.getContact() != null) {
-            Contact contact = ContactMapper.map(detailedVenue.getContact());
+            Contact contact = ContactMapper.INSTANCE.map(detailedVenue.getContact());
             result.setContact(contact);
         }
 

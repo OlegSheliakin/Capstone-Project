@@ -5,7 +5,6 @@ dependencies {
 
     implementation project(':core-presentation')
     implementation project(':domain')
-    implementation project(':common')
     implementation project(':core-di')
     implementation project(':feature-add-favorite')
     implementation project(':feature-add-history')
@@ -32,8 +31,4 @@ dependencies {
     implementation deps.support.constraintLayout
     implementation deps.support.recyclerview
     implementation deps.support.design
-
-    testImplementation deps.testing.junit
-    testImplementation deps.testing.mockito
-
 }

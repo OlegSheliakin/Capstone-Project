@@ -1,13 +1,11 @@
 apply plugin: 'java-library'
+apply plugin: 'kotlin'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':common')
 
     implementation deps.rxjava2.rxjava
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
-
-sourceCompatibility = javaVersion
-targetCompatibility = javaVersion

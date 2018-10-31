@@ -21,7 +21,7 @@ public final class VenueMapper {
 
         for (home.oleg.placesnearme.network.models.Category category : venue.getCategories()) {
             if (category.getPrimary()) {
-                result.setCategory(CategoryMapper.map(category));
+                result.setCategory(CategoryMapper.INSTANCE.map(category));
             }
         }
 

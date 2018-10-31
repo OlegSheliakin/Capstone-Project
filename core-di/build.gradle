@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion sdk.compile
@@ -36,4 +37,5 @@ dependencies {
     testImplementation deps.testing.junit
     testImplementation deps.testing.mockito
     testImplementation deps.testing.room
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

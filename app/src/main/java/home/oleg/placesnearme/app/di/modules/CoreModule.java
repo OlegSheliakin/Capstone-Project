@@ -8,7 +8,7 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import home.oleg.placesnearme.app.PlacesNearMeApp;
-import home.oleg.placesnearme.core_presentation.error_handler.ErrorHanlder;
+import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler;
 import home.oleg.placesnearme.core_presentation.error_handler.MainErrorHandler;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
 import home.oleg.placesnearme.core_presentation.provider.ResourceProviderImpl;
@@ -38,5 +38,5 @@ public abstract class CoreModule {
 
     @Binds
     @NonNull
-    abstract ErrorHanlder provideErrorHandler(MainErrorHandler impl);
+    abstract ErrorHandler provideErrorHandler(MainErrorHandler impl);
 }

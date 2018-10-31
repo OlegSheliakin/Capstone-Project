@@ -5,11 +5,8 @@ import dagger.Provides;
 import home.oleg.feature_add_history.interactor.CheckInOut;
 import home.oleg.placenearme.interactors.CreateVenueFavorite;
 import home.oleg.placenearme.interactors.EvaluateDistance;
-import home.oleg.placenearme.interactors.GetAllHistory;
 import home.oleg.placenearme.interactors.GetDetailedVenue;
-import home.oleg.placenearme.interactors.GetFavoriteVenues;
 import home.oleg.placenearme.interactors.GetRecommendedVenues;
-import home.oleg.placenearme.interactors.GetUserLocation;
 import home.oleg.placenearme.repositories.DetailedVenueRepository;
 import home.oleg.placenearme.repositories.DistanceRepository;
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository;
@@ -33,11 +30,6 @@ public final class InteractorModule {
     }
 
     @Provides
-    public GetAllHistory provideGetAllHistory(VenueHistoryRepository venueHistoryRepository) {
-        return new GetAllHistory(venueHistoryRepository);
-    }
-
-    @Provides
     public CreateVenueFavorite provideAddRemoveVenueFavorite(FavoriteVenuesRepository favoriteVenuesRepository) {
         return new CreateVenueFavorite(favoriteVenuesRepository);
     }
@@ -50,19 +42,9 @@ public final class InteractorModule {
     }
 
     @Provides
-    public GetUserLocation provideGetUserLocationInteractor(UserLocationRepository userLocationRepository) {
-        return new GetUserLocation(userLocationRepository);
-    }
-
-    @Provides
     public GetDetailedVenue provideGetDetailedVenueInteractor(DetailedVenueRepository detailedVenueRepository,
                                                               VenueHistoryRepository venueHistoryRepository) {
         return new GetDetailedVenue(detailedVenueRepository, venueHistoryRepository);
-    }
-
-    @Provides
-    public GetFavoriteVenues provideGetFavoriteVenues(FavoriteVenuesRepository favoriteVenuesRepository) {
-        return new GetFavoriteVenues(favoriteVenuesRepository);
     }
 
 }

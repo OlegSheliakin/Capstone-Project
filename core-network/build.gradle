@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion sdk.compile
@@ -37,4 +38,5 @@ dependencies {
 
     implementation deps.dagger.runtime
     annotationProcessor deps.dagger.compiler
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

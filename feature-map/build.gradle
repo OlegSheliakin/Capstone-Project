@@ -6,7 +6,6 @@ dependencies {
     implementation project(':core-presentation')
     implementation project(':googlemapbehaviour')
     implementation project(':domain')
-    implementation project(':common')
     implementation project(':core-di')
     implementation project(':feature-venue-detail')
     implementation project(':feature-add-favorite')
@@ -38,8 +37,4 @@ dependencies {
 
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
-
-    testImplementation deps.testing.junit
-    testImplementation deps.testing.mockito
-    testImplementation deps.testing.room
 }
