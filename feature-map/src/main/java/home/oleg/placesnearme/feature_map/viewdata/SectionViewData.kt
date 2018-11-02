@@ -1,8 +1,7 @@
 package home.oleg.placesnearme.feature_map.viewdata
 
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
-
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import home.oleg.placenearme.models.Section
 
 /**

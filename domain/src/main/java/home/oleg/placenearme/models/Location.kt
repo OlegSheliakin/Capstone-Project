@@ -1,6 +1,6 @@
 package home.oleg.placenearme.models
 
-data class Location(val address: String?,
-                    val lat: Double,
-                    val lng: Double)
+data class Location(var address: String?,
+                    var lat: Double,
+                    var lng: Double)
 

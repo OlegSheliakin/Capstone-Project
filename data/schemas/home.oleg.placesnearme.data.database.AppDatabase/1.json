@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e8b1642947a58d4e49be768de46398f3",
+    "identityHash": "4da8f8ab801c36c6b5af33aea648e34e",
     "entities": [
       {
         "tableName": "detailed_venue",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT, `description` TEXT, `rating` REAL NOT NULL, `isFavorite` INTEGER NOT NULL, `isHereNow` INTEGER NOT NULL, `address` TEXT, `lat` REAL, `lng` REAL, `formattedPhone` TEXT, `name` TEXT, `iconPrefix` TEXT, `iconSuffix` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `rating` REAL NOT NULL, `isFavorite` INTEGER NOT NULL, `isHereNow` INTEGER NOT NULL, `address` TEXT, `lat` REAL NOT NULL, `lng` REAL NOT NULL, `formattedPhone` TEXT, `name` TEXT, `iconPrefix` TEXT, `iconSuffix` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,7 +18,7 @@
             "fieldPath": "title",
             "columnName": "title",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "description",
@@ -54,13 +54,13 @@
             "fieldPath": "location.lat",
             "columnName": "lat",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "location.lng",
             "columnName": "lng",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "contact.formattedPhone",
@@ -98,19 +98,19 @@
       },
       {
         "tableName": "PhotoDbEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `venueId` TEXT, `height` INTEGER, `prefix` TEXT, `suffix` TEXT, `width` INTEGER, FOREIGN KEY(`venueId`) REFERENCES `detailed_venue`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `venueId` TEXT NOT NULL, `height` INTEGER, `prefix` TEXT, `suffix` TEXT, `width` INTEGER, FOREIGN KEY(`venueId`) REFERENCES `detailed_venue`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "venueId",
             "columnName": "venueId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "photo.height",
@@ -169,19 +169,19 @@
       },
       {
         "tableName": "venue_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `venueId` TEXT, `createdAt` INTEGER NOT NULL, `lastCheckIn` INTEGER NOT NULL, FOREIGN KEY(`venueId`) REFERENCES `detailed_venue`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `venueId` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `isLastCheckIn` INTEGER NOT NULL, FOREIGN KEY(`venueId`) REFERENCES `detailed_venue`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "venueId",
             "columnName": "venueId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "createdAt",
@@ -190,8 +190,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "lastCheckIn",
-            "columnName": "lastCheckIn",
+            "fieldPath": "isLastCheckIn",
+            "columnName": "isLastCheckIn",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -229,7 +229,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e8b1642947a58d4e49be768de46398f3\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4da8f8ab801c36c6b5af33aea648e34e\")"
     ]
   }
 }

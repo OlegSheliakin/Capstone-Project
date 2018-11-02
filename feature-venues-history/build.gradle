@@ -10,7 +10,7 @@ dependencies {
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
-    annotationProcessor deps.lifecycle.compiler
+    kapt deps.lifecycle.compiler
 
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
@@ -18,7 +18,7 @@ dependencies {
     implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
 
     implementation deps.dagger.runtime
-    annotationProcessor deps.dagger.compiler
+    kapt deps.dagger.compiler
 
     implementation deps.support.appcompat7
     implementation deps.support.constraintLayout

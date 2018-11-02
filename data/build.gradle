@@ -1,17 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+apply from: '../base_gradle.gradle'
 
 android {
-    compileSdkVersion sdk.compile
 
     defaultConfig {
-        minSdkVersion sdk.min
-        targetSdkVersion sdk.target
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation":
@@ -21,17 +12,6 @@ android {
 
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility javaVersion
-        targetCompatibility javaVersion
-    }
 }
 
 dependencies {
@@ -42,11 +22,8 @@ dependencies {
 
     implementation deps.googlePlayServices.location
 
-    testImplementation deps.testing.junit
-    androidTestImplementation deps.testing.testRunner
-
     implementation deps.room.runtime
-    annotationProcessor deps.room.compiler
+    kapt deps.room.compiler
     implementation deps.room.rxjava2
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'

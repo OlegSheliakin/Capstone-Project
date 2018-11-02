@@ -1,7 +1,5 @@
 package home.oleg.placenearme.interactors;
 
-import com.smedialink.common.Pair;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +11,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import home.oleg.placenearme.models.Category;
+import home.oleg.placenearme.models.Location;
 import home.oleg.placenearme.models.Section;
 import home.oleg.placenearme.models.UserLocation;
 import home.oleg.placenearme.models.Venue;
@@ -21,6 +21,7 @@ import home.oleg.placenearme.repositories.UserLocationRepository;
 import home.oleg.placenearme.repositories.VenueRepository;
 import home.oleg.placenearme.repositories.VenueRequestParams;
 import io.reactivex.Single;
+import kotlin.Pair;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -47,10 +48,10 @@ public class GetVenuesInteractorTest {
     private VenueRequestParams filter;
 
     private List<Venue> fakeVenues = Arrays.asList(
-            new Venue() {{
-                setId("0");
-            }}
-    );
+            new Venue(
+                    new Category("", "", ""),
+                    "0",
+                    new Location("", 0,0),"",0));
 
     @Before
     public void setUp() {

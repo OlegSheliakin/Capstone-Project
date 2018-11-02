@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 repositories {
     maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
@@ -44,11 +45,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility javaVersion
-        targetCompatibility javaVersion
-    }
-
 }
 
 dependencies {
@@ -68,13 +64,14 @@ dependencies {
     implementation project(':feature-venues-history')
     implementation project(':feature-widget')
 
+    implementation deps.support.appcompat7
     implementation deps.support.supportV13
     implementation deps.lifecycle.extensions
 
     implementation deps.rxjava2.rxjava
-    
+
     implementation deps.dagger.runtime
-    annotationProcessor deps.dagger.compiler
+    kapt deps.dagger.compiler
 
     implementation deps.timber
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

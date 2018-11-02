@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.support.design.widget.CoordinatorLayout">
+    tools:parentTag="androidx.coordinatorlayout.widget.CoordinatorLayout">
 
     <ImageView
         android:id="@+id/ivVenuePhoto"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         app:layout_behavior="home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,37 +34,37 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_fragment_venue_details" />
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:layout_behavior="home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_behavior="home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabCheckInButton"
             style="@style/CheckInButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:contentDescription="@string/content_description_check_in_button"
+            android:layout_marginStart="@dimen/margin_high"
             android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/margin_high"
             android:layout_marginEnd="@dimen/margin_high"
-            android:layout_marginStart="@dimen/margin_high" />
+            android:layout_marginBottom="@dimen/margin_high"
+            android:contentDescription="@string/content_description_check_in_button" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabFavoriteButton"
             style="@style/FavoriteButtonStyle"
-            android:contentDescription="@string/content_description_add_to_favorite_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/margin_high"
+            android:layout_marginStart="@dimen/margin_high"
             android:layout_marginEnd="@dimen/margin_high"
-            android:layout_marginStart="@dimen/margin_high" />
+            android:layout_marginBottom="@dimen/margin_high"
+            android:contentDescription="@string/content_description_add_to_favorite_button" />
 
     </LinearLayout>
 </merge>

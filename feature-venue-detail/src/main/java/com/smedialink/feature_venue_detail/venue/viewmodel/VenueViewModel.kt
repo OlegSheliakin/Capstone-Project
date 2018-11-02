@@ -1,10 +1,8 @@
 package com.smedialink.feature_venue_detail.venue.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.smedialink.feature_venue_detail.state.VenueViewState
-
 import home.oleg.placenearme.models.DetailedVenue
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData

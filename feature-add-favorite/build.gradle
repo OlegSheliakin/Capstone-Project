@@ -1,5 +1,4 @@
 apply from: '../base_gradle.gradle'
-apply plugin: 'kotlin-android'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -10,7 +9,7 @@ dependencies {
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
-    annotationProcessor deps.lifecycle.compiler
+    kapt  deps.lifecycle.compiler
 
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
@@ -19,5 +18,5 @@ dependencies {
     implementation deps.support.design
 
     implementation deps.dagger.runtime
-    annotationProcessor deps.dagger.compiler
+    kapt deps.dagger.compiler
 }

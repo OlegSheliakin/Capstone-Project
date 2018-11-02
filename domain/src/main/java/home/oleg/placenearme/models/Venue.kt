@@ -1,7 +1,7 @@
 package home.oleg.placenearme.models
 
 data class Venue(
-    val category: Category? = null,
+    val category: Category,
     val id: String,
     val location: Location,
     val name: String,

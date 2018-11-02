@@ -15,7 +15,7 @@ dependencies {
     implementation deps.lifecycle.extensions
 
     implementation deps.dagger.runtime
-    annotationProcessor deps.dagger.compiler
+    kapt deps.dagger.compiler
 
     //navigation
     implementation deps.bottomNavigation

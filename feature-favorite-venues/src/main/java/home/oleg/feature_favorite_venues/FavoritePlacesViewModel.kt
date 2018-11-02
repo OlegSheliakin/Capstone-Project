@@ -1,7 +1,7 @@
 package home.oleg.feature_favorite_venues
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import home.oleg.placenearme.models.DetailedVenue
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData

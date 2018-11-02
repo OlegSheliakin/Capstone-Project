@@ -30,7 +30,7 @@ public interface PlacesMapFragmentComponent {
         }
 
         public static void inject(VenuesMapFragment fragment) {
-            AppApi appApi = AppApiProvider.Initializer.getAppApi(fragment);
+            AppApi appApi = AppApiProvider.Initializer.INSTANCE.getAppApi(fragment);
             DaggerPlacesMapFragmentComponent.builder()
                     .appComponent(appApi)
                     .bind(fragment)

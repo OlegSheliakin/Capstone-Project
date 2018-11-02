@@ -1,13 +1,14 @@
 package home.oleg.coordinator_behavior;
 
 import android.content.Context;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.mahc.custombottomsheetbehavior.R;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 public class MergedAppBarLayout extends AppBarLayout {
 

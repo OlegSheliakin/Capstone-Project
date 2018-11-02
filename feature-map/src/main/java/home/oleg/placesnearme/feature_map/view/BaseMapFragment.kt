@@ -1,20 +1,15 @@
 package home.oleg.placesnearme.feature_map.view
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-
 import home.oleg.placesnearme.feature_map.R
 
-/**
- * A simple [Fragment] subclass.
- */
 abstract class BaseMapFragment : Fragment(), OnMapReadyCallback {
 
     private var mapView: MapView? = null
@@ -35,7 +30,6 @@ abstract class BaseMapFragment : Fragment(), OnMapReadyCallback {
         super.onResume()
         mapView?.onResume()
     }
-
 
     override fun onPause() {
         super.onPause()

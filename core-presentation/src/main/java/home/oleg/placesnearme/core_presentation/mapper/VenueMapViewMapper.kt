@@ -16,9 +16,9 @@ object VenueMapViewMapper {
         override val address: String = venue.location.address ?: "-"
         override val lat: Double = venue.location.lat
         override val lng: Double = venue.location.lng
-        override val iconViewData: IconViewData? = venue.category?.let { IconViewData(it.iconPrefix, it.iconSuffix) }
-        override val categoryName: String? = venue.category?.name
-        override val sectionType: Section? = section
+        override val iconViewData: IconViewData? = venue.category.let { IconViewData(it.iconPrefix, it.iconSuffix) }
+        override val categoryName: String? = venue.category.name
+        override val sectionType: Section = section
     }
 
     fun map(section: Section, venues: List<Venue>): List<PreviewVenueViewData> {

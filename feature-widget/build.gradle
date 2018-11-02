@@ -13,5 +13,5 @@ dependencies {
     implementation deps.support.appcompat7
 
     implementation deps.dagger.runtime
-    annotationProcessor deps.dagger.compiler
+    kapt deps.dagger.compiler
 }

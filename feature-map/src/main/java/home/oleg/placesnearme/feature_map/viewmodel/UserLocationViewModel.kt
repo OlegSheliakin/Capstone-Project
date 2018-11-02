@@ -1,7 +1,7 @@
 package home.oleg.placesnearme.feature_map.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import home.oleg.placenearme.models.UserLocation
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,7 +18,7 @@ class UserLocationViewModel(private val getLocation: () -> Single<UserLocation>)
 
     val state = MutableLiveData<UserLocation>()
 
-    fun getUserLocation() {
+    fun requestUserLocation() {
         disposable?.takeUnless { it.isDisposed }?.dispose()
 
         disposable = getLocation()

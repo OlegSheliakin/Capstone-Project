@@ -1,3 +1,3 @@
 package home.oleg.placenearme.models
 
-data class Contact(val formattedPhone: String?)
+data class Contact(var formattedPhone: String?)

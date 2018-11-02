@@ -1,7 +1,7 @@
 package home.oleg.placenearme.models
 
-data class Photo(val height: Long? = null,
-                 val prefix: String? = null,
-                 val suffix: String? = null,
-                 val width: Long? = null)
+data class Photo(var height: Long? = null,
+                 var prefix: String? = null,
+                 var suffix: String? = null,
+                 var width: Long? = null)
 

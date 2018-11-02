@@ -3,7 +3,6 @@ package home.oleg.feature_widget
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 

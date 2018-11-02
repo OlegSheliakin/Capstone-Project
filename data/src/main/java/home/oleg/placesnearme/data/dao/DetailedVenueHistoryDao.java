@@ -1,13 +1,12 @@
 package home.oleg.placesnearme.data.dao;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Transaction;
-
 import java.util.List;
 
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+import androidx.room.Transaction;
 import home.oleg.placesnearme.data.model.DetailedVenueHistory;
 import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity;
 import io.reactivex.Flowable;
@@ -26,17 +25,14 @@ public interface DetailedVenueHistoryDao {
 
     @Transaction
     @Query("SELECT detailed_venue.*, venue_history.createdAt FROM detailed_venue " +
-            "INNER JOIN venue_history ON venue_history.lastCheckIn = 1")
+            "INNER JOIN venue_history ON venue_history.isLastCheckIn = 1")
     Single<DetailedVenueHistory> getCurrent();
 
     @Query("SELECT * FROM venue_history WHERE venue_history.venueId = :venueId")
     Flowable<DetailedVenueHistoryDbEntity> observeById(String venueId);
 
-    @Query("SELECT * FROM venue_history WHERE lastCheckIn = 1")
+    @Query("SELECT * FROM venue_history WHERE isLastCheckIn = 1")
     Maybe<DetailedVenueHistoryDbEntity> getLastCheckIn();
-
-    @Query("SELECT * FROM venue_history WHERE lastCheckIn = 1")
-    DetailedVenueHistoryDbEntity getLastCheckInEagelry();
 
     @Query("DELETE FROM venue_history WHERE venue_history.venueId = :venueId")
     void remove(String venueId);

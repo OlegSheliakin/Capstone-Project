@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    android:layout_height="match_parent">
 
     <View
         android:layout_width="36dp"
@@ -44,15 +43,15 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="TextView" />
 
-    <hyogeun.github.com.colorratingbarlib.ColorRatingBar
+    <home.oleg.placesnearme.core_presentation.custom.ColorRatingBar
         android:id="@+id/ratingBar"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_normal"
+        android:clickable="false"
         android:numStars="5"
         android:stepSize="0.1"
-        android:clickable="false"
         app:empty_color="@color/colorGrayLight"
         app:layout_constraintBottom_toBottomOf="@id/tvVenueName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -171,8 +170,8 @@
         android:layout_marginTop="@dimen/margin_normal"
         android:ellipsize="end"
         android:maxLines="1"
-        android:visibility="gone"
         android:textColor="@color/colorText"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvContacts"
         tools:text="Open until 6 pm" />
@@ -190,19 +189,19 @@
         app:layout_constraintStart_toStartOf="@id/ivVenueIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvVenueOpeningHours" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPhotos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/all_fragment_margin_bottom"
         android:orientation="horizontal"
         android:paddingStart="@dimen/margin_normal"
         android:paddingTop="@dimen/margin_small"
         android:paddingEnd="@dimen/margin_normal"
         android:paddingBottom="@dimen/margin_small"
-        android:layout_marginBottom="@dimen/all_fragment_margin_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvGalleryLabel"
         tools:listitem="@layout/item_photo" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

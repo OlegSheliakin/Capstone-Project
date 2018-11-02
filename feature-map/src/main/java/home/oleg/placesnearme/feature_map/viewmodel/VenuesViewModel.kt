@@ -1,8 +1,7 @@
 package home.oleg.placesnearme.feature_map.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.smedialink.common.Pair
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import home.oleg.placenearme.models.Section
 import home.oleg.placenearme.models.Venue
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler

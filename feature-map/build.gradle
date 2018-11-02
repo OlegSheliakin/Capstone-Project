@@ -11,8 +11,6 @@ dependencies {
     implementation project(':feature-add-favorite')
     implementation project(':feature-add-history')
 
-    implementation deps.googlePlayServices.maps
-
     implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
 
     implementation deps.support.appcompat7
@@ -20,21 +18,20 @@ dependencies {
     implementation deps.support.cardview
     implementation deps.support.constraintLayout
 
-    implementation deps.butterknife.runtime
-    annotationProcessor deps.butterknife.compiler
-
     implementation 'com.github.ybq:AndroidSpinKit:v1.0.0'
 
     implementation deps.permissions.runtime
-    annotationProcessor deps.permissions.compiler
+    kapt deps.permissions.compiler
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
-    annotationProcessor deps.lifecycle.compiler
+    kapt deps.lifecycle.compiler
 
     implementation deps.dagger.runtime
-    annotationProcessor deps.dagger.compiler
+    kapt deps.dagger.compiler
 
     implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
+
+    implementation deps.googlePlayServices.maps
 }

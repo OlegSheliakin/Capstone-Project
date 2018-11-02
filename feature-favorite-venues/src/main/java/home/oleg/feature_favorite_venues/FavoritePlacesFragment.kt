@@ -1,28 +1,24 @@
 package home.oleg.feature_favorite_venues
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.smedialink.common.Optional
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
-
-import java.util.ArrayList
-
-import javax.inject.Inject
-
 import home.oleg.feature_favorite_venues.di.FavoriteVenuesComponent
+import home.oleg.placenearme.models.Venue
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType
+import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import javax.inject.Inject
 
 class FavoritePlacesFragment : Fragment(), FavoriteVenuesAdapter.FavoriteClicksListener {
 
@@ -58,13 +54,12 @@ class FavoritePlacesFragment : Fragment(), FavoriteVenuesAdapter.FavoriteClicksL
         rvFavorites.adapter = adapter
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        Optional.of(activity as AppCompatActivity?)
-                .ifPresent { appCompatActivity ->
-                    appCompatActivity.setSupportActionBar(toolbar)
-                    appCompatActivity.supportActionBar!!.setTitle(R.string.fragment_title_favorite)
-                }
+        (activity as AppCompatActivity?)?.apply {
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setTitle(R.string.fragment_title_favorite)
+        }
 
-        favoritePlacesViewModel.state.observe(this, Observer { venueViewItems ->
+        favoritePlacesViewModel.state.observe(this, Observer<List<VenueViewItem>> { venueViewItems ->
             if (venueViewItems == null || venueViewItems.isEmpty()) {
                 adapter.showEmpty()
             } else {
