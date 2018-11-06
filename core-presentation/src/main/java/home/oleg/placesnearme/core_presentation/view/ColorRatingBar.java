@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.core_presentation.custom;
+package home.oleg.placesnearme.core_presentation.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;

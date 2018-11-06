@@ -1,5 +1,6 @@
 package home.oleg.placesnearme.feature_map.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import home.oleg.placenearme.models.Section
@@ -24,12 +25,16 @@ class VenuesViewModel(
     private var searchDisposable: Disposable? = null
     private val venuesHolder = VenuesViewModel.VenuesHolder()
 
-    val state = MutableLiveData<MapViewState>()
-    val data = MutableLiveData<List<PreviewVenueViewData>>()
+    private val state = MutableLiveData<MapViewState>()
+    private val data = MutableLiveData<List<PreviewVenueViewData>>()
 
     init {
         state.value = MapViewState.initial()
     }
+
+    fun getState(): LiveData<MapViewState> = state
+
+    fun getData(): LiveData<List<PreviewVenueViewData>> = data
 
     fun getRecommendedVenues(section: Section) {
         searchDisposable?.takeUnless { it.isDisposed }?.dispose()

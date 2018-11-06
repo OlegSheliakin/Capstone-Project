@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.ImageView
+import androidx.core.view.doOnLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -33,7 +34,8 @@ constructor(
         private val lifecycleOwner: LifecycleOwner,
         private val venueViewModel: VenueViewModel,
         private val createFavoriteViewModel: CreateFavoriteViewModel,
-        private val checkInViewModel: CheckInViewModel, private val toastDelegate: ToastDelegate) : Observer<MessageEvent> {
+        private val checkInViewModel: CheckInViewModel,
+        private val toastDelegate: ToastDelegate) : Observer<MessageEvent> {
     private var showHideBottomBarListener: ShowHideBottomBarListener? = null
 
     private var venueDetailsView: VenueDetailsView? = null
@@ -73,12 +75,9 @@ constructor(
 
     fun onRestoreState(state: Bundle) {
         behaviorState = state.getInt(KEY_STATE_BEHAVIOR)
-        nestedScrollView!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                behavior!!.state = behaviorState
-                nestedScrollView!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
+        nestedScrollView?.doOnLayout {
+            behavior!!.state = behaviorState
+        }
     }
 
     fun setShowHideBottomBarListener(showHideBottomBarListener: ShowHideBottomBarListener) {

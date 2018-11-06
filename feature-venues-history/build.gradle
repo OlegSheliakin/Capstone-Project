@@ -12,7 +12,6 @@ dependencies {
     implementation deps.lifecycle.runtime
     kapt deps.lifecycle.compiler
 
-    implementation deps.rxjava2.rxjava
     implementation deps.rxjava2.rxandroid
 
     implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'

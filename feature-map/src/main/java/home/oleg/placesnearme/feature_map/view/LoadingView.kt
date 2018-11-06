@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.custom
+package home.oleg.placesnearme.feature_map.view
 
 import android.content.Context
 import android.util.AttributeSet

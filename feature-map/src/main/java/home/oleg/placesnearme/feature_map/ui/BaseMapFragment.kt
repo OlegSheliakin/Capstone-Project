@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.view
+package home.oleg.placesnearme.feature_map.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

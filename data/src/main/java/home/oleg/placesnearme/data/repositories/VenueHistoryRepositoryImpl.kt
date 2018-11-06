@@ -14,15 +14,16 @@ import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-class VenueHistoryRepositoryImpl(private val detailedVenueWithPhotosDao: DetailedVenueDao,
-                                 private val venueHistoryDao: DetailedVenueHistoryDao) : VenueHistoryRepository {
+class VenueHistoryRepositoryImpl(
+        private val detailedVenueWithPhotosDao: DetailedVenueDao,
+        private val venueHistoryDao: DetailedVenueHistoryDao) : VenueHistoryRepository {
 
     override val history: Flowable<List<DetailedVenue>>
         get() = venueHistoryDao.allHistory.map { this.map(it) }
 
     override fun checkOutFromCurrent(): Completable {
         return venueHistoryDao.lastCheckIn
-                .flatMapCompletable { this.dropCheckIn(it) }
+                .flatMapCompletable(this::dropCheckIn)
     }
 
     override fun isHereNow(venueId: String): Flowable<Boolean> {

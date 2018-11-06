@@ -60,7 +60,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="TextView" />
 
-            <home.oleg.placesnearme.core_presentation.custom.ColorRatingBar
+            <home.oleg.placesnearme.core_presentation.view.ColorRatingBar
                 android:id="@+id/ratingBar"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"

@@ -36,7 +36,6 @@ class VenueViewModel(
                 .flatMapSingle(evaluateDistance)
                 .map { VenueViewData.mapFrom(it) }
                 .doOnNext { data -> this.venueViewData = data }
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _ -> state.setValue(VenueViewState.loading()) }
                 .subscribe(
@@ -54,7 +53,6 @@ class VenueViewModel(
                 .flatMapSingle(evaluateDistance)
                 .map { VenueViewData.mapFrom(it) }
                 .doOnNext { data -> this.venueViewData = data }
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { detailedVenue -> state.setValue(VenueViewState.success(detailedVenue)) },

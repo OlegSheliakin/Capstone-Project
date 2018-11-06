@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
+import com.smedialink.feature_add_favorite.FavoriteMessageEventMapper
 import com.smedialink.feature_main.viewmodel.MainViewModel
 import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel
 import dagger.Module
@@ -73,8 +74,8 @@ object ViewModelModule {
     @ViewModelKey(CreateFavoriteViewModel::class)
     @Provides
     internal fun provideCreateFavoriteViewModel(createVenueFavorite: CreateVenueFavorite,
-                                                resourceProvider: ResourceProvider): ViewModel {
-        return CreateFavoriteViewModel(createVenueFavorite, resourceProvider)
+                                                mapper: FavoriteMessageEventMapper): ViewModel {
+        return CreateFavoriteViewModel(createVenueFavorite, mapper)
     }
 
     @JvmStatic

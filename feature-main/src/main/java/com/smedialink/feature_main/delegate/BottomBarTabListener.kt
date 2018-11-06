@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.smedialink.feature_main.R
 import home.oleg.feature_favorite_venues.FavoritePlacesFragment
-import home.oleg.placesnearme.feature_map.view.VenuesMapFragment
+import home.oleg.placesnearme.feature_map.ui.VenuesMapFragment
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment
 import javax.inject.Inject
 

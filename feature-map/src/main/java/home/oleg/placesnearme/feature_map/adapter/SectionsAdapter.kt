@@ -74,10 +74,9 @@ class SectionsAdapter(
 
     class ViewHolder constructor(itemView: View, itemSelectListener: ItemSelectListener) : RecyclerView.ViewHolder(itemView) {
 
-        private val textView: TextView
+        private val textView: TextView = itemView.findViewById(R.id.tvSection)
 
         init {
-            textView = itemView.findViewById(R.id.tvSection)
             textView.setOnClickListener { itemSelectListener.itemSelected(adapterPosition) }
         }
 

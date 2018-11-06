@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.view
+package home.oleg.placesnearme.feature_map.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -21,7 +21,6 @@ import home.oleg.placesnearme.core_presentation.base.handle
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.feature_map.R
-import home.oleg.placesnearme.feature_map.R.id.loadingView
 import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent
 import home.oleg.placesnearme.feature_map.mapper.MarkerMapper
@@ -130,8 +129,9 @@ class VenuesMapFragment
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        venuesViewModel.state.observe(this, Observer { this.render(it) })
-        venuesViewModel.data.observe(this, Observer { this.show(it.orEmpty()) })
+        venuesViewModel.getState().observe(this, Observer { this.render(it) })
+        venuesViewModel.getData().observe(this, Observer { this.show(it.orEmpty()) })
+
         userLocationViewModel.state.observe(this, Observer { this.renderLocation(it) })
         initLocationSettingsWithPermissionCheck(googleMap)
     }

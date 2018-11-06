@@ -11,7 +11,5 @@ import io.reactivex.annotations.NonNull
  * Contact me by email - olegsheliakin@gmail.com
  */
 interface DrawableConverter {
-
     fun convert(drawable: Drawable): BitmapDescriptor
-
 }

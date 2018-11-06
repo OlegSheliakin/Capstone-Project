@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
 import dagger.Module
 import dagger.Provides
-import home.oleg.placesnearme.core_presentation.recyclerview.VenuesDiffCallback
+import home.oleg.placesnearme.core_presentation.recyclerview.ItemsDiffCallback
 import home.oleg.placesnearme.feature_venues_history.HistoryVenuesAdapter
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel
@@ -16,7 +16,7 @@ class VenuesHistoryModule {
     @Provides
     fun provideFavoriteVenuesAdapter(
             fragment: VenuesHistoryFragment): HistoryVenuesAdapter {
-        return HistoryVenuesAdapter(VenuesDiffCallback.VENUES_DIFF_CALLBACK, fragment)
+        return HistoryVenuesAdapter(ItemsDiffCallback.ITEMS_DIFF_CALLBACK, fragment)
     }
 
     @Provides

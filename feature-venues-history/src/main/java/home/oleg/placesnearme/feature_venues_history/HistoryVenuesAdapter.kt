@@ -14,6 +14,10 @@ class HistoryVenuesAdapter(
         diffCallback: DiffUtil.ItemCallback<ItemViewType>,
         private val favoriteClicksListener: HistoryVenuesAdapter.HistoryClicksListener) : BaseVenueAdapter(diffCallback) {
 
+    override val venueItemLayoutRes: Int = R.layout.item_history_venue
+
+    override val emptyItemLayoutRes: Int = R.layout.item_empty
+
     interface HistoryClicksListener {
         fun favoriteClicked(venueViewData: VenueViewData)
 
@@ -22,14 +26,6 @@ class HistoryVenuesAdapter(
 
     override fun getVenueItemHolder(view: View): BaseVenueAdapter.VenueItemHolder {
         return HistoryVenuesAdapter.ViewHolder(view, favoriteClicksListener)
-    }
-
-    override fun getVenueItemLayoutRes(): Int {
-        return R.layout.item_history_venue
-    }
-
-    override fun getEmptyItemLayoutRes(): Int {
-        return R.layout.item_empty
     }
 
     private class ViewHolder constructor(

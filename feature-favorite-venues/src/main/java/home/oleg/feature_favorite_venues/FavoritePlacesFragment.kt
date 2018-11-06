@@ -8,15 +8,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
 import home.oleg.feature_favorite_venues.di.FavoriteVenuesComponent
-import home.oleg.placenearme.models.Venue
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
+import home.oleg.placesnearme.core_presentation.extensions.observeX
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType
-import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
 import javax.inject.Inject
 
@@ -36,6 +34,7 @@ class FavoritePlacesFragment : Fragment(), FavoriteVenuesAdapter.FavoriteClicksL
     override fun onAttach(context: Context?) {
         injectDependencies()
         super.onAttach(context)
+        //todo -> navigator
         if (context is ShowHideBottomBarListener) {
             this.showHideBottomBarListener = context
         }
@@ -56,16 +55,16 @@ class FavoritePlacesFragment : Fragment(), FavoriteVenuesAdapter.FavoriteClicksL
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)?.apply {
             setSupportActionBar(toolbar)
-            supportActionBar!!.setTitle(R.string.fragment_title_favorite)
+            supportActionBar?.setTitle(R.string.fragment_title_favorite)
         }
 
-        favoritePlacesViewModel.state.observe(this, Observer<List<VenueViewItem>> { venueViewItems ->
-            if (venueViewItems == null || venueViewItems.isEmpty()) {
+        favoritePlacesViewModel.state.observeX(this) { venueViewItems ->
+            if (venueViewItems.isEmpty()) {
                 adapter.showEmpty()
             } else {
                 adapter.submitList(ArrayList<ItemViewType>(venueViewItems))
             }
-        })
+        }
     }
 
     override fun favoriteClicked(venueViewData: VenueViewData) {

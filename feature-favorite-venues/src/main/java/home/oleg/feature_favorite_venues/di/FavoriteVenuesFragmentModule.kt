@@ -3,35 +3,33 @@ package home.oleg.feature_favorite_venues.di
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
 
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
 import home.oleg.feature_favorite_venues.FavoritePlacesFragment
 import home.oleg.feature_favorite_venues.FavoritePlacesViewModel
 import home.oleg.feature_favorite_venues.FavoriteVenuesAdapter
-import home.oleg.placesnearme.core_presentation.recyclerview.VenuesDiffCallback
-import io.reactivex.annotations.NonNull
+import home.oleg.placesnearme.core_presentation.extensions.viewModel
+import home.oleg.placesnearme.core_presentation.recyclerview.ItemsDiffCallback
 
 @Module
-class FavoriteVenuesFragmentModule {
+object FavoriteVenuesFragmentModule {
 
+    @JvmStatic
     @Provides
     internal fun provideFavoriteVenuesAdapter(
             fragment: FavoritePlacesFragment): FavoriteVenuesAdapter {
-        return FavoriteVenuesAdapter(VenuesDiffCallback.VENUES_DIFF_CALLBACK, fragment)
+        return FavoriteVenuesAdapter(ItemsDiffCallback.ITEMS_DIFF_CALLBACK, fragment)
     }
 
+    @JvmStatic
     @Provides
     internal fun provideFavoritePlacesViewModel(
             fragment: FavoritePlacesFragment,
-            factory: ViewModelProvider.Factory): FavoritePlacesViewModel {
-        return ViewModelProviders.of(fragment, factory).get(FavoritePlacesViewModel::class.java)
-    }
+            factory: ViewModelProvider.Factory): FavoritePlacesViewModel = fragment.viewModel(factory)
 
+    @JvmStatic
     @Provides
     internal fun provideCreateFavoriteViewModel(
             fragment: FavoritePlacesFragment,
-            factory: ViewModelProvider.Factory): CreateFavoriteViewModel {
-        return ViewModelProviders.of(fragment, factory).get(CreateFavoriteViewModel::class.java)
-    }
+            factory: ViewModelProvider.Factory): CreateFavoriteViewModel = fragment.viewModel(factory)
 }

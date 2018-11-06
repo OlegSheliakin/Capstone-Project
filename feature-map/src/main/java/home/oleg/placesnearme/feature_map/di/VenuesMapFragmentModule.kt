@@ -17,11 +17,9 @@ import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl
 import home.oleg.placesnearme.feature_map.sections.SectionProvider
-import home.oleg.placesnearme.feature_map.view.VenuesMapFragment
-import home.oleg.placesnearme.feature_map.viewdata.SectionViewData
+import home.oleg.placesnearme.feature_map.ui.VenuesMapFragment
 import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel
 import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel
-import io.reactivex.annotations.NonNull
 
 @Module
 abstract class VenuesMapFragmentModule {
