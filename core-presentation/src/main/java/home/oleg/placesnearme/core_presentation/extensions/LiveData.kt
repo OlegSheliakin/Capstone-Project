@@ -9,8 +9,13 @@ import androidx.lifecycle.Observer
  * Contact me by email - olegsheliakin@gmail.com
  */
 
-fun <T> LiveData<T>.observeX(lifecycleOwner: LifecycleOwner, onChange: (T) -> Unit) {
+fun <T> LiveData<T>.observeNonNull(lifecycleOwner: LifecycleOwner, onChange: (T) -> Unit) {
     this.observe(lifecycleOwner, Observer {
         it?.let(onChange)
     })
+}
+
+
+fun <T : Any> LifecycleOwner.observe(data: LiveData<T>, onChange: (T) -> Unit) {
+    data.observeNonNull(this, onChange)
 }

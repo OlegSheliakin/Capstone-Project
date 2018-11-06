@@ -2,19 +2,14 @@ package home.oleg.placesnearme.feature_venues_history
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
 import home.oleg.placesnearme.core_presentation.base.BaseFragment
-import home.oleg.placesnearme.core_presentation.extensions.observeX
+import home.oleg.placesnearme.core_presentation.extensions.observeNonNull
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
 import home.oleg.placesnearme.feature_venues_history.di.VenueHistoryComponent
@@ -59,7 +54,7 @@ class VenuesHistoryFragment : BaseFragment(), HistoryVenuesAdapter.HistoryClicks
             supportActionBar?.setTitle(R.string.history_title)
         }
 
-        placesHistoryViewModel.state.observeX(this) { venues ->
+        placesHistoryViewModel.state.observeNonNull(this) { venues ->
             if (venues.isEmpty()) {
                 historyVenuesAdapter.showEmpty()
             } else {

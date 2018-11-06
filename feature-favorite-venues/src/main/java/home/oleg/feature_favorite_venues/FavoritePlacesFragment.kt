@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
 import home.oleg.feature_favorite_venues.di.FavoriteVenuesComponent
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
-import home.oleg.placesnearme.core_presentation.extensions.observeX
+import home.oleg.placesnearme.core_presentation.extensions.observeNonNull
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
 import javax.inject.Inject
@@ -58,7 +58,7 @@ class FavoritePlacesFragment : Fragment(), FavoriteVenuesAdapter.FavoriteClicksL
             supportActionBar?.setTitle(R.string.fragment_title_favorite)
         }
 
-        favoritePlacesViewModel.state.observeX(this) { venueViewItems ->
+        favoritePlacesViewModel.state.observeNonNull(this) { venueViewItems ->
             if (venueViewItems.isEmpty()) {
                 adapter.showEmpty()
             } else {

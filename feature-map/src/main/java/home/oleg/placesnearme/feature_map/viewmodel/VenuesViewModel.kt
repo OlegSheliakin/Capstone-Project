@@ -1,10 +1,10 @@
 package home.oleg.placesnearme.feature_map.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import home.oleg.placenearme.models.Section
 import home.oleg.placenearme.models.Venue
+import home.oleg.placesnearme.core_presentation.base.BaseViewModel
+import home.oleg.placesnearme.core_presentation.delegate.disposableDelegate
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler
 import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
@@ -20,38 +20,41 @@ import java.util.*
  */
 class VenuesViewModel(
         private val errorHandler: ErrorHandler,
-        private val fetchRecommended: (Section) -> Single<Pair<Section, List<Venue>>>) : ViewModel() {
+        private val fetchRecommended: (Section) -> Single<Pair<Section, List<Venue>>>) : BaseViewModel() {
 
-    private var searchDisposable: Disposable? = null
     private val venuesHolder = VenuesViewModel.VenuesHolder()
 
-    private val state = MutableLiveData<MapViewState>()
-    private val data = MutableLiveData<List<PreviewVenueViewData>>()
+    private var searchDisposable: Disposable? by disposableDelegate()
+    private val stateInternal = MutableLiveData<MapViewState>()
+    private val dataInternal = MutableLiveData<List<PreviewVenueViewData>>()
+
+    val state = stateInternal
+    val data = dataInternal
 
     init {
-        state.value = MapViewState.initial()
+        stateInternal.value = MapViewState.initial()
     }
 
-    fun getState(): LiveData<MapViewState> = state
-
-    fun getData(): LiveData<List<PreviewVenueViewData>> = data
-
     fun getRecommendedVenues(section: Section) {
-        searchDisposable?.takeUnless { it.isDisposed }?.dispose()
-
         searchDisposable = fetchRecommended(section)
                 .map { sectionListPair -> VenueMapViewMapper.map(sectionListPair.first, sectionListPair.second) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { _ ->
+                .doOnSubscribe {
                     changeState { it.copy(error = null, isVenuesLoading = true) }
                 }
                 .subscribe({ venues ->
                     changeState { it.copy(isVenuesLoading = false) }
-                    data.setValue(venues)
+                    dataInternal.setValue(venues)
                 }, { throwable ->
                     changeState { it.copy(isVenuesLoading = false, error = errorHandler.handle(throwable)) }
                 })
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        searchDisposable = null
     }
 
     fun openSearch() {
@@ -62,18 +65,18 @@ class VenuesViewModel(
         changeState { it.copy(isSearchShown = false) }
     }
 
-    private fun changeState(function: (MapViewState) -> MapViewState) {
-        state.value?.let {
-            state.value = function(it)
-        }
-    }
-
     fun setVenues(venues: Map<String, PreviewVenueViewData>) {
         venuesHolder.set(venues)
     }
 
     fun getVenue(id: String): PreviewVenueViewData {
         return venuesHolder[id]
+    }
+
+    private fun changeState(function: (MapViewState) -> MapViewState) {
+        stateInternal.value?.let {
+            stateInternal.value = function(it)
+        }
     }
 
     private class VenuesHolder {

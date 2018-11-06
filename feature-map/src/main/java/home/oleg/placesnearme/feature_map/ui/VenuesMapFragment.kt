@@ -5,7 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,6 +19,8 @@ import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
 import home.oleg.placesnearme.core_presentation.base.BackHandler
 import home.oleg.placesnearme.core_presentation.base.handle
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate
+import home.oleg.placesnearme.core_presentation.extensions.observe
+import home.oleg.placesnearme.core_presentation.extensions.observeNonNull
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.feature_map.R
 import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter
@@ -129,10 +131,11 @@ class VenuesMapFragment
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        venuesViewModel.getState().observe(this, Observer { this.render(it) })
-        venuesViewModel.getData().observe(this, Observer { this.show(it.orEmpty()) })
 
-        userLocationViewModel.state.observe(this, Observer { this.renderLocation(it) })
+        observe(venuesViewModel.data, this::show)
+        observe(venuesViewModel.state, this::render)
+        observe(userLocationViewModel.location, this::renderLocation)
+
         initLocationSettingsWithPermissionCheck(googleMap)
     }
 
@@ -230,8 +233,7 @@ class VenuesMapFragment
             return true
         }
 
-        val isSearchVisible = searchAppBar.visibility == View.VISIBLE
-        if (isSearchVisible) {
+        if (searchAppBar.isVisible) {
             venuesViewModel.closeSearch()
             return true
         }

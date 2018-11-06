@@ -1,12 +1,16 @@
 package home.oleg.placesnearme.feature_map.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import home.oleg.placenearme.models.UserLocation
+import home.oleg.placesnearme.core_presentation.delegate.disposableDelegate
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlin.properties.Delegates
 
 /**
  * Created by Oleg Sheliakin on 17.09.2018.
@@ -14,18 +18,17 @@ import io.reactivex.schedulers.Schedulers
  */
 class UserLocationViewModel(private val getLocation: () -> Single<UserLocation>) : ViewModel() {
 
-    private var disposable: Disposable? = null
+    private var disposable: Disposable? by disposableDelegate()
+    private val stateInternal = MutableLiveData<UserLocation>()
 
-    val state = MutableLiveData<UserLocation>()
+    val location = stateInternal
 
     fun requestUserLocation() {
-        disposable?.takeUnless { it.isDisposed }?.dispose()
-
         disposable = getLocation()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { state.setValue(it) },
-                        { _ -> })
+                .subscribeBy(
+                        onSuccess = { stateInternal.setValue(it) },
+                        onError = Throwable::printStackTrace)
     }
 }
