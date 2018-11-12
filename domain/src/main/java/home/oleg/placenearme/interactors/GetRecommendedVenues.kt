@@ -8,9 +8,9 @@ import home.oleg.placenearme.repositories.UserLocationRepository
 import home.oleg.placenearme.repositories.VenueRepository
 import home.oleg.placenearme.repositories.VenueRequestParams
 import io.reactivex.Single
-import io.reactivex.annotations.NonNull
+import javax.inject.Inject
 
-class GetRecommendedVenues(
+class GetRecommendedVenues @Inject constructor(
         private val venueRepository: VenueRepository,
         private val locationRepository: UserLocationRepository,
         private val categoryRepository: SectionRepository) {

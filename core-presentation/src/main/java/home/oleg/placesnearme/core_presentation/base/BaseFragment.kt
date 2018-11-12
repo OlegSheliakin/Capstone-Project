@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import home.oleg.placesnearme.core_presentation.R
-import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
 
 /**
  * Created by Oleg Sheliakin on 06.11.2018.

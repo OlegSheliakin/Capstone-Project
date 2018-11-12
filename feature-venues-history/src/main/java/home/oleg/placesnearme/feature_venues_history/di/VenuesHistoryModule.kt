@@ -2,7 +2,7 @@ package home.oleg.placesnearme.feature_venues_history.di
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
+import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
 import dagger.Module
 import dagger.Provides
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemsDiffCallback

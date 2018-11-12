@@ -1,13 +1,13 @@
 package home.oleg.feature_favorite_venues.di
 
-import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
+import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
 
 import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
-import home.oleg.feature_favorite_venues.FavoritePlacesFragment
-import home.oleg.feature_favorite_venues.FavoritePlacesViewModel
-import home.oleg.feature_favorite_venues.FavoriteVenuesAdapter
+import home.oleg.feature_favorite_venues.ui.FavoritePlacesFragment
+import home.oleg.feature_favorite_venues.ui.FavoritePlacesViewModel
+import home.oleg.feature_favorite_venues.ui.FavoriteVenuesAdapter
 import home.oleg.placesnearme.core_presentation.extensions.viewModel
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemsDiffCallback
 

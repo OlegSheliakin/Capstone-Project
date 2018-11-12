@@ -4,6 +4,7 @@ package home.oleg.placesnearme.app.di.modules
 import android.content.SharedPreferences
 
 import androidx.annotation.NonNull
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import home.oleg.placenearme.models.Section
@@ -28,65 +29,48 @@ import home.oleg.placesnearme.data.repositories.VenueRepositoryImpl
 import home.oleg.placesnearme.network.service.IFourSquareAPI
 
 @Module
-object RepositoryModule {
+abstract class RepositoryModule {
 
-    @JvmStatic
-    @Provides
-    internal fun provideVenueHistoryRepository(
-            detailedVenueWithPhotosDao: DetailedVenueDao,
-            venueHistoryDao: DetailedVenueHistoryDao): VenueHistoryRepository {
-        return VenueHistoryRepositoryImpl(detailedVenueWithPhotosDao, venueHistoryDao)
-    }
+    @Binds
+    internal abstract fun provideVenueHistoryRepository(impl: VenueHistoryRepositoryImpl): VenueHistoryRepository
 
-    @JvmStatic
-    @Provides
-    internal fun provideFavoriteVenuesRepository(dao: DetailedVenueDao): FavoriteVenuesRepository {
-        return FavoriteVenueRepositoryImpl(dao)
-    }
+    @Binds
+    internal abstract fun provideFavoriteVenuesRepository(impl: FavoriteVenueRepositoryImpl): FavoriteVenuesRepository
 
-    @JvmStatic
-    @Provides
-    internal fun distanceRepository(): DistanceRepository {
-        return DistanceRepositoryImpl()
-    }
+    @Binds
+    internal abstract fun distanceRepository(impl: DistanceRepositoryImpl): DistanceRepository
 
-    @JvmStatic
-    @Provides
-    internal fun provideDetailedVenueRepo(api: IFourSquareAPI, dao: DetailedVenueDao): DetailedVenueRepository {
-        return DetailedVenueRepositoryImpl(api, dao)
-    }
+    @Binds
+    internal abstract fun provideDetailedVenueRepo(impl: DetailedVenueRepositoryImpl): DetailedVenueRepository
 
-    @JvmStatic
-    @Provides
-    internal fun provideVenueRepo(api: IFourSquareAPI): VenueRepository {
-        return VenueRepositoryImpl(api)
-    }
+    @Binds
+    internal abstract fun provideVenueRepo(impl: VenueRepositoryImpl): VenueRepository
 
-    @JvmStatic
-    @Provides
-    internal fun provideCategoryRepo(): SectionRepository {
-        return object : SectionRepository {
-            override val mostFrequent: Section
-                get() = Section.TOP
+    @Binds
+    internal abstract fun provideUserLocationRepo(impl: UserLocationRepositoryImpl): UserLocationRepository
 
+    @Module
+    companion object {
+        @JvmStatic
+        @Provides
+        internal fun provideCategoryRepo(): SectionRepository {
+            return object : SectionRepository {
+                override val mostFrequent: Section
+                    get() = Section.TOP
+            }
+        }
+
+        @JvmStatic
+        @Provides
+        internal fun provideLocationStore(app: PlacesNearMeApp): ReactiveLocationStore {
+            return ReactiveLocationStore.create(app)
+        }
+
+        @JvmStatic
+        @Provides
+        internal fun provideCachedLocationsStore(sharedPreferences: SharedPreferences): CachedLocationsStore {
+            return CachedLocationsStore(sharedPreferences)
         }
     }
 
-    @JvmStatic
-    @Provides
-    internal fun provideUserLocationRepo(reactiveLocationStore: ReactiveLocationStore, cachedLocationsStore: CachedLocationsStore): UserLocationRepository {
-        return UserLocationRepositoryImpl(reactiveLocationStore, cachedLocationsStore)
-    }
-
-    @JvmStatic
-    @Provides
-    internal fun provideLocationStore(app: PlacesNearMeApp): ReactiveLocationStore {
-        return ReactiveLocationStore.create(app)
-    }
-
-    @JvmStatic
-    @Provides
-    internal fun provideCachedLocationsStore(sharedPreferences: SharedPreferences): CachedLocationsStore {
-        return CachedLocationsStore(sharedPreferences)
-    }
 }

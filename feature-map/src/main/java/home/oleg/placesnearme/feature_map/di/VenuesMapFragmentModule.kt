@@ -2,8 +2,8 @@ package home.oleg.placesnearme.feature_map.di
 
 import android.app.Activity
 
-import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
-import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel
+import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
+import com.smedialink.feature_venue_detail.viewmodel.VenueViewModel
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -12,14 +12,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import home.oleg.feature_add_history.CheckInViewModel
-import home.oleg.placesnearme.feature_map.adapter.CheckedItem
-import home.oleg.placesnearme.feature_map.adapter.SectionsAdapter
+import home.oleg.placesnearme.feature_map.presentation.adapter.CheckedItem
+import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl
-import home.oleg.placesnearme.feature_map.sections.SectionProvider
-import home.oleg.placesnearme.feature_map.ui.VenuesMapFragment
-import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel
-import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel
+import home.oleg.placesnearme.feature_map.presentation.sections.SectionProvider
+import home.oleg.placesnearme.feature_map.presentation.ui.VenuesMapFragment
+import home.oleg.placesnearme.feature_map.presentation.viewmodel.UserLocationViewModel
+import home.oleg.placesnearme.feature_map.presentation.viewmodel.VenuesViewModel
 
 @Module
 abstract class VenuesMapFragmentModule {
@@ -78,9 +78,7 @@ abstract class VenuesMapFragmentModule {
 
         @JvmStatic
         @Provides
-        internal fun provideLifeCycleOwner(mapFragment: VenuesMapFragment): LifecycleOwner {
-            return mapFragment
-        }
+        internal fun provideLifeCycleOwner(mapFragment: VenuesMapFragment): LifecycleOwner = mapFragment.viewLifecycleOwner
 
         @JvmStatic
         @Provides

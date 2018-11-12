@@ -16,7 +16,9 @@ import io.reactivex.schedulers.Schedulers
  * Created by Oleg Sheliakin on 23.10.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-class CheckInViewModel(private val checkInOut: CheckInOut, private val resourceProvider: ResourceProvider) : ViewModel() {
+class CheckInViewModel(
+        private val checkInOut: CheckInOut,
+        private val resourceProvider: ResourceProvider) : ViewModel() {
 
     val state = MutableLiveData<MessageEvent>()
 
@@ -27,8 +29,8 @@ class CheckInViewModel(private val checkInOut: CheckInOut, private val resourceP
             return
         }
 
-        if (disposable != null && !disposable!!.isDisposed) {
-            disposable!!.dispose()
+        if (disposable != null && disposable?.isDisposed != true) {
+            disposable?.dispose()
         }
 
         disposable = Single.fromCallable { venueViewData.mapToDetailVenue() }
@@ -37,11 +39,10 @@ class CheckInViewModel(private val checkInOut: CheckInOut, private val resourceP
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { isChecked ->
-                            val stringsRes: Int
-                            if (isChecked!!) {
-                                stringsRes = R.string.add_history_message_success_added
+                            val stringsRes: Int = if (isChecked!!) {
+                                R.string.add_history_message_success_added
                             } else {
-                                stringsRes = R.string.add_history_message_success_removed
+                                R.string.add_history_message_success_removed
                             }
                             val messageEvent = MessageEvent(resourceProvider.getString(stringsRes))
                             state.setValue(messageEvent)

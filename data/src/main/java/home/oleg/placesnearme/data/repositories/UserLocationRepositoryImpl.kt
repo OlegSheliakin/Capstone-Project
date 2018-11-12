@@ -6,12 +6,13 @@ import home.oleg.placesnearme.data.mapper.LocationMapper
 import home.oleg.placesnearme.data.provider.CachedLocationsStore
 import home.oleg.placesnearme.data.provider.ReactiveLocationStore
 import io.reactivex.Single
+import javax.inject.Inject
 
 /**
  * Created by Oleg Sheliakin on 17.09.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-class UserLocationRepositoryImpl(
+class UserLocationRepositoryImpl @Inject constructor(
         private val reactiveLocationStore: ReactiveLocationStore,
         private val cachedLocationsStore: CachedLocationsStore) : UserLocationRepository {
 

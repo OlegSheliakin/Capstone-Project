@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <include layout="@layout/status_bar" />
+
     <include layout="@layout/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView

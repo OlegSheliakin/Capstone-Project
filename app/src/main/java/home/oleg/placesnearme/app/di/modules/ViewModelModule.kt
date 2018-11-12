@@ -1,21 +1,20 @@
 package home.oleg.placesnearme.app.di.modules
 
-import androidx.annotation.NonNull
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
-import com.smedialink.feature_add_favorite.FavoriteMessageEventMapper
+import com.smedialink.feature_add_favorite.domain.interactor.CreateVenueFavorite
+import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
+import com.smedialink.feature_add_favorite.presentation.FavoriteMessageEventMapper
 import com.smedialink.feature_main.viewmodel.MainViewModel
-import com.smedialink.feature_venue_detail.venue.viewmodel.VenueViewModel
+import com.smedialink.feature_venue_detail.domain.GetDetailedVenue
+import com.smedialink.feature_venue_detail.viewmodel.VenueViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import home.oleg.feature_add_history.CheckInViewModel
 import home.oleg.feature_add_history.interactor.CheckInOut
-import home.oleg.feature_favorite_venues.FavoritePlacesViewModel
-import home.oleg.placenearme.interactors.CreateVenueFavorite
+import home.oleg.feature_favorite_venues.ui.FavoritePlacesViewModel
 import home.oleg.placenearme.interactors.EvaluateDistance
-import home.oleg.placenearme.interactors.GetDetailedVenue
 import home.oleg.placenearme.interactors.GetRecommendedVenues
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository
 import home.oleg.placenearme.repositories.UserLocationRepository
@@ -23,8 +22,8 @@ import home.oleg.placenearme.repositories.VenueHistoryRepository
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey
 import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler
 import home.oleg.placesnearme.core_presentation.provider.ResourceProvider
-import home.oleg.placesnearme.feature_map.viewmodel.UserLocationViewModel
-import home.oleg.placesnearme.feature_map.viewmodel.VenuesViewModel
+import home.oleg.placesnearme.feature_map.presentation.viewmodel.UserLocationViewModel
+import home.oleg.placesnearme.feature_map.presentation.viewmodel.VenuesViewModel
 import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel
 import javax.inject.Provider
 
@@ -50,7 +49,6 @@ object ViewModelModule {
             }
         }
     }
-
 
     @JvmStatic
     @IntoMap

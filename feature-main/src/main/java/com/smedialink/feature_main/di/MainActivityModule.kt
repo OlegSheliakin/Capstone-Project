@@ -19,5 +19,4 @@ class MainActivityModule {
         return mainActivity
     }
 
-
 }

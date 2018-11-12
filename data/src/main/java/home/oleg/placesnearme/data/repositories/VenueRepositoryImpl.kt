@@ -7,8 +7,9 @@ import home.oleg.placenearme.repositories.VenueRequestParams
 import home.oleg.placesnearme.data.mapper.VenueMapper
 import home.oleg.placesnearme.network.service.IFourSquareAPI
 import io.reactivex.Single
+import javax.inject.Inject
 
-class VenueRepositoryImpl(private val api: IFourSquareAPI) : VenueRepository {
+class VenueRepositoryImpl @Inject constructor(private val api: IFourSquareAPI) : VenueRepository {
     private val queryParamCreator = QueryParamCreator()
 
     override fun getRecommendedBySection(section: Section, requestParams: VenueRequestParams): Single<List<Venue>> {

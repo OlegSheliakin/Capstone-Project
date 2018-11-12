@@ -6,10 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.smedialink.feature_add_favorite.CreateFavoriteViewModel
+import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
 import home.oleg.placesnearme.core_presentation.base.BaseFragment
-import home.oleg.placesnearme.core_presentation.extensions.observeNonNull
+import home.oleg.placesnearme.core_presentation.extensions.observe
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
 import home.oleg.placesnearme.feature_venues_history.di.VenueHistoryComponent
@@ -54,13 +54,12 @@ class VenuesHistoryFragment : BaseFragment(), HistoryVenuesAdapter.HistoryClicks
             supportActionBar?.setTitle(R.string.history_title)
         }
 
-        placesHistoryViewModel.state.observeNonNull(this) { venues ->
-            if (venues.isEmpty()) {
+        observe(placesHistoryViewModel.state) {
+            if (it.isEmpty()) {
                 historyVenuesAdapter.showEmpty()
             } else {
-                val list: List<ItemViewType> = venues
+                val list: List<ItemViewType> = it
                 historyVenuesAdapter.submitList(list)
-
             }
         }
     }
@@ -69,6 +68,7 @@ class VenuesHistoryFragment : BaseFragment(), HistoryVenuesAdapter.HistoryClicks
         createFavoriteViewModel.manageFavorite(venueViewData)
     }
 
+    //todo -> create delegate
     override fun onItemClicked(venueViewData: VenueViewData) {
         showHideBottomBarListener.showVenueDetail(venueViewData)
     }

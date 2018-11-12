@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import home.oleg.placenearme.interactors.EvaluateDistance
 import home.oleg.placenearme.models.DetailedVenue
+import home.oleg.placenearme.models.Venue
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData

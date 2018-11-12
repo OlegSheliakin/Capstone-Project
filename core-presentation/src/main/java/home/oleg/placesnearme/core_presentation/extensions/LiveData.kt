@@ -1,5 +1,9 @@
 package home.oleg.placesnearme.core_presentation.extensions
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ComponentActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -15,7 +19,14 @@ fun <T> LiveData<T>.observeNonNull(lifecycleOwner: LifecycleOwner, onChange: (T)
     })
 }
 
+fun <T : Any> ComponentActivity.observe(liveData: LiveData<T>, onChange: (T) -> Unit) {
+    liveData.observe(this, Observer {
+        it?.let(onChange)
+    })
+}
 
-fun <T : Any> LifecycleOwner.observe(data: LiveData<T>, onChange: (T) -> Unit) {
-    data.observeNonNull(this, onChange)
+fun <T : Any> Fragment.observe(liveData: LiveData<T>, onChange: (T) -> Unit) {
+    liveData.observe(viewLifecycleOwner, Observer {
+        it?.let(onChange)
+    })
 }

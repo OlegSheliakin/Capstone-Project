@@ -11,8 +11,11 @@ import home.oleg.placesnearme.network.models.reposnses.VenueDetailResponse
 import home.oleg.placesnearme.network.service.IFourSquareAPI
 import io.reactivex.Flowable
 import io.reactivex.Single
+import javax.inject.Inject
 
-class DetailedVenueRepositoryImpl(private val api: IFourSquareAPI, private val dao: DetailedVenueDao) : DetailedVenueRepository {
+class DetailedVenueRepositoryImpl @Inject constructor(
+        private val api: IFourSquareAPI,
+        private val dao: DetailedVenueDao) : DetailedVenueRepository {
 
     override fun getDetailedVenueById(venueId: String): Flowable<DetailedVenue> {
         return Flowable.merge(

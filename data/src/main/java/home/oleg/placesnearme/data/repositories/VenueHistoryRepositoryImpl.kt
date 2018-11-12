@@ -13,8 +13,9 @@ import home.oleg.placesnearme.data.model.DetailedVenueHistoryDbEntity
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import javax.inject.Inject
 
-class VenueHistoryRepositoryImpl(
+class VenueHistoryRepositoryImpl @Inject constructor(
         private val detailedVenueWithPhotosDao: DetailedVenueDao,
         private val venueHistoryDao: DetailedVenueHistoryDao) : VenueHistoryRepository {
 

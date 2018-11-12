@@ -2,6 +2,8 @@ package home.oleg.placesnearme.data.repositories;
 
 import android.location.Location;
 
+import javax.inject.Inject;
+
 import home.oleg.placenearme.models.LatLng;
 import home.oleg.placenearme.repositories.DistanceRepository;
 
@@ -10,6 +12,11 @@ import home.oleg.placenearme.repositories.DistanceRepository;
  * Contact me by email - olegsheliakin@gmail.com
  */
 public class DistanceRepositoryImpl implements DistanceRepository {
+
+    @Inject
+    public DistanceRepositoryImpl() {
+
+    }
 
     @Override
     public double evaluate(LatLng from, LatLng to) {

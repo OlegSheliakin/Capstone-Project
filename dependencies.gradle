@@ -27,7 +27,8 @@ ext.versions = [
         loggingInterceptor : "3.10.0",
         timber             : "4.7.1",
         bottomNavigation   : "2.1.0",
-        permissionDispather: "4.0.0"
+        permissionDispather: "4.0.0",
+        inject             : "1"
 ]
 
 def deps = [:]
@@ -95,6 +96,7 @@ deps.permissions = [
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.leakCanary = "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 deps.bottomNavigation = "com.aurelhubert:ahbottomnavigation:$versions.bottomNavigation"
+deps.inject = "javax.inject:javax.inject:$versions.inject"
 
 ext.deps = deps
 

@@ -3,8 +3,9 @@ package home.oleg.feature_add_history.interactor
 import home.oleg.placenearme.models.DetailedVenue
 import home.oleg.placenearme.repositories.VenueHistoryRepository
 import io.reactivex.Single
+import javax.inject.Inject
 
-class CheckInOut(private val venueHistoryRepository: VenueHistoryRepository) {
+class CheckInOut @Inject constructor(private val venueHistoryRepository: VenueHistoryRepository) {
 
     fun execute(detailedVenue: DetailedVenue): Single<Boolean> {
         return if (detailedVenue.isHereNow) {

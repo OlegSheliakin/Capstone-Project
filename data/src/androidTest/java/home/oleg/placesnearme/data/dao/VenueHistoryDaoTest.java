@@ -1,15 +1,14 @@
 package home.oleg.placesnearme.data.dao;
 
-import android.arch.persistence.room.Room;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import androidx.room.Room;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 import home.oleg.placesnearme.data.FakesStore;
 import home.oleg.placesnearme.data.database.AppDatabase;
 import home.oleg.placesnearme.data.model.DetailedVenueDbEntity;

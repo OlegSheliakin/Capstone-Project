@@ -7,12 +7,13 @@ import home.oleg.placenearme.repositories.DistanceRepository
 import home.oleg.placenearme.repositories.UserLocationRepository
 import io.reactivex.Single
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by Oleg Sheliakin on 27.10.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-class EvaluateDistance(
+class EvaluateDistance @Inject constructor(
         private val locationRepository: UserLocationRepository,
         private val distanceRepository: DistanceRepository) {
 

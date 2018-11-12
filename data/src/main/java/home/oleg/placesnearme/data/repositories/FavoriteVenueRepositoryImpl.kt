@@ -8,8 +8,9 @@ import home.oleg.placesnearme.data.model.DetailedVenueDbEntity
 import home.oleg.placesnearme.data.model.DetailedVenueWithPhotos
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import javax.inject.Inject
 
-class FavoriteVenueRepositoryImpl(private val dao: DetailedVenueDao) : FavoriteVenuesRepository {
+class FavoriteVenueRepositoryImpl @Inject constructor(private val dao: DetailedVenueDao) : FavoriteVenuesRepository {
 
     override fun observeFavorites(): Flowable<List<DetailedVenue>> {
         return dao.allFavorites.map { DetailedVenueMapper.map(it) }
