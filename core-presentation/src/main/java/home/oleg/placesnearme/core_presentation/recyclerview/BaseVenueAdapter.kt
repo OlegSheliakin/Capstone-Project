@@ -25,22 +25,18 @@ protected constructor(diffCallback: DiffUtil.ItemCallback<ItemViewType>)
     protected abstract val emptyItemLayoutRes: Int
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val holder: RecyclerView.ViewHolder
-
-        when (viewType) {
+        return when (viewType) {
             1 -> {
                 val venueView = LayoutInflater.from(viewGroup.context)
                         .inflate(venueItemLayoutRes, viewGroup, false)
-                holder = getVenueItemHolder(venueView)
+                getVenueItemHolder(venueView)
             }
             else -> {
                 val emptyView = LayoutInflater.from(viewGroup.context)
                         .inflate(emptyItemLayoutRes, viewGroup, false)
-                holder = EmptyViewHolder(emptyView)
+                EmptyViewHolder(emptyView)
             }
         }
-
-        return holder
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {

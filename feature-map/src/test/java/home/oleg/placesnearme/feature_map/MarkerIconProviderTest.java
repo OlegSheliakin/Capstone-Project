@@ -6,7 +6,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import home.oleg.placesnearme.common.converter.DrawableConverter;
-import home.oleg.placesnearme.core_presentation.provider.ResourceProvider;
+import com.home.olegsheliakin.corettools.resource.provider.ResourceProvider;
 
 /**
  * Created by Oleg Sheliakin on 28.08.2018.

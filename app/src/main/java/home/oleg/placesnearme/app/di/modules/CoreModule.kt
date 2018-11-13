@@ -3,15 +3,17 @@ package home.oleg.placesnearme.app.di.modules
 import android.content.Context
 import android.content.SharedPreferences
 
-import androidx.annotation.NonNull
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import home.oleg.placesnearme.app.PlacesNearMeApp
-import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler
-import home.oleg.placesnearme.core_presentation.error_handler.MainErrorHandler
-import home.oleg.placesnearme.core_presentation.provider.ResourceProvider
-import home.oleg.placesnearme.core_presentation.provider.ResourceProviderImpl
+import com.home.olegsheliakin.corettools.error_handler.ErrorHandler
+import com.home.olegsheliakin.corettools.error_handler.MainErrorHandler
+import com.home.olegsheliakin.corettools.logger.Logger
+import com.home.olegsheliakin.corettools.logger.LoggerImpl
+import com.home.olegsheliakin.corettools.resource.ResourceProvider
+import com.home.olegsheliakin.corettools.resource.ResourceProviderImpl
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
@@ -29,6 +31,9 @@ abstract class CoreModule {
 
     @Binds
     abstract fun provideContext(app: PlacesNearMeApp): Context
+
+    @Binds
+    abstract fun provideLogger(impl: LoggerImpl): Logger
 
     @Module
     companion object {

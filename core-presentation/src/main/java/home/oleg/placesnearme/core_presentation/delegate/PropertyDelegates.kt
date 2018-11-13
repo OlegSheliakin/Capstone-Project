@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty
  * Contact me by email - olegsheliakin@gmail.com
  */
 
-class DisposableDelegate() : ReadWriteProperty<Any, Disposable?> {
+class DisposableDelegate : ReadWriteProperty<Any, Disposable?> {
 
     private var disposable: Disposable? = null
 

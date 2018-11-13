@@ -2,13 +2,12 @@ package home.oleg.placesnearme.feature_venues_history.di
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
 import dagger.Module
 import dagger.Provides
 import home.oleg.placesnearme.core_presentation.recyclerview.ItemsDiffCallback
-import home.oleg.placesnearme.feature_venues_history.HistoryVenuesAdapter
-import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment
-import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel
+import home.oleg.placesnearme.feature_venues_history.presentation.ui.HistoryVenuesAdapter
+import home.oleg.placesnearme.feature_venues_history.presentation.ui.VenuesHistoryFragment
+import home.oleg.placesnearme.feature_venues_history.presentation.VenuesHistoryViewModel
 
 @Module
 class VenuesHistoryModule {
@@ -26,10 +25,4 @@ class VenuesHistoryModule {
         return ViewModelProviders.of(fragment, factory).get(VenuesHistoryViewModel::class.java)
     }
 
-    @Provides
-    fun provideCreateFavoriteViewModel(
-            fragment: VenuesHistoryFragment,
-            factory: ViewModelProvider.Factory): CreateFavoriteViewModel {
-        return ViewModelProviders.of(fragment, factory).get(CreateFavoriteViewModel::class.java)
-    }
 }

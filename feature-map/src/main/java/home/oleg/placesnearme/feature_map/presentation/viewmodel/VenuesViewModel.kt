@@ -5,7 +5,7 @@ import home.oleg.placenearme.models.Section
 import home.oleg.placenearme.models.Venue
 import home.oleg.placesnearme.core_presentation.base.BaseViewModel
 import home.oleg.placesnearme.core_presentation.delegate.disposableDelegate
-import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler
+import com.home.olegsheliakin.corettools.error_handler.ErrorHandler
 import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.feature_map.presentation.state.MapViewState
@@ -25,6 +25,7 @@ class VenuesViewModel(
     private val venuesHolder = VenuesViewModel.VenuesHolder()
 
     private var searchDisposable: Disposable? by disposableDelegate()
+
     private val stateInternal = MutableLiveData<MapViewState>()
     private val dataInternal = MutableLiveData<List<PreviewVenueViewData>>()
 

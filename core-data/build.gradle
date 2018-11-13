@@ -1,0 +1,36 @@
+apply from: '../base_core.gradle'
+
+android {
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(':core-domain')
+    implementation project(':core-network')
+
+    implementation deps.googlePlayServices.location
+
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+    implementation deps.room.rxjava2
+
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+
+    implementation deps.inject
+    implementation deps.network.retrofit
+    implementation deps.network.converterGson
+    implementation deps.network.loggingInterceptor
+    implementation deps.network.rxJavaAdapter
+}

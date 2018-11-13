@@ -1,17 +1,11 @@
-apply from: '../base_gradle.gradle'
+apply from: '../base_feature.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core-presentation')
-    implementation project(':domain')
+    implementation project(':core-domain')
     implementation project(':core-di')
 
-    implementation deps.rxjava2.rxjava
-    implementation deps.rxjava2.rxandroid
-
     implementation deps.support.appcompat7
-
-    implementation deps.dagger.runtime
-    kapt deps.dagger.compiler
 }

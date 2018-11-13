@@ -1,23 +1,19 @@
 package home.oleg.placesnearme.feature_map.di
 
 import android.app.Activity
-
-import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
-import com.smedialink.feature_venue_detail.viewmodel.VenueViewModel
-
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.smedialink.feature_venue_detail.presentation.VenueViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import home.oleg.feature_add_history.CheckInViewModel
-import home.oleg.placesnearme.feature_map.presentation.adapter.CheckedItem
-import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl
 import home.oleg.placesnearme.feature_map.presentation.sections.SectionProvider
 import home.oleg.placesnearme.feature_map.presentation.ui.VenuesMapFragment
+import home.oleg.placesnearme.feature_map.presentation.ui.adapter.CheckedItem
+import home.oleg.placesnearme.feature_map.presentation.ui.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.presentation.viewmodel.UserLocationViewModel
 import home.oleg.placesnearme.feature_map.presentation.viewmodel.VenuesViewModel
 
@@ -34,22 +30,6 @@ abstract class VenuesMapFragmentModule {
         @Provides
         internal fun provideActivity(fragment: VenuesMapFragment): Activity {
             return fragment.activity!!
-        }
-
-        @JvmStatic
-        @Provides
-        internal fun provideCheckInViewModel(
-                fragment: VenuesMapFragment,
-                factory: ViewModelProvider.Factory): CheckInViewModel {
-            return ViewModelProviders.of(fragment, factory).get(CheckInViewModel::class.java)
-        }
-
-        @JvmStatic
-        @Provides
-        internal fun provideCreateFavoriteViewModel(
-                fragment: VenuesMapFragment,
-                factory: ViewModelProvider.Factory): CreateFavoriteViewModel {
-            return ViewModelProviders.of(fragment, factory).get(CreateFavoriteViewModel::class.java)
         }
 
         @JvmStatic

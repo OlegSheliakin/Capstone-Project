@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.smedialink.feature_venue_detail.view.VenueViewFacade
+import com.smedialink.feature_venue_detail.presentation.VenueViewFacade
 import home.oleg.placenearme.models.Section
 import home.oleg.placenearme.models.UserLocation
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
@@ -22,7 +21,7 @@ import home.oleg.placesnearme.core_presentation.extensions.observe
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent
 import home.oleg.placesnearme.feature_map.mapper.MarkerMapper
-import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
+import home.oleg.placesnearme.feature_map.presentation.ui.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.presentation.state.MapViewState
 import home.oleg.placesnearme.feature_map.presentation.viewmodel.UserLocationViewModel
 import home.oleg.placesnearme.feature_map.presentation.viewmodel.VenuesViewModel

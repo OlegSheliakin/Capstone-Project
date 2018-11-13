@@ -1,11 +1,12 @@
-apply from: '../base_gradle.gradle'
+apply from: '../base_feature.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core-presentation')
     implementation project(':googlemapbehaviour')
-    implementation project(':domain')
+    implementation project(':core-domain')
+    implementation project(':core-tools')
     implementation project(':core-di')
     implementation project(':feature-venue-detail')
     implementation project(':feature-add-favorite')
@@ -26,12 +27,6 @@ dependencies {
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
     kapt deps.lifecycle.compiler
-
-    implementation deps.dagger.runtime
-    kapt deps.dagger.compiler
-
-    implementation deps.rxjava2.rxjava
-    implementation deps.rxjava2.rxandroid
 
     implementation deps.googlePlayServices.maps
 }

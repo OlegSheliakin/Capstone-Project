@@ -24,7 +24,7 @@
         app:layout_behavior="home.oleg.coordinator_behavior.HideSearchViewBehavior"
         app:srcCompat="@drawable/ic_search" />
 
-    <home.oleg.placesnearme.feature_map.presentation.view.LoadingView
+    <home.oleg.placesnearme.feature_map.presentation.ui.LoadingView
         android:id="@+id/loadingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

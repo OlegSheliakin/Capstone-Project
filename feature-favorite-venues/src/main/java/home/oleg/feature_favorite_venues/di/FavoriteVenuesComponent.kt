@@ -2,7 +2,7 @@ package home.oleg.feature_favorite_venues.di
 
 import dagger.BindsInstance
 import dagger.Component
-import home.oleg.feature_favorite_venues.ui.FavoritePlacesFragment
+import home.oleg.feature_favorite_venues.presentation.ui.FavoritePlacesFragment
 import home.oleg.placesnearme.AppApiProvider
 import home.oleg.placesnearme.api.AppApi
 import home.oleg.placesnearme.scopes.FeatureScope

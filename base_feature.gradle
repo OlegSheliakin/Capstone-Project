@@ -1,0 +1,14 @@
+apply from: '../base_core.gradle'
+apply plugin: 'kotlin-android-extensions'
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.0.1'
+    implementation 'androidx.fragment:fragment-ktx:1.0.0'
+    implementation 'androidx.collection:collection-ktx:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+
+    implementation deps.rxjava2.rxandroid
+
+    implementation deps.dagger.runtime
+    kapt deps.dagger.compiler
+}

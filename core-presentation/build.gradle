@@ -1,17 +1,15 @@
-apply from: '../base_gradle.gradle'
+apply from: '../base_core.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(':domain')
+    implementation project(':core-domain')
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
     implementation deps.network.retrofit
-
-    implementation deps.rxjava2.rxjava
 
     implementation deps.support.recyclerview
     implementation deps.support.design
@@ -21,8 +19,5 @@ dependencies {
 
     implementation deps.lifecycle.extensions
 
-    implementation deps.timber
-
     implementation deps.inject
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

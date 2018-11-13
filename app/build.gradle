@@ -52,8 +52,9 @@ dependencies {
     implementation project(':core-presentation')
     implementation project(':core-di')
 
-    implementation project(':data')
-    implementation project(':domain')
+    implementation project(':core-data')
+    implementation project(':core-domain')
+    implementation project(':core-tools')
 
     implementation project(':feature-map')
     implementation project(':feature-main')

@@ -10,10 +10,4 @@
     <string name="all_description">Description</string>
     <string name="all_label_gallery">Gallery</string>
 
-    <!--erros-->
-    <string name="unexpected_error">Something went wrong</string>
-    <string name="error_limit_exceeded">Daily call quota exceeded</string>
-    <string name="no_internet_connection">Check the network connection</string>
-    <string name="timeout_error">Low Signal</string>
-
 </resources>

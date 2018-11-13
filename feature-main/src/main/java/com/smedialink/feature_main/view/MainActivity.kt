@@ -8,14 +8,12 @@ import com.smedialink.feature_main.R
 import com.smedialink.feature_main.delegate.BackPressedDelegate
 import com.smedialink.feature_main.delegate.BottomBarDelegate
 import com.smedialink.feature_main.di.MainActivityComponent
-import com.smedialink.feature_venue_detail.view.VenueFragment
+import com.smedialink.feature_venue_detail.presentation.ui.VenueFragment
 
 import javax.inject.Inject
 
 import androidx.appcompat.app.AppCompatActivity
-import com.smedialink.feature_main.viewmodel.MainViewModel
 import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
-import home.oleg.placesnearme.core_presentation.extensions.observe
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
 
 class MainActivity : AppCompatActivity(), ShowHideBottomBarListener {

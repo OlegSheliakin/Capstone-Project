@@ -1,10 +1,12 @@
-apply from: '../base_gradle.gradle'
+apply from: '../base_core.gradle'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':core-presentation')
     implementation project(':core-network')
-    implementation project(path: ':domain')
+    implementation project(path: ':core-domain')
+    implementation project(path: ':core-tools')
+
     implementation deps.dagger.runtime
     implementation deps.lifecycle.extensions
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

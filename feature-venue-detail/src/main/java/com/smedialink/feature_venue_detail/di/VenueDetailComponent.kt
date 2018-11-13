@@ -1,6 +1,6 @@
 package com.smedialink.feature_venue_detail.di
 
-import com.smedialink.feature_venue_detail.view.VenueFragment
+import com.smedialink.feature_venue_detail.presentation.ui.VenueFragment
 
 import dagger.BindsInstance
 import dagger.Component

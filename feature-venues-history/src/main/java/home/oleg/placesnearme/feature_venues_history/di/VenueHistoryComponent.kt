@@ -4,7 +4,7 @@ import dagger.BindsInstance
 import dagger.Component
 import home.oleg.placesnearme.AppApiProvider
 import home.oleg.placesnearme.api.AppApi
-import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment
+import home.oleg.placesnearme.feature_venues_history.presentation.ui.VenuesHistoryFragment
 import home.oleg.placesnearme.scopes.FeatureScope
 
 @FeatureScope

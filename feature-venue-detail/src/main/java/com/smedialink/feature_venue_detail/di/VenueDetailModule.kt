@@ -4,22 +4,13 @@ import android.app.Activity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
-import com.smedialink.feature_venue_detail.view.VenueFragment
-import com.smedialink.feature_venue_detail.viewmodel.VenueViewModel
+import com.smedialink.feature_venue_detail.presentation.ui.VenueFragment
+import com.smedialink.feature_venue_detail.presentation.VenueViewModel
 import dagger.Module
 import dagger.Provides
-import home.oleg.feature_add_history.CheckInViewModel
 
 @Module
 class VenueDetailModule {
-
-    @Provides
-    fun provideCheckInViewModel(
-            fragment: VenueFragment,
-            factory: ViewModelProvider.Factory): CheckInViewModel {
-        return ViewModelProviders.of(fragment, factory).get(CheckInViewModel::class.java)
-    }
 
     @Provides
     fun provideVenueViewModel(
@@ -29,20 +20,11 @@ class VenueDetailModule {
     }
 
     @Provides
-    fun provideCreateFavoriteViewModel(
-            fragment: VenueFragment,
-            factory: ViewModelProvider.Factory): CreateFavoriteViewModel {
-        return ViewModelProviders.of(fragment, factory).get(CreateFavoriteViewModel::class.java)
-    }
-
-    @Provides
     fun provideActivity(fragment: VenueFragment): Activity {
         return fragment.activity!!
     }
 
     @Provides
-    fun provideLifecycleOwner(fragment: VenueFragment): LifecycleOwner {
-        return fragment
-    }
+    fun provideLifecycleOwner(fragment: VenueFragment): LifecycleOwner = fragment
 
 }

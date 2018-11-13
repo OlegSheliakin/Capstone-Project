@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.smedialink.feature_main.R
-import home.oleg.feature_favorite_venues.ui.FavoritePlacesFragment
+import home.oleg.feature_favorite_venues.presentation.ui.FavoritePlacesFragment
 import home.oleg.placesnearme.feature_map.presentation.ui.VenuesMapFragment
-import home.oleg.placesnearme.feature_venues_history.VenuesHistoryFragment
+import home.oleg.placesnearme.feature_venues_history.presentation.ui.VenuesHistoryFragment
 import javax.inject.Inject
 
 class BottomBarTabListener @Inject

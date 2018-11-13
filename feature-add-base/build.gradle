@@ -1,0 +1,13 @@
+apply from: '../base_feature.gradle'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':core-presentation')
+    implementation project(':core-domain')
+    implementation project(':core-di')
+
+    implementation deps.lifecycle.extensions
+    implementation deps.lifecycle.runtime
+    kapt deps.lifecycle.compiler
+}

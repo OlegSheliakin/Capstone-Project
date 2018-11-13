@@ -1,9 +1,9 @@
 package home.oleg.placesnearme.api
 
 import androidx.lifecycle.ViewModelProvider
+import com.home.olegsheliakin.corettools.resource.ResourceProvider
 import home.oleg.placenearme.interactors.EvaluateDistance
 import home.oleg.placenearme.interactors.GetRecommendedVenues
-import home.oleg.placesnearme.core_presentation.provider.ResourceProvider
 import home.oleg.placesnearme.network.config.NetworkConfig
 import home.oleg.placesnearme.network.service.IFourSquareAPI
 

@@ -1,0 +1,15 @@
+apply from: '../base_core.gradle'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.timber
+
+    implementation deps.network.retrofit
+
+    implementation deps.inject
+
+    implementation deps.support.appcompat7
+
+    implementation project(path: ':core-presentation')
+}

@@ -3,7 +3,6 @@ package home.oleg.placesnearme.app.di.modules
 
 import android.content.SharedPreferences
 
-import androidx.annotation.NonNull
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -16,17 +15,14 @@ import home.oleg.placenearme.repositories.UserLocationRepository
 import home.oleg.placenearme.repositories.VenueHistoryRepository
 import home.oleg.placenearme.repositories.VenueRepository
 import home.oleg.placesnearme.app.PlacesNearMeApp
-import home.oleg.placesnearme.data.dao.DetailedVenueDao
-import home.oleg.placesnearme.data.dao.DetailedVenueHistoryDao
-import home.oleg.placesnearme.data.provider.CachedLocationsStore
-import home.oleg.placesnearme.data.provider.ReactiveLocationStore
+import home.oleg.placesnearme.data.location.CachedLocationsStore
+import home.oleg.placesnearme.data.location.ReactiveLocationStore
 import home.oleg.placesnearme.data.repositories.DetailedVenueRepositoryImpl
 import home.oleg.placesnearme.data.repositories.DistanceRepositoryImpl
 import home.oleg.placesnearme.data.repositories.FavoriteVenueRepositoryImpl
 import home.oleg.placesnearme.data.repositories.UserLocationRepositoryImpl
 import home.oleg.placesnearme.data.repositories.VenueHistoryRepositoryImpl
 import home.oleg.placesnearme.data.repositories.VenueRepositoryImpl
-import home.oleg.placesnearme.network.service.IFourSquareAPI
 
 @Module
 abstract class RepositoryModule {

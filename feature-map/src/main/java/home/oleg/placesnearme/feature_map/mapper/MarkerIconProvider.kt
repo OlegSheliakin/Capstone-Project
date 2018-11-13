@@ -2,20 +2,12 @@ package home.oleg.placesnearme.feature_map.mapper
 
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-
 import com.google.android.gms.maps.model.BitmapDescriptor
-
-import java.util.HashMap
-import java.util.Objects
-
-import javax.inject.Inject
-
+import com.home.olegsheliakin.corettools.resource.ResourceProvider
 import home.oleg.placenearme.models.Section
-import home.oleg.placesnearme.core_presentation.provider.ResourceProvider
 import home.oleg.placesnearme.feature_map.R
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter
-import io.reactivex.annotations.NonNull
-import io.reactivex.annotations.Nullable
+import javax.inject.Inject
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.

@@ -1,4 +1,4 @@
-apply from: '../base_gradle.gradle'
+apply from: '../base_core.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -6,12 +6,10 @@ dependencies {
     implementation deps.network.converterGson
     implementation deps.network.loggingInterceptor
     implementation deps.network.rxJavaAdapter
-    implementation deps.rxjava2.rxjava
 
     implementation deps.support.appcompat7
     implementation deps.support.design
 
     implementation deps.dagger.runtime
     kapt deps.dagger.compiler
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

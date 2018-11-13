@@ -2,29 +2,26 @@ package home.oleg.placesnearme.app.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.smedialink.feature_add_favorite.domain.interactor.CreateVenueFavorite
-import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModel
-import com.smedialink.feature_add_favorite.presentation.FavoriteMessageEventMapper
+import com.home.olegsheliakin.corettools.error_handler.ErrorHandler
+import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import com.smedialink.feature_main.viewmodel.MainViewModel
 import com.smedialink.feature_venue_detail.domain.GetDetailedVenue
-import com.smedialink.feature_venue_detail.viewmodel.VenueViewModel
+import com.smedialink.feature_venue_detail.presentation.VenueViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import home.oleg.feature_add_history.CheckInViewModel
-import home.oleg.feature_add_history.interactor.CheckInOut
-import home.oleg.feature_favorite_venues.ui.FavoritePlacesViewModel
+import home.oleg.feature_add_history.presentation.viewmodel.CheckInViewModelDelegate
+import home.oleg.feature_favorite_venues.presentation.FavoritePlacesViewModel
 import home.oleg.placenearme.interactors.EvaluateDistance
 import home.oleg.placenearme.interactors.GetRecommendedVenues
 import home.oleg.placenearme.repositories.FavoriteVenuesRepository
 import home.oleg.placenearme.repositories.UserLocationRepository
 import home.oleg.placenearme.repositories.VenueHistoryRepository
 import home.oleg.placesnearme.app.di.mapkeys.ViewModelKey
-import home.oleg.placesnearme.core_presentation.error_handler.ErrorHandler
-import home.oleg.placesnearme.core_presentation.provider.ResourceProvider
 import home.oleg.placesnearme.feature_map.presentation.viewmodel.UserLocationViewModel
 import home.oleg.placesnearme.feature_map.presentation.viewmodel.VenuesViewModel
-import home.oleg.placesnearme.feature_venues_history.VenuesHistoryViewModel
+import home.oleg.placesnearme.feature_venues_history.domain.interactor.ObserveHistory
+import home.oleg.placesnearme.feature_venues_history.presentation.VenuesHistoryViewModel
 import javax.inject.Provider
 
 /**
@@ -52,36 +49,22 @@ object ViewModelModule {
 
     @JvmStatic
     @IntoMap
-    @ViewModelKey(CheckInViewModel::class)
-    @Provides
-    internal fun provideCheckInViewModel(checkInOut: CheckInOut, resourceProvider: ResourceProvider): ViewModel {
-        return CheckInViewModel(checkInOut, resourceProvider)
-    }
-
-    @JvmStatic
-    @IntoMap
     @ViewModelKey(VenuesHistoryViewModel::class)
     @Provides
-    internal fun provideVenuesHistoryViewModel(venueHistoryRepository: VenueHistoryRepository,
-                                               evaluateDistance: EvaluateDistance): ViewModel {
-        return VenuesHistoryViewModel(venueHistoryRepository::history, evaluateDistance)
-    }
-
-    @JvmStatic
-    @IntoMap
-    @ViewModelKey(CreateFavoriteViewModel::class)
-    @Provides
-    internal fun provideCreateFavoriteViewModel(createVenueFavorite: CreateVenueFavorite,
-                                                mapper: FavoriteMessageEventMapper): ViewModel {
-        return CreateFavoriteViewModel(createVenueFavorite, mapper)
+    internal fun provideVenuesHistoryViewModel(
+            createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
+            observeHistory: ObserveHistory): ViewModel {
+        return VenuesHistoryViewModel(createFavoriteViewModelDelegate, observeHistory)
     }
 
     @JvmStatic
     @IntoMap
     @ViewModelKey(FavoritePlacesViewModel::class)
     @Provides
-    internal fun provideFavoritePlacesViewModel(favoriteVenuesRepository: FavoriteVenuesRepository): ViewModel {
-        return FavoritePlacesViewModel(favoriteVenuesRepository::observeFavorites)
+    internal fun provideFavoritePlacesViewModel(
+            createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
+            favoriteVenuesRepository: FavoriteVenuesRepository): ViewModel {
+        return FavoritePlacesViewModel(createFavoriteViewModelDelegate, favoriteVenuesRepository::observeFavorites)
     }
 
     @JvmStatic
@@ -89,12 +72,13 @@ object ViewModelModule {
     @ViewModelKey(VenueViewModel::class)
     @Provides
     internal fun provideVenueViewModel(errorHanlder: ErrorHandler,
-                                       getDetailedVenue: GetDetailedVenue,
-                                       evaluateDistance: EvaluateDistance): ViewModel {
-        return VenueViewModel(errorHanlder,
-                getDetailedVenue::getDetailedVenue,
-                getDetailedVenue::getCachedDetailVenue,
-                evaluateDistance::evaluateDistance)
+                                       createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
+                                       checkInViewModelDelegate: CheckInViewModelDelegate,
+                                       getDetailedVenue: GetDetailedVenue): ViewModel {
+        return VenueViewModel(createFavoriteViewModelDelegate,
+                checkInViewModelDelegate,
+                errorHanlder,
+                getDetailedVenue)
     }
 
     @JvmStatic

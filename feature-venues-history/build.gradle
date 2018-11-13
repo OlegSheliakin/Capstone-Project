@@ -1,10 +1,11 @@
-apply from: '../base_gradle.gradle'
+apply from: '../base_feature.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core-presentation')
-    implementation project(':domain')
+    implementation project(':core-domain')
+    implementation project(':core-tools')
     implementation project(':core-di')
     implementation project(':feature-add-favorite')
 
@@ -12,12 +13,7 @@ dependencies {
     implementation deps.lifecycle.runtime
     kapt deps.lifecycle.compiler
 
-    implementation deps.rxjava2.rxandroid
-
     implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
-
-    implementation deps.dagger.runtime
-    kapt deps.dagger.compiler
 
     implementation deps.support.appcompat7
     implementation deps.support.constraintLayout
