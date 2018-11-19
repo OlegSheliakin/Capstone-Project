@@ -7,9 +7,8 @@ dependencies {
 
     implementation deps.network.retrofit
 
-    implementation deps.inject
-
     implementation deps.support.appcompat7
 
-    implementation project(path: ':core-presentation')
+    implementation deps.dagger.runtime
+    kapt deps.dagger.compiler
 }

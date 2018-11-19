@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/venueFragment"
-        android:name="com.smedialink.feature_venue_detail.presentation.ui.VenueFragment"
+        android:name="home.oleg.placesnearme.feature_venue_detail.presentation.ui.VenueFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -1,6 +1,6 @@
 package home.oleg.placesnearme.feature_map.presentation.state
 
-import home.oleg.placesnearme.core_presentation.base.ErrorEvent
+import com.smedialink.common.base.ErrorEvent
 
 data class MapViewState(
         val isVenuesLoading: Boolean,
@@ -14,3 +14,8 @@ data class MapViewState(
         }
     }
 }
+
+sealed class State
+
+object Loading : State()
+data class Error(val error: ErrorEvent) : State()

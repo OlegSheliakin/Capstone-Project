@@ -2,8 +2,8 @@ package home.oleg.placesnearme.feature_venues_history.presentation.ui
 
 import android.view.View
 import androidx.recyclerview.widget.DiffUtil
+import com.smedialink.common.recyclerview.ItemViewType
 import home.oleg.placesnearme.core_presentation.recyclerview.BaseVenueAdapter
-import home.oleg.placesnearme.core_presentation.recyclerview.ItemViewType
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.core_presentation.utils.DistanceUtil
 import home.oleg.placesnearme.core_presentation.utils.ImageLoader

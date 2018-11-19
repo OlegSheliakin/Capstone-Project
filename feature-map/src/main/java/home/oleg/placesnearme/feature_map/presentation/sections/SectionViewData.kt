@@ -2,7 +2,7 @@ package home.oleg.placesnearme.feature_map.presentation.sections
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import home.oleg.placenearme.models.Section
+import home.oleg.placesnearme.coredomain.models.Section
 
 /**
  * Created by Oleg Sheliakin on 25.10.2018.

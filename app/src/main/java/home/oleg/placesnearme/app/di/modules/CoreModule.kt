@@ -2,18 +2,11 @@ package home.oleg.placesnearme.app.di.modules
 
 import android.content.Context
 import android.content.SharedPreferences
-
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
+import home.oleg.placesnearme.BuildConfig
 import home.oleg.placesnearme.app.PlacesNearMeApp
-import com.home.olegsheliakin.corettools.error_handler.ErrorHandler
-import com.home.olegsheliakin.corettools.error_handler.MainErrorHandler
-import com.home.olegsheliakin.corettools.logger.Logger
-import com.home.olegsheliakin.corettools.logger.LoggerImpl
-import com.home.olegsheliakin.corettools.resource.ResourceProvider
-import com.home.olegsheliakin.corettools.resource.ResourceProviderImpl
+import home.oleg.placesnearme.corenetwork.config.NetworkConfig
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.
@@ -21,27 +14,39 @@ import com.home.olegsheliakin.corettools.resource.ResourceProviderImpl
  */
 
 @Module
-abstract class CoreModule {
+object CoreModule {
 
-    @Binds
-    abstract fun provideResourceProvider(impl: ResourceProviderImpl): ResourceProvider
+    @JvmStatic
+    @Provides
+    internal fun provideSharedPreferences(app: PlacesNearMeApp): SharedPreferences {
+        return app.getSharedPreferences(PlacesNearMeApp::class.java.simpleName, Context.MODE_PRIVATE)
+    }
 
-    @Binds
-    abstract fun provideErrorHandler(impl: MainErrorHandler): ErrorHandler
+    @JvmStatic
+    @Provides
+    internal fun provideContext(app: PlacesNearMeApp): Context = app
 
-    @Binds
-    abstract fun provideContext(app: PlacesNearMeApp): Context
+    @JvmStatic
+    @Provides
+    internal fun provideNetworkConfig(): NetworkConfig {
+        return MyNetworkConfig()
+    }
 
-    @Binds
-    abstract fun provideLogger(impl: LoggerImpl): Logger
+    private class MyNetworkConfig : NetworkConfig {
+        override fun baseUrl(): String {
+            return BuildConfig.BASE_URL
+        }
 
-    @Module
-    companion object {
+        override fun clientSecret(): String {
+            return BuildConfig.CLIENT_SECRET
+        }
 
-        @JvmStatic
-        @Provides
-        fun provideSharedPreferences(app: PlacesNearMeApp): SharedPreferences {
-            return app.getSharedPreferences(PlacesNearMeApp::class.java.simpleName, Context.MODE_PRIVATE)
+        override fun clientId(): String {
+            return BuildConfig.CLIENT_ID
+        }
+
+        override fun apiVersion(): String {
+            return BuildConfig.API_VERSION
         }
     }
 }

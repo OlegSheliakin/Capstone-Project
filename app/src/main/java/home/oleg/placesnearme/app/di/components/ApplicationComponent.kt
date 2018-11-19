@@ -1,23 +1,13 @@
 package home.oleg.placesnearme.app.di.components
 
-import javax.inject.Singleton
-
 import dagger.Component
-import home.oleg.placesnearme.api.AppApi
 import home.oleg.placesnearme.app.PlacesNearMeApp
 import home.oleg.placesnearme.app.di.modules.CoreModule
-import home.oleg.placesnearme.app.di.modules.DbModule
-import home.oleg.placesnearme.app.di.modules.NetworkModule
-import home.oleg.placesnearme.app.di.modules.RepositoryModule
-import home.oleg.placesnearme.app.di.modules.ViewModelModule
-import home.oleg.placesnearme.builder.ComponentBuilder
+import home.oleg.placesnearme.coredi.api.AppApi
+import home.oleg.placesnearme.coredi.builder.ComponentBuilder
+import javax.inject.Singleton
 
-@Component(modules = [
-    CoreModule::class,
-    DbModule::class,
-    NetworkModule::class,
-    RepositoryModule::class,
-    ViewModelModule::class])
+@Component(modules = [CoreModule::class])
 @Singleton
 interface ApplicationComponent : AppApi {
 

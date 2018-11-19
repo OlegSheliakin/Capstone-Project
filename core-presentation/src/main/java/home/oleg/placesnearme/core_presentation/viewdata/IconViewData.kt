@@ -1,9 +1,6 @@
 package home.oleg.placesnearme.core_presentation.viewdata
 
-import android.os.Parcel
-import android.os.Parcelable
-
-import home.oleg.placenearme.models.Icon
+import home.oleg.placesnearme.coredomain.models.Icon
 
 /**
  * Created by Oleg Sheliakin on 21.09.2018.

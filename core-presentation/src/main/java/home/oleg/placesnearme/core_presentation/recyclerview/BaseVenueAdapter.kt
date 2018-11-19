@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
  * Contact me by email - olegsheliakin@gmail.com
  */
 abstract class BaseVenueAdapter
-protected constructor(diffCallback: DiffUtil.ItemCallback<ItemViewType>)
-    : ListAdapter<ItemViewType, RecyclerView.ViewHolder>(diffCallback) {
+protected constructor(diffCallback: DiffUtil.ItemCallback<com.smedialink.common.recyclerview.ItemViewType>)
+    : ListAdapter<com.smedialink.common.recyclerview.ItemViewType, RecyclerView.ViewHolder>(diffCallback) {
 
     @get:LayoutRes
     protected abstract val venueItemLayoutRes: Int

@@ -1,6 +1,6 @@
 package home.oleg.placesnearme.core_presentation.viewdata
 
-import home.oleg.placenearme.models.Photo
+import home.oleg.placesnearme.coredomain.models.Photo
 
 /**
  * Created by Oleg Sheliakin on 21.09.2018.

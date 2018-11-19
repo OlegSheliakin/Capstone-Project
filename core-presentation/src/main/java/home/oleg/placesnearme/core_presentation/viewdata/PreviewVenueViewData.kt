@@ -1,6 +1,6 @@
 package home.oleg.placesnearme.core_presentation.viewdata
 
-import home.oleg.placenearme.models.Section
+import home.oleg.placesnearme.coredomain.models.Section
 
 interface PreviewVenueViewData {
     val id: String

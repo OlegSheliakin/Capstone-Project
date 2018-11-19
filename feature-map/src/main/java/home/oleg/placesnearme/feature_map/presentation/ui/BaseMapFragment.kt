@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
-import home.oleg.placesnearme.core_presentation.base.BaseFragment
+import com.smedialink.common.base.BaseFragment
 import home.oleg.placesnearme.feature_map.R
 
 abstract class BaseMapFragment : BaseFragment() {

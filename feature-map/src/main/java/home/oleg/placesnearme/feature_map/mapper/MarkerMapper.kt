@@ -2,14 +2,8 @@ package home.oleg.placesnearme.feature_map.mapper
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
-import java.util.ArrayList
-import java.util.Collections
-
-import javax.inject.Inject
-
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
-import io.reactivex.annotations.NonNull
+import javax.inject.Inject
 
 /**
  * Created by Oleg Sheliakin on 14.08.2018.

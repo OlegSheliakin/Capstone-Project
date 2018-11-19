@@ -1,11 +1,10 @@
 package home.oleg.placesnearme.core_presentation.mapper
 
-import java.util.ArrayList
-
-import home.oleg.placenearme.models.Section
-import home.oleg.placenearme.models.Venue
 import home.oleg.placesnearme.core_presentation.viewdata.IconViewData
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.coredomain.models.Section
+import home.oleg.placesnearme.coredomain.models.Venue
+import java.util.*
 
 object VenueMapViewMapper {
 

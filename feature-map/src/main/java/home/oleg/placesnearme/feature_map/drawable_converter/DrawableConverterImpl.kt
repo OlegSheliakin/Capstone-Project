@@ -13,6 +13,13 @@ import javax.inject.Inject
  * Created by Oleg Sheliakin on 28.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
+
+interface DrawableConverter {
+
+    fun convert(drawable: Drawable): BitmapDescriptor
+
+}
+
 class DrawableConverterImpl @Inject constructor() : DrawableConverter {
 
     override fun convert(drawable: Drawable): BitmapDescriptor {

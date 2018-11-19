@@ -9,6 +9,8 @@ dependencies {
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
+    implementation 'androidx.core:core-ktx:1.0.1'
+
     implementation deps.network.retrofit
 
     implementation deps.support.recyclerview

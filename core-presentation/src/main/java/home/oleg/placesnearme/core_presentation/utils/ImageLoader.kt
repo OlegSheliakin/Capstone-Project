@@ -5,11 +5,9 @@ import android.graphics.Bitmap
 import android.widget.ImageView
 import android.widget.RemoteViews
 import com.squareup.picasso.Picasso
-
-import java.io.IOException
-
 import home.oleg.placesnearme.core_presentation.R
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import java.io.IOException
 
 /**
  * Created by Oleg Sheliakin on 21.09.2018.

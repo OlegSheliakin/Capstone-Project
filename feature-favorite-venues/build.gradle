@@ -6,6 +6,8 @@ dependencies {
     implementation project(':core-presentation')
     implementation project(':core-domain')
     implementation project(':core-di')
+    implementation project(':core-data')
+    implementation project(':core-tools')
     implementation project(':feature-add-favorite')
     implementation project(':feature-venue-detail')
 

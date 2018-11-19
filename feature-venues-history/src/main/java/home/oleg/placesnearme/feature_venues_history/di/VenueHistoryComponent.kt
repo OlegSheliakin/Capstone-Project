@@ -2,19 +2,23 @@ package home.oleg.placesnearme.feature_venues_history.di
 
 import dagger.BindsInstance
 import dagger.Component
-import home.oleg.placesnearme.AppApiProvider
-import home.oleg.placesnearme.api.AppApi
+import home.oleg.placesnearme.coredata.di.RepoApi
+import home.oleg.placesnearme.coredi.module.ViewModelFactoryModule
+import home.oleg.placesnearme.coredi.scopes.FeatureScope
+import home.oleg.placesnearme.corettools.di.ToolsApi
 import home.oleg.placesnearme.feature_venues_history.presentation.ui.VenuesHistoryFragment
-import home.oleg.placesnearme.scopes.FeatureScope
 
 @FeatureScope
-@Component(dependencies = [AppApi::class], modules = [VenuesHistoryModule::class])
+@Component(
+        dependencies = [ToolsApi::class, RepoApi::class],
+        modules = [ViewModelFactoryModule::class, VenuesHistoryModule::class])
 interface VenueHistoryComponent {
     fun inject(target: VenuesHistoryFragment)
 
     @Component.Builder
     interface Builder {
-        fun appComponent(appApi: AppApi): VenueHistoryComponent.Builder
+        fun toolsProvider(toolsProvider: ToolsApi): VenueHistoryComponent.Builder
+        fun repoComponent(repoApi: RepoApi): VenueHistoryComponent.Builder
 
         @BindsInstance
         fun bind(target: VenuesHistoryFragment): VenueHistoryComponent.Builder
@@ -25,9 +29,12 @@ interface VenueHistoryComponent {
     object Injector {
 
         fun inject(fragment: VenuesHistoryFragment) {
-            val appApi = AppApiProvider.Initializer.getAppApi(fragment)
+            val toolsProvider = ToolsApi.getInstance(fragment.activity!!.applicationContext)
+            val repoApi = RepoApi.getInstance(fragment.activity!!.applicationContext)
+
             DaggerVenueHistoryComponent.builder()
-                    .appComponent(appApi)
+                    .toolsProvider(toolsProvider)
+                    .repoComponent(repoApi)
                     .bind(fragment)
                     .build()
                     .inject(fragment)

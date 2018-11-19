@@ -2,19 +2,13 @@ package home.oleg.placesnearme.feature_venues_history.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.smedialink.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
-import com.smedialink.feature_add_favorite.presentation.UpdateFavorite
-import home.oleg.placenearme.interactors.EvaluateDistance
-import home.oleg.placenearme.models.DetailedVenue
-import home.oleg.placenearme.models.Venue
-import home.oleg.placesnearme.core_presentation.base.BaseViewModel
+import com.smedialink.common.base.BaseViewModel
 import home.oleg.placesnearme.core_presentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
+import home.oleg.placesnearme.feature_add_favorite.presentation.UpdateFavorite
 import home.oleg.placesnearme.feature_venues_history.domain.interactor.ObserveHistory
-import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers

@@ -6,25 +6,24 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.smedialink.feature_venue_detail.presentation.VenueViewFacade
-import home.oleg.placenearme.models.Section
-import home.oleg.placenearme.models.UserLocation
-import home.oleg.placesnearme.core_presentation.ShowHideBottomBarListener
-import home.oleg.placesnearme.core_presentation.base.BackHandler
-import home.oleg.placesnearme.core_presentation.base.handle
+import com.smedialink.common.base.BackHandler
+import com.smedialink.common.base.handle
+import com.smedialink.common.ext.horizontal
+import com.smedialink.common.ext.observe
+import home.oleg.placesnearme.core_presentation.api.ShowHideBottomBar
 import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate
-import home.oleg.placesnearme.core_presentation.extensions.observe
 import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.coredomain.models.Section
+import home.oleg.placesnearme.coredomain.models.UserLocation
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent
 import home.oleg.placesnearme.feature_map.mapper.MarkerMapper
-import home.oleg.placesnearme.feature_map.presentation.ui.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.presentation.state.MapViewState
-import home.oleg.placesnearme.feature_map.presentation.viewmodel.UserLocationViewModel
-import home.oleg.placesnearme.feature_map.presentation.viewmodel.VenuesViewModel
+import home.oleg.placesnearme.feature_map.presentation.ui.adapter.SectionsAdapter
+import home.oleg.placesnearme.feature_map.presentation.viewmodel.MapViewModel
+import home.oleg.placesnearme.feature_venue_detail.presentation.VenueViewFacade
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.layout_search.*
 import permissions.dispatcher.NeedsPermission
@@ -39,10 +38,7 @@ class VenuesMapFragment
     lateinit var toastDelegate: ToastDelegate
 
     @Inject
-    lateinit var venuesViewModel: VenuesViewModel
-
-    @Inject
-    lateinit var userLocationViewModel: UserLocationViewModel
+    lateinit var mapViewModel: MapViewModel
 
     @Inject
     lateinit var venueViewFacade: VenueViewFacade
@@ -53,14 +49,14 @@ class VenuesMapFragment
     @Inject
     lateinit var sectionsAdapter: SectionsAdapter
 
-    private var showHideBottomBarListener: ShowHideBottomBarListener? = null
+    private var showHideBottomBarListener: ShowHideBottomBar? = null
 
     private var googleMap: GoogleMap? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        if (context is ShowHideBottomBarListener) {
+        if (context is ShowHideBottomBar) {
             this.showHideBottomBarListener = context
         }
     }
@@ -69,17 +65,23 @@ class VenuesMapFragment
         super.onViewCreated(view, savedInstanceState)
         toastDelegate.attach(view.context)
 
-        rvSections.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        rvSections.adapter = sectionsAdapter
         sectionsAdapter.setHasStableIds(true)
 
+        rvSections.horizontal(withAdapter = sectionsAdapter)
+
         loadingView.setOnRetryCLickListener {
-            sectionsAdapter.selectedItem?.let {
-                venuesViewModel.getRecommendedVenues(it)
-            }
+            sectionsAdapter.selectedItem?.let(mapViewModel::getRecommendedVenues)
         }
 
-        venueViewFacade.onCreateView(view)
+        fabSearch.setOnClickListener {
+            mapViewModel.openSearch()
+        }
+
+        btnClose.setOnClickListener {
+            mapViewModel.closeSearch()
+        }
+
+        venueViewFacade.onCreateView(view, viewLifecycleOwner)
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener!!)
     }
 
@@ -105,11 +107,11 @@ class VenuesMapFragment
     }
 
     fun onCloseSearchClicked() {
-        venuesViewModel.closeSearch()
+        mapViewModel.closeSearch()
     }
 
     fun oSearchClicked() {
-        venuesViewModel.openSearch()
+        mapViewModel.openSearch()
     }
 
     fun onZoomInClicked() {
@@ -127,9 +129,9 @@ class VenuesMapFragment
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
 
-        observe(venuesViewModel.data, this::show)
-        observe(venuesViewModel.state, this::render)
-        observe(userLocationViewModel.location, this::renderLocation)
+        mapViewModel.venues.observe(this, this::renderVenues)
+        mapViewModel.viewState.observe(this, this::render)
+        mapViewModel.location.observe(this, this::renderLocation)
 
         initLocationSettingsWithPermissionCheck(googleMap)
     }
@@ -139,53 +141,55 @@ class VenuesMapFragment
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
-    private fun show(items: Collection<PreviewVenueViewData>) {
-        googleMap?.let {
-            it.clear()
+    private fun renderVenues(items: Collection<PreviewVenueViewData>) {
+        googleMap?.apply {
+            clear()
 
             val pairs = markerMapper.mapFrom(items)
             val markerVenueViewDataMap = HashMap<String, PreviewVenueViewData>()
 
             for (pair in pairs) {
-                val id = it.addMarker(pair.first).id
+                val id = addMarker(pair.first).id
                 markerVenueViewDataMap[id] = pair.second
             }
 
-            venuesViewModel.setVenues(markerVenueViewDataMap)
+            mapViewModel.venuesHolder.clear()
+            mapViewModel.venuesHolder.putAll(markerVenueViewDataMap)
         }
     }
 
     @SuppressLint("MissingPermission")
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     fun onShowCurrentLocationClicked() {
-        userLocationViewModel.requestUserLocation()
+        mapViewModel.requestUserLocation()
     }
 
     @SuppressLint("MissingPermission")
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     fun initLocationSettings(googleMap: GoogleMap) {
-        googleMap.uiSettings.isMyLocationButtonEnabled = false
-        googleMap.isMyLocationEnabled = true
-        googleMap.setOnMarkerClickListener {
-            val venueMapViewData = venuesViewModel.getVenue(it.id)
-            venueViewFacade.setVenue(venueMapViewData)
-            return@setOnMarkerClickListener true
+        googleMap.apply {
+            uiSettings.isMyLocationButtonEnabled = false
+            isMyLocationEnabled = true
+            setOnMarkerClickListener {
+                val venueMapViewData = mapViewModel.venuesHolder[it.id]!!
+                venueViewFacade.setVenue(venueMapViewData)
+                return@setOnMarkerClickListener true
+            }
+
         }
 
-        userLocationViewModel.requestUserLocation()
+        mapViewModel.requestUserLocation()
     }
 
     override fun sectionSelected(section: Section) {
-        venuesViewModel.getRecommendedVenues(section)
+        mapViewModel.getRecommendedVenues(section)
     }
 
     override fun inject() {
         PlacesMapFragmentComponent.Injector.inject(this)
     }
 
-    private fun render(mapViewState: MapViewState?) {
-        if (mapViewState == null) return
-
+    private fun render(mapViewState: MapViewState) {
         mapViewState.error?.handle { toastDelegate.showError(it.errorText) }
 
         showSearch(mapViewState.isSearchShown)
@@ -210,8 +214,7 @@ class VenuesMapFragment
         }
     }
 
-    private fun renderLocation(userLocation: UserLocation?) {
-        if (userLocation == null) return
+    private fun renderLocation(userLocation: UserLocation) {
         val latLng = LatLng(userLocation.lat, userLocation.lng)
         googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM.toFloat()))
     }
@@ -223,7 +226,7 @@ class VenuesMapFragment
         }
 
         if (searchAppBar.isVisible) {
-            venuesViewModel.closeSearch()
+            mapViewModel.closeSearch()
             return true
         }
 

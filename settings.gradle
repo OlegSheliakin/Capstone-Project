@@ -1,4 +1,6 @@
-include ':app', ':core-tools', ':feature-add-base',
+include ':app', ':common',
+        ':core-tools',
+        ':feature-add-base',
         ':feature-widget',
         ':core-di',
         ':core-presentation',

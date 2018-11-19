@@ -1,10 +1,8 @@
 package home.oleg.placesnearme.feature_map.presentation.sections
 
-import java.util.ArrayList
-import java.util.Collections
-
-import home.oleg.placenearme.models.Section
+import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.feature_map.R
+import java.util.*
 
 /**
  * Created by Oleg Sheliakin on 25.10.2018.

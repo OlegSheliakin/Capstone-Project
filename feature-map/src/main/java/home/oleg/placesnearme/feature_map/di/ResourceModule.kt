@@ -1,12 +1,10 @@
 package home.oleg.placesnearme.feature_map.di
 
-import java.util.HashMap
-
 import dagger.Module
 import dagger.Provides
-import home.oleg.placenearme.models.Section
+import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.feature_map.R
-import io.reactivex.annotations.NonNull
+import java.util.*
 
 /**
  * Created by Oleg Sheliakin on 28.08.2018.

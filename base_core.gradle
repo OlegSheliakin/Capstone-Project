@@ -1,31 +1,12 @@
+apply from: '../android_config.gradle'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-android {
-    compileSdkVersion sdk.compile
-
-    defaultConfig {
-        minSdkVersion sdk.min
-        targetSdkVersion sdk.target
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-}
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(':common')
 
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 

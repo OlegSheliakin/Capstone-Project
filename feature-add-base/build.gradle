@@ -5,7 +5,6 @@ dependencies {
 
     implementation project(':core-presentation')
     implementation project(':core-domain')
-    implementation project(':core-di')
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime

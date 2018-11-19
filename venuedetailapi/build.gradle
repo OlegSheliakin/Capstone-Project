@@ -1,0 +1,6 @@
+apply from: '../base_feature.gradle'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':feature-main')
+}

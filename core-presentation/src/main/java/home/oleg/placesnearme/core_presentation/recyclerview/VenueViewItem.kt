@@ -1,11 +1,9 @@
 package home.oleg.placesnearme.core_presentation.recyclerview
 
-import java.util.ArrayList
-import java.util.Objects
-
 import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import java.util.*
 
-data class VenueViewItem(val venueViewData: VenueViewData) : ItemViewType {
+data class VenueViewItem(val venueViewData: VenueViewData) : com.smedialink.common.recyclerview.ItemViewType {
 
     override fun getViewType(): Int {
         return VIEW_TYPE

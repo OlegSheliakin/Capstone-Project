@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
-import home.oleg.placenearme.models.Section
+import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.feature_map.R
 import home.oleg.placesnearme.feature_map.presentation.sections.SectionViewData
 

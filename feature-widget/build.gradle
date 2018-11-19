@@ -5,7 +5,7 @@ dependencies {
 
     implementation project(':core-presentation')
     implementation project(':core-domain')
-    implementation project(':core-di')
+    implementation project(':core-data')
 
     implementation deps.support.appcompat7
 }

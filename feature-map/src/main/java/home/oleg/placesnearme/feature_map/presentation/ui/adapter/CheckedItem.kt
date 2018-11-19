@@ -1,6 +1,6 @@
 package home.oleg.placesnearme.feature_map.presentation.ui.adapter
 
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Oleg Sheliakin on 25.10.2018.

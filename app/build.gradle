@@ -49,27 +49,11 @@ android {
 
 dependencies {
     implementation project(':core-network')
-    implementation project(':core-presentation')
     implementation project(':core-di')
 
-    implementation project(':core-data')
-    implementation project(':core-domain')
-    implementation project(':core-tools')
-
-    implementation project(':feature-map')
     implementation project(':feature-main')
-    implementation project(':feature-venue-detail')
-    implementation project(':feature-favorite-venues')
-    implementation project(':feature-add-favorite')
-    implementation project(':feature-add-history')
-    implementation project(':feature-venues-history')
-    implementation project(':feature-widget')
 
     implementation deps.support.appcompat7
-    implementation deps.support.supportV13
-    implementation deps.lifecycle.extensions
-
-    implementation deps.rxjava2.rxjava
 
     implementation deps.dagger.runtime
     kapt deps.dagger.compiler

@@ -9,8 +9,6 @@ dependencies {
     implementation project(':feature-venues-history')
     implementation project(':feature-map')
     implementation project(':feature-venue-detail')
-    implementation project(':feature-add-favorite')
-    implementation project(':feature-add-history')
 
     implementation deps.lifecycle.extensions
 

@@ -1,12 +1,13 @@
 package home.oleg.placesnearme.presentation.feature.map.marker;
 
+import com.home.oleg.corettools.resource.provider.ResourceProvider;
+
 import org.junit.Rule;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import home.oleg.placesnearme.common.converter.DrawableConverter;
-import com.home.olegsheliakin.corettools.resource.provider.ResourceProvider;
 
 /**
  * Created by Oleg Sheliakin on 28.08.2018.

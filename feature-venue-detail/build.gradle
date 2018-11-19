@@ -7,14 +7,10 @@ dependencies {
     implementation project(':core-domain')
     implementation project(':core-tools')
     implementation project(':core-di')
+    implementation project(':core-data')
     implementation project(':feature-add-favorite')
     implementation project(':feature-add-history')
-    implementation project(':feature-add-base')
     implementation project(':googlemapbehaviour')
-
-    implementation deps.lifecycle.extensions
-    implementation deps.lifecycle.runtime
-    kapt deps.lifecycle.compiler
 
     implementation 'com.github.ybq:AndroidSpinKit:v1.0.0'
 

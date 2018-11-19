@@ -1,8 +1,8 @@
 package home.oleg.placesnearme.feature_venues_history.domain.interactor
 
-import home.oleg.placenearme.interactors.EvaluateDistance
-import home.oleg.placenearme.models.DetailedVenue
-import home.oleg.placenearme.repositories.VenueHistoryRepository
+import home.oleg.placesnearme.coredomain.interactors.EvaluateDistance
+import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredomain.repositories.VenueHistoryRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 

@@ -3,8 +3,8 @@ package home.oleg.placesnearme.feature_map.mapper
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import com.google.android.gms.maps.model.BitmapDescriptor
-import com.home.olegsheliakin.corettools.resource.ResourceProvider
-import home.oleg.placenearme.models.Section
+import home.oleg.placesnearme.coredomain.models.Section
+import home.oleg.placesnearme.corettools.resource.ResourceProvider
 import home.oleg.placesnearme.feature_map.R
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter
 import javax.inject.Inject

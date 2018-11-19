@@ -1,11 +1,11 @@
 package home.oleg.placesnearme.core_presentation.viewdata
 
-import home.oleg.placenearme.models.Category
-import home.oleg.placenearme.models.Contact
-import home.oleg.placenearme.models.DetailedVenue
-import home.oleg.placenearme.models.Hours
-import home.oleg.placenearme.models.Location
-import home.oleg.placenearme.models.Section
+import home.oleg.placesnearme.coredomain.models.Category
+import home.oleg.placesnearme.coredomain.models.Contact
+import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredomain.models.Hours
+import home.oleg.placesnearme.coredomain.models.Location
+import home.oleg.placesnearme.coredomain.models.Section
 import java.util.*
 
 /**

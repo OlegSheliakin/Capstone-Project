@@ -19,6 +19,7 @@ dependencies {
 
     implementation project(':core-domain')
     implementation project(':core-network')
+    implementation project(':core-di')
 
     implementation deps.googlePlayServices.location
 
@@ -28,7 +29,9 @@ dependencies {
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
-    implementation deps.inject
+    implementation deps.dagger.runtime
+    kapt deps.dagger.compiler
+
     implementation deps.network.retrofit
     implementation deps.network.converterGson
     implementation deps.network.loggingInterceptor
