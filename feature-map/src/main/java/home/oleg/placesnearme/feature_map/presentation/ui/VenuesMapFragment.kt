@@ -81,6 +81,18 @@ class VenuesMapFragment
             mapViewModel.closeSearch()
         }
 
+        fabZoomIn.setOnClickListener {
+            googleMap?.animateCamera(CameraUpdateFactory.zoomIn())
+        }
+
+        fabZoomOut.setOnClickListener {
+            googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
+        }
+
+        fabCurrentLocation.setOnClickListener {
+            onShowCurrentLocationClickedWithPermissionCheck()
+        }
+
         venueViewFacade.onCreateView(view, viewLifecycleOwner)
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener!!)
     }
@@ -104,26 +116,6 @@ class VenuesMapFragment
         } else {
             showSearch(false)
         }
-    }
-
-    fun onCloseSearchClicked() {
-        mapViewModel.closeSearch()
-    }
-
-    fun oSearchClicked() {
-        mapViewModel.openSearch()
-    }
-
-    fun onZoomInClicked() {
-        googleMap?.animateCamera(CameraUpdateFactory.zoomIn())
-    }
-
-    fun onZoomOutClicked() {
-        googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
-    }
-
-    fun onMyLocationClicked() {
-        onShowCurrentLocationClickedWithPermissionCheck()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -194,12 +186,10 @@ class VenuesMapFragment
 
         showSearch(mapViewState.isSearchShown)
 
-        if (mapViewState.isVenuesLoading) {
-            loadingView.showLoading()
-        } else if (mapViewState.error != null) {
-            loadingView.showRetry()
-        } else {
-            loadingView.hide()
+        when {
+            mapViewState.isVenuesLoading -> loadingView.showLoading()
+            mapViewState.error != null -> loadingView.showRetry()
+            else -> loadingView.hide()
         }
 
     }
@@ -220,8 +210,7 @@ class VenuesMapFragment
     }
 
     override fun onBackPressed(): Boolean {
-        if (venueViewFacade.isShown) {
-            venueViewFacade.dismiss()
+        if (venueViewFacade.dismiss()) {
             return true
         }
 

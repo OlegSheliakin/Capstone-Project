@@ -30,11 +30,12 @@ class VenueViewFacade @Inject constructor(
     private lateinit var view: View
 
     private var mergedAppBarLayoutBehavior: MergedAppBarLayoutBehavior? = null
+
     private var behavior: GoogleMapsBottomSheetBehavior<*>? = null
 
     private var behaviorState = GoogleMapsBottomSheetBehavior.STATE_HIDDEN
 
-    val isShown: Boolean
+    private val isShown: Boolean
         get() = behavior?.state != GoogleMapsBottomSheetBehavior.STATE_HIDDEN
 
     fun onCreateView(view: View, lifecycleOwner: LifecycleOwner) {
@@ -89,7 +90,7 @@ class VenueViewFacade @Inject constructor(
 
         mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(view.mergedappbarlayout)
 
-        mergedAppBarLayoutBehavior?.setNavigationOnClickListener { _ -> behavior?.setState(GoogleMapsBottomSheetBehavior.STATE_HIDDEN) }
+        mergedAppBarLayoutBehavior?.setNavigationOnClickListener { _ -> dismiss() }
 
         behavior?.setBottomSheetCallback(object : GoogleMapsBottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -107,8 +108,13 @@ class VenueViewFacade @Inject constructor(
         })
     }
 
-    fun dismiss() {
-        behavior?.state = GoogleMapsBottomSheetBehavior.STATE_HIDDEN
+    fun dismiss(): Boolean {
+        if (isShown) {
+            behavior?.state = GoogleMapsBottomSheetBehavior.STATE_HIDDEN
+            return true
+        }
+
+        return false
     }
 
     private fun render(venueViewState: VenueViewState) = when (venueViewState) {

@@ -65,7 +65,6 @@ class MapViewModel(
                                 state.copy(isVenuesLoading = false, error = errorHandler.handle(throwable))
                             }
                         })
-
     }
 
     fun requestUserLocation() {
@@ -73,8 +72,12 @@ class MapViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onSuccess = { locationInternal.setValue(it) },
-                        onError = Throwable::printStackTrace)
+                        onSuccess = locationInternal::setValue,
+                        onError = {
+                            viewStateInternal.reduceState { state ->
+                                state.copy(isVenuesLoading = false, error = errorHandler.handle(it))
+                            }
+                        })
     }
 
     override fun onCleared() {
