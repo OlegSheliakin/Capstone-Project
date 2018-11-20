@@ -21,7 +21,6 @@ interface MainActivityComponent {
     }
 
     object Injector {
-
         fun inject(activity: MainActivity) {
             DaggerMainActivityComponent.builder()
                     .bind(activity)

@@ -9,8 +9,9 @@ import home.oleg.placesnearme.feature_map.presentation.ui.VenuesMapFragment
 import home.oleg.placesnearme.feature_venues_history.presentation.ui.VenuesHistoryFragment
 import javax.inject.Inject
 
-class BottomBarTabListener @Inject
-constructor(private val fragmentManager: FragmentManager) : AHBottomNavigation.OnTabSelectedListener {
+class BottomBarTabListener
+@Inject constructor(private val fragmentManager: FragmentManager)
+    : AHBottomNavigation.OnTabSelectedListener {
 
     override fun onTabSelected(position: Int, wasSelected: Boolean): Boolean {
         if (wasSelected) {
@@ -31,13 +32,7 @@ constructor(private val fragmentManager: FragmentManager) : AHBottomNavigation.O
 
         val curFragment = fragmentManager.findFragmentByTag(tag)
         if (curFragment == null) {
-            val fragment: Fragment
-            when (position) {
-                0 -> fragment = VenuesHistoryFragment()
-                1 -> fragment = VenuesMapFragment()
-                2 -> fragment = FavoritePlacesFragment()
-                else -> fragment = VenuesMapFragment()
-            }
+            val fragment = createFrag(position)
             fragmentTransaction.add(R.id.container, fragment, tag)
         } else if (curFragment is VenuesMapFragment) {
             fragmentTransaction.show(curFragment)
@@ -47,5 +42,12 @@ constructor(private val fragmentManager: FragmentManager) : AHBottomNavigation.O
 
         fragmentTransaction.commit()
         return true
+    }
+
+    private fun createFrag(position: Int): Fragment = when (position) {
+        0 -> VenuesHistoryFragment()
+        1 -> VenuesMapFragment()
+        2 -> FavoritePlacesFragment()
+        else -> VenuesMapFragment()
     }
 }
