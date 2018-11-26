@@ -14,7 +14,6 @@ import home.oleg.placesnearme.feature_map.R
  * Created by Oleg Sheliakin on 20.11.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-
 class LifeCycleAwareMap private constructor(
         lifecycleOwner: LifecycleOwner,
         private val onMapReadyCallback: OnMapReadyCallback

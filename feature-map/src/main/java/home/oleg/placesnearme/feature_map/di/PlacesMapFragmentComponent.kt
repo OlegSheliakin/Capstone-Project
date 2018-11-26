@@ -6,7 +6,7 @@ import home.oleg.placesnearme.coredata.di.RepoApi
 import home.oleg.placesnearme.coredi.module.ViewModelFactoryModule
 import home.oleg.placesnearme.coredi.scopes.FeatureScope
 import home.oleg.placesnearme.corettools.di.ToolsApi
-import home.oleg.placesnearme.feature_map.presentation.VenuesMapFragment
+import home.oleg.placesnearme.feature_map.presentation.MapFragment
 
 @FeatureScope
 @Component(
@@ -14,7 +14,7 @@ import home.oleg.placesnearme.feature_map.presentation.VenuesMapFragment
         modules = [ViewModelFactoryModule::class, VenuesMapFragmentModule::class, ResourceModule::class])
 interface PlacesMapFragmentComponent {
 
-    fun inject(target: VenuesMapFragment)
+    fun inject(target: MapFragment)
 
     @Component.Builder
     interface Builder {
@@ -23,14 +23,14 @@ interface PlacesMapFragmentComponent {
         fun repoComponent(repoApi: RepoApi): PlacesMapFragmentComponent.Builder
 
         @BindsInstance
-        fun bind(mapFragment: VenuesMapFragment): PlacesMapFragmentComponent.Builder
+        fun bind(mapFragment: MapFragment): PlacesMapFragmentComponent.Builder
 
         fun build(): PlacesMapFragmentComponent
     }
 
     object Injector {
 
-        fun inject(fragment: VenuesMapFragment) {
+        fun inject(fragment: MapFragment) {
             val toolsApi = ToolsApi.getInstance(fragment.activity!!.applicationContext)
             val repoApi = RepoApi.getInstance(fragment.activity!!.applicationContext)
 

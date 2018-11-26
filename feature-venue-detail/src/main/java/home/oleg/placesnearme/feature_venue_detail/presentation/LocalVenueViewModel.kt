@@ -34,7 +34,7 @@ class LocalVenueViewModel(
         }
 
     fun load(venueId: String) {
-        disposable = getDetailedVenue(venueId, GetDetailedVenue.Type.OBSERVE)
+        disposable = getDetailedVenue(venueId, GetDetailedVenue.Type.STREAM)
                 .map { VenueViewData.mapFrom(it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(

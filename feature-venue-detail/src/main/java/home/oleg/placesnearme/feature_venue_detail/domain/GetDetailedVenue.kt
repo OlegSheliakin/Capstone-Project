@@ -15,8 +15,8 @@ class GetDetailedVenue @Inject constructor(
 
     operator fun invoke(id: String, type: Type): Flowable<Place> {
         return when (type) {
-            Type.OBSERVE -> get(id, detailedVenueRepository.stream(id))
-            Type.UPDATE -> get(id, detailedVenueRepository.getDetailedVenueById(id))
+            Type.STREAM -> get(id, detailedVenueRepository.stream(id))
+            Type.FETCH -> get(id, detailedVenueRepository.getDetailedVenueById(id))
         }.flatMapSingle(evaluateDistance::evaluateDistance)
     }
 
@@ -28,7 +28,7 @@ class GetDetailedVenue @Inject constructor(
     }
 
     enum class Type {
-        OBSERVE, UPDATE
+        STREAM, FETCH
     }
 
 }
