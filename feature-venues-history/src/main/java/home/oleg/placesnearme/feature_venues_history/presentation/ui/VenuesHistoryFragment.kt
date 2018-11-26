@@ -38,8 +38,6 @@ class VenuesHistoryFragment : BaseFragment(), HistoryVenuesAdapter.HistoryClicks
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        historyVenuesAdapter.setHasStableIds(true)
-
         rvHistoryVenues.layoutManager = LinearLayoutManager(context)
         rvHistoryVenues.setHasFixedSize(true)
         rvHistoryVenues.adapter = historyVenuesAdapter
