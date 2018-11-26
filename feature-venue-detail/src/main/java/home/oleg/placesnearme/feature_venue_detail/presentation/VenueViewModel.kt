@@ -1,7 +1,5 @@
 package home.oleg.placesnearme.feature_venue_detail.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.BaseViewModel
 import com.smedialink.common.propertydelegate.disposableDelegate
 import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
@@ -41,7 +39,7 @@ class VenueViewModel(
     }
 
     fun load(venueId: String) {
-        disposable = getDetailedVenue(venueId, GetDetailedVenue.Type.UPDATE)
+        disposable = getDetailedVenue(venueId, GetDetailedVenue.Type.FETCH)
                 .map { VenueViewData.mapFrom(it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {

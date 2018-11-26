@@ -17,7 +17,7 @@ import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.CheckIn
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl
 import home.oleg.placesnearme.feature_map.sections.SectionProvider
-import home.oleg.placesnearme.feature_map.presentation.VenuesMapFragment
+import home.oleg.placesnearme.feature_map.presentation.MapFragment
 import home.oleg.placesnearme.feature_map.presentation.adapter.CheckedItem
 import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.presentation.MapViewModel
@@ -35,7 +35,7 @@ abstract class VenuesMapFragmentModule {
 
         @JvmStatic
         @Provides
-        internal fun provideActivity(fragment: VenuesMapFragment): Activity {
+        internal fun provideActivity(fragment: MapFragment): Activity {
             return fragment.activity!!
         }
 
@@ -66,7 +66,7 @@ abstract class VenuesMapFragmentModule {
         @JvmStatic
         @Provides
         internal fun provideVenueViewModel(
-                fragment: VenuesMapFragment,
+                fragment: MapFragment,
                 factory: ViewModelProvider.Factory): VenueViewModel {
             return ViewModelProviders.of(fragment, factory).get(VenueViewModel::class.java)
         }
@@ -74,14 +74,14 @@ abstract class VenuesMapFragmentModule {
         @JvmStatic
         @Provides
         internal fun provideMapViewModel(
-                fragment: VenuesMapFragment,
+                fragment: MapFragment,
                 factory: ViewModelProvider.Factory): MapViewModel {
             return ViewModelProviders.of(fragment, factory).get(MapViewModel::class.java)
         }
 
         @JvmStatic
         @Provides
-        internal fun provideSectionsAdapter(venuesMapFragment: VenuesMapFragment): SectionsAdapter {
+        internal fun provideSectionsAdapter(venuesMapFragment: MapFragment): SectionsAdapter {
             val sectionProvider = SectionProvider()
             val seCheckedItems = CheckedItem.wrap(sectionProvider.sections)
             return SectionsAdapter(seCheckedItems, venuesMapFragment)

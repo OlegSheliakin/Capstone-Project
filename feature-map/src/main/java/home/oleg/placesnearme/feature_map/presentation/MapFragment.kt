@@ -28,9 +28,6 @@ import home.oleg.placesnearme.feature_map.R
 import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent
 import home.oleg.placesnearme.feature_map.mapper.MarkerMapper
 import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
-import home.oleg.placesnearme.feature_map.presentation.ui.initLocationSettingsWithPermissionCheck
-import home.oleg.placesnearme.feature_map.presentation.ui.onRequestPermissionsResult
-import home.oleg.placesnearme.feature_map.presentation.ui.onShowCurrentLocationClickedWithPermissionCheck
 import home.oleg.placesnearme.feature_venue_detail.presentation.VenueViewFacade
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -44,7 +41,7 @@ import javax.inject.Inject
 private const val REQUEST_CODE_CHECK_LOCATION_SETTINGS = 10001
 
 @RuntimePermissions
-class VenuesMapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackHandler {
+class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackHandler {
 
     override val layoutRes: Int = R.layout.fragment_map
 
@@ -68,18 +65,19 @@ class VenuesMapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener,
 
     private lateinit var showHideBottomBarListener: ShowHideBottomBar
 
-    private val lifeCycleAwareMap = LifeCycleAwareMap.create(this, OnMapReadyCallback {
-        this.googleMap = it
+    private val onMapReadyCallback = OnMapReadyCallback { map ->
+        this.googleMap = map
 
-        googleMap?.setOnMarkerClickListener {
-            viewModel.venuesHolder[it.id]?.let(venueViewFacade::setVenue)
+        googleMap?.setOnMarkerClickListener { marker ->
+            viewModel.venuesHolder[marker.id]?.let(venueViewFacade::setVenue)
             return@setOnMarkerClickListener true
         }
 
         viewModel.state.observe(this, stateBinder::newState)
 
-        initLocationSettingsWithPermissionCheck(it)
-    })
+        initLocationSettingsWithPermissionCheck(map)
+    }
+    private val lifeCycleAwareMap = LifeCycleAwareMap.create(this, onMapReadyCallback)
 
     private var autoDisposable = AutoDisposable.create(viewLifecycleOwner)
 
@@ -124,15 +122,13 @@ class VenuesMapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener,
         if (savedInstanceState != null) {
             val position = savedInstanceState.getInt(KEY_SEARCH_SELECTED_ITEM_POSITION)
             val shouldShow = savedInstanceState.getBoolean(KEY_SEARCH_VISIBILITY)
-            if(shouldShow) {
+            if (shouldShow) {
                 viewModel.openSearch()
             } else {
                 viewModel.closeSearch()
             }
             sectionsAdapter.setSelected(position)
             venueViewFacade.onRestoreState(savedInstanceState)
-        } else {
-            showSearch(false)
         }
     }
 
@@ -174,14 +170,14 @@ class VenuesMapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener,
                 loadingView.showLoading(it)
             }
 
-            bind(MapViewState::isSearchShown, this@VenuesMapFragment::showSearch)
+            bind(MapViewState::isSearchShown, this@MapFragment::showSearch)
 
             bindNullable(MapViewState::error, toastDelegate::onChanged)
 
-            bind(MapViewState::places, this@VenuesMapFragment::renderPlaces)
+            bind(MapViewState::places, this@MapFragment::renderPlaces)
 
             bindNullable(MapViewState::userLatLng) {
-                it?.let(this@VenuesMapFragment::renderLocation)
+                it?.let(this@MapFragment::renderLocation)
             }
         }
     }
