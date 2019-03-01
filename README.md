@@ -2,4 +2,4 @@
 
 Udacity Capstone
 
-![](art/Oleg_Sheliakin_Nanodgree.pdf)
+![](art/Oleg_Sheliakin_Nanodgree.png)
