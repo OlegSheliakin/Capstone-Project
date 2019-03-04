@@ -24,6 +24,8 @@ class CachedLocationsStore(private val sharedPreferences: SharedPreferences) : L
         return if (latLng == null) {
             Single.error(LocationEmptyException())
         } else {
+            lastLocation.latitude = latLng.lat
+            lastLocation.longitude = latLng.lng
             Single.just(lastLocation)
         }
     }

@@ -1,14 +1,15 @@
 package com.oleg.placesnearme.feature_main.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.oleg.placesnearme.feature_main.R
 import com.oleg.placesnearme.feature_main.delegate.BackPressedDelegate
 import com.oleg.placesnearme.feature_main.delegate.BottomBarDelegate
 import com.oleg.placesnearme.feature_main.di.MainActivityComponent
-import home.oleg.placesnearme.core_presentation.api.ShowHideBottomBar
-import home.oleg.placesnearme.core_presentation.api.ShowVenueDetail
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.api.ShowHideBottomBar
+import home.oleg.placesnearme.corepresentation.api.ShowVenueDetail
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import home.oleg.placesnearme.feature_venue_detail.presentation.ui.VenueFragment
 import kotlinx.android.synthetic.main.bottom_bar.*
 import javax.inject.Inject
@@ -31,6 +32,13 @@ class MainActivity : AppCompatActivity(), ShowHideBottomBar, ShowVenueDetail {
         venueFragment = supportFragmentManager.findFragmentById(R.id.venueFragment) as VenueFragment
 
         initBottomBar(savedInstanceState)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        supportFragmentManager.fragments.forEach {
+            it.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     override fun showBottomBar() {

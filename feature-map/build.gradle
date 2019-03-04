@@ -20,6 +20,7 @@ dependencies {
     implementation deps.support.cardview
     implementation deps.support.constraintLayout
 
+    implementation deps.googlePlayServices.location
     implementation 'com.github.ybq:AndroidSpinKit:v1.0.0'
 
     implementation deps.permissions.runtime

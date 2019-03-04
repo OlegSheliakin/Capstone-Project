@@ -7,8 +7,8 @@ import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.oleg.placesnearme.feature_venue_detail.R
-import home.oleg.placesnearme.core_presentation.utils.ImageLoader
-import home.oleg.placesnearme.core_presentation.viewdata.PhotoViewData
+import home.oleg.placesnearme.corepresentation.utils.ImageLoader
+import home.oleg.placesnearme.corepresentation.viewdata.PhotoViewData
 import java.util.*
 
 internal class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {

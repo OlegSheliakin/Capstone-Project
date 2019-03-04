@@ -9,7 +9,6 @@ dependencies {
     implementation project(':core-data')
     implementation project(':core-tools')
     implementation project(':feature-add-favorite')
-    implementation project(':feature-venue-detail')
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime

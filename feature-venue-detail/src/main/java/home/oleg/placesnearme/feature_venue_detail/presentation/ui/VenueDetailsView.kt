@@ -7,8 +7,9 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oleg.placesnearme.feature_venue_detail.R
-import home.oleg.placesnearme.core_presentation.utils.ImageLoader
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.utils.DistanceUtil
+import home.oleg.placesnearme.corepresentation.utils.ImageLoader
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import kotlinx.android.synthetic.main.content_venue_details.view.*
 import kotlinx.android.synthetic.main.view_venue_details.view.*
 
@@ -47,7 +48,7 @@ class VenueDetailsView @JvmOverloads constructor(
         tvVenueName.text = venue.title
         tvVenueAddress.text = venue.address
 
-        val distance = context.getString(R.string.meters, venue.distance)
+        val distance = DistanceUtil.convertDistanceToString(venue.distance, context)
         tvVenueDistance.text = distance
 
         tvCategoryName.text = venue.categoryName
@@ -79,7 +80,7 @@ class VenueDetailsView @JvmOverloads constructor(
     fun hideLoading() {
         content.visibility = View.VISIBLE
         tvError.visibility = View.GONE
-        retryButton!!.visibility = View.GONE
+        retryButton.visibility = View.GONE
         spinKit.visibility = View.GONE
     }
 

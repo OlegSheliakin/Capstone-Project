@@ -1,6 +1,7 @@
 package home.oleg.placesnearme.coredata.repositories
 
 import home.oleg.placesnearme.coredata.location.CachedLocationsStore
+import home.oleg.placesnearme.coredata.location.ReactiveLocationSettings
 import home.oleg.placesnearme.coredata.location.ReactiveLocationStore
 import home.oleg.placesnearme.coredata.mapper.LocationMapper
 import home.oleg.placesnearme.coredomain.models.UserLocation
@@ -17,10 +18,9 @@ class UserLocationRepositoryImpl @Inject constructor(
         private val cachedLocationsStore: CachedLocationsStore) : UserLocationRepository {
 
     override val location: Single<UserLocation>
-        get() = reactiveLocationStore
-                .lastLocation
-                .doOnSuccess { cachedLocationsStore.save(it) }
-                .onErrorResumeNext(cachedLocationsStore.lastLocation)
-                .map { LocationMapper.map(it) }
+        get() = reactiveLocationStore.lastLocation
+                    .doOnSuccess { cachedLocationsStore.save(it) }
+                    .onErrorResumeNext(cachedLocationsStore.lastLocation)
+                    .map { LocationMapper.map(it) }
 
 }

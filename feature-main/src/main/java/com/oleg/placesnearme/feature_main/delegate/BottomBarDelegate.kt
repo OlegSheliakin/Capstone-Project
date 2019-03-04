@@ -6,7 +6,7 @@ import android.view.View
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.oleg.placesnearme.feature_main.R
-import home.oleg.placesnearme.core_presentation.api.ShowHideBottomBar
+import home.oleg.placesnearme.corepresentation.api.ShowHideBottomBar
 import javax.inject.Inject
 
 /**

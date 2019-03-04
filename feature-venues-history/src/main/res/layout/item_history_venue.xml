@@ -7,7 +7,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddToFavorite"
-        style="@style/FavoriteButtonStyle"
+        style="@style/CheckInButtonStyle"
         android:layout_width="@dimen/size_fab_mini"
         android:layout_height="@dimen/size_fab_mini"
         android:layout_marginStart="@dimen/margin_normal"
@@ -60,7 +60,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="TextView" />
 
-            <home.oleg.placesnearme.core_presentation.view.ColorRatingBar
+            <home.oleg.placesnearme.corepresentation.view.ColorRatingBar
                 android:id="@+id/ratingBar"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
             <TextView
                 android:id="@+id/tvVenueAddress"
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_small"
                 android:layout_marginEnd="@dimen/margin_small"
                 android:ellipsize="end"

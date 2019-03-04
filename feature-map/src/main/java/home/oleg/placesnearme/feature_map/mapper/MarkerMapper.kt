@@ -2,7 +2,7 @@ package home.oleg.placesnearme.feature_map.mapper
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
 import javax.inject.Inject
 
 /**

@@ -7,13 +7,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.smedialink.common.base.LiveEvent
 import com.smedialink.common.ext.observe
+import home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior
 import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior
-import home.oleg.placesnearme.core_presentation.api.ShowHideBottomBar
-import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate
-import home.oleg.placesnearme.core_presentation.utils.ImageLoader
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.api.ShowHideBottomBar
+import home.oleg.placesnearme.corepresentation.delegate.ToastDelegate
+import home.oleg.placesnearme.corepresentation.utils.ImageLoader
+import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import kotlinx.android.synthetic.main.layout_venue.view.*
 import javax.inject.Inject
 
@@ -30,6 +31,8 @@ class VenueViewFacade @Inject constructor(
     private lateinit var view: View
 
     private var mergedAppBarLayoutBehavior: MergedAppBarLayoutBehavior? = null
+
+    private var fabsBehavior: BottomSheetAwareFabBehavior? = null
 
     private var behavior: GoogleMapsBottomSheetBehavior<*>? = null
 
@@ -48,14 +51,13 @@ class VenueViewFacade @Inject constructor(
 
         initBehavior()
 
-        venueViewModel.viewState.observe(lifecycleOwner, this@VenueViewFacade::render)
-        //  venueViewModel.venue.observe(lifecycleOwner, this@VenueViewFacade::open)
+        venueViewModel.viewState.observe(lifecycleOwner, Observer { render(it) })
         venueViewModel.checkInMesage.observe(lifecycleOwner, this)
         venueViewModel.favoriteMessage.observe(lifecycleOwner, this)
     }
 
     fun onSaveState(state: Bundle) {
-        behaviorState = behavior!!.state
+        behaviorState = behavior?.state ?: GoogleMapsBottomSheetBehavior.STATE_HIDDEN
         state.putInt(KEY_STATE_BEHAVIOR, behaviorState)
     }
 
@@ -89,6 +91,7 @@ class VenueViewFacade @Inject constructor(
         behavior?.parallax = view.ivVenuePhoto
 
         mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(view.mergedappbarlayout)
+        fabsBehavior = BottomSheetAwareFabBehavior.from(view.fabsContainer)
 
         mergedAppBarLayoutBehavior?.setNavigationOnClickListener { _ -> dismiss() }
 
@@ -123,20 +126,23 @@ class VenueViewFacade @Inject constructor(
         is VenueViewState.Error -> {
             val errorEvent = venueViewState.errorEvent
             view.venueView.showError(errorEvent.errorText)
+            fabsBehavior?.setShouldIntercept(false)
         }
         is VenueViewState.Success -> showVenue(venueViewState.venue)
     }
 
     private fun showVenue(venue: VenueViewData) {
-        mergedAppBarLayoutBehavior!!.setToolbarTitle(venue.title)
+        mergedAppBarLayoutBehavior?.setToolbarTitle(venue.title)
 
         val url = venue.bestPhoto?.fullSizeUrl
 
         ImageLoader.loadImage(view.ivVenuePhoto, url)
 
         view.venueView.show(venue)
-        view.fabCheckInButton.isSelected = venue.isFavorite
-        view.fabFavoriteButton.isSelected = venue.isHere
+
+        fabsBehavior?.setShouldIntercept(true)
+        view.fabCheckInButton.isSelected = venue.isHere
+        view.fabFavoriteButton.isSelected = venue.isFavorite
     }
 
     companion object {

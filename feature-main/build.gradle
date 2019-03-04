@@ -16,4 +16,5 @@ dependencies {
     implementation deps.bottomNavigation
 
     implementation deps.support.appcompat7
+    implementation deps.support.constraintLayout
 }

@@ -11,9 +11,9 @@ import com.smedialink.common.ext.observe
 import com.smedialink.common.propertydelegate.bundle
 import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior
-import home.oleg.placesnearme.core_presentation.delegate.ToastDelegate
-import home.oleg.placesnearme.core_presentation.utils.ImageLoader
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.delegate.ToastDelegate
+import home.oleg.placesnearme.corepresentation.utils.ImageLoader
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import home.oleg.placesnearme.feature_venue_detail.di.VenueDetailComponent
 import home.oleg.placesnearme.feature_venue_detail.presentation.LocalVenueViewModel
 import kotlinx.android.synthetic.main.layout_venue.*

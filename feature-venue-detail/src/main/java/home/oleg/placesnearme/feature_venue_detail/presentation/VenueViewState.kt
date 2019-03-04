@@ -1,7 +1,7 @@
 package home.oleg.placesnearme.feature_venue_detail.presentation
 
 import com.smedialink.common.base.ErrorEvent
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 
 sealed class VenueViewState {
     object Initial : VenueViewState()

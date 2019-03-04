@@ -3,7 +3,7 @@ package home.oleg.placesnearme.feature_add_favorite.presentation
 import androidx.lifecycle.LiveData
 import com.smedialink.common.base.MessageEvent
 import home.oleg.placesnearme.baseadd.BaseAddViewModelDelegate
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import home.oleg.placesnearme.feature_add_favorite.domain.interactor.CreateVenueFavorite
 import javax.inject.Inject
 

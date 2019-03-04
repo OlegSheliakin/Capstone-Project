@@ -17,13 +17,12 @@ import androidx.core.widget.NestedScrollView;
 
 public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View> {
 
-    private WeakReference<GoogleMapsBottomSheetBehavior> bottomSheetBehaviorWeakReference;
     private boolean isInitialized;
 
     private List<FloatingActionButton> fabs = new ArrayList<>();
     private int anchorHeight = -1;
     private boolean enabled;
-    private static int RANGE = 50;
+    private boolean shouldIntercept = true;
 
     public BottomSheetAwareFabBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,16 +39,21 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
             init(dependency, child);
         } else {
             float dependencyY = dependency.getY();
-         if(dependencyY < anchorHeight) {
-             updateEnable(true);
-         } else {
-             updateEnable(false);
-         }
+            if (dependencyY < anchorHeight) {
+                updateEnable(true);
+            } else {
+                updateEnable(false);
+            }
 
             return true;
         }
 
         return super.onDependentViewChanged(parent, child, dependency);
+    }
+
+    public void setShouldIntercept(boolean shouldIntercept) {
+        this.shouldIntercept = shouldIntercept;
+        updateEnable(true);
     }
 
     private void init(View dependency, View child) {
@@ -76,12 +80,14 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
     }
 
     private void updateEnable(boolean isEnabled) {
+        if (!shouldIntercept) return;
+
         if (isEnabled == enabled) {
             return;
         }
 
         for (FloatingActionButton fab : fabs) {
-            if(isEnabled){
+            if (isEnabled) {
                 fab.show();
             } else {
                 fab.hide();
@@ -91,13 +97,23 @@ public class BottomSheetAwareFabBehavior extends CoordinatorLayout.Behavior<View
         enabled = isEnabled;
     }
 
-    private WeakReference<GoogleMapsBottomSheetBehavior> getWeekReference(View view) {
-        if (bottomSheetBehaviorWeakReference != null) {
-            return bottomSheetBehaviorWeakReference;
-        } else {
-            GoogleMapsBottomSheetBehavior behavior = getBottomSheetBehavior(view);
-            return new WeakReference<>(behavior);
+    public static <V extends View> BottomSheetAwareFabBehavior from(V view) {
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        if (!(params instanceof CoordinatorLayout.LayoutParams)) {
+            throw new IllegalArgumentException("The view is not a child of CoordinatorLayout");
         }
+        CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) params)
+                .getBehavior();
+        if (!(behavior instanceof BottomSheetAwareFabBehavior)) {
+            throw new IllegalArgumentException("The view is not associated with " +
+                    "MergedAppBarLayoutBehavior");
+        }
+        return (BottomSheetAwareFabBehavior) behavior;
+    }
+
+    private WeakReference<GoogleMapsBottomSheetBehavior> getWeekReference(View view) {
+        GoogleMapsBottomSheetBehavior behavior = getBottomSheetBehavior(view);
+        return new WeakReference<>(behavior);
     }
 
     private GoogleMapsBottomSheetBehavior<NestedScrollView> getBottomSheetBehavior(View view) {

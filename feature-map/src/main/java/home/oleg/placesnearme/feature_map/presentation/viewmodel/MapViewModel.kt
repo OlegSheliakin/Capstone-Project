@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.BaseViewModel
 import com.smedialink.common.ext.reduceState
 import com.smedialink.common.propertydelegate.disposableDelegate
-import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.corepresentation.mapper.VenueMapViewMapper
+import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.coredomain.interactors.GetRecommendedVenues
 import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.coredomain.models.UserLocation

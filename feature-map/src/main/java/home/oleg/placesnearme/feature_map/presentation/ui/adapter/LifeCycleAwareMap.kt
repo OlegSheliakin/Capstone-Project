@@ -4,30 +4,40 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import home.oleg.placesnearme.feature_map.R
+import javax.inject.Inject
 
 /**
  * Created by Oleg Sheliakin on 20.11.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
 
-class LifeCycleAwareMap : LifecycleObserver, OnMapReadyCallback {
+class LifeCycleAwareMap private constructor(
+        private val lifecycleOwner: LifecycleOwner,
+        private val onMapReadyCallback: OnMapReadyCallback
+) : LifecycleObserver {
 
     private var mapView: MapView? = null
-    private var lifecycle: Lifecycle? = null
+
+    init {
+        lifecycleOwner.lifecycle.addObserver(this)
+    }
+
+    companion object {
+        fun create(lifecycleOwner: LifecycleOwner, onMapReadyCallback: OnMapReadyCallback) : LifeCycleAwareMap {
+            return LifeCycleAwareMap(lifecycleOwner, onMapReadyCallback)
+        }
+    }
 
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mapView = view.findViewById(R.id.mapView)
-        mapView?.getMapAsync(this)
+        mapView?.getMapAsync(onMapReadyCallback)
         mapView?.onCreate(savedInstanceState)
-    }
-
-    override fun onMapReady(p0: GoogleMap?) {
-
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -45,7 +55,6 @@ class LifeCycleAwareMap : LifecycleObserver, OnMapReadyCallback {
         mapView?.onDestroy()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     fun onLowMemory() {
         mapView?.onLowMemory()
     }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.BaseViewModel
 import com.smedialink.common.propertydelegate.disposableDelegate
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import home.oleg.placesnearme.corettools.error_handler.ErrorHandler
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import home.oleg.placesnearme.feature_add_favorite.presentation.UpdateFavorite

@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import home.oleg.placesnearme.coredomain.exception.LocationEmptyException
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import io.reactivex.SingleOnSubscribe
+import com.google.android.gms.location.LocationSettingsRequest
+
 
 /**
  * Created by Oleg Sheliakin on 17.09.2018.

@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import home.oleg.placesnearme.core_presentation.mapper.VenueMapViewMapper
-import home.oleg.placesnearme.core_presentation.utils.DistanceUtil
-import home.oleg.placesnearme.core_presentation.utils.ImageLoader
-import home.oleg.placesnearme.core_presentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.corepresentation.mapper.VenueMapViewMapper
+import home.oleg.placesnearme.corepresentation.utils.DistanceUtil
+import home.oleg.placesnearme.corepresentation.utils.ImageLoader
+import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.coredomain.interactors.EvaluateDistance
 import home.oleg.placesnearme.coredomain.interactors.GetRecommendedVenues
 import home.oleg.placesnearme.feature_widget.R
@@ -58,7 +58,7 @@ class ListRemoteViewsFactory(private val context: Context, intent: Intent) : Rem
                 R.layout.item_widget_list)
         rView.setTextViewText(R.id.tvName, data[position].title)
 
-        val distance = DistanceUtil.convertDistanceTOString(data[position].distance, context)
+        val distance = DistanceUtil.convertDistanceToString(data[position].distance, context)
         rView.setTextViewText(R.id.tbDistance, distance)
         try {
             val b = ImageLoader.loadIcon(rView, R.id.ivIcon, data[position].categoryIconUrl, widgetID)

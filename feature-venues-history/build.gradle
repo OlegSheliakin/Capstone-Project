@@ -8,13 +8,11 @@ dependencies {
     implementation project(':core-tools')
     implementation project(':core-di')
     implementation project(':core-data')
-    implementation project(':feature-add-favorite')
+    implementation project(':feature-add-history')
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
     kapt deps.lifecycle.compiler
-
-    implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
 
     implementation deps.support.appcompat7
     implementation deps.support.constraintLayout

@@ -3,7 +3,7 @@ package home.oleg.placesnearme.feature_add_history.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import com.smedialink.common.base.MessageEvent
 import home.oleg.placesnearme.baseadd.BaseAddViewModelDelegate
-import home.oleg.placesnearme.core_presentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import home.oleg.placesnearme.feature_add_history.domain.interactor.CheckInOut
 import javax.inject.Inject
 

@@ -25,7 +25,7 @@ data class DetailedVenue(
     val photos: List<Photo>
         @NonNull
         get() {
-            if (photoGroup!!.groups == null) {
+            if (photoGroup?.groups == null) {
                 return emptyList()
             }
 

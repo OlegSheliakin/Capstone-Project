@@ -54,6 +54,7 @@ dependencies {
     implementation project(':feature-main')
 
     implementation deps.support.appcompat7
+    implementation deps.support.constraintLayout
 
     implementation deps.dagger.runtime
     kapt deps.dagger.compiler
