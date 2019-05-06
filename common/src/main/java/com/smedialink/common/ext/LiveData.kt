@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
  * Created by Oleg Sheliakin on 06.11.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-
 fun <T: Any> LiveData<T>.observe(target: LifecycleOwner, onChange: (T) -> Unit) {
     observe(target, Observer {
         it?.let(onChange)

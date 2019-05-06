@@ -1,17 +1,15 @@
-package home.oleg.placesnearme.feature_map.presentation.viewmodel
+package home.oleg.placesnearme.feature_map.presentation
 
-import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.BaseViewModel
 import com.smedialink.common.ext.reduceState
 import com.smedialink.common.propertydelegate.disposableDelegate
-import home.oleg.placesnearme.corepresentation.mapper.VenueMapViewMapper
-import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.coredomain.interactors.GetRecommendedVenues
-import home.oleg.placesnearme.coredomain.models.LatLng
 import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.coredomain.repositories.UserLatLngRepository
+import home.oleg.placesnearme.corepresentation.mapper.VenueMapViewMapper
+import home.oleg.placesnearme.corepresentation.viewdata.PreviewPlace
 import home.oleg.placesnearme.corettools.error_handler.ErrorHandler
-import home.oleg.placesnearme.feature_map.presentation.state.MapViewState
+import home.oleg.placesnearme.feature_map.presentation.MapViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -20,26 +18,18 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by Oleg on 10.08.2018.
  */
-class MapViewModel(
-        private val errorHandler: ErrorHandler,
-        private val userLocationRepository: UserLatLngRepository,
-        private val getRecommendedVenues: GetRecommendedVenues) : BaseViewModel() {
+class MapViewModel(private val errorHandler: ErrorHandler,
+                   private val userLocationRepository: UserLatLngRepository,
+                   private val getRecommendedVenues: GetRecommendedVenues)
+    : BaseViewModel<MapViewState>() {
 
     private var searchDisposable: Disposable? by disposableDelegate()
     private var locationDisposable: Disposable? by disposableDelegate()
 
-    private val viewStateInternal = MutableLiveData<MapViewState>()
-    private val locationInternal = MutableLiveData<LatLng>()
-    private val venuesInternal = MutableLiveData<List<PreviewVenueViewData>>()
-
-    val venuesHolder: MutableMap<String, PreviewVenueViewData> = mutableMapOf()
-
-    val viewState = viewStateInternal
-    val venues = venuesInternal
-    val location = locationInternal
+    val venuesHolder: MutableMap<String, PreviewPlace> = mutableMapOf()
 
     init {
-        viewStateInternal.value = MapViewState.initial()
+        stateInternal.value = MapViewState.initial()
     }
 
     fun getRecommendedVenues(section: Section) {
@@ -48,20 +38,18 @@ class MapViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
-                    viewStateInternal.reduceState { state ->
+                    stateInternal.reduceState { state ->
                         state.copy(error = null, isVenuesLoading = true)
                     }
                 }
                 .subscribeBy(
-                        onSuccess = { venues ->
-                            viewStateInternal.reduceState { state ->
-                                state.copy(isVenuesLoading = false)
+                        onSuccess = { places ->
+                            stateInternal.reduceState { state ->
+                                state.copy(isVenuesLoading = false, places = places)
                             }
-
-                            venuesInternal.setValue(venues)
                         },
                         onError = { throwable ->
-                            viewStateInternal.reduceState { state ->
+                            stateInternal.reduceState { state ->
                                 state.copy(isVenuesLoading = false, error = errorHandler.handle(throwable))
                             }
                         })
@@ -72,9 +60,13 @@ class MapViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onSuccess = locationInternal::setValue,
+                        onSuccess = { latlng ->
+                            stateInternal.reduceState {
+                                it.copy(userLatLng = latlng)
+                            }
+                        },
                         onError = {
-                            viewStateInternal.reduceState { state ->
+                            stateInternal.reduceState { state ->
                                 state.copy(isVenuesLoading = false, error = errorHandler.handle(it))
                             }
                         })
@@ -83,19 +75,21 @@ class MapViewModel(
     override fun onCleared() {
         super.onCleared()
         searchDisposable = null
-        locationDisposable == null
+        locationDisposable = null
     }
 
     fun openSearch() {
-        viewStateInternal.reduceState {
+        stateInternal.reduceState {
             it.copy(isSearchShown = true)
         }
     }
 
     fun closeSearch() {
-        viewStateInternal.reduceState {
+        stateInternal.reduceState {
             it.copy(isSearchShown = false)
         }
     }
-
 }
+
+
+

@@ -2,7 +2,7 @@ package home.oleg.placesnearme.feature_map.mapper
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PreviewPlace
 import javax.inject.Inject
 
 /**
@@ -11,21 +11,21 @@ import javax.inject.Inject
  */
 class MarkerMapper @Inject constructor(private val markerIconProvider: MarkerIconProvider) {
 
-    fun mapFrom(venueViewData: PreviewVenueViewData): Pair<MarkerOptions, PreviewVenueViewData> {
-        val section = venueViewData.sectionType ?: throw IllegalStateException("must have section type")
+    fun mapFrom(places: PreviewPlace): Pair<MarkerOptions, PreviewPlace> {
+        val section = places.sectionType ?: throw IllegalStateException("must have section type")
 
-        val latLng = LatLng(venueViewData.lat, venueViewData.lng)
+        val latLng = LatLng(places.lat, places.lng)
 
         return Pair(MarkerOptions()
                 .icon(markerIconProvider.getIconByCategory(section))
-                .position(latLng), venueViewData)
+                .position(latLng), places)
     }
 
-    fun mapFrom(venueViewDatas: Collection<PreviewVenueViewData>): List<Pair<MarkerOptions, PreviewVenueViewData>> {
-        if (venueViewDatas.isEmpty()) {
+    fun mapFrom(places: Collection<PreviewPlace>): List<Pair<MarkerOptions, PreviewPlace>> {
+        if (places.isEmpty()) {
             return emptyList()
         }
 
-        return venueViewDatas.map(this::mapFrom)
+        return places.map(this::mapFrom)
     }
 }

@@ -16,11 +16,11 @@ import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteVi
 import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.CheckInViewModelDelegate
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverter
 import home.oleg.placesnearme.feature_map.drawable_converter.DrawableConverterImpl
-import home.oleg.placesnearme.feature_map.presentation.sections.SectionProvider
-import home.oleg.placesnearme.feature_map.presentation.ui.VenuesMapFragment
-import home.oleg.placesnearme.feature_map.presentation.ui.adapter.CheckedItem
-import home.oleg.placesnearme.feature_map.presentation.ui.adapter.SectionsAdapter
-import home.oleg.placesnearme.feature_map.presentation.viewmodel.MapViewModel
+import home.oleg.placesnearme.feature_map.sections.SectionProvider
+import home.oleg.placesnearme.feature_map.presentation.VenuesMapFragment
+import home.oleg.placesnearme.feature_map.presentation.adapter.CheckedItem
+import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
+import home.oleg.placesnearme.feature_map.presentation.MapViewModel
 import home.oleg.placesnearme.feature_venue_detail.domain.GetDetailedVenue
 import home.oleg.placesnearme.feature_venue_detail.presentation.VenueViewModel
 

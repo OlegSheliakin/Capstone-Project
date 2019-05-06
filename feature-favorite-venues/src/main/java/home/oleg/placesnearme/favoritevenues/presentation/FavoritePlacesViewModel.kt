@@ -1,15 +1,12 @@
 package home.oleg.placesnearme.favoritevenues.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.BaseViewModel
+import home.oleg.placesnearme.coredomain.repositories.FavoriteVenuesRepository
 import home.oleg.placesnearme.corepresentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
-import home.oleg.placesnearme.coredomain.repositories.FavoriteVenuesRepository
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import home.oleg.placesnearme.feature_add_favorite.presentation.UpdateFavorite
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
@@ -20,24 +17,18 @@ import io.reactivex.schedulers.Schedulers
 
 class FavoritePlacesViewModel(
         createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
-        private val favoriteVenuesRepository: FavoriteVenuesRepository) : BaseViewModel(),
-        UpdateFavorite by createFavoriteViewModelDelegate {
+        favoriteVenuesRepository: FavoriteVenuesRepository)
+    : BaseViewModel<List<VenueViewItem>>(), UpdateFavorite by createFavoriteViewModelDelegate {
 
-    private val stateInternal: MutableLiveData<List<VenueViewItem>> by lazy {
-        return@lazy MutableLiveData<List<VenueViewItem>>()
-    }
-
-    val state: LiveData<List<VenueViewItem>> by lazy {
+    init {
         favoriteVenuesRepository.observeFavorites()
-                .map { VenueViewData.mapFrom(it) }
-                .map { VenueViewItem.map(it) }
+                .map(VenueViewData.Companion::mapFrom)
+                .map(VenueViewItem.Companion::map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onNext = { it -> stateInternal.value = it },
+                        onNext = { stateInternal.value = it },
                         onError = Throwable::printStackTrace).autoDispose()
-
-        return@lazy stateInternal
     }
 
 }

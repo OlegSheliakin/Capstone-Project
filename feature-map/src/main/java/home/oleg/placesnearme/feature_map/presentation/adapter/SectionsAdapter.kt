@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.presentation.ui.adapter
+package home.oleg.placesnearme.feature_map.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.feature_map.R
-import home.oleg.placesnearme.feature_map.presentation.sections.SectionViewData
+import home.oleg.placesnearme.feature_map.sections.SectionViewData
 
 /**
  * Created by Oleg Sheliakin on 25.10.2018.
@@ -44,7 +44,7 @@ class SectionsAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_section, viewGroup, false)
-        return SectionsAdapter.ViewHolder(view, this)
+        return ViewHolder(view, this)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {

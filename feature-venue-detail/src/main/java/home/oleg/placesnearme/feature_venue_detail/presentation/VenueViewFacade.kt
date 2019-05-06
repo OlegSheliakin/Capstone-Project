@@ -6,14 +6,13 @@ import androidx.core.view.doOnLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.smedialink.common.base.LiveEvent
-import com.smedialink.common.ext.observe
 import home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior
 import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior
 import home.oleg.placesnearme.corepresentation.api.ShowHideBottomBar
 import home.oleg.placesnearme.corepresentation.delegate.ToastDelegate
 import home.oleg.placesnearme.corepresentation.utils.ImageLoader
-import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PreviewPlace
 import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 import kotlinx.android.synthetic.main.layout_venue.view.*
 import javax.inject.Inject
@@ -25,10 +24,6 @@ import javax.inject.Inject
 class VenueViewFacade @Inject constructor(
         private val venueViewModel: VenueViewModel,
         private val toastDelegate: ToastDelegate) : Observer<LiveEvent> by toastDelegate {
-
-    companion object {
-        private const val KEY_STATE_BEHAVIOR = "key_state_behavior"
-    }
 
     private var showHideBottomBarListener: ShowHideBottomBar? = null
 
@@ -55,7 +50,7 @@ class VenueViewFacade @Inject constructor(
 
         initBehavior()
 
-        venueViewModel.viewState.observe(lifecycleOwner, Observer { render(it) })
+        venueViewModel.state.observe(lifecycleOwner, Observer { render(it) })
         venueViewModel.checkInMesage.observe(lifecycleOwner, this)
         venueViewModel.favoriteMessage.observe(lifecycleOwner, this)
     }
@@ -76,11 +71,20 @@ class VenueViewFacade @Inject constructor(
         this.showHideBottomBarListener = showHideBottomBarListener
     }
 
-    fun setVenue(venueMapViewData: PreviewVenueViewData) {
+    fun setVenue(venueMapViewData: PreviewPlace) {
         view.venueView.clearContent()
         venueViewModel.load(venueMapViewData.id)
         view.venueView.setRetryClickListener { venueViewModel.load(venueMapViewData.id) }
         openBottomIfNeed()
+    }
+
+    fun dismiss(): Boolean {
+        if (isShown) {
+            behavior?.state = GoogleMapsBottomSheetBehavior.STATE_HIDDEN
+            return true
+        }
+
+        return false
     }
 
     private fun openBottomIfNeed() {
@@ -115,15 +119,6 @@ class VenueViewFacade @Inject constructor(
         })
     }
 
-    fun dismiss(): Boolean {
-        if (isShown) {
-            behavior?.state = GoogleMapsBottomSheetBehavior.STATE_HIDDEN
-            return true
-        }
-
-        return false
-    }
-
     private fun render(venueViewState: VenueViewState) = when (venueViewState) {
         is VenueViewState.Initial -> view.venueView.hideLoading()
         is VenueViewState.Loading -> view.venueView.showLoading()
@@ -147,6 +142,10 @@ class VenueViewFacade @Inject constructor(
         fabsBehavior?.setShouldIntercept(true)
         view.fabCheckInButton.isSelected = venue.isHere
         view.fabFavoriteButton.isSelected = venue.isFavorite
+    }
+
+    companion object {
+        private const val KEY_STATE_BEHAVIOR = "key_state_behavior"
     }
 
 }

@@ -2,7 +2,7 @@ package home.oleg.placesnearme.corepresentation.viewdata
 
 import home.oleg.placesnearme.coredomain.models.Section
 
-interface PreviewVenueViewData {
+interface PreviewPlace {
     val id: String
     val title: String
     val distance: Double

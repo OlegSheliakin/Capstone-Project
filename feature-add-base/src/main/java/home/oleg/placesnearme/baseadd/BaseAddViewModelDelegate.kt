@@ -43,26 +43,3 @@ abstract class BaseAddViewModelDelegate(
                         onError = Throwable::printStackTrace)
     }
 }
-
-class UpdateVenueDelegate(
-        private val useCase: (Place) -> Single<Boolean>,
-        private val mapper: (Boolean) -> MessageEvent
-) : UpdateVenue {
-
-    private val stateInternal = MutableLiveData<MessageEvent>()
-
-    private var disposable: Disposable? by disposableDelegate()
-
-    override val messages: LiveData<MessageEvent> = stateInternal
-
-    override fun update(venue: VenueViewData) {
-        disposable = Single.fromCallable { venue.mapToDetailVenue() }
-                .flatMap<Boolean> { useCase(it) }
-                .map { mapper(it) }
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = stateInternal::setValue,
-                        onError = Throwable::printStackTrace)
-    }
-}

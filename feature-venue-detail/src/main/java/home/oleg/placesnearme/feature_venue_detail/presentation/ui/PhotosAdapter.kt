@@ -13,7 +13,7 @@ import java.util.*
 
 internal class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
 
-    private val photoViewDatas = ArrayList<PhotoViewData>()
+    private val items = ArrayList<PhotoViewData>()
 
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,12 +22,10 @@ internal class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.ViewHolder>() 
     }
 
     override fun onBindViewHolder(@NonNull holder: ViewHolder, position: Int) {
-        holder.bind(photoViewDatas[position])
+        holder.bind(items[position])
     }
 
-    override fun getItemCount(): Int {
-        return photoViewDatas.size
-    }
+    override fun getItemCount(): Int = items.size
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
@@ -35,18 +33,14 @@ internal class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.ViewHolder>() 
     }
 
     fun setItems(items: List<PhotoViewData>) {
-        photoViewDatas.clear()
-        photoViewDatas.addAll(items)
+        this.items.clear()
+        this.items.addAll(items)
         notifyDataSetChanged()
     }
 
-    internal class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val imageView: ImageView
-
-        init {
-            imageView = itemView.findViewById(R.id.ivPhoto)
-        }
+        val imageView: ImageView = itemView.findViewById(R.id.ivPhoto)
 
         fun bind(photoViewData: PhotoViewData) {
             ImageLoader.loadImage(imageView, photoViewData.fullSizeUrl)

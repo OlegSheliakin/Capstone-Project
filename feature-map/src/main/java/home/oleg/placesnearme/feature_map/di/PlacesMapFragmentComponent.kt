@@ -6,7 +6,7 @@ import home.oleg.placesnearme.coredata.di.RepoApi
 import home.oleg.placesnearme.coredi.module.ViewModelFactoryModule
 import home.oleg.placesnearme.coredi.scopes.FeatureScope
 import home.oleg.placesnearme.corettools.di.ToolsApi
-import home.oleg.placesnearme.feature_map.presentation.ui.VenuesMapFragment
+import home.oleg.placesnearme.feature_map.presentation.VenuesMapFragment
 
 @FeatureScope
 @Component(

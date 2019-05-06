@@ -1,7 +1,5 @@
 package home.oleg.placesnearme.venueshistory.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.BaseViewModel
 import home.oleg.placesnearme.corepresentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
@@ -9,7 +7,6 @@ import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.CheckIn
 import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.UpdateCheckIn
 import home.oleg.placesnearme.venueshistory.domain.interactor.ObserveHistory
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
@@ -19,13 +16,10 @@ import io.reactivex.schedulers.Schedulers
  */
 class VenuesHistoryViewModel(
         createFavoriteViewModelDelegate: CheckInViewModelDelegate,
-        private val observeHistory: ObserveHistory) : BaseViewModel(), UpdateCheckIn by createFavoriteViewModelDelegate {
+        observeHistory: ObserveHistory) : BaseViewModel<List<VenueViewItem>>(),
+        UpdateCheckIn by createFavoriteViewModelDelegate {
 
-    private val stateInternal: MutableLiveData<List<VenueViewItem>> by lazy {
-        return@lazy MutableLiveData<List<VenueViewItem>>()
-    }
-
-    val state: LiveData<List<VenueViewItem>> by lazy {
+    init {
         observeHistory.invoke()
                 .map { VenueViewData.mapFrom(it) }
                 .map { VenueViewItem.map(it) }
@@ -34,7 +28,6 @@ class VenuesHistoryViewModel(
                 .subscribeBy(
                         onNext = { stateInternal.value = it },
                         onError = Throwable::printStackTrace).autoDispose()
-        return@lazy stateInternal
     }
 
 }

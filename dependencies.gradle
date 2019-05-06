@@ -32,7 +32,8 @@ ext.versions = [
         bottomNavigation   : "2.1.0",
         permissionDispather: "4.0.0",
         inject             : "1",
-        statebinder        : "1.0.0"
+        statebinder        : "1.0.0",
+        autodisposable     : "1.0.1"
 ]
 
 def deps = [:]
@@ -105,6 +106,7 @@ deps.leakCanary = "com.squareup.leakcanary:leakcanary-android:$versions.leakCana
 deps.bottomNavigation = "com.aurelhubert:ahbottomnavigation:$versions.bottomNavigation"
 deps.inject = "javax.inject:javax.inject:$versions.inject"
 deps.statebinder = "com.olegsheliakin:statebinder:$versions.statebinder"
+deps.autodisposable = "com.olegsheliakin.lifecycle:autodisposable:$versions.autodisposable"
 
 ext.deps = deps
 

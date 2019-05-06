@@ -8,5 +8,6 @@ dependencies {
     implementation deps.rxjava2.rxkotlin
 
     implementation deps.support.recyclerview
+    implementation deps.support.design
     implementation deps.lifecycle.extensions
 }

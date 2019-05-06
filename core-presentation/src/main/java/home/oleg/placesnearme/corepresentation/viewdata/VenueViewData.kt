@@ -30,7 +30,7 @@ data class VenueViewData(
         override val iconViewData: IconViewData?,
         override val categoryName: String?,
         override val sectionType: Section?
-) : PreviewVenueViewData {
+) : PreviewPlace {
 
     val adoptedRating: Float
         get() = rating / 2.0f

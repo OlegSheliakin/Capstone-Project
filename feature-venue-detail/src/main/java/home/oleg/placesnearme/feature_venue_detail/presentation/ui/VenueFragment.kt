@@ -24,13 +24,12 @@ class VenueFragment
 @SuppressLint("ValidFragment") constructor(private val toastDelegate: ToastDelegate)
     : BaseFragment(), Observer<LiveEvent> by toastDelegate {
 
+    override val layoutRes: Int = R.layout.fragment_venue
+
     @Inject
     lateinit var venueViewModel: LocalVenueViewModel
 
-    override val layoutRes: Int = R.layout.fragment_venue
-
     private var venueId: String? by bundle()
-
     private var mergedAppBarLayoutBehavior: MergedAppBarLayoutBehavior? = null
     private var behavior: GoogleMapsBottomSheetBehavior<*>? = null
 

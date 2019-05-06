@@ -22,15 +22,12 @@ class VenueViewModel(
         createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
         checkInViewModelDelegate: CheckInViewModelDelegate,
         private val errorHandler: ErrorHandler,
-        private val getDetailedVenue: GetDetailedVenue) : BaseViewModel(),
+        private val getDetailedVenue: GetDetailedVenue) : BaseViewModel<VenueViewState>(),
         UpdateFavorite by createFavoriteViewModelDelegate, UpdateCheckIn by checkInViewModelDelegate {
 
     private var disposable: Disposable? by disposableDelegate()
 
-    private val stateInternal = MutableLiveData<VenueViewState>()
     // private val venueInternal = MutableLiveData<VenueViewData>()
-
-    val viewState: LiveData<VenueViewState> = stateInternal
     // val venue: LiveData<VenueViewData> = venueInternal
 
     private val venueViewData: VenueViewData
@@ -47,7 +44,7 @@ class VenueViewModel(
         disposable = getDetailedVenue(venueId, GetDetailedVenue.Type.UPDATE)
                 .map { VenueViewData.mapFrom(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { _ ->
+                .doOnSubscribe {
                     stateInternal.value = VenueViewState.Loading
                 }
                 .subscribe(

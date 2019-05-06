@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.presentation.sections
+package home.oleg.placesnearme.feature_map.sections
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

@@ -1,10 +1,11 @@
-package home.oleg.placesnearme.feature_map.presentation.ui
+package home.oleg.placesnearme.feature_map.presentation
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import com.smedialink.common.ext.gone
 
 import home.oleg.placesnearme.feature_map.R
 import kotlinx.android.synthetic.main.view_loading.view.*
@@ -28,16 +29,10 @@ class LoadingView @JvmOverloads constructor(
         }
     }
 
-    fun showLoading() {
-        this.visibility = View.VISIBLE
-        retryButton.visibility = View.GONE
-        spinKit.visibility = View.VISIBLE
-    }
-
-    fun hide() {
-        this.visibility = View.GONE
-        retryButton.visibility = View.GONE
-        spinKit.visibility = View.GONE
+    fun showLoading(isShown: Boolean) {
+        this.gone(isShown)
+        retryButton.gone(true)
+        spinKit.gone(!isShown)
     }
 
     fun showRetry() {
@@ -45,4 +40,5 @@ class LoadingView @JvmOverloads constructor(
         retryButton.visibility = View.VISIBLE
         spinKit.visibility = View.GONE
     }
+
 }

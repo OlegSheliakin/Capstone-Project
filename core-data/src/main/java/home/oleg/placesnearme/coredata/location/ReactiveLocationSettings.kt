@@ -15,7 +15,7 @@ class ReactiveLocationSettings @Inject constructor(
     fun checkSettings(): Completable {
         return Completable.create { emitter ->
             val mLocationRequest = LocationRequest()
-            mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+            mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
             val builder = LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest)
 
@@ -25,7 +25,7 @@ class ReactiveLocationSettings @Inject constructor(
                 emitter.onComplete()
             }
 
-            task.addOnFailureListener() {
+            task.addOnFailureListener {
                 emitter.onError(it)
             }
 

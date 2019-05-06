@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.presentation.sections
+package home.oleg.placesnearme.feature_map.sections
 
 import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.feature_map.R
@@ -16,6 +16,7 @@ class SectionProvider {
 
     init {
         sectionViewDataList = ArrayList()
+
         sectionViewDataList.add(
                 SectionViewData(Section.TOP, R.string.label_section_top, R.drawable.state_top_section))
         sectionViewDataList.add(

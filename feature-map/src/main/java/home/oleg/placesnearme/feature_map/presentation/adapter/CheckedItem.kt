@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_map.presentation.ui.adapter
+package home.oleg.placesnearme.feature_map.presentation.adapter
 
 import java.util.*
 

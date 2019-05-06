@@ -19,7 +19,7 @@ class LocalVenueViewModel(
         createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
         checkInViewModelDelegate: CheckInViewModelDelegate,
         private val logger: Logger,
-        private val getDetailedVenue: GetDetailedVenue) : BaseViewModel(),
+        private val getDetailedVenue: GetDetailedVenue) : BaseViewModel<VenueViewData>(),
         UpdateFavorite by createFavoriteViewModelDelegate, UpdateCheckIn by checkInViewModelDelegate {
 
     private var disposable: Disposable? by disposableDelegate()
@@ -48,10 +48,6 @@ class LocalVenueViewModel(
 
     fun updateFavorite() {
         updateFavorite(venueViewData)
-    }
-
-    fun cancel() {
-        disposable = null
     }
 
 }

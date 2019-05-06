@@ -9,6 +9,8 @@ dependencies {
 
     implementation deps.statebinder
 
+    implementation deps.autodisposable
+
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
     kapt deps.lifecycle.compiler

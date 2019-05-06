@@ -27,7 +27,7 @@ class UpdateVenueViewModel(
         disposable = Single.fromCallable { venueViewData.mapToDetailVenue() }
                 .flatMap<Boolean> { updateVenueFunc(it) }
                 .map { mapper(it) }
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = messageEventInternal::setValue,
