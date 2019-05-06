@@ -12,7 +12,7 @@ import java.util.*
  * Created by Oleg Sheliakin on 14.08.2018.
  * Contact me by email - olegsheliakin@gmail.com
  */
-data class VenueViewData(
+data class PlaceViewData(
         val openingHoursStatus: String? = null,
         val isFavorite: Boolean = false,
         val isHere: Boolean = false,
@@ -57,19 +57,19 @@ data class VenueViewData(
 
     companion object {
 
-        fun mapFrom(detailedVenues: List<Place>): List<VenueViewData> {
+        fun mapFrom(detailedVenues: List<Place>): List<PlaceViewData> {
             if (detailedVenues.isEmpty()) {
                 return emptyList()
             }
 
-            val list = ArrayList<VenueViewData>()
+            val list = ArrayList<PlaceViewData>()
             for (venue in detailedVenues) {
-                list.add(VenueViewData.mapFrom(venue))
+                list.add(PlaceViewData.mapFrom(venue))
             }
             return list
         }
 
-        fun mapFrom(venue: Place) = VenueViewData(
+        fun mapFrom(venue: Place) = PlaceViewData(
                 openingHoursStatus = venue.hours?.status ?: "-",
                 rating = venue.rating,
                 photos = venue.photos.map { PhotoViewData.map(it) },

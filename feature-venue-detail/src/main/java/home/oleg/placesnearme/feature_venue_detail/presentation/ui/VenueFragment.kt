@@ -7,13 +7,13 @@ import androidx.lifecycle.Observer
 import com.oleg.placesnearme.feature_venue_detail.R
 import com.smedialink.common.base.BaseFragment
 import com.smedialink.common.base.LiveEvent
-import com.smedialink.common.ext.observe
+import com.smedialink.common.ext.observeExt
 import com.smedialink.common.propertydelegate.bundle
 import home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior
 import home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior
 import home.oleg.placesnearme.corepresentation.delegate.ToastDelegate
 import home.oleg.placesnearme.corepresentation.utils.ImageLoader
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.feature_venue_detail.di.VenueDetailComponent
 import home.oleg.placesnearme.feature_venue_detail.presentation.LocalVenueViewModel
 import kotlinx.android.synthetic.main.layout_venue.*
@@ -40,8 +40,6 @@ class VenueFragment
 
         initBehavior(view)
 
-        venueView.hideLoading()
-
         fabCheckInButton.setOnClickListener { _ ->
             venueViewModel.updateCheckIn()
         }
@@ -50,9 +48,7 @@ class VenueFragment
             venueViewModel.updateFavorite()
         }
 
-        venueViewModel.venue.observe(this, ::show)
-        venueViewModel.favoriteMessage.observe(this, this)
-        venueViewModel.checkInMesage.observe(this, this)
+        venueViewModel.venue.observeExt(this, ::show)
 
         venueId?.let(this::open)
     }
@@ -92,15 +88,15 @@ class VenueFragment
         }
     }
 
-    private fun show(venue: VenueViewData) {
-        venueView.show(venue)
+    private fun show(place: PlaceViewData) {
+        venueView.show(place)
 
-        val url = venue.bestPhoto?.fullSizeUrl
+        val url = place.bestPhoto?.fullSizeUrl
         ImageLoader.loadImage(ivVenuePhoto, url)
 
-        mergedAppBarLayoutBehavior?.setToolbarTitle(venue.title)
-        fabFavoriteButton.isSelected = venue.isFavorite
-        fabCheckInButton.isSelected = venue.isHere
+        mergedAppBarLayoutBehavior?.setToolbarTitle(place.title)
+        fabFavoriteButton.isSelected = place.isFavorite
+        fabCheckInButton.isSelected = place.isHere
     }
 
 }

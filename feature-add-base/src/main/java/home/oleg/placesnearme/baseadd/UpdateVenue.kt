@@ -2,7 +2,7 @@ package home.oleg.placesnearme.baseadd
 
 import androidx.lifecycle.LiveData
 import com.smedialink.common.base.MessageEvent
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 
 /**
  * Created by Oleg Sheliakin on 13.11.2018.
@@ -11,5 +11,5 @@ import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
 
 interface UpdateVenue {
     val messages: LiveData<MessageEvent>
-    fun update(venue: VenueViewData)
+    fun update(venue: PlaceViewData)
 }

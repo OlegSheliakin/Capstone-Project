@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.MessageEvent
 import com.smedialink.common.propertydelegate.disposableDelegate
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.coredomain.models.Place
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +23,7 @@ class UpdateVenueViewModel(
 
     val messageEvent: LiveData<MessageEvent> = messageEventInternal
 
-    fun update(venueViewData: VenueViewData) {
+    fun update(venueViewData: PlaceViewData) {
         disposable = Single.fromCallable { venueViewData.mapToDetailVenue() }
                 .flatMap<Boolean> { updateVenueFunc(it) }
                 .map { mapper(it) }

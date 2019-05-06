@@ -3,8 +3,9 @@ package home.oleg.placesnearme.feature_add_history.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import com.smedialink.common.base.MessageEvent
 import home.oleg.placesnearme.baseadd.BaseAddViewModelDelegate
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.feature_add_history.domain.interactor.CheckInOut
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -14,10 +15,8 @@ import javax.inject.Inject
 class CheckInViewModelDelegate @Inject constructor(checkInOut: CheckInOut, mapper: CheckInMessageEventMapper)
     : BaseAddViewModelDelegate(checkInOut::execute, mapper::map), UpdateCheckIn {
 
-    override val checkInMesage: LiveData<MessageEvent> = state
-
-    override fun updateCheckIn(venue: VenueViewData) {
-        manage(venue)
+    override fun updateCheckIn(venue: PlaceViewData) : Single<MessageEvent> {
+       return manage(venue)
     }
 
 }

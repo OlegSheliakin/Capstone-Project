@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.BaseViewModel
 import com.smedialink.common.propertydelegate.disposableDelegate
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.corettools.logger.Logger
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import home.oleg.placesnearme.feature_add_favorite.presentation.UpdateFavorite
@@ -19,23 +19,23 @@ class LocalVenueViewModel(
         createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
         checkInViewModelDelegate: CheckInViewModelDelegate,
         private val logger: Logger,
-        private val getDetailedVenue: GetDetailedVenue) : BaseViewModel<VenueViewData>(),
+        private val getDetailedVenue: GetDetailedVenue) : BaseViewModel<PlaceViewData>(),
         UpdateFavorite by createFavoriteViewModelDelegate, UpdateCheckIn by checkInViewModelDelegate {
 
     private var disposable: Disposable? by disposableDelegate()
 
-    private val venueInternal: MutableLiveData<VenueViewData> = MutableLiveData()
+    private val venueInternal: MutableLiveData<PlaceViewData> = MutableLiveData()
 
-    val venue: LiveData<VenueViewData> = venueInternal
+    val venue: LiveData<PlaceViewData> = venueInternal
 
-    private val venueViewData: VenueViewData
+    private val venueViewData: PlaceViewData
         get() {
             return venue.value ?: throw IllegalStateException()
         }
 
     fun load(venueId: String) {
         disposable = getDetailedVenue(venueId, GetDetailedVenue.Type.STREAM)
-                .map { VenueViewData.mapFrom(it) }
+                .map { PlaceViewData.mapFrom(it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = venueInternal::setValue,

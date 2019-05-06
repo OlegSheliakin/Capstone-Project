@@ -7,9 +7,10 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oleg.placesnearme.feature_venue_detail.R
+import com.smedialink.common.ext.gone
 import home.oleg.placesnearme.corepresentation.utils.DistanceUtil
 import home.oleg.placesnearme.corepresentation.utils.ImageLoader
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import kotlinx.android.synthetic.main.content_venue_details.view.*
 import kotlinx.android.synthetic.main.view_venue_details.view.*
 
@@ -28,17 +29,22 @@ class VenueDetailsView @JvmOverloads constructor(
         init()
     }
 
+    var isLoading: Boolean = false
+        set(value) {
+            field = value
+            content.gone(value)
+            tvError.gone(value)
+            retryButton.gone(value)
+            spinKit.gone(!value)
+        }
+
     fun setRetryClickListener(retryClickListener: () -> Unit) {
         retryButton.setOnClickListener {
             retryClickListener()
         }
     }
 
-    fun show(venue: VenueViewData) {
-        tvError.visibility = View.GONE
-        retryButton.visibility = View.GONE
-        spinKit.visibility = View.GONE
-
+    fun show(venue: PlaceViewData) {
         tvVenueDescription.text = venue.description
         tvContacts.text = venue.formattedPhone
         ratingBar.rating = venue.adoptedRating
@@ -70,20 +76,6 @@ class VenueDetailsView @JvmOverloads constructor(
         tvError.text = ""
     }
 
-    fun showLoading() {
-        content.visibility = View.GONE
-        tvError.visibility = View.GONE
-        retryButton.visibility = View.GONE
-        spinKit.visibility = View.VISIBLE
-    }
-
-    fun hideLoading() {
-        content.visibility = View.VISIBLE
-        tvError.visibility = View.GONE
-        retryButton.visibility = View.GONE
-        spinKit.visibility = View.GONE
-    }
-
     fun showError(text: String) {
         content.visibility = View.GONE
         retryButton.visibility = View.VISIBLE
@@ -96,7 +88,7 @@ class VenueDetailsView @JvmOverloads constructor(
         LayoutInflater.from(context)
                 .inflate(R.layout.view_venue_details, this, true)
 
-        content.visibility = View.INVISIBLE
+        content.visibility = View.GONE
 
         rvPhotos.layoutManager = LinearLayoutManager(this.context)
         rvPhotos.adapter = photosAdapter

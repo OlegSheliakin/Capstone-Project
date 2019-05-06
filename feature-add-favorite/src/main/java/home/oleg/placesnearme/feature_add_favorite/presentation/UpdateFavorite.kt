@@ -1,8 +1,8 @@
 package home.oleg.placesnearme.feature_add_favorite.presentation
 
-import androidx.lifecycle.LiveData
 import com.smedialink.common.base.MessageEvent
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
+import io.reactivex.Single
 
 /**
  * Created by Oleg Sheliakin on 13.11.2018.
@@ -10,6 +10,5 @@ import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
  */
 
 interface UpdateFavorite {
-    val favoriteMessage: LiveData<MessageEvent>
-    fun updateFavorite(venue: VenueViewData)
+    fun updateFavorite(venue: PlaceViewData) : Single<MessageEvent>
 }
