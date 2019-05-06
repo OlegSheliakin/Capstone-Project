@@ -1,7 +1,6 @@
 package home.oleg.placesnearme.feature_map.di
 
 import android.app.Activity
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -11,7 +10,7 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import home.oleg.placesnearme.coredi.mapkeys.ViewModelKey
 import home.oleg.placesnearme.coredomain.interactors.GetRecommendedVenues
-import home.oleg.placesnearme.coredomain.repositories.UserLocationRepository
+import home.oleg.placesnearme.coredomain.repositories.UserLatLngRepository
 import home.oleg.placesnearme.corettools.error_handler.ErrorHandler
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.CheckInViewModelDelegate
@@ -60,7 +59,7 @@ abstract class VenuesMapFragmentModule {
         @Provides
         internal fun provideMapViewModel_(errorHandler: ErrorHandler,
                                           interactor: GetRecommendedVenues,
-                                          userLocationRepository: UserLocationRepository): ViewModel {
+                                          userLocationRepository: UserLatLngRepository): ViewModel {
             return MapViewModel(errorHandler, userLocationRepository, interactor)
         }
 

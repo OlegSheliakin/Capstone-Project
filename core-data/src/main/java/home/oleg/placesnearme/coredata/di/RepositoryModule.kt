@@ -19,7 +19,7 @@ import home.oleg.placesnearme.coredomain.repositories.DetailedVenueRepository
 import home.oleg.placesnearme.coredomain.repositories.DistanceRepository
 import home.oleg.placesnearme.coredomain.repositories.FavoriteVenuesRepository
 import home.oleg.placesnearme.coredomain.repositories.SectionRepository
-import home.oleg.placesnearme.coredomain.repositories.UserLocationRepository
+import home.oleg.placesnearme.coredomain.repositories.UserLatLngRepository
 import home.oleg.placesnearme.coredomain.repositories.VenueHistoryRepository
 import home.oleg.placesnearme.coredomain.repositories.VenueRepository
 
@@ -42,7 +42,7 @@ abstract class RepositoryModule {
     internal abstract fun provideVenueRepo(impl: VenueRepositoryImpl): VenueRepository
 
     @Binds
-    internal abstract fun provideUserLocationRepo(impl: UserLocationRepositoryImpl): UserLocationRepository
+    internal abstract fun provideUserLocationRepo(impl: UserLocationRepositoryImpl): UserLatLngRepository
 
     @Module
     companion object {

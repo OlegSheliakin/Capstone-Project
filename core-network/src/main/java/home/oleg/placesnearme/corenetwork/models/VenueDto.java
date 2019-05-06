@@ -6,7 +6,7 @@ public class VenueDto {
 
     private List<Category> categories;
     private String id;
-    private Location location;
+    private LocationDto location;
     private String name;
 
     public List<Category> getCategories() {
@@ -25,11 +25,11 @@ public class VenueDto {
         this.id = id;
     }
 
-    public Location getLocation() {
+    public LocationDto getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(LocationDto location) {
         this.location = location;
     }
 

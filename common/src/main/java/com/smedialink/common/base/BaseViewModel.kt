@@ -2,6 +2,7 @@ package com.smedialink.common.base
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 /**
  * Created by Oleg Sheliakin on 06.11.2018.
@@ -10,13 +11,17 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val disposables: CompositeDisposable by lazy {
+    private val disposables: CompositeDisposable by lazy {
         return@lazy CompositeDisposable()
     }
 
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
+    }
+
+    protected fun Disposable.autoDispose() {
+        disposables.add(this)
     }
 
 }

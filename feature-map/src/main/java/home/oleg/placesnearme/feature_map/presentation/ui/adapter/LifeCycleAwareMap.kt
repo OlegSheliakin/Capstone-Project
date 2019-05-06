@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 
 class LifeCycleAwareMap private constructor(
-        private val lifecycleOwner: LifecycleOwner,
+        lifecycleOwner: LifecycleOwner,
         private val onMapReadyCallback: OnMapReadyCallback
 ) : LifecycleObserver {
 
@@ -26,12 +26,6 @@ class LifeCycleAwareMap private constructor(
 
     init {
         lifecycleOwner.lifecycle.addObserver(this)
-    }
-
-    companion object {
-        fun create(lifecycleOwner: LifecycleOwner, onMapReadyCallback: OnMapReadyCallback) : LifeCycleAwareMap {
-            return LifeCycleAwareMap(lifecycleOwner, onMapReadyCallback)
-        }
     }
 
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,4 +53,9 @@ class LifeCycleAwareMap private constructor(
         mapView?.onLowMemory()
     }
 
+    companion object {
+        fun create(lifecycleOwner: LifecycleOwner, onMapReadyCallback: OnMapReadyCallback) : LifeCycleAwareMap {
+            return LifeCycleAwareMap(lifecycleOwner, onMapReadyCallback)
+        }
+    }
 }

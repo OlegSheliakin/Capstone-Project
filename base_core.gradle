@@ -8,9 +8,13 @@ dependencies {
 
     implementation project(':common')
 
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation deps.rxjava2.rxkotlin
+    implementation deps.rxjava2.rxjava
+
+    androidTestImplementation deps.testing.testCore
+    androidTestImplementation deps.testing.testRunner
+    androidTestImplementation deps.testing.junitRunner
 
     testImplementation deps.testing.junit
-    androidTestImplementation deps.testing.testRunner
     testImplementation deps.testing.mockito
 }

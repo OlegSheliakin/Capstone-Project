@@ -28,14 +28,14 @@ class FavoritePlacesViewModel(
     }
 
     val state: LiveData<List<VenueViewItem>> by lazy {
-        disposables += favoriteVenuesRepository.observeFavorites()
+        favoriteVenuesRepository.observeFavorites()
                 .map { VenueViewData.mapFrom(it) }
                 .map { VenueViewItem.map(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = { it -> stateInternal.value = it },
-                        onError = Throwable::printStackTrace)
+                        onError = Throwable::printStackTrace).autoDispose()
 
         return@lazy stateInternal
     }

@@ -44,8 +44,9 @@ import javax.inject.Inject
 private const val REQUEST_CODE_CHECK_LOCATION_SETTINGS = 10001
 
 @RuntimePermissions
-class VenuesMapFragment
-    : BaseFragment(), SectionsAdapter.SectionSelectListener, BackHandler {
+class VenuesMapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackHandler {
+
+    override val layoutRes: Int = R.layout.fragment_map
 
     @Inject
     lateinit var toastDelegate: ToastDelegate
@@ -65,7 +66,7 @@ class VenuesMapFragment
     @Inject
     lateinit var reactiveLocationSettings: ReactiveLocationSettings
 
-    override val layoutRes: Int = R.layout.fragment_map
+    private lateinit var showHideBottomBarListener: ShowHideBottomBar
 
     private val lifeCycleAwareMap = LifeCycleAwareMap.create(this, OnMapReadyCallback {
         this.googleMap = it
@@ -76,8 +77,6 @@ class VenuesMapFragment
 
         initLocationSettingsWithPermissionCheck(it)
     })
-
-    private lateinit var showHideBottomBarListener: ShowHideBottomBar
 
     private var googleMap: GoogleMap? = null
 
@@ -225,6 +224,19 @@ class VenuesMapFragment
         lifeCycleAwareMap.onLowMemory()
     }
 
+    override fun onBackPressed(): Boolean {
+        if (venueViewFacade.dismiss()) {
+            return true
+        }
+
+        if (searchAppBar.isVisible) {
+            mapViewModel.closeSearch()
+            return true
+        }
+
+        return false
+    }
+
     private fun render(mapViewState: MapViewState) {
         mapViewState.error?.handle { toastDelegate.showError(it.errorText) }
 
@@ -248,22 +260,9 @@ class VenuesMapFragment
         }
     }
 
-    private fun renderLocation(userLocation: UserLocation) {
+    private fun renderLocation(userLocation: home.oleg.placesnearme.coredomain.models.LatLng) {
         val latLng = LatLng(userLocation.lat, userLocation.lng)
         googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, USER_LOCATION_ZOOM.toFloat()))
-    }
-
-    override fun onBackPressed(): Boolean {
-        if (venueViewFacade.dismiss()) {
-            return true
-        }
-
-        if (searchAppBar.isVisible) {
-            mapViewModel.closeSearch()
-            return true
-        }
-
-        return false
     }
 
     companion object {

@@ -6,16 +6,18 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "venue_history",
+const val PLACES_HISTORY_TABLE_NAME = "places_history"
+
+@Entity(tableName = PLACES_HISTORY_TABLE_NAME,
         foreignKeys = [ForeignKey(
-                entity = DetailedVenueDbEntity::class,
+                entity = PlaceEntity::class,
                 parentColumns = arrayOf("id"),
-                childColumns = arrayOf("venueId"),
+                childColumns = arrayOf("placeId"),
                 onDelete = CASCADE, onUpdate = CASCADE)])
 data class DetailedVenueHistoryDbEntity(
         @PrimaryKey(autoGenerate = true)
         val id: Long = 0,
         @ColumnInfo(index = true)
-        val venueId: String,
+        val placeId: String,
         val createdAt: Long,
         val isLastCheckIn: Boolean)

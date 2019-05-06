@@ -9,15 +9,18 @@ import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import home.oleg.placesnearme.coredomain.models.Photo
 
-@Entity(foreignKeys = [ForeignKey(entity = DetailedVenueDbEntity::class,
+const val PHOTOS_TABLE_NAME = "photos"
+
+@Entity(tableName = PHOTOS_TABLE_NAME,
+        foreignKeys = [ForeignKey(entity = PlaceEntity::class,
         parentColumns = arrayOf("id"),
-        childColumns = arrayOf("venueId"),
+        childColumns = arrayOf("placeId"),
         onDelete = CASCADE)])
-data class PhotoDbEntity(
+data class PhotoEntity(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
         @ColumnInfo(index = true)
-        var venueId: String = "",
+        var placeId: String = "",
         @Embedded
         var photo: Photo)
 

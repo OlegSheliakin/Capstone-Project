@@ -1,18 +1,18 @@
 package home.oleg.placesnearme.coredomain.repositories
 
-import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredomain.models.Place
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
 interface VenueHistoryRepository {
 
-    val history: Flowable<List<DetailedVenue>>
+    val history: Flowable<List<Place>>
 
     fun checkOutFromCurrent(): Completable
 
     fun isHereNow(venueId: String): Flowable<Boolean>
 
-    fun checkIn(detailedVenue: DetailedVenue): Completable
+    fun checkIn(detailedVenue: Place): Completable
 
     fun checkOut(venueId: String): Completable
 

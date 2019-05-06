@@ -1,8 +1,10 @@
 package home.oleg.placesnearme.coredata.mapper
 
 import android.location.Location
+import home.oleg.placesnearme.coredomain.models.LatLng
 
 import home.oleg.placesnearme.coredomain.models.UserLocation
+import home.oleg.placesnearme.corenetwork.models.LocationDto
 
 /**
  * Created by Oleg Sheliakin on 17.09.2018.
@@ -10,8 +12,8 @@ import home.oleg.placesnearme.coredomain.models.UserLocation
  */
 object LocationMapper {
 
-    fun map(location: Location): UserLocation {
-        return UserLocation(location.latitude, location.longitude)
+    fun map(location: Location): LatLng {
+        return LatLng(location.latitude, location.longitude)
     }
 
     fun map(userLocation: UserLocation): Location {
@@ -21,7 +23,7 @@ object LocationMapper {
         return location
     }
 
-    fun map(location: home.oleg.placesnearme.corenetwork.models.Location) = home.oleg.placesnearme.coredomain.models.Location(
+    fun map(location: LocationDto) = home.oleg.placesnearme.coredomain.models.UserLocation(
             address = location.formattedAddress.firstOrNull(),
             lat = location.lat,
             lng = location.lng

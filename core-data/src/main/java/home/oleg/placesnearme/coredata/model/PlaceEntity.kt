@@ -5,10 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import home.oleg.placesnearme.coredomain.models.Category
 import home.oleg.placesnearme.coredomain.models.Contact
-import home.oleg.placesnearme.coredomain.models.Location
+import home.oleg.placesnearme.coredomain.models.UserLocation
 
-@Entity(tableName = "detailed_venue")
-data class DetailedVenueDbEntity(
+const val PLACES_TABLE_NAME = "places"
+
+@Entity(tableName = PLACES_TABLE_NAME)
+data class PlaceEntity(
         @PrimaryKey
         val id: String,
         val title: String,
@@ -17,7 +19,7 @@ data class DetailedVenueDbEntity(
         val isFavorite: Boolean,
         val isHereNow: Boolean,
         @Embedded
-        val location: Location,
+        val location: UserLocation,
         @Embedded
         val contact: Contact?,
         @Embedded

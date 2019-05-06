@@ -26,14 +26,14 @@ class VenuesHistoryViewModel(
     }
 
     val state: LiveData<List<VenueViewItem>> by lazy {
-        disposables += observeHistory.invoke()
+        observeHistory.invoke()
                 .map { VenueViewData.mapFrom(it) }
                 .map { VenueViewItem.map(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onNext = { it -> stateInternal.value = it },
-                        onError = Throwable::printStackTrace)
+                        onNext = { stateInternal.value = it },
+                        onError = Throwable::printStackTrace).autoDispose()
         return@lazy stateInternal
     }
 

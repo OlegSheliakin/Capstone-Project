@@ -26,9 +26,11 @@ class VenueViewFacade @Inject constructor(
         private val venueViewModel: VenueViewModel,
         private val toastDelegate: ToastDelegate) : Observer<LiveEvent> by toastDelegate {
 
-    private var showHideBottomBarListener: ShowHideBottomBar? = null
+    companion object {
+        private const val KEY_STATE_BEHAVIOR = "key_state_behavior"
+    }
 
-    private lateinit var view: View
+    private var showHideBottomBarListener: ShowHideBottomBar? = null
 
     private var mergedAppBarLayoutBehavior: MergedAppBarLayoutBehavior? = null
 
@@ -41,13 +43,15 @@ class VenueViewFacade @Inject constructor(
     private val isShown: Boolean
         get() = behavior?.state != GoogleMapsBottomSheetBehavior.STATE_HIDDEN
 
+    private lateinit var view: View
+
     fun onCreateView(view: View, lifecycleOwner: LifecycleOwner) {
         this.view = view
 
         toastDelegate.attach(view.context)
 
-        view.fabCheckInButton.setOnClickListener { _ -> venueViewModel.updateCheckIn() }
-        view.fabFavoriteButton.setOnClickListener { _ -> venueViewModel.updateFavorite() }
+        view.fabCheckInButton.setOnClickListener { venueViewModel.updateCheckIn() }
+        view.fabFavoriteButton.setOnClickListener { venueViewModel.updateFavorite() }
 
         initBehavior()
 
@@ -93,7 +97,7 @@ class VenueViewFacade @Inject constructor(
         mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(view.mergedappbarlayout)
         fabsBehavior = BottomSheetAwareFabBehavior.from(view.fabsContainer)
 
-        mergedAppBarLayoutBehavior?.setNavigationOnClickListener { _ -> dismiss() }
+        mergedAppBarLayoutBehavior?.setNavigationOnClickListener { dismiss() }
 
         behavior?.setBottomSheetCallback(object : GoogleMapsBottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -145,7 +149,4 @@ class VenueViewFacade @Inject constructor(
         view.fabFavoriteButton.isSelected = venue.isFavorite
     }
 
-    companion object {
-        private const val KEY_STATE_BEHAVIOR = "key_state_behavior"
-    }
 }

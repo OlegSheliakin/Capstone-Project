@@ -1,11 +1,11 @@
 package home.oleg.placesnearme.coredata.repositories
 
 import home.oleg.placesnearme.coredata.location.CachedLocationsStore
-import home.oleg.placesnearme.coredata.location.ReactiveLocationSettings
 import home.oleg.placesnearme.coredata.location.ReactiveLocationStore
 import home.oleg.placesnearme.coredata.mapper.LocationMapper
+import home.oleg.placesnearme.coredomain.models.LatLng
 import home.oleg.placesnearme.coredomain.models.UserLocation
-import home.oleg.placesnearme.coredomain.repositories.UserLocationRepository
+import home.oleg.placesnearme.coredomain.repositories.UserLatLngRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -15,12 +15,12 @@ import javax.inject.Inject
  */
 class UserLocationRepositoryImpl @Inject constructor(
         private val reactiveLocationStore: ReactiveLocationStore,
-        private val cachedLocationsStore: CachedLocationsStore) : UserLocationRepository {
+        private val cachedLocationsStore: CachedLocationsStore) : UserLatLngRepository {
 
-    override val location: Single<UserLocation>
+    override val latlng: Single<LatLng>
         get() = reactiveLocationStore.lastLocation
                     .doOnSuccess { cachedLocationsStore.save(it) }
                     .onErrorResumeNext(cachedLocationsStore.lastLocation)
-                    .map { LocationMapper.map(it) }
+                    .map(LocationMapper::map)
 
 }

@@ -1,6 +1,6 @@
 package home.oleg.placesnearme.coredata.mapper
 
-import home.oleg.placesnearme.coredata.model.PhotoDbEntity
+import home.oleg.placesnearme.coredata.model.PhotoEntity
 import home.oleg.placesnearme.coredomain.models.Photo
 import java.util.*
 
@@ -27,7 +27,7 @@ object PhotoMapper {
         return result
     }
 
-    fun mapFromDb(photos: List<PhotoDbEntity>): List<Photo> {
+    fun mapFromDb(photos: List<PhotoEntity>): List<Photo> {
         val result = ArrayList<Photo>()
 
         for (photo in photos) {
@@ -37,11 +37,11 @@ object PhotoMapper {
         return result
     }
 
-    fun mapToDb(photos: List<Photo>): List<PhotoDbEntity> {
-        val result = ArrayList<PhotoDbEntity>()
+    fun mapToDb(photos: List<Photo>): List<PhotoEntity> {
+        val result = ArrayList<PhotoEntity>()
 
         for (photo in photos) {
-            val photoDbEntity = PhotoDbEntity(
+            val photoDbEntity = PhotoEntity(
                     photo = photo
             )
             result.add(photoDbEntity)

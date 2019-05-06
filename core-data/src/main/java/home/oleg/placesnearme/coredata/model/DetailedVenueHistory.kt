@@ -7,4 +7,4 @@ import androidx.room.Entity
 data class DetailedVenueHistory(
         val createdAt: Long,
         @Embedded
-        val detailedVenueWithPhotos: DetailedVenueWithPhotos?)
+        val detailedVenueWithPhotos: PlaceAndPhotos?)

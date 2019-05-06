@@ -38,7 +38,6 @@ class CachedLocationsStore(private val sharedPreferences: SharedPreferences) : L
     }
 
     companion object {
-
         private val KEY_LAT_LNG = "key_lat_lng"
     }
 

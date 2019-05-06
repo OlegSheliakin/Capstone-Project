@@ -4,7 +4,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import home.oleg.placesnearme.coredata.DaoProviderFactory
-import home.oleg.placesnearme.coredata.dao.DetailedVenueDao
+import home.oleg.placesnearme.coredata.dao.PlacesDao
 import home.oleg.placesnearme.coredata.dao.DetailedVenueHistoryDao
 import home.oleg.placesnearme.coredata.database.DaoProvider
 import javax.inject.Singleton
@@ -22,7 +22,7 @@ object DbModule {
     @JvmStatic
     @Singleton
     @Provides
-    fun provideDetailedVenueWithPhotosDao(provider: DaoProvider): DetailedVenueDao {
+    fun provideDetailedVenueWithPhotosDao(provider: DaoProvider): PlacesDao {
         return provider.detailedVenueWithPhotosDao
     }
 

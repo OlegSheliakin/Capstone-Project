@@ -1,8 +1,8 @@
 package home.oleg.placesnearme.coredata.mapper
 
-import home.oleg.placesnearme.coredata.model.DetailedVenueDbEntity
-import home.oleg.placesnearme.coredata.model.DetailedVenueWithPhotos
-import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredata.model.PlaceEntity
+import home.oleg.placesnearme.coredata.model.PlaceAndPhotos
+import home.oleg.placesnearme.coredomain.models.Place
 import java.util.*
 
 /**
@@ -11,7 +11,7 @@ import java.util.*
  */
 object DetailedVenueMapper {
 
-    fun map(detailedVenue: home.oleg.placesnearme.corenetwork.models.DetailedVenue) = DetailedVenue(
+    fun map(detailedVenue: home.oleg.placesnearme.corenetwork.models.DetailedVenue) = Place(
             description = detailedVenue.description,
             name = detailedVenue.name,
             id = detailedVenue.id,
@@ -23,8 +23,8 @@ object DetailedVenueMapper {
             hours = detailedVenue.hours?.let { HoursMapper.map(it) }
     )
 
-    fun map(venue: DetailedVenue): DetailedVenueWithPhotos {
-        val detailedVenue = DetailedVenueDbEntity(
+    fun map(venue: Place): PlaceAndPhotos {
+        val detailedVenue = PlaceEntity(
                 id = venue.id,
                 title = venue.name,
                 category = venue.category,
@@ -36,14 +36,14 @@ object DetailedVenueMapper {
                 isHereNow = venue.isHereNow
         )
 
-        val detailedVenueWithPhotos = DetailedVenueWithPhotos(detailedVenue)
+        val detailedVenueWithPhotos = PlaceAndPhotos(detailedVenue)
         detailedVenueWithPhotos.photos = PhotoMapper.mapToDb(venue.photos)
 
         return detailedVenueWithPhotos
     }
 
-    fun map(detailedVenueWithPhotos: List<DetailedVenueWithPhotos>): List<DetailedVenue> {
-        val detailedVenues = ArrayList<DetailedVenue>()
+    fun map(detailedVenueWithPhotos: List<PlaceAndPhotos>): List<Place> {
+        val detailedVenues = ArrayList<Place>()
 
         for (detailedVenueWithPhoto in detailedVenueWithPhotos) {
             detailedVenues.add(map(detailedVenueWithPhoto))
@@ -52,10 +52,10 @@ object DetailedVenueMapper {
         return detailedVenues
     }
 
-    fun map(detailedVenueWithPhotos: DetailedVenueWithPhotos): DetailedVenue {
+    fun map(detailedVenueWithPhotos: PlaceAndPhotos): Place {
         val venue = detailedVenueWithPhotos.venue
 
-        return DetailedVenue(
+        return Place(
                 id = venue.id,
                 isHereNow = venue.isHereNow,
                 description = venue.description,

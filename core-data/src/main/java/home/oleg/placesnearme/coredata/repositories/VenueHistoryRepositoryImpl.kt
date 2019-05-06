@@ -1,11 +1,11 @@
 package home.oleg.placesnearme.coredata.repositories
 
-import home.oleg.placesnearme.coredata.dao.DetailedVenueDao
+import home.oleg.placesnearme.coredata.dao.PlacesDao
 import home.oleg.placesnearme.coredata.dao.DetailedVenueHistoryDao
 import home.oleg.placesnearme.coredata.mapper.DetailedVenueMapper
 import home.oleg.placesnearme.coredata.model.DetailedVenueHistory
 import home.oleg.placesnearme.coredata.model.DetailedVenueHistoryDbEntity
-import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredomain.models.Place
 import home.oleg.placesnearme.coredomain.repositories.VenueHistoryRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -13,14 +13,14 @@ import java.util.*
 import javax.inject.Inject
 
 class VenueHistoryRepositoryImpl @Inject constructor(
-        private val detailedVenueWithPhotosDao: DetailedVenueDao,
+        private val detailedVenueWithPhotosDao: PlacesDao,
         private val venueHistoryDao: DetailedVenueHistoryDao) : VenueHistoryRepository {
 
-    override val history: Flowable<List<DetailedVenue>>
-        get() = venueHistoryDao.allHistory.map { this.map(it) }
+    override val history: Flowable<List<Place>>
+        get() = venueHistoryDao.allHistory().map { this.map(it) }
 
     override fun checkOutFromCurrent(): Completable {
-        return venueHistoryDao.lastCheckIn
+        return venueHistoryDao.lastCheckIn()
                 .flatMapCompletable(this::dropCheckIn)
     }
 
@@ -31,18 +31,19 @@ class VenueHistoryRepositoryImpl @Inject constructor(
                         .map { it.isLastCheckIn })
     }
 
-    override fun checkIn(detailedVenue: DetailedVenue): Completable {
+    override fun checkIn(detailedVenue: Place): Completable {
         return Completable.fromAction {
-            //always insert or replace if exist
+            //always inserts or replaces if exist
             val detailedVenueWithPhotos = DetailedVenueMapper.map(detailedVenue)
-            detailedVenueWithPhotosDao.insert(detailedVenueWithPhotos)
+            detailedVenueWithPhotosDao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
 
+            //update history
             val historyDbEntity = DetailedVenueHistoryDbEntity(
                     createdAt = System.currentTimeMillis(),
                     isLastCheckIn = true,
-                    venueId = detailedVenue.id
+                    placeId = detailedVenue.id
             )
-            venueHistoryDao.insert(historyDbEntity)
+            venueHistoryDao.upsert(historyDbEntity)
         }
     }
 
@@ -56,12 +57,12 @@ class VenueHistoryRepositoryImpl @Inject constructor(
 
     private fun dropCheckIn(historyDbEntity: DetailedVenueHistoryDbEntity): Completable {
         return Completable.fromAction {
-            venueHistoryDao.insert(historyDbEntity.copy(isLastCheckIn = false))
+            venueHistoryDao.upsert(historyDbEntity.copy(isLastCheckIn = false))
         }
     }
 
-    private fun map(detailedVenueHistoryList: Iterable<DetailedVenueHistory>): List<DetailedVenue> {
-        val result = ArrayList<DetailedVenue>()
+    private fun map(detailedVenueHistoryList: Iterable<DetailedVenueHistory>): List<Place> {
+        val result = ArrayList<Place>()
         for ((_, detailedVenueWithPhotos) in detailedVenueHistoryList) {
             val detailedVenue = DetailedVenueMapper.map(detailedVenueWithPhotos!!)
             result.add(detailedVenue)

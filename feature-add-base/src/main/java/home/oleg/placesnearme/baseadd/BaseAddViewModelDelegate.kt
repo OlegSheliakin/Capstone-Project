@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.smedialink.common.base.MessageEvent
 import com.smedialink.common.propertydelegate.disposableDelegate
 import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
-import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredomain.models.Place
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
  */
 
 abstract class BaseAddViewModelDelegate(
-        private val useCase: (DetailedVenue) -> Single<Boolean>,
+        private val useCase: (Place) -> Single<Boolean>,
         private val mapper: (Boolean) -> MessageEvent
 ) {
 
@@ -45,7 +45,7 @@ abstract class BaseAddViewModelDelegate(
 }
 
 class UpdateVenueDelegate(
-        private val useCase: (DetailedVenue) -> Single<Boolean>,
+        private val useCase: (Place) -> Single<Boolean>,
         private val mapper: (Boolean) -> MessageEvent
 ) : UpdateVenue {
 

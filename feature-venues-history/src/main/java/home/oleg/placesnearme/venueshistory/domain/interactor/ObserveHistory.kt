@@ -1,7 +1,7 @@
 package home.oleg.placesnearme.venueshistory.domain.interactor
 
 import home.oleg.placesnearme.coredomain.interactors.EvaluateDistance
-import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredomain.models.Place
 import home.oleg.placesnearme.coredomain.repositories.VenueHistoryRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class ObserveHistory @Inject constructor(
         private val evaluateDistance: EvaluateDistance,
         private val venueHistoryRepository: VenueHistoryRepository) {
 
-    operator fun invoke(): Flowable<List<DetailedVenue>> {
+    operator fun invoke(): Flowable<List<Place>> {
         return venueHistoryRepository.history.flatMapSingle {
             evaluateDistance.evaluateDistance(it)
         }

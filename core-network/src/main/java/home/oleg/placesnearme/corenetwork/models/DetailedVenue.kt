@@ -12,7 +12,7 @@ data class DetailedVenue(
         val hours: Hours? = null,
         val id: String,
         val likes: Likes? = null,
-        val location: Location,
+        val location: LocationDto,
         val name: String,
         val photoGroup: PhotosGroup? = null,
         val rating: Float = 0.toFloat(),

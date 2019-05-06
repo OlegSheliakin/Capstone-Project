@@ -1,3 +1,6 @@
 package home.oleg.placesnearme.coredomain.models
 
-class UserLocation(val lat: Double, val lng: Double)
+data class UserLocation(var address: String?,
+                        var lat: Double,
+                        var lng: Double)
+

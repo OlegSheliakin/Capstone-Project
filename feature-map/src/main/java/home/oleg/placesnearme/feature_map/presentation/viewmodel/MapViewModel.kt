@@ -7,9 +7,9 @@ import com.smedialink.common.propertydelegate.disposableDelegate
 import home.oleg.placesnearme.corepresentation.mapper.VenueMapViewMapper
 import home.oleg.placesnearme.corepresentation.viewdata.PreviewVenueViewData
 import home.oleg.placesnearme.coredomain.interactors.GetRecommendedVenues
+import home.oleg.placesnearme.coredomain.models.LatLng
 import home.oleg.placesnearme.coredomain.models.Section
-import home.oleg.placesnearme.coredomain.models.UserLocation
-import home.oleg.placesnearme.coredomain.repositories.UserLocationRepository
+import home.oleg.placesnearme.coredomain.repositories.UserLatLngRepository
 import home.oleg.placesnearme.corettools.error_handler.ErrorHandler
 import home.oleg.placesnearme.feature_map.presentation.state.MapViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,14 +22,14 @@ import io.reactivex.schedulers.Schedulers
  */
 class MapViewModel(
         private val errorHandler: ErrorHandler,
-        private val userLocationRepository: UserLocationRepository,
+        private val userLocationRepository: UserLatLngRepository,
         private val getRecommendedVenues: GetRecommendedVenues) : BaseViewModel() {
 
     private var searchDisposable: Disposable? by disposableDelegate()
     private var locationDisposable: Disposable? by disposableDelegate()
 
     private val viewStateInternal = MutableLiveData<MapViewState>()
-    private val locationInternal = MutableLiveData<UserLocation>()
+    private val locationInternal = MutableLiveData<LatLng>()
     private val venuesInternal = MutableLiveData<List<PreviewVenueViewData>>()
 
     val venuesHolder: MutableMap<String, PreviewVenueViewData> = mutableMapOf()
@@ -68,7 +68,7 @@ class MapViewModel(
     }
 
     fun requestUserLocation() {
-        locationDisposable = userLocationRepository.location
+        locationDisposable = userLocationRepository.latlng
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(

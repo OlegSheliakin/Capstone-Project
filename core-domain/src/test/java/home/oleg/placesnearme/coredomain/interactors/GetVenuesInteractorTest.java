@@ -12,12 +12,12 @@ import java.util.Collections;
 import java.util.List;
 
 import home.oleg.placesnearme.coredomain.models.Category;
-import home.oleg.placesnearme.coredomain.models.Location;
-import home.oleg.placesnearme.coredomain.models.Section;
+import home.oleg.placesnearme.coredomain.models.LatLng;
 import home.oleg.placesnearme.coredomain.models.UserLocation;
+import home.oleg.placesnearme.coredomain.models.Section;
 import home.oleg.placesnearme.coredomain.models.Venue;
 import home.oleg.placesnearme.coredomain.repositories.SectionRepository;
-import home.oleg.placesnearme.coredomain.repositories.UserLocationRepository;
+import home.oleg.placesnearme.coredomain.repositories.UserLatLngRepository;
 import home.oleg.placesnearme.coredomain.repositories.VenueRepository;
 import home.oleg.placesnearme.coredomain.repositories.VenueRequestParams;
 import io.reactivex.Single;
@@ -35,7 +35,7 @@ public class GetVenuesInteractorTest {
     VenueRepository venueRepository;
 
     @Mock
-    UserLocationRepository userLocationRepository;
+    UserLatLngRepository userLocationRepository;
 
     @Mock
     SectionRepository sectionRepository;
@@ -43,7 +43,7 @@ public class GetVenuesInteractorTest {
     @InjectMocks
     GetRecommendedVenues subject;
 
-    private UserLocation fakeUserLocation = new UserLocation(45.0, 45.0);
+    private LatLng fakeUserLatLng = new LatLng(45.0, 45.0);
 
     private VenueRequestParams filter;
 
@@ -51,13 +51,13 @@ public class GetVenuesInteractorTest {
             new Venue(
                     new Category("", "", ""),
                     "0",
-                    new Location("", 0,0),"",0));
+                    new UserLocation("", 0,0),"",0));
 
     @Before
     public void setUp() {
-        when(userLocationRepository.getLocation()).thenReturn(Single.just(fakeUserLocation));
+        when(userLocationRepository.getLatlng()).thenReturn(Single.just(fakeUserLatLng));
 
-        filter = new VenueRequestParams(1000, fakeUserLocation.getLat(), fakeUserLocation.getLng());
+        filter = new VenueRequestParams(1000, fakeUserLatLng.getLat(), fakeUserLatLng.getLng());
     }
 
     @Test

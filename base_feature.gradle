@@ -7,6 +7,8 @@ dependencies {
 
     implementation deps.rxjava2.rxandroid
 
+    implementation deps.statebinder
+
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.runtime
     kapt deps.lifecycle.compiler

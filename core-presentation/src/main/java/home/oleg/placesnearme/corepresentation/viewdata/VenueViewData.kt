@@ -2,9 +2,9 @@ package home.oleg.placesnearme.corepresentation.viewdata
 
 import home.oleg.placesnearme.coredomain.models.Category
 import home.oleg.placesnearme.coredomain.models.Contact
-import home.oleg.placesnearme.coredomain.models.DetailedVenue
+import home.oleg.placesnearme.coredomain.models.Place
 import home.oleg.placesnearme.coredomain.models.Hours
-import home.oleg.placesnearme.coredomain.models.Location
+import home.oleg.placesnearme.coredomain.models.UserLocation
 import home.oleg.placesnearme.coredomain.models.Section
 import java.util.*
 
@@ -40,7 +40,7 @@ data class VenueViewData(
             photos[0]
         } else null
 
-    fun mapToDetailVenue() = DetailedVenue(
+    fun mapToDetailVenue() = Place(
             category = Category(categoryName, iconSuffix = iconViewData?.suffix, iconPrefix = iconViewData?.prefix),
             distance = distance,
             isHereNow = isHere,
@@ -50,14 +50,14 @@ data class VenueViewData(
             description = description,
             hours = Hours(isOpen = isOpen, status = openingHoursStatus),
             isFavorite = isFavorite,
-            location = Location(address = address, lat = lat, lng = lng),
+            location = UserLocation(address = address, lat = lat, lng = lng),
             photos = photos.map(PhotoViewData.Companion::map),
             rating = rating
     )
 
     companion object {
 
-        fun mapFrom(detailedVenues: List<DetailedVenue>): List<VenueViewData> {
+        fun mapFrom(detailedVenues: List<Place>): List<VenueViewData> {
             if (detailedVenues.isEmpty()) {
                 return emptyList()
             }
@@ -69,7 +69,7 @@ data class VenueViewData(
             return list
         }
 
-        fun mapFrom(venue: DetailedVenue) = VenueViewData(
+        fun mapFrom(venue: Place) = VenueViewData(
                 openingHoursStatus = venue.hours?.status ?: "-",
                 rating = venue.rating,
                 photos = venue.photos.map { PhotoViewData.map(it) },
