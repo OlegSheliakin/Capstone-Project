@@ -1,8 +1,8 @@
 package home.oleg.placesnearme.feature_add_history.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
 import com.smedialink.common.base.MessageEvent
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
+import io.reactivex.Single
 
 /**
  * Created by Oleg Sheliakin on 13.11.2018.
@@ -10,6 +10,5 @@ import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
  */
 
 interface UpdateCheckIn {
-    val checkInMesage: LiveData<MessageEvent>
-    fun updateCheckIn(venue: VenueViewData)
+    fun updateCheckIn(venue: PlaceViewData) : Single<MessageEvent>
 }

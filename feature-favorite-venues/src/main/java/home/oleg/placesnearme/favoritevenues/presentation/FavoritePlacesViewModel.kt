@@ -3,7 +3,7 @@ package home.oleg.placesnearme.favoritevenues.presentation
 import com.smedialink.common.base.BaseViewModel
 import home.oleg.placesnearme.coredomain.repositories.FavoriteVenuesRepository
 import home.oleg.placesnearme.corepresentation.recyclerview.VenueViewItem
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import home.oleg.placesnearme.feature_add_favorite.presentation.UpdateFavorite
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +22,7 @@ class FavoritePlacesViewModel(
 
     init {
         favoriteVenuesRepository.observeFavorites()
-                .map(VenueViewData.Companion::mapFrom)
+                .map(PlaceViewData.Companion::mapFrom)
                 .map(VenueViewItem.Companion::map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

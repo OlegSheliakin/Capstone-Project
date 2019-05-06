@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smedialink.common.base.BaseFragment
-import com.smedialink.common.ext.observe
-import com.smedialink.common.recyclerview.ItemViewType
+import com.smedialink.common.ext.observeExt
 import home.oleg.placesnearme.corepresentation.api.ShowVenueDetail
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.venueshistory.R
 import home.oleg.placesnearme.venueshistory.di.VenueHistoryComponent
 import home.oleg.placesnearme.venueshistory.presentation.VenuesHistoryViewModel
@@ -48,14 +47,14 @@ class VenuesHistoryFragment : BaseFragment(), HistoryVenuesAdapter.HistoryClicks
             supportActionBar?.setTitle(R.string.history_title)
         }
 
-        placesHistoryViewModel.state.observe(this, historyVenuesAdapter::submitList)
+        placesHistoryViewModel.state.observeExt(this, historyVenuesAdapter::submitList)
     }
 
-    override fun favoriteClicked(venueViewData: VenueViewData) {
+    override fun favoriteClicked(venueViewData: PlaceViewData) {
         placesHistoryViewModel.updateCheckIn(venueViewData)
     }
 
-    override fun onItemClicked(venueViewData: VenueViewData) {
+    override fun onItemClicked(venueViewData: PlaceViewData) {
         showVenueDetail.showVenueDetail(venueViewData)
     }
 

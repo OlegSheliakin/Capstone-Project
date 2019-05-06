@@ -73,7 +73,7 @@ class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackH
             return@setOnMarkerClickListener true
         }
 
-        viewModel.state.observe(this, stateBinder::newState)
+        viewModel.state.observeExt(this, stateBinder::newState)
 
         initLocationSettingsWithPermissionCheck(map)
     }

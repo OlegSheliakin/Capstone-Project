@@ -6,7 +6,7 @@ import com.smedialink.common.recyclerview.ItemViewType
 import home.oleg.placesnearme.corepresentation.recyclerview.BaseVenueAdapter
 import home.oleg.placesnearme.corepresentation.recyclerview.VenueViewItem
 import home.oleg.placesnearme.corepresentation.utils.ImageLoader
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.favoritevenues.R
 import kotlinx.android.synthetic.main.item_favorite_venue.view.*
 
@@ -18,9 +18,9 @@ class FavoriteVenuesAdapter(diffCallback: DiffUtil.ItemCallback<ItemViewType>,
     override val emptyItemLayoutRes: Int = R.layout.item_empty
 
     interface FavoriteClicksListener {
-        fun favoriteClicked(venueViewData: VenueViewData)
+        fun favoriteClicked(venueViewData: PlaceViewData)
 
-        fun onItemClicked(venueViewData: VenueViewData)
+        fun onItemClicked(venueViewData: PlaceViewData)
     }
 
     override fun getVenueItemHolder(view: View): BaseVenueAdapter.VenueItemHolder {

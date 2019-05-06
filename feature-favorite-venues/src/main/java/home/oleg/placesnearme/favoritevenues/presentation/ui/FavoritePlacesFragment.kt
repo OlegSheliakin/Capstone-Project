@@ -8,11 +8,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smedialink.common.base.BaseFragment
 import com.smedialink.common.base.handle
-import com.smedialink.common.ext.observe
+import com.smedialink.common.ext.observeExt
 import com.smedialink.common.recyclerview.ItemViewType
 import home.oleg.placesnearme.corepresentation.api.ShowVenueDetail
 import home.oleg.placesnearme.corepresentation.delegate.ToastDelegate
-import home.oleg.placesnearme.corepresentation.viewdata.VenueViewData
+import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.favoritevenues.R
 import home.oleg.placesnearme.favoritevenues.di.FavoriteVenuesComponent
 import home.oleg.placesnearme.favoritevenues.presentation.FavoritePlacesViewModel
@@ -55,7 +55,7 @@ class FavoritePlacesFragment : BaseFragment(), FavoriteVenuesAdapter.FavoriteCli
             supportActionBar?.setTitle(R.string.fragment_title_favorite)
         }
 
-        favoritePlacesViewModel.state.observe(this) {
+        favoritePlacesViewModel.state.observeExt(this) {
             if (it.isEmpty()) {
                 adapter.showEmpty()
             } else {
@@ -63,16 +63,16 @@ class FavoritePlacesFragment : BaseFragment(), FavoriteVenuesAdapter.FavoriteCli
             }
         }
 
-        favoritePlacesViewModel.favoriteMessage.observe(this) { message ->
+      /*  favoritePlacesViewModel.favoriteMessage.observeExt(this) { message ->
             message.handle { toastDelegate.showSuccess(it.text) }
-        }
+        }*/
     }
 
-    override fun favoriteClicked(venueViewData: VenueViewData) {
+    override fun favoriteClicked(venueViewData: PlaceViewData) {
         favoritePlacesViewModel.updateFavorite(venueViewData)
     }
 
-    override fun onItemClicked(venueViewData: VenueViewData) {
+    override fun onItemClicked(venueViewData: PlaceViewData) {
         showVenueDetail.showVenueDetail(venueViewData)
     }
 
