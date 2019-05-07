@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_venue_detail.presentation.ui
+package home.oleg.placesnearme.feature_place_detail.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import com.oleg.placesnearme.feature_venue_detail.R
+import com.oleg.placesnearme.feature_place_detail.R
 import home.oleg.placesnearme.corepresentation.utils.ImageLoader
 import home.oleg.placesnearme.corepresentation.viewdata.PhotoViewData
 import java.util.*

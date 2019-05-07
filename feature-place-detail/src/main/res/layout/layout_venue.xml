@@ -28,7 +28,7 @@
         app:header_offset="@dimen/margin_normal"
         app:layout_behavior="home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior">
 
-        <home.oleg.placesnearme.feature_venue_detail.presentation.ui.VenueDetailsView
+        <home.oleg.placesnearme.feature_place_detail.presentation.ui.VenueDetailsView
             android:id="@+id/venueView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

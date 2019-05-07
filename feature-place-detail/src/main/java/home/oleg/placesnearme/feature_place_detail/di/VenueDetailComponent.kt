@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_venue_detail.di
+package home.oleg.placesnearme.feature_place_detail.di
 
 import dagger.BindsInstance
 import dagger.Component
@@ -6,7 +6,7 @@ import home.oleg.placesnearme.coredata.di.RepoApi
 import home.oleg.placesnearme.coredi.module.ViewModelFactoryModule
 import home.oleg.placesnearme.coredi.scopes.FeatureScope
 import home.oleg.placesnearme.corettools.di.ToolsApi
-import home.oleg.placesnearme.feature_venue_detail.presentation.ui.VenueFragment
+import home.oleg.placesnearme.feature_place_detail.presentation.ui.VenueFragment
 
 @FeatureScope
 @Component(

@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_venue_detail.di
+package home.oleg.placesnearme.feature_place_detail.di
 
 import android.app.Activity
 import androidx.lifecycle.LifecycleOwner
@@ -9,14 +9,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import home.oleg.placesnearme.coredi.mapkeys.ViewModelKey
+import home.oleg.placesnearme.coredomain.repositories.DetailedVenueRepository
 import home.oleg.placesnearme.corettools.error_handler.ErrorHandler
-import home.oleg.placesnearme.corettools.logger.Logger
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.CheckInViewModelDelegate
-import home.oleg.placesnearme.feature_venue_detail.domain.GetDetailedVenue
-import home.oleg.placesnearme.feature_venue_detail.presentation.LocalVenueViewModel
-import home.oleg.placesnearme.feature_venue_detail.presentation.VenueViewModel
-import home.oleg.placesnearme.feature_venue_detail.presentation.ui.VenueFragment
+import home.oleg.placesnearme.feature_place_detail.domain.GetDetailedVenue
+import home.oleg.placesnearme.feature_place_detail.presentation.VenueViewModel
+import home.oleg.placesnearme.feature_place_detail.presentation.ui.VenueFragment
 
 @Module
 object VenueDetailModule {
@@ -29,23 +28,10 @@ object VenueDetailModule {
                                   createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
                                   checkInViewModelDelegate: CheckInViewModelDelegate,
                                   getDetailedVenue: GetDetailedVenue): ViewModel {
-        return VenueViewModel(createFavoriteViewModelDelegate,
+        return VenueViewModel(
+                createFavoriteViewModelDelegate,
                 checkInViewModelDelegate,
                 errorHandler,
-                getDetailedVenue)
-    }
-
-    @JvmStatic
-    @IntoMap
-    @ViewModelKey(LocalVenueViewModel::class)
-    @Provides
-    internal fun provideLocalVenueViewModel_(logger: Logger,
-                                             createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
-                                             checkInViewModelDelegate: CheckInViewModelDelegate,
-                                             getDetailedVenue: GetDetailedVenue): ViewModel {
-        return LocalVenueViewModel(createFavoriteViewModelDelegate,
-                checkInViewModelDelegate,
-                logger,
                 getDetailedVenue)
     }
 
@@ -56,15 +42,6 @@ object VenueDetailModule {
             factory: ViewModelProvider.Factory): VenueViewModel {
         return ViewModelProviders.of(fragment, factory).get(VenueViewModel::class.java)
     }
-
-    @JvmStatic
-    @Provides
-    fun provideLocalVenueViewModel(
-            fragment: VenueFragment,
-            factory: ViewModelProvider.Factory): LocalVenueViewModel {
-        return ViewModelProviders.of(fragment, factory).get(LocalVenueViewModel::class.java)
-    }
-
 
     @JvmStatic
     @Provides

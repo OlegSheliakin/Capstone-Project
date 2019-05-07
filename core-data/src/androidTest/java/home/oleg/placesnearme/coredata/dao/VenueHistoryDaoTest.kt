@@ -34,7 +34,7 @@ class VenueHistoryDaoTest {
         val photoDbEntities = FakesStore.listPhotos(detailedVenue.id)
         detailedVenueWithPhotos.photos = photoDbEntities
 
-        detailedVenueWithPhotosDao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        detailedVenueWithPhotosDao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         val detailedVenueHistoryDbEntity = DetailedVenueHistoryDbEntity(
                 placeId = detailedVenue.id,
@@ -47,8 +47,8 @@ class VenueHistoryDaoTest {
 
         assertEquals(1, history.size.toLong())
 
-        val actual = history[0].detailedVenueWithPhotos!!.venue
-        assertTrue(detailedVenueWithPhotos.venue == actual)
+        val actual = history[0].detailedVenueWithPhotos!!.place
+        assertTrue(detailedVenueWithPhotos.place == actual)
     }
 
     @Test
@@ -58,7 +58,7 @@ class VenueHistoryDaoTest {
 
         val detailedVenueWithPhotos = PlaceAndPhotos(detailedVenue)
         detailedVenueWithPhotos.photos = photoDbEntities
-        detailedVenueWithPhotosDao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        detailedVenueWithPhotosDao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         val detailedVenueHistoryDbEntity = DetailedVenueHistoryDbEntity(
                 placeId = detailedVenue.id,
@@ -72,7 +72,7 @@ class VenueHistoryDaoTest {
         val history = dao.allHistory().blockingFirst()
         val allVenus = detailedVenueWithPhotosDao.streamPlaces().blockingFirst()
 
-        //check if deleting venue from history do not delete it from detail_venue table
+        //check if deleting place from history do not delete it from detail_venue table
         assertEquals(1, allVenus.size.toLong())
         assertTrue(history.isEmpty())
     }

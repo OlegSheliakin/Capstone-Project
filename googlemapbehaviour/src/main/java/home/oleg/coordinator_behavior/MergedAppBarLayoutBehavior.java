@@ -100,8 +100,9 @@ public class MergedAppBarLayoutBehavior extends AppBarLayout.ScrollingViewBehavi
 
     private void init(@NonNull CoordinatorLayout parent, @NonNull View child) {
 
-        if (!(child instanceof MergedAppBarLayout))
+        if (!(child instanceof MergedAppBarLayout)) {
             throw new IllegalArgumentException("The view is not a MergedAppBarLayout");
+        }
 
         MergedAppBarLayout appBarLayout = (MergedAppBarLayout) child;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -1,18 +1,17 @@
-package home.oleg.placesnearme.feature_venue_detail.presentation
+package home.oleg.placesnearme.feature_place_detail.presentation
 
 import com.smedialink.common.base.BaseViewModel
-import com.smedialink.common.ext.reduceState
 import com.smedialink.common.propertydelegate.disposableDelegate
+import home.oleg.placesnearme.coredomain.repositories.DetailedVenueRepository
 import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
 import home.oleg.placesnearme.corettools.error_handler.ErrorHandler
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
 import home.oleg.placesnearme.feature_add_favorite.presentation.UpdateFavorite
 import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.CheckInViewModelDelegate
 import home.oleg.placesnearme.feature_add_history.presentation.viewmodel.UpdateCheckIn
-import home.oleg.placesnearme.feature_venue_detail.domain.GetDetailedVenue
+import home.oleg.placesnearme.feature_place_detail.domain.GetDetailedVenue
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.BiConsumer
 import io.reactivex.rxkotlin.subscribeBy
 
 /**
@@ -38,26 +37,26 @@ class VenueViewModel(
     }
 
     fun load(venueId: String) {
-        disposable = getDetailedVenue(venueId, GetDetailedVenue.Type.STREAM)
+        disposable = getDetailedVenue(venueId)
                 .map { PlaceViewData.mapFrom(it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
-                    stateInternal.reduceState {
+                    reduce {
                         it.copy(isLoading = true)
                     }
                 }
                 .subscribe(
                         { place ->
-                            stateInternal.reduceState {
+                            reduce {
                                 it.copy(isLoading = false, place = place)
                             }
                         },
                         { throwable ->
                             val errorEvent = errorHandler.handle(throwable)
-                            stateInternal.reduceState {
+                            reduce {
                                 it.copy(isLoading = false, error = errorEvent)
                             }
-                        })
+                        }).autoDispose()
     }
 
     fun updateCheckIn() {
@@ -74,7 +73,7 @@ class VenueViewModel(
             UpdateType.CHECK_IN -> updateCheckIn(venueViewData)
         }.subscribeBy(
                 onSuccess = { message ->
-                    stateInternal.reduceState {
+                    reduce {
                         it.copy(message = message)
                     }
                 }
@@ -88,6 +87,5 @@ class VenueViewModel(
     private enum class UpdateType {
         FAVORITE, CHECK_IN
     }
-
 
 }

@@ -35,7 +35,7 @@ class VenueHistoryRepositoryImpl @Inject constructor(
         return Completable.fromAction {
             //always inserts or replaces if exist
             val detailedVenueWithPhotos = DetailedVenueMapper.map(detailedVenue)
-            detailedVenueWithPhotosDao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+            detailedVenueWithPhotosDao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
             //update history
             val historyDbEntity = DetailedVenueHistoryDbEntity(

@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_venue_detail.presentation
+package home.oleg.placesnearme.feature_place_detail.presentation
 
 import com.olegsheliakin.statebinder.State
 import com.smedialink.common.base.ErrorEvent
@@ -19,11 +19,4 @@ data class PlaceViewState(
                 place = null,
                 message = null)
     }
-}
-
-sealed class VenueViewState {
-    object Initial : VenueViewState()
-    object Loading : VenueViewState()
-    data class Success(val venue: PlaceViewData) : VenueViewState()
-    data class Error(val errorEvent: ErrorEvent) : VenueViewState()
 }

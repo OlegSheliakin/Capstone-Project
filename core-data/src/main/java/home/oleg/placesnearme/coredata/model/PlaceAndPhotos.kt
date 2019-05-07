@@ -5,7 +5,7 @@ import androidx.room.Relation
 
 data class PlaceAndPhotos(
         @Embedded
-        var venue: PlaceEntity
+        var place: PlaceEntity
 ) {
 
     @Relation(parentColumn = "id", entityColumn = "placeId")

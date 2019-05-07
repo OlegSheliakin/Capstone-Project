@@ -18,17 +18,21 @@ import com.olegsheliakin.lifecycle.autodisposable.disposeOnDestroy
 import com.olegsheliakin.statebinder.StateBinder
 import com.smedialink.common.base.BackHandler
 import com.smedialink.common.base.BaseFragment
-import com.smedialink.common.ext.*
+import com.smedialink.common.base.handle
+import com.smedialink.common.ext.gone
+import com.smedialink.common.ext.horizontal
+import com.smedialink.common.ext.observeExt
+import com.smedialink.common.ext.showExt
+import home.oleg.placesnearme.coredata.location.ReactiveLocationSettings
+import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.corepresentation.api.ShowHideBottomBar
 import home.oleg.placesnearme.corepresentation.delegate.ToastDelegate
 import home.oleg.placesnearme.corepresentation.viewdata.PreviewPlace
-import home.oleg.placesnearme.coredata.location.ReactiveLocationSettings
-import home.oleg.placesnearme.coredomain.models.Section
 import home.oleg.placesnearme.feature_map.R
-import home.oleg.placesnearme.feature_map.di.PlacesMapFragmentComponent
+import home.oleg.placesnearme.feature_map.di.MapFragmentComponent
 import home.oleg.placesnearme.feature_map.mapper.MarkerMapper
 import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
-import home.oleg.placesnearme.feature_venue_detail.presentation.VenueViewFacade
+import home.oleg.placesnearme.feature_place_detail.presentation.VenueViewFacade
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -77,9 +81,13 @@ class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackH
 
         initLocationSettingsWithPermissionCheck(map)
     }
-    private val lifeCycleAwareMap = LifeCycleAwareMap.create(this, onMapReadyCallback)
+    private val lifeCycleAwareMap: LifeCycleAwareMap by lazy {
+        LifeCycleAwareMap.create(viewLifecycleOwner, onMapReadyCallback)
+    }
 
-    private var autoDisposable = AutoDisposable.create(viewLifecycleOwner)
+    private val autoDisposable: AutoDisposable by lazy {
+        return@lazy AutoDisposable.create(viewLifecycleOwner)
+    }
 
     private var stateBinder = StateBinder.create<MapViewState>()
 
@@ -95,7 +103,7 @@ class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackH
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifeCycleAwareMap.onViewCreated(view, savedInstanceState)
+        lifeCycleAwareMap.onViewCreated(mapView, savedInstanceState)
         toastDelegate.attach(view.context)
         venueViewFacade.onCreateView(view, viewLifecycleOwner)
         venueViewFacade.setShowHideBottomBarListener(showHideBottomBarListener)
@@ -161,7 +169,6 @@ class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackH
         fabCurrentLocation.setOnClickListener {
             onShowCurrentLocationClickedWithPermissionCheck()
         }
-
     }
 
     private fun bindState() {
@@ -172,7 +179,12 @@ class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackH
 
             bind(MapViewState::isSearchShown, this@MapFragment::showSearch)
 
-            bindNullable(MapViewState::error, toastDelegate::onChanged)
+            bindNullable(MapViewState::error) { errorEvent ->
+                errorEvent?.handle {
+                    toastDelegate.showError(it.errorText)
+                    loadingView.showRetry()
+                }
+            }
 
             bind(MapViewState::places, this@MapFragment::renderPlaces)
 
@@ -241,7 +253,7 @@ class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackH
     }
 
     override fun inject() {
-        PlacesMapFragmentComponent.Injector.inject(this)
+        MapFragmentComponent.Injector.inject(this)
     }
 
     override fun onLowMemory() {
@@ -264,7 +276,7 @@ class MapFragment : BaseFragment(), SectionsAdapter.SectionSelectListener, BackH
 
     private fun showSearch(shouldShow: Boolean) {
         searchAppBar.gone(!shouldShow)
-        fabSearch.showExt(shouldShow)
+        fabSearch.showExt(!shouldShow)
     }
 
     private fun renderLocation(userLocation: home.oleg.placesnearme.coredomain.models.LatLng) {

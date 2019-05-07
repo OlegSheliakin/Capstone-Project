@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_venue_detail.domain
+package home.oleg.placesnearme.feature_place_detail.domain
 
 import home.oleg.placesnearme.coredomain.interactors.EvaluateDistance
 import home.oleg.placesnearme.coredomain.models.Place
@@ -13,22 +13,14 @@ class GetDetailedVenue @Inject constructor(
         private val detailedVenueRepository: DetailedVenueRepository,
         private val venueHistoryRepository: VenueHistoryRepository) {
 
-    operator fun invoke(id: String, type: Type): Flowable<Place> {
-        return when (type) {
-            Type.STREAM -> get(id, detailedVenueRepository.stream(id))
-            Type.FETCH -> get(id, detailedVenueRepository.getDetailedVenueById(id))
-        }.flatMapSingle(evaluateDistance::evaluateDistance)
-    }
-
-    private fun get(id: String, detailedVenueFlowable: Flowable<Place>): Flowable<Place> {
-        return Flowable.combineLatest(venueHistoryRepository.isHereNow(id), detailedVenueFlowable,
-                BiFunction { b, v ->
+    operator fun invoke(id: String): Flowable<Place> {
+        return Flowable.combineLatest(
+                venueHistoryRepository.isHereNow(id),
+                detailedVenueRepository.getPlaceById(id),
+                BiFunction<Boolean, Place, Place> { b, v ->
                     v.copy(isHereNow = b)
                 })
-    }
-
-    enum class Type {
-        STREAM, FETCH
+                .flatMapSingle(evaluateDistance::evaluateDistance)
     }
 
 }

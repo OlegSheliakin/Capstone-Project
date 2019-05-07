@@ -13,40 +13,29 @@ class DetailedVenueRepositoryImpl @Inject constructor(
         private val api: IFourSquareAPI,
         private val dao: PlacesDao) : DetailedVenueRepository {
 
-    override fun getDetailedVenueById(venueId: String): Flowable<Place> {
+    override fun getPlaceById(placeId: String): Flowable<Place> {
         return Flowable.merge(
-                fetch(venueId).toFlowable(),
-                stream(venueId).skip(1)
-        )
+                getFormDb(placeId).switchIfEmpty(getFromNetwork(placeId)),
+                getFormDb(placeId)).distinctUntilChanged()
+        /*return getFormDb(placeId)
+                .switchIfEmpty(getFromNetwork(placeId))
+                .distinctUntilChanged()*/
     }
 
-    override fun stream(venueId: String): Flowable<Place> {
-        return dao.streamById(venueId).map { DetailedVenueMapper.map(it) }
+    private fun getFormDb(placeId: String): Flowable<Place> {
+        return dao.streamById(placeId).map(DetailedVenueMapper::map)
     }
 
-    override fun fetch(venueId: String): Single<Place> {
-        return getFromNetwork(venueId)
-    }
-
-    private fun getFromNetwork(venueId: String): Single<Place> {
-        return api.getDetail(venueId)
-                .map { it.response }
-                .map { it.venue }
-                .map { DetailedVenueMapper.map(it) }
-                .flatMap(::refreshPlace)
+    private fun getFromNetwork(placeId: String): Flowable<Place> {
+        return api.getDetail(placeId)
+                .map { DetailedVenueMapper.map(it.response.venue) }
+                .flatMap(::refreshPlace).toFlowable()
     }
 
     private fun refreshPlace(place: Place): Single<Place> {
-        val placeEntity = dao.getPlaceById(place.id)
-        return if (placeEntity != null) {
-            val fetchedVenue = place.copy(isFavorite = placeEntity.isFavorite)
-
-            val placeAndPhotos = DetailedVenueMapper.map(fetchedVenue)
-            dao.update(placeAndPhotos.venue, placeAndPhotos.photos)
-            return Single.never<Place>()
-        } else {
-            Single.just(place)
-        }
+        val placeAndPhotos = DetailedVenueMapper.map(place)
+        dao.update(placeAndPhotos.place, placeAndPhotos.photos)
+        return Single.never<Place>()
     }
 
 }

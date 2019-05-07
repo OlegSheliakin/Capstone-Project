@@ -1,14 +1,12 @@
 package home.oleg.placesnearme.feature_map.presentation
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import home.oleg.placesnearme.feature_map.R
 
 /**
  * Created by Oleg Sheliakin on 20.11.2018.
@@ -25,10 +23,9 @@ class LifeCycleAwareMap private constructor(
         lifecycleOwner.lifecycle.addObserver(this)
     }
 
-    fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mapView = view.findViewById(R.id.mapView)
-        mapView?.getMapAsync(onMapReadyCallback)
-        mapView?.onCreate(savedInstanceState)
+    fun onViewCreated(mapView: MapView, savedInstanceState: Bundle?) {
+        mapView.getMapAsync(onMapReadyCallback)
+        mapView.onCreate(savedInstanceState)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

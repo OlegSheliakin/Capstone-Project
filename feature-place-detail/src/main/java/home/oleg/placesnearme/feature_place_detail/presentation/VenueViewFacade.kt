@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_venue_detail.presentation
+package home.oleg.placesnearme.feature_place_detail.presentation
 
 import android.os.Bundle
 import android.view.View
@@ -80,6 +80,11 @@ class VenueViewFacade @Inject constructor(
         venueViewModel.load(venueMapViewData.id)
         view.venueView.setRetryClickListener { venueViewModel.load(venueMapViewData.id) }
         openBottomIfNeed()
+    }
+
+    fun open(venueId: String) {
+        behavior?.state = GoogleMapsBottomSheetBehavior.STATE_ANCHORED
+        venueViewModel.load(venueId)
     }
 
     fun dismiss(): Boolean {

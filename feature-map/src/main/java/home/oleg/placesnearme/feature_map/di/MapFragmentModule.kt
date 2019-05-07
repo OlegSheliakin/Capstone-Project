@@ -10,6 +10,7 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import home.oleg.placesnearme.coredi.mapkeys.ViewModelKey
 import home.oleg.placesnearme.coredomain.interactors.GetRecommendedVenues
+import home.oleg.placesnearme.coredomain.repositories.DetailedVenueRepository
 import home.oleg.placesnearme.coredomain.repositories.UserLatLngRepository
 import home.oleg.placesnearme.corettools.error_handler.ErrorHandler
 import home.oleg.placesnearme.feature_add_favorite.presentation.CreateFavoriteViewModelDelegate
@@ -21,11 +22,11 @@ import home.oleg.placesnearme.feature_map.presentation.MapFragment
 import home.oleg.placesnearme.feature_map.presentation.adapter.CheckedItem
 import home.oleg.placesnearme.feature_map.presentation.adapter.SectionsAdapter
 import home.oleg.placesnearme.feature_map.presentation.MapViewModel
-import home.oleg.placesnearme.feature_venue_detail.domain.GetDetailedVenue
-import home.oleg.placesnearme.feature_venue_detail.presentation.VenueViewModel
+import home.oleg.placesnearme.feature_place_detail.domain.GetDetailedVenue
+import home.oleg.placesnearme.feature_place_detail.presentation.VenueViewModel
 
 @Module
-abstract class VenuesMapFragmentModule {
+abstract class MapFragmentModule {
 
     @Binds
     internal abstract fun provideConverter(impl: DrawableConverterImpl): DrawableConverter
@@ -47,7 +48,8 @@ abstract class VenuesMapFragmentModule {
                                             createFavoriteViewModelDelegate: CreateFavoriteViewModelDelegate,
                                             checkInViewModelDelegate: CheckInViewModelDelegate,
                                             getDetailedVenue: GetDetailedVenue): ViewModel {
-            return VenueViewModel(createFavoriteViewModelDelegate,
+            return VenueViewModel(
+                    createFavoriteViewModelDelegate,
                     checkInViewModelDelegate,
                     errorHanlder,
                     getDetailedVenue)

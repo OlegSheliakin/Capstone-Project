@@ -6,10 +6,6 @@ import io.reactivex.Single
 
 interface DetailedVenueRepository {
 
-    fun getDetailedVenueById(venueId: String): Flowable<Place>
-
-    fun stream(venueId: String): Flowable<Place>
-
-    fun fetch(venueId: String): Single<Place>
+    fun getPlaceById(placeId: String): Flowable<Place>
 
 }

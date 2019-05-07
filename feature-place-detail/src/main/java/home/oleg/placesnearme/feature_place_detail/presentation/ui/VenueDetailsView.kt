@@ -1,4 +1,4 @@
-package home.oleg.placesnearme.feature_venue_detail.presentation.ui
+package home.oleg.placesnearme.feature_place_detail.presentation.ui
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.oleg.placesnearme.feature_venue_detail.R
+import com.oleg.placesnearme.feature_place_detail.R
 import com.smedialink.common.ext.gone
 import home.oleg.placesnearme.corepresentation.utils.DistanceUtil
 import home.oleg.placesnearme.corepresentation.utils.ImageLoader

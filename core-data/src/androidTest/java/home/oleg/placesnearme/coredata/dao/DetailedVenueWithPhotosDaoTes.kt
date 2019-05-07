@@ -1,7 +1,6 @@
 package home.oleg.placesnearme.coredata.dao
 
 import androidx.room.Room
-import androidx.test.InstrumentationRegistry
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import home.oleg.placesnearme.coredata.FakesStore
@@ -40,7 +39,7 @@ class DetailedVenueWithPhotosDaoTes {
         val detailedVenueWithPhotos = PlaceAndPhotos(detailedVenue)
         detailedVenueWithPhotos.photos = FakesStore.listPhotos(detailedVenue.id)
 
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         val actual = dao.streamPlaces().blockingFirst()
 
@@ -55,8 +54,8 @@ class DetailedVenueWithPhotosDaoTes {
         detailedVenueWithPhotos.photos = FakesStore.listPhotos(detailedVenue.id)
 
         //double inserting
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         val detailedVenueWithPhotos1 = dao.streamPlaces().blockingFirst()
 
@@ -69,11 +68,11 @@ class DetailedVenueWithPhotosDaoTes {
         val detailedVenueWithPhotos = PlaceAndPhotos(detailedVenue)
         detailedVenueWithPhotos.photos = FakesStore.listPhotos(detailedVenue.id)
 
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         //clear photos
         detailedVenueWithPhotos.photos = emptyList()
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         val actual = appDatabase.detailedVenueWithPhotosDao.streamPhotos().blockingFirst()
 
@@ -86,7 +85,7 @@ class DetailedVenueWithPhotosDaoTes {
         val detailedVenueWithPhotos = PlaceAndPhotos(detailedVenue)
         detailedVenueWithPhotos.photos = FakesStore.listPhotos(detailedVenue.id)
 
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         dao.deleteAll()
 
@@ -107,8 +106,8 @@ class DetailedVenueWithPhotosDaoTes {
         val detailedVenueWithPhotos1 = PlaceAndPhotos(detailedVenue1)
         detailedVenueWithPhotos1.photos = FakesStore.listPhotos(detailedVenue1.id)
 
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
         dao.deleteAll()
 
         val actualPhotos = appDatabase.detailedVenueWithPhotosDao.streamPhotos().blockingFirst()
@@ -124,7 +123,7 @@ class DetailedVenueWithPhotosDaoTes {
         val detailedVenueWithPhotos = PlaceAndPhotos(detailedVenue)
         detailedVenueWithPhotos.photos = FakesStore.listPhotos(detailedVenue.id)
 
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         val detailedVenueDbEntity = dao.getPlaceById(detailedVenue.id)!!.copy(isFavorite = false)
 
@@ -133,7 +132,7 @@ class DetailedVenueWithPhotosDaoTes {
         val actualVenue = dao.getById(detailedVenue.id).blockingGet()
 
         assertEquals(1, actualVenue.photos.size.toLong())
-        assertEquals(false, actualVenue.venue.isFavorite)
+        assertEquals(false, actualVenue.place.isFavorite)
     }
 
     @Test
@@ -142,10 +141,10 @@ class DetailedVenueWithPhotosDaoTes {
         val detailedVenueWithPhotos = PlaceAndPhotos(detailedVenue)
         detailedVenueWithPhotos.photos = FakesStore.listPhotos(detailedVenue.id)
 
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
-        detailedVenueWithPhotos.venue = detailedVenueWithPhotos.venue.copy(isFavorite = false)
-        dao.insertOrReplace(detailedVenueWithPhotos.venue, detailedVenueWithPhotos.photos)
+        detailedVenueWithPhotos.place = detailedVenueWithPhotos.place.copy(isFavorite = false)
+        dao.insertOrReplace(detailedVenueWithPhotos.place, detailedVenueWithPhotos.photos)
 
         val (venue) = dao!!.getById("1").blockingGet()
 

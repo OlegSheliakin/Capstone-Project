@@ -11,21 +11,21 @@ import home.oleg.placesnearme.feature_map.presentation.MapFragment
 @FeatureScope
 @Component(
         dependencies = [ToolsApi::class, RepoApi::class],
-        modules = [ViewModelFactoryModule::class, VenuesMapFragmentModule::class, ResourceModule::class])
-interface PlacesMapFragmentComponent {
+        modules = [ViewModelFactoryModule::class, MapFragmentModule::class, ResourceModule::class])
+interface MapFragmentComponent {
 
     fun inject(target: MapFragment)
 
     @Component.Builder
     interface Builder {
-        fun toolsComponent(toolsProvider: ToolsApi): PlacesMapFragmentComponent.Builder
+        fun toolsComponent(toolsProvider: ToolsApi): MapFragmentComponent.Builder
 
-        fun repoComponent(repoApi: RepoApi): PlacesMapFragmentComponent.Builder
+        fun repoComponent(repoApi: RepoApi): MapFragmentComponent.Builder
 
         @BindsInstance
-        fun bind(mapFragment: MapFragment): PlacesMapFragmentComponent.Builder
+        fun bind(mapFragment: MapFragment): MapFragmentComponent.Builder
 
-        fun build(): PlacesMapFragmentComponent
+        fun build(): MapFragmentComponent
     }
 
     object Injector {
@@ -34,7 +34,7 @@ interface PlacesMapFragmentComponent {
             val toolsApi = ToolsApi.getInstance(fragment.activity!!.applicationContext)
             val repoApi = RepoApi.getInstance(fragment.activity!!.applicationContext)
 
-            DaggerPlacesMapFragmentComponent.builder()
+            DaggerMapFragmentComponent.builder()
                     .toolsComponent(toolsApi)
                     .repoComponent(repoApi)
                     .bind(fragment)

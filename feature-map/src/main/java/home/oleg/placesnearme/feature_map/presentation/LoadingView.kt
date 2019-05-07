@@ -30,7 +30,7 @@ class LoadingView @JvmOverloads constructor(
     }
 
     fun showLoading(isShown: Boolean) {
-        this.gone(isShown)
+        this.gone(!isShown)
         retryButton.gone(true)
         spinKit.gone(!isShown)
     }
