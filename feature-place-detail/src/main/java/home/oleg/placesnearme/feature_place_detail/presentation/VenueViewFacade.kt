@@ -107,7 +107,8 @@ class VenueViewFacade @Inject constructor(
             }
 
             bindNullable(PlaceViewState::error) { errorEvent ->
-                errorEvent?.apply {
+                val errorText = errorEvent?.errorText
+                if(errorText != null) {
                     view.venueView.showError(errorText)
                     fabsBehavior?.setShouldIntercept(false)
                 }

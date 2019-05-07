@@ -13,6 +13,7 @@ import home.oleg.placesnearme.feature_place_detail.domain.GetDetailedVenue
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by Oleg Sheliakin on 18.09.2018.
@@ -39,6 +40,7 @@ class VenueViewModel(
     fun load(venueId: String) {
         disposable = getDetailedVenue(venueId)
                 .map { PlaceViewData.mapFrom(it) }
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
                     reduce {
@@ -75,6 +77,11 @@ class VenueViewModel(
                 onSuccess = { message ->
                     reduce {
                         it.copy(message = message)
+                    }
+                },
+                onError = { error ->
+                    reduce {
+                        it.copy(error = errorHandler.handle(error))
                     }
                 }
         ).autoDispose()

@@ -7,6 +7,7 @@ import home.oleg.placesnearme.coredomain.repositories.DetailedVenueRepository
 import home.oleg.placesnearme.corenetwork.service.IFourSquareAPI
 import io.reactivex.Flowable
 import io.reactivex.Single
+import org.intellij.lang.annotations.Flow
 import javax.inject.Inject
 
 class DetailedVenueRepositoryImpl @Inject constructor(
@@ -14,28 +15,28 @@ class DetailedVenueRepositoryImpl @Inject constructor(
         private val dao: PlacesDao) : DetailedVenueRepository {
 
     override fun getPlaceById(placeId: String): Flowable<Place> {
-        return Flowable.merge(
-                getFormDb(placeId).switchIfEmpty(getFromNetwork(placeId)),
-                getFormDb(placeId)).distinctUntilChanged()
-        /*return getFormDb(placeId)
-                .switchIfEmpty(getFromNetwork(placeId))
-                .distinctUntilChanged()*/
+        return Flowable.defer {
+            val place = dao.getPlaceById(placeId)
+            return@defer if (place != null) {
+                dao.streamById(placeId).map(DetailedVenueMapper::map)
+            } else {
+                Flowable.merge(
+                        getFromNetwork(placeId).toFlowable(),
+                        dao.streamById(placeId).map(DetailedVenueMapper::map))
+            }
+        }
     }
 
-    private fun getFormDb(placeId: String): Flowable<Place> {
-        return dao.streamById(placeId).map(DetailedVenueMapper::map)
-    }
-
-    private fun getFromNetwork(placeId: String): Flowable<Place> {
+    private fun getFromNetwork(placeId: String): Single<Place> {
         return api.getDetail(placeId)
                 .map { DetailedVenueMapper.map(it.response.venue) }
-                .flatMap(::refreshPlace).toFlowable()
+                .flatMap(::refreshPlace)
     }
 
     private fun refreshPlace(place: Place): Single<Place> {
         val placeAndPhotos = DetailedVenueMapper.map(place)
-        dao.update(placeAndPhotos.place, placeAndPhotos.photos)
-        return Single.never<Place>()
+        dao.insertOrReplace(placeAndPhotos.place, placeAndPhotos.photos)
+        return Single.never()
     }
 
 }

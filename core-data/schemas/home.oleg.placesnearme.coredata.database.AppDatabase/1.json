@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "573f54ae0ba8b924bdaa79b1d57f6a56",
+    "identityHash": "11788d88e4ee9f0f9baf7ef97e34a681",
     "entities": [
       {
         "tableName": "places",
@@ -93,7 +93,16 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_places_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE  INDEX `index_places_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -169,14 +178,8 @@
       },
       {
         "tableName": "places_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `placeId` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `isLastCheckIn` INTEGER NOT NULL, FOREIGN KEY(`placeId`) REFERENCES `places`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`placeId` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `isLastCheckIn` INTEGER NOT NULL, PRIMARY KEY(`placeId`), FOREIGN KEY(`placeId`) REFERENCES `places`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "placeId",
             "columnName": "placeId",
@@ -198,9 +201,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "placeId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -229,7 +232,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"573f54ae0ba8b924bdaa79b1d57f6a56\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"11788d88e4ee9f0f9baf7ef97e34a681\")"
     ]
   }
 }

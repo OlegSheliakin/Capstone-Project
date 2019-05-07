@@ -13,7 +13,7 @@ interface PreviewPlace {
     val categoryName: String?
     val sectionType: Section?
 
-    val categoryIconUrl: String
-        get() = iconViewData!!.iconUrlGray
+    val categoryIconUrl: String?
+        get() = iconViewData?.iconUrlGray
 
 }

@@ -9,12 +9,10 @@ class CheckInOut @Inject constructor(private val venueHistoryRepository: VenueHi
 
     fun execute(detailedVenue: Place): Single<Boolean> {
         return if (detailedVenue.isHereNow) {
-            venueHistoryRepository.checkOut(detailedVenue.id)
+            venueHistoryRepository.dropCheckIns()
                     .andThen(Single.just(false))
         } else {
-            venueHistoryRepository
-                    .checkOutFromCurrent()
-                    .andThen(venueHistoryRepository.checkIn(detailedVenue))
+            venueHistoryRepository.checkIn(detailedVenue)
                     .andThen(Single.just(true))
         }
     }

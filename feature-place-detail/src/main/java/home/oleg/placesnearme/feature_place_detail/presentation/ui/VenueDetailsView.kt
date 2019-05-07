@@ -33,9 +33,9 @@ class VenueDetailsView @JvmOverloads constructor(
         set(value) {
             field = value
             content.gone(value)
-            tvError.gone(value)
-            retryButton.gone(value)
             spinKit.gone(!value)
+            tvError.gone(true)
+            retryButton.gone(true)
         }
 
     fun setRetryClickListener(retryClickListener: () -> Unit) {
@@ -45,6 +45,9 @@ class VenueDetailsView @JvmOverloads constructor(
     }
 
     fun show(venue: PlaceViewData) {
+        tvError.gone(true)
+        retryButton.gone(true)
+
         tvVenueDescription.text = venue.description
         tvContacts.text = venue.formattedPhone
         ratingBar.rating = venue.adoptedRating
