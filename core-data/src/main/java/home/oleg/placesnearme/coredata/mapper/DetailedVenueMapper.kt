@@ -53,7 +53,7 @@ object DetailedVenueMapper {
     }
 
     fun map(detailedVenueWithPhotos: PlaceAndPhotos): Place {
-        val venue = detailedVenueWithPhotos.venue
+        val venue = detailedVenueWithPhotos.place
 
         return Place(
                 id = venue.id,

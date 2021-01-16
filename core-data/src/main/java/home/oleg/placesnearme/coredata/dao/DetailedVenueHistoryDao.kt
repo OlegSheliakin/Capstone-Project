@@ -39,4 +39,18 @@ abstract class DetailedVenueHistoryDao : CrudDao<DetailedVenueHistoryDbEntity>(P
             " INNER JOIN $PLACES_HISTORY_TABLE_NAME ON $PLACES_HISTORY_TABLE_NAME.isLastCheckIn = 1")
     abstract fun current(): Single<DetailedVenueHistory>
 
+    @Transaction
+    open fun checkIn(placeId: String) {
+        val historyDbEntity = DetailedVenueHistoryDbEntity(
+                createdAt = System.currentTimeMillis(),
+                isLastCheckIn = true,
+                placeId = placeId
+        )
+        dropCheckIns()
+        insertOrReplace(historyDbEntity)
+    }
+
+    @Query("UPDATE $PLACES_HISTORY_TABLE_NAME SET isLastCheckIn = 0 WHERE isLastCheckIn = 1")
+    abstract fun dropCheckIns() : Long
+
 }

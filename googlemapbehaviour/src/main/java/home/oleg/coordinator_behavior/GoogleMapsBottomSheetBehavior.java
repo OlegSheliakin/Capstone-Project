@@ -41,6 +41,7 @@ import androidx.customview.widget.ViewDragHelper;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
+@SuppressWarnings("ALL")
 public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
 
     /**
@@ -326,15 +327,9 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
             mPeekHeight = mPeekHeightMin;
         }
         if (mAnchorHeightAuto) {
-            if (mAnchorHeightMin == 0) {
-                /*if(mParentHeight < parent.getWidth()) {
-                    mAnchorHeightMin = mParentHeight - parent.getWidth() * 9 / 16;
-                } else {
-                    mAnchorHeightMin = mParentHeight * parallax.getHeight();
-                }*/
-               // mAnchorHeightMin = mParentHeight - parallax.getHeight();
+            if (parallax != null) {
+                mAnchorHeight = mParentHeight - parallax.getHeight();
             }
-            mAnchorHeight = mParentHeight - parallax.getHeight();
         }
         mMinOffset = Math.max(0, mParentHeight - child.getHeight());
         mMaxOffset = Math.max(mParentHeight - mPeekHeight, mMinOffset);
@@ -613,6 +608,10 @@ public class GoogleMapsBottomSheetBehavior<V extends View> extends CoordinatorLa
     }
 
     public final int getHeaderHeight() {
+        if(parallax == null) {
+            return 0;
+        }
+
         return parallax.getHeight();
     }
 

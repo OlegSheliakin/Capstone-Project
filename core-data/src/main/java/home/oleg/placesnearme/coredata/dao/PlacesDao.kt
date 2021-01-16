@@ -38,6 +38,9 @@ abstract class PlacesDao : CrudDao<PlaceEntity>(tableName = PLACES_TABLE_NAME) {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertOrReplace(placeEntity: PlaceEntity, photoEntityList: List<PhotoEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract fun insertOrIgnore(placeEntity: PlaceEntity, photoEntityList: List<PhotoEntity>)
+
     @Update
     abstract fun update(placeEntity: PlaceEntity, photoEntityList: List<PhotoEntity>)
 

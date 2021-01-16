@@ -9,7 +9,7 @@ dependencies {
     implementation project(':core-tools')
     implementation project(':core-di')
     implementation project(':core-data')
-    implementation project(':feature-venue-detail')
+    implementation project(':feature-place-detail')
     implementation project(':feature-add-favorite')
     implementation project(':feature-add-history')
 

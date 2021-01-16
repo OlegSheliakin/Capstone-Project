@@ -2,6 +2,7 @@ package com.smedialink.common.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.smedialink.common.ext.reduceState
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -11,9 +12,9 @@ import io.reactivex.disposables.Disposable
  * Contact me by email - olegsheliakin@gmail.com
  */
 
-abstract class BaseViewModel<STATE> : ViewModel() {
+abstract class BaseViewModel<STATE : Any> : ViewModel() {
 
-    private val disposables: CompositeDisposable by lazy {
+    protected val disposables: CompositeDisposable by lazy {
         return@lazy CompositeDisposable()
     }
 
@@ -28,9 +29,14 @@ abstract class BaseViewModel<STATE> : ViewModel() {
         disposables.clear()
     }
 
-    protected fun Disposable.autoDispose() {
+    protected fun Disposable.autoDispose() : Disposable {
         disposables.add(this)
+        return this
     }
 
+    protected fun reduce(operation: (STATE) -> STATE) {
+        stateInternal.reduceState {
+            operation(it)
+        }
+    }
 }
-

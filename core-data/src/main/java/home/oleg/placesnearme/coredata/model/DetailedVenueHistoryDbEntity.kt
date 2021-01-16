@@ -15,8 +15,7 @@ const val PLACES_HISTORY_TABLE_NAME = "places_history"
                 childColumns = arrayOf("placeId"),
                 onDelete = CASCADE, onUpdate = CASCADE)])
 data class DetailedVenueHistoryDbEntity(
-        @PrimaryKey(autoGenerate = true)
-        val id: Long = 0,
+        @PrimaryKey
         @ColumnInfo(index = true)
         val placeId: String,
         val createdAt: Long,

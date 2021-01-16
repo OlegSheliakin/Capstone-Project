@@ -17,14 +17,14 @@ class FavoriteVenueRepositoryImpl @Inject constructor(private val dao: PlacesDao
     override fun addToFavorite(venue: Place): Completable {
         return Completable.fromAction {
             val placeAndPhotos = DetailedVenueMapper.map(venue)
-            placeAndPhotos.venue = placeAndPhotos.venue.copy(isFavorite = true)
-            dao.insertOrReplace(placeAndPhotos.venue, placeAndPhotos.photos)
+            placeAndPhotos.place = placeAndPhotos.place.copy(isFavorite = true)
+            dao.insertOrReplace(placeAndPhotos.place, placeAndPhotos.photos)
         }
     }
 
     override fun deleteFromFavorite(venue: Place): Completable {
         return Completable.fromAction {
-            val detailedVenueDbEntity = DetailedVenueMapper.map(venue).venue
+            val detailedVenueDbEntity = DetailedVenueMapper.map(venue).place
             dao.update(detailedVenueDbEntity.copy(isFavorite = false))
         }
     }

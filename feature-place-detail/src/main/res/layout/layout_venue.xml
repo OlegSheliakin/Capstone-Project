@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.coordinatorlayout.widget.CoordinatorLayout">
+
+    <ImageView
+        android:id="@+id/ivVenuePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/anchor_height_venue_photo"
+        android:clickable="true"
+        android:contentDescription="@string/content_description_venue_s_photo"
+        android:focusable="true" />
+
+    <home.oleg.coordinator_behavior.MergedAppBarLayout
+        android:id="@+id/mergedappbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="home.oleg.coordinator_behavior.MergedAppBarLayoutBehavior" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="@dimen/peek_height_venue"
+        app:header_offset="@dimen/margin_normal"
+        app:layout_behavior="home.oleg.coordinator_behavior.GoogleMapsBottomSheetBehavior">
+
+        <home.oleg.placesnearme.feature_place_detail.presentation.ui.VenueDetailsView
+            android:id="@+id/venueView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_fragment_venue_details" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/fabsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="vertical"
+        app:layout_behavior="home.oleg.coordinator_behavior.BottomSheetAwareFabBehavior">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCheckInButton"
+            style="@style/CheckInButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginStart="@dimen/margin_high"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginBottom="@dimen/margin_high"
+            android:contentDescription="@string/content_description_check_in_button" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabFavoriteButton"
+            style="@style/FavoriteButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginStart="@dimen/margin_high"
+            android:layout_marginEnd="@dimen/margin_high"
+            android:layout_marginBottom="@dimen/margin_high"
+            android:contentDescription="@string/content_description_add_to_favorite_button" />
+
+    </LinearLayout>
+</merge>

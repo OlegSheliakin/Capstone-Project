@@ -10,7 +10,7 @@ import com.oleg.placesnearme.feature_main.di.MainActivityComponent
 import home.oleg.placesnearme.corepresentation.api.ShowHideBottomBar
 import home.oleg.placesnearme.corepresentation.api.ShowVenueDetail
 import home.oleg.placesnearme.corepresentation.viewdata.PlaceViewData
-import home.oleg.placesnearme.feature_venue_detail.presentation.ui.VenueFragment
+import home.oleg.placesnearme.feature_place_detail.presentation.ui.VenueFragment
 import kotlinx.android.synthetic.main.bottom_bar.*
 import javax.inject.Inject
 
